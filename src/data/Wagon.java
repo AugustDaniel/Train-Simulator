@@ -1,6 +1,8 @@
 package data;
 
-public class Wagon {
+import java.io.Serializable;
+
+public class Wagon implements Serializable {
     private int maxCapacity;
 
     public Wagon(int maxCapacity) {

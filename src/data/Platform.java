@@ -1,4 +1,6 @@
 package data;
 
-public class Platform {
+import java.io.Serializable;
+
+public class Platform implements Serializable {
 }

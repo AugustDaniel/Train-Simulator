@@ -1,9 +1,10 @@
 package data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Schedule {
+public class Schedule implements Serializable {
 
     private List<Train> trainList;
     private List<Platform> platformList;
