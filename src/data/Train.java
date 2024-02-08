@@ -17,4 +17,14 @@ public class Train implements Serializable {
     public void addWagon(Wagon wagon){
         wagonList.add(wagon);
     }
+
+    public int getCapacity() {
+        int sum = 0;
+
+        for (Wagon wagon : this.wagonList) {
+            sum += wagon.getMaxCapacity();
+        }
+
+        return sum;
+    }
 }

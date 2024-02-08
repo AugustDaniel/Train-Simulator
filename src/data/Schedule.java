@@ -18,9 +18,9 @@ public class Schedule implements Serializable {
         trainList.add(train);
     }
     public void changeTrain(){
-
+        //todo needs body
     }
     public void deleteTrain(Train train){
-        trainList.remove(train);
+        trainList.remove(train); //todo think about parameters
     }
 }
