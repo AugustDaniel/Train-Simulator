@@ -1,17 +1,14 @@
 package guiApplication;
 
-
 import data.Schedule;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
 import javafx.scene.layout.Pane;
 
-public class ScheduleView extends TableView<Schedule> {
-
+public class EditorView {
     private Schedule schedule;
 
-    public ScheduleView(Schedule schedule) {
+    public EditorView(Schedule schedule) {
         this.schedule = schedule;
     }
 

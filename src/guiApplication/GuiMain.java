@@ -12,6 +12,7 @@ public class GuiMain extends Application {
 
     private Schedule schedule;
     private ScheduleView scheduleView;
+    private EditorView editorView;
 
     public static void main(String[] args) {
         launch(GuiMain.class);
@@ -20,15 +21,16 @@ public class GuiMain extends Application {
     @Override
     public void init() {
         this.schedule = new Schedule();
-        this.scheduleView = new ScheduleView();
+        this.scheduleView = new ScheduleView(this.schedule);
+        this.editorView = new EditorView(this.schedule);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         // create tabs
         TabPane tabPane = new TabPane();
-        tabPane.getTabs().add(new Tab("Trein rooster",scheduleView.getNode()));
-        tabPane.getTabs().add(new Tab("Trein weergave",scheduleView.getNode())); //todo change to right view
+        tabPane.getTabs().add(new Tab("Rooster editor",editorView.getNode()));
+        tabPane.getTabs().add(new Tab("Trein weergave",scheduleView.getNode()));
 
         // prevent removing of tabs
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
