@@ -16,24 +16,26 @@ import javafx.scene.layout.VBox;
 public class ScheduleView implements View {
 
     private Schedule schedule;
-    private final BorderPane MAINPANE;
+    private final BorderPane mainPane;
+
 
     public ScheduleView(Schedule schedule) {
         this.schedule = schedule;
-        this.MAINPANE = new BorderPane();
+        this.mainPane = new BorderPane();
+//        this.addJourneyView = new AddJourneyView();
     }
 
     @Override
     public Node getNode() {
-        MAINPANE.setCenter(getTableView());
-        MAINPANE.setLeft(getButtons());
-        return MAINPANE;
+        this.mainPane.setCenter(getTableView());
+        this.mainPane.setLeft(getButtons());
+        return this.mainPane;
     }
 
     private Node getButtons() {
         Button addJourneyButton = new Button("Voeg reis toe");
         addJourneyButton.setOnAction(e -> {
-
+//            this.mainPane.setLeft(this.addJourneyView.getNode());
         });
 
         return new VBox(addJourneyButton);
