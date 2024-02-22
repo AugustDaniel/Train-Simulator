@@ -26,11 +26,11 @@ public class GuiMain extends Application {
         this.schedule = new Schedule();
         this.schedule.addJourney(new Journey(10,
                 10,
-                new Train(),
+                new Train("36-fd"),
                 new Platform(10))); // todo clear test
         this.schedule.addJourney(new Journey(11,
                 11,
-                new Train(),
+                new Train("123-r3"),
                 new Platform(11))); // todo clear test
         this.scheduleView = new ScheduleView(this.schedule);
         this.editorView = new EditorView(this.schedule);

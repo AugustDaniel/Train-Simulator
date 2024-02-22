@@ -55,8 +55,8 @@ public class ScheduleView implements View {
         TableColumn<Journey, Integer> wagons = new TableColumn<> ("Wagons(Capaciteit)");
         wagons.setCellValueFactory(e -> new SimpleIntegerProperty(e.getValue().getTrain().getCapacity()).asObject());
 
-        TableColumn<Journey, Integer> train = new TableColumn<> ("Trein");
-//        train.setCellValueFactory(e -> new SimpleStringProperty(e.getValue().getTrain())); // todo change to correct id getter from train
+        TableColumn<Journey, String> train = new TableColumn<> ("Trein");
+        train.setCellValueFactory(e -> new SimpleStringProperty(e.getValue().getTrain().getTrainIDNumber())); // todo change to correct id getter from train
 
         TableColumn<Journey, Integer> arrival = new TableColumn<> ("Aankomst");
         arrival.setCellValueFactory(new PropertyValueFactory<>("arrivalTime"));

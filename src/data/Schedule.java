@@ -7,19 +7,19 @@ import java.util.List;
 
 public class Schedule implements Serializable {
 
-    private HashMap<String,Train> trainList;
+    private ArrayList<Train> trainList;
     private List<Platform> platformList;
     private List<Journey> journeyList;
 
     private HashMap<String, List<Wagon>> wagonList;
     public Schedule(){
-        this.trainList = new HashMap<>();
+        this.trainList = new ArrayList<>();
         this.journeyList = new ArrayList<>();
         this.platformList = new ArrayList<>();
         this.wagonList = new HashMap<>();
     }
-    public void addTrain(String IdNumber ,Train train){
-        trainList.put(IdNumber, train);
+    public void addTrain(Train train){
+        trainList.add(train);
     }
 
     public void addWagons(String IdNumber, ArrayList<Wagon> wagons){
@@ -37,11 +37,11 @@ public class Schedule implements Serializable {
     public void changeTrain(){
         //todo needs body
     }
-    public void deleteTrain(String IdNumber){
+    public void deleteTrain(Train train){
         for (Journey journey : journeyList) {
-            if (journey.getTrain().equals(trainList.get(IdNumber))){
+            if (journey.getTrain().equals(train)){
                 deleteJourney(journey);
-                trainList.remove(IdNumber, trainList.get(IdNumber));
+                trainList.remove(train);
             }
         }
     }
@@ -60,8 +60,8 @@ public class Schedule implements Serializable {
     }
 
     public void deleteWagons(String wagonsKey){
-        for (String trainKey : trainList.keySet()) {
-            if (trainList.get(trainKey).getWagons().equals(wagonList.get(wagonsKey))){
+        for (Train trainKey : trainList) {
+            if (trainKey.getWagons().equals(wagonList.get(wagonsKey))){
                 deleteTrain(trainKey);
                 wagonList.remove(wagonsKey,wagonList.get(wagonsKey));
             }

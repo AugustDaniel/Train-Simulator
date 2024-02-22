@@ -6,12 +6,14 @@ import java.util.List;
 
 public class Train implements Serializable {
     private List<Wagon> wagonList;
+    private String TrainIDNumber;
 
-    public Train(List<Wagon> wagonList) {
+    public Train(String trainIDNumber,ArrayList<Wagon> wagonList) {
         this.wagonList = wagonList;
+        this.TrainIDNumber = trainIDNumber;
     }
-    public Train(){
-        this(new ArrayList<>());
+    public Train(String trainIDNumber){
+        this(trainIDNumber,new ArrayList<>());
     }
 
     public List<Wagon> getWagons(){
@@ -26,5 +28,9 @@ public class Train implements Serializable {
         }
 
         return sum;
+    }
+
+    public String getTrainIDNumber() {
+        return this.TrainIDNumber;
     }
 }
