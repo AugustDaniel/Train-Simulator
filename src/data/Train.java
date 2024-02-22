@@ -14,8 +14,8 @@ public class Train implements Serializable {
         this(new ArrayList<>());
     }
 
-    public void addWagon(Wagon wagon){
-        wagonList.add(wagon);
+    public List<Wagon> getWagons(){
+        return wagonList;
     }
 
     public int getCapacity() {

@@ -13,5 +13,6 @@ public class Platform implements Serializable {
     public int getPlatformNumber() {
         return platformNumber;
     }
+
     //todo
 }
