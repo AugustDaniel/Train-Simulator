@@ -1,24 +1,45 @@
 package guiApplication.scheduleView;
 
-
 import data.Journey;
 import data.Schedule;
+import guiApplication.View;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableListBase;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 
-public class ScheduleView {
+public class ScheduleView implements View {
 
     private Schedule schedule;
+    private final BorderPane MAINPANE;
 
     public ScheduleView(Schedule schedule) {
         this.schedule = schedule;
+        this.MAINPANE = new BorderPane();
     }
 
+    @Override
     public Node getNode() {
+        MAINPANE.setCenter(getTableView());
+        MAINPANE.setLeft(getButtons());
+        return MAINPANE;
+    }
+
+    private Node getButtons() {
+        Button addJourneyButton = new Button("Voeg reis toe");
+        addJourneyButton.setOnAction(e -> {
+
+        });
+
+        return new VBox(addJourneyButton);
+    }
+
+    public Node getTableView() {
         ObservableList<Journey> journeys = new ObservableListBase<Journey>() {
             @Override
             public Journey get(int index) {
@@ -31,26 +52,26 @@ public class ScheduleView {
             }
         };
 
-
-        TableView<Journey> table = new TableView<Journey>();
+        TableView<Journey> table = new TableView<>();
         table.setItems(journeys);
-        TableColumn<Journey, Integer> peron = new TableColumn<Journey, Integer> ("Platform");
-        peron.setCellValueFactory(new PropertyValueFactory<Journey, Integer>("platform"));
 
-        TableColumn<Journey, Integer> wagons = new TableColumn<Journey, Integer> ("Wagons(Capaciteit)");
-        wagons.setCellValueFactory(new PropertyValueFactory<Journey, Integer>("platform"));
+        TableColumn<Journey, Integer> peron = new TableColumn<> ("Platform");
+        peron.setCellValueFactory(new PropertyValueFactory<>("platform"));
 
-        TableColumn<Journey, Integer> train = new TableColumn<Journey, Integer> ("Trein");
-        train.setCellValueFactory(new PropertyValueFactory<Journey, Integer>("platform"));
+        TableColumn<Journey, Integer> wagons = new TableColumn<> ("Wagons(Capaciteit)");
+        wagons.setCellValueFactory(new PropertyValueFactory<>("platform"));
 
-        TableColumn<Journey, Integer> arrival = new TableColumn<Journey, Integer> ("Aankomst");
-        arrival.setCellValueFactory(new PropertyValueFactory<Journey, Integer>("platform"));
+        TableColumn<Journey, Integer> train = new TableColumn<> ("Trein");
+        train.setCellValueFactory(new PropertyValueFactory<>("platform"));
 
-        TableColumn<Journey, Integer> departure = new TableColumn<Journey, Integer> ("Vertrek");
-        departure.setCellValueFactory(new PropertyValueFactory<Journey, Integer>("platform"));
+        TableColumn<Journey, Integer> arrival = new TableColumn<> ("Aankomst");
+        arrival.setCellValueFactory(new PropertyValueFactory<>("platform"));
+
+        TableColumn<Journey, Integer> departure = new TableColumn<> ("Vertrek");
+        departure.setCellValueFactory(new PropertyValueFactory<>("platform"));
 
         table.getColumns().addAll(peron, train, wagons, arrival, departure);
 
-        return table; //todo change view to right content
+        return table;
     }
 }
