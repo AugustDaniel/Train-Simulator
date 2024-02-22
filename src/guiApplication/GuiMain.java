@@ -24,6 +24,14 @@ public class GuiMain extends Application {
     @Override
     public void init() {
         this.schedule = new Schedule();
+        this.schedule.addJourney(new Journey(10,
+                10,
+                new Train(),
+                new Platform(10)));
+        this.schedule.addJourney(new Journey(11,
+                11,
+                new Train(),
+                new Platform(11)));
         this.scheduleView = new ScheduleView(this.schedule);
         this.editorView = new EditorView(this.schedule);
     }

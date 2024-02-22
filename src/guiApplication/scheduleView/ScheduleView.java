@@ -4,6 +4,7 @@ import data.Journey;
 import data.Schedule;
 import guiApplication.View;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -55,7 +56,7 @@ public class ScheduleView implements View {
         wagons.setCellValueFactory(e -> new SimpleIntegerProperty(e.getValue().getTrain().getCapacity()).asObject());
 
         TableColumn<Journey, Integer> train = new TableColumn<> ("Trein");
-        train.setCellValueFactory(new PropertyValueFactory<>("jj"));
+//        train.setCellValueFactory(e -> new SimpleStringProperty(e.getValue().getTrain())); // todo change to correct id getter from train
 
         TableColumn<Journey, Integer> arrival = new TableColumn<> ("Aankomst");
         arrival.setCellValueFactory(new PropertyValueFactory<>("arrivalTime"));
