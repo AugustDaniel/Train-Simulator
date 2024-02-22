@@ -1,4 +1,4 @@
-package guiapplication.scheduleView.popups;
+package guiapplication.scheduleview.popups;
 
 import data.Schedule;
 import guiapplication.PopupView;
