@@ -27,8 +27,6 @@ public class ScheduleView extends ReturnableView {
 
     enum MenuMode {CREATE, DELETE}
 
-    ;
-
     public ScheduleView(Schedule schedule) {
         this.schedule = schedule;
         this.mainPane = new BorderPane();
@@ -50,34 +48,46 @@ public class ScheduleView extends ReturnableView {
     }
 
     private Node getButtons() {
-        if (menuToggle == MenuMode.CREATE) {
-            return getAddButtons();
+        VBox box = new VBox();
+
+        switch (menuToggle) {
+            case CREATE: box = getAddButtons(); break;
+            case DELETE: box = getDeleteButtons(); break;
         }
 
-        return getDeleteButtons();
-    }
+        Button switchModeButton = new Button("Verander modus");
+        switchModeButton.setOnAction(event -> {
+            switch (menuToggle) {
+                case CREATE: menuToggle = MenuMode.DELETE; break;
+                case DELETE: menuToggle = MenuMode.CREATE; break;
+            }
+            this.returnToView();
+        });
 
-    private Node getAddButtons() {
-        VBox box = new VBox(
-                getButton("creëer reis", new CreateJourneyPopup(this, this.schedule).getNode()),
-                getButton("creëer trein", new CreateTrainPopup(this, this.schedule).getNode()),
-                getButton("creëer Wagon", new CreateWagonPopup(this, this.schedule).getNode()),
-                getButton("creëer perron", new CreatePlatformPopup(this, this.schedule).getNode())
-        );
-        box.setPadding(new Insets(10, 10, 10, 10));
+        box.getChildren().add(switchModeButton);
+        box.setPadding(new Insets(10));
+        box.setSpacing(10);
+        box.setAlignment(Pos.BASELINE_LEFT);
         return box;
     }
 
-    private Node getDeleteButtons() {
-        VBox box = new VBox(100);
-        box.getChildren().addAll(
-                getButton("creëer reis", new DeleteJourneyPopup(this, this.schedule).getNode()),
-                getButton("creëer trein", new DeleteTrainPopup(this, this.schedule).getNode()),
-                getButton("creëer Wagon", new DeleteWagonPopup(this, this.schedule).getNode()),
-                getButton("creëer perron", new DeletePlatformPopup(this, this.schedule).getNode())
+    private VBox getAddButtons() {
+        VBox box = new VBox(
+                getButton("Creëer reis", new CreateJourneyPopup(this, this.schedule).getNode()),
+                getButton("Creëer trein", new CreateTrainPopup(this, this.schedule).getNode()),
+                getButton("Creëer wagon", new CreateWagonPopup(this, this.schedule).getNode()),
+                getButton("Creëer perron", new CreatePlatformPopup(this, this.schedule).getNode())
         );
-        box.setPadding(new Insets(10));
-        box.setAlignment(Pos.BASELINE_LEFT);
+        return box;
+    }
+
+    private VBox getDeleteButtons() {
+        VBox box = new VBox(
+                getButton("Verwijder reis", new DeleteJourneyPopup(this, this.schedule).getNode()),
+                getButton("Verwijder trein", new DeleteTrainPopup(this, this.schedule).getNode()),
+                getButton("Verwijder wagon", new DeleteWagonPopup(this, this.schedule).getNode()),
+                getButton("Verwijder perron", new DeletePlatformPopup(this, this.schedule).getNode())
+        );
         return box;
     }
 
