@@ -1,4 +1,4 @@
-package guiApplication;
+package guiApplication.scheduleView;
 
 
 import data.Schedule;
