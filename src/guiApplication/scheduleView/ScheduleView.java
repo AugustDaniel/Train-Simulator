@@ -73,6 +73,7 @@ public class ScheduleView implements View {
         departure.setCellValueFactory(new PropertyValueFactory<>("platform"));
 
         table.getColumns().addAll(peron, train, wagons, arrival, departure);
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         return table;
     }
