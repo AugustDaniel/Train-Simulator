@@ -3,6 +3,7 @@ package guiApplication.scheduleView;
 import data.Journey;
 import data.Schedule;
 import guiApplication.View;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableListBase;
 import javafx.scene.Node;
@@ -42,7 +43,7 @@ public class ScheduleView implements View {
     }
 
     public Node getTableView() {
-        ObservableList<Journey> journeys = (ObservableList<Journey>) this.schedule.getJourneyList();
+        ObservableList<Journey> journeys = FXCollections.observableList(this.schedule.getJourneyList());
 
         TableView<Journey> table = new TableView<>();
         table.setItems(journeys);
