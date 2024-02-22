@@ -35,8 +35,7 @@ public class ScheduleView extends ReturnableView {
 
     @Override
     public Node getNode() {
-        this.mainPane.setCenter(getTableView());
-        this.mainPane.setLeft(getButtons());
+        this.returnToView();
         return this.mainPane;
     }
 
