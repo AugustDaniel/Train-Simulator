@@ -47,8 +47,7 @@ public class ScheduleView extends ReturnableView {
         Button addJourneyButton = new Button("Voeg reis toe");
 
         addJourneyButton.setOnAction(e -> {
-            this.mainPane.getChildren().clear();
-            this.mainPane.setCenter(this.addJourneyPopup.getNode());
+            this.mainPane.setBottom(this.addJourneyPopup.getNode());
         });
 
         VBox box = new VBox(addJourneyButton);
