@@ -3,9 +3,9 @@ package guiApplication.scheduleView;
 import data.Journey;
 import data.Schedule;
 import guiApplication.View;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableListBase;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -49,19 +49,19 @@ public class ScheduleView implements View {
         table.setItems(journeys);
 
         TableColumn<Journey, Integer> peron = new TableColumn<> ("Platform");
-        peron.setCellValueFactory(new PropertyValueFactory<>("platform"));
+        peron.setCellValueFactory(e -> new SimpleIntegerProperty(e.getValue().getPlatform().getPlatformNumber()).asObject());
 
         TableColumn<Journey, Integer> wagons = new TableColumn<> ("Wagons(Capaciteit)");
-        wagons.setCellValueFactory(new PropertyValueFactory<>("platform"));
+        wagons.setCellValueFactory(e -> new SimpleIntegerProperty(e.getValue().getTrain().getCapacity()).asObject());
 
         TableColumn<Journey, Integer> train = new TableColumn<> ("Trein");
-        train.setCellValueFactory(new PropertyValueFactory<>("platform"));
+        train.setCellValueFactory(new PropertyValueFactory<>("jj"));
 
         TableColumn<Journey, Integer> arrival = new TableColumn<> ("Aankomst");
-        arrival.setCellValueFactory(new PropertyValueFactory<>("platform"));
+        arrival.setCellValueFactory(new PropertyValueFactory<>("arrivalTime"));
 
         TableColumn<Journey, Integer> departure = new TableColumn<> ("Vertrek");
-        departure.setCellValueFactory(new PropertyValueFactory<>("platform"));
+        departure.setCellValueFactory(new PropertyValueFactory<>("departureTime"));
 
         table.getColumns().addAll(peron, train, wagons, arrival, departure);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);

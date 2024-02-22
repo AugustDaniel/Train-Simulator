@@ -1,13 +1,15 @@
 package guiApplication;
 
 
-import data.Schedule;
+import data.*;
 import guiApplication.scheduleView.ScheduleView;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
 
 public class GuiMain extends Application {
 
@@ -24,8 +26,6 @@ public class GuiMain extends Application {
         this.schedule = new Schedule();
         this.scheduleView = new ScheduleView(this.schedule);
         this.editorView = new EditorView(this.schedule);
-
-
     }
 
     @Override
