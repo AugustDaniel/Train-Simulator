@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Pane;
 
-public class EditorView extends TableView<Schedule> {
+public class EditorView {
     private Schedule schedule;
 
     public EditorView(Schedule schedule) {

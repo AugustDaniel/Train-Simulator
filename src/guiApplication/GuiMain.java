@@ -29,8 +29,8 @@ public class GuiMain extends Application {
     public void start(Stage primaryStage) throws Exception {
         // create tabs
         TabPane tabPane = new TabPane();
-        tabPane.getTabs().add(new Tab("Rooster editor",editorView.getNode()));
-        tabPane.getTabs().add(new Tab("Trein weergave",scheduleView.getNode()));
+        tabPane.getTabs().add(new Tab("Rooster weergave",editorView.getNode()));
+        tabPane.getTabs().add(new Tab("Trein tabel",scheduleView.getNode()));
 
         // prevent removing of tabs
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
