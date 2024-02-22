@@ -1,4 +1,4 @@
-package guiApplication.scheduleView;
+package guiApplication.scheduleView.popups;
 
 import data.Schedule;
 import guiApplication.PopupView;
@@ -11,10 +11,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
-public class AddJourneyPopup extends PopupView {
+public class CreateJourneyPopup extends PopupView {
     private Schedule schedule;
 
-    public AddJourneyPopup(ReturnableView mainView, Schedule schedule) {
+    public CreateJourneyPopup(ReturnableView mainView, Schedule schedule) {
         super(mainView);
         this.schedule = schedule;
     }

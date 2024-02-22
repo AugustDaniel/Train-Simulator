@@ -4,11 +4,13 @@ import data.Journey;
 import data.Schedule;
 import guiApplication.ReturnableView;
 import guiApplication.View;
+import guiApplication.scheduleView.popups.*;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -21,12 +23,16 @@ public class ScheduleView extends ReturnableView {
 
     private Schedule schedule;
     private final BorderPane mainPane;
-    private final View addJourneyPopup;
+    private MenuMode menuToggle;
+
+    enum MenuMode {CREATE, DELETE}
+
+    ;
 
     public ScheduleView(Schedule schedule) {
         this.schedule = schedule;
         this.mainPane = new BorderPane();
-        this.addJourneyPopup = new AddJourneyPopup(this, this.schedule);
+        this.menuToggle = MenuMode.CREATE;
     }
 
     @Override
@@ -44,16 +50,44 @@ public class ScheduleView extends ReturnableView {
     }
 
     private Node getButtons() {
-        Button addJourneyButton = new Button("Voeg reis toe");
+        if (menuToggle == MenuMode.CREATE) {
+            return getAddButtons();
+        }
 
-        addJourneyButton.setOnAction(e -> {
-            this.mainPane.setBottom(this.addJourneyPopup.getNode());
+        return getDeleteButtons();
+    }
+
+    private Node getAddButtons() {
+        VBox box = new VBox(
+                getButton("creëer reis", new CreateJourneyPopup(this, this.schedule).getNode()),
+                getButton("creëer trein", new CreateTrainPopup(this, this.schedule).getNode()),
+                getButton("creëer Wagon", new CreateWagonPopup(this, this.schedule).getNode()),
+                getButton("creëer perron", new CreatePlatformPopup(this, this.schedule).getNode())
+        );
+        box.setPadding(new Insets(10, 10, 10, 10));
+        return box;
+    }
+
+    private Node getDeleteButtons() {
+        VBox box = new VBox(100);
+        box.getChildren().addAll(
+                getButton("creëer reis", new DeleteJourneyPopup(this, this.schedule).getNode()),
+                getButton("creëer trein", new DeleteTrainPopup(this, this.schedule).getNode()),
+                getButton("creëer Wagon", new DeleteWagonPopup(this, this.schedule).getNode()),
+                getButton("creëer perron", new DeletePlatformPopup(this, this.schedule).getNode())
+        );
+        box.setPadding(new Insets(10));
+        box.setAlignment(Pos.BASELINE_LEFT);
+        return box;
+    }
+
+    private Node getButton(String text, Node popup) {
+        Button button = new Button(text);
+        button.setOnAction(e -> {
+            this.mainPane.setBottom(popup);
         });
 
-        VBox box = new VBox(addJourneyButton);
-        box.setPadding(new Insets(10,10,10,10));
-
-        return box; //todo add more buttons
+        return button;
     }
 
     private Node getTableView() {
@@ -62,19 +96,19 @@ public class ScheduleView extends ReturnableView {
         TableView<Journey> table = new TableView<>();
         table.setItems(journeys);
 
-        TableColumn<Journey, Integer> peron = new TableColumn<> ("Platform");
+        TableColumn<Journey, Integer> peron = new TableColumn<>("Platform");
         peron.setCellValueFactory(e -> new SimpleIntegerProperty(e.getValue().getPlatform().getPlatformNumber()).asObject());
 
-        TableColumn<Journey, Integer> wagons = new TableColumn<> ("Wagons(Capaciteit)");
+        TableColumn<Journey, Integer> wagons = new TableColumn<>("Wagons(Capaciteit)");
         wagons.setCellValueFactory(e -> new SimpleIntegerProperty(e.getValue().getTrain().getCapacity()).asObject());
 
-        TableColumn<Journey, String> train = new TableColumn<> ("Trein");
+        TableColumn<Journey, String> train = new TableColumn<>("Trein");
         train.setCellValueFactory(e -> new SimpleStringProperty(e.getValue().getTrain().getTrainIDNumber()));
 
-        TableColumn<Journey, Integer> arrival = new TableColumn<> ("Aankomst");
+        TableColumn<Journey, Integer> arrival = new TableColumn<>("Aankomst");
         arrival.setCellValueFactory(new PropertyValueFactory<>("arrivalTime"));
 
-        TableColumn<Journey, Integer> departure = new TableColumn<> ("Vertrek");
+        TableColumn<Journey, Integer> departure = new TableColumn<>("Vertrek");
         departure.setCellValueFactory(new PropertyValueFactory<>("departureTime"));
 
         table.getColumns().addAll(peron, train, wagons, arrival, departure);
