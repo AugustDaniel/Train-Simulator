@@ -42,17 +42,7 @@ public class ScheduleView implements View {
     }
 
     public Node getTableView() {
-        ObservableList<Journey> journeys = new ObservableListBase<Journey>() {
-            @Override
-            public Journey get(int index) {
-                return null;
-            }
-
-            @Override
-            public int size() {
-                return 0;
-            }
-        };
+        ObservableList<Journey> journeys = (ObservableList<Journey>) this.schedule.getJourneyList();
 
         TableView<Journey> table = new TableView<>();
         table.setItems(journeys);

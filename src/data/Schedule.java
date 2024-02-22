@@ -68,8 +68,8 @@ public class Schedule implements Serializable {
         }
     }
 
-    public void getJourneyList(){
-
+    public List<Journey> getJourneyList(){
+        return this.journeyList;
     }
 
 }
