@@ -23,6 +23,8 @@ public class GuiMain extends Application {
         this.schedule = new Schedule();
         this.scheduleView = new ScheduleView(this.schedule);
         this.editorView = new EditorView(this.schedule);
+
+
     }
 
     @Override
