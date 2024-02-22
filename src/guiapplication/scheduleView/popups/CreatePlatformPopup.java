@@ -1,8 +1,8 @@
-package guiApplication.scheduleView.popups;
+package guiapplication.scheduleView.popups;
 
 import data.Schedule;
-import guiApplication.PopupView;
-import guiApplication.ReturnableView;
+import guiapplication.PopupView;
+import guiapplication.ReturnableView;
 import javafx.scene.Node;
 
 public class CreatePlatformPopup extends PopupView {

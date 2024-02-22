@@ -1,15 +1,13 @@
-package guiApplication;
+package guiapplication;
 
 
 import data.*;
-import guiApplication.scheduleView.ScheduleView;
+import guiapplication.scheduleView.ScheduleView;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
 
 public class GuiMain extends Application {
 

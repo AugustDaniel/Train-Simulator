@@ -1,4 +1,4 @@
-package guiApplication;
+package guiapplication;
 
 import data.Schedule;
 import javafx.scene.Node;

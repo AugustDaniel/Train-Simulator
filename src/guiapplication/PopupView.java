@@ -1,4 +1,4 @@
-package guiApplication;
+package guiapplication;
 
 abstract public class PopupView implements View{
 

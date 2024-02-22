@@ -1,4 +1,4 @@
-package guiApplication;
+package guiapplication;
 
 import javafx.scene.Node;
 

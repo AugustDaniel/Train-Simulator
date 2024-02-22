@@ -1,10 +1,9 @@
-package guiApplication.scheduleView;
+package guiapplication.scheduleView;
 
 import data.Journey;
 import data.Schedule;
-import guiApplication.ReturnableView;
-import guiApplication.View;
-import guiApplication.scheduleView.popups.*;
+import guiapplication.ReturnableView;
+import guiapplication.scheduleView.popups.*;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;

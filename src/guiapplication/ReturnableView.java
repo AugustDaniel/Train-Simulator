@@ -1,6 +1,4 @@
-package guiApplication;
-
-import javafx.scene.Node;
+package guiapplication;
 
 abstract public class ReturnableView implements View {
 
