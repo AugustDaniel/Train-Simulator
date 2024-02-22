@@ -8,6 +8,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -20,12 +21,12 @@ public class ScheduleView extends ReturnableView {
 
     private Schedule schedule;
     private final BorderPane mainPane;
-    private final View addJourneyView;
+    private final View addJourneyPopup;
 
     public ScheduleView(Schedule schedule) {
         this.schedule = schedule;
         this.mainPane = new BorderPane();
-        this.addJourneyView = new AddJourneyView(this);
+        this.addJourneyPopup = new AddJourneyPopup(this, this.schedule);
     }
 
     @Override
@@ -47,13 +48,16 @@ public class ScheduleView extends ReturnableView {
 
         addJourneyButton.setOnAction(e -> {
             this.mainPane.getChildren().clear();
-            this.mainPane.setCenter(this.addJourneyView.getNode());
+            this.mainPane.setCenter(this.addJourneyPopup.getNode());
         });
 
-        return new VBox(addJourneyButton);
+        VBox box = new VBox(addJourneyButton);
+        box.setPadding(new Insets(10,10,10,10));
+
+        return box; //todo add more buttons
     }
 
-    public Node getTableView() {
+    private Node getTableView() {
         ObservableList<Journey> journeys = FXCollections.observableList(this.schedule.getJourneyList());
 
         TableView<Journey> table = new TableView<>();

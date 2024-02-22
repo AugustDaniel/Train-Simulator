@@ -1,5 +1,7 @@
+import guiApplication.GuiMain;
+
 class Main{
     public static void main(String[] args) {
-        System.out.println("hello there");
+        GuiMain.main(null);
     }
 }
