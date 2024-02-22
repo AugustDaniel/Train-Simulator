@@ -2,6 +2,7 @@ package guiApplication;
 
 
 import data.Schedule;
+import guiApplication.scheduleView.ScheduleView;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
