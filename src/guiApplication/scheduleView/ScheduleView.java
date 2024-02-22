@@ -2,6 +2,7 @@ package guiApplication.scheduleView;
 
 import data.Journey;
 import data.Schedule;
+import guiApplication.ReturnableView;
 import guiApplication.View;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -15,16 +16,16 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
-public class ScheduleView implements View {
+public class ScheduleView extends ReturnableView {
 
     private Schedule schedule;
     private final BorderPane mainPane;
-
+    private final View addJourneyView;
 
     public ScheduleView(Schedule schedule) {
         this.schedule = schedule;
         this.mainPane = new BorderPane();
-//        this.addJourneyView = new AddJourneyView();
+        this.addJourneyView = new AddJourneyView(this);
     }
 
     @Override
@@ -34,10 +35,19 @@ public class ScheduleView implements View {
         return this.mainPane;
     }
 
+    @Override
+    public void returnToView() {
+        this.mainPane.getChildren().clear();
+        this.mainPane.setLeft(getButtons());
+        this.mainPane.setCenter(getTableView());
+    }
+
     private Node getButtons() {
         Button addJourneyButton = new Button("Voeg reis toe");
+
         addJourneyButton.setOnAction(e -> {
-//            this.mainPane.setLeft(this.addJourneyView.getNode());
+            this.mainPane.getChildren().clear();
+            this.mainPane.setCenter(this.addJourneyView.getNode());
         });
 
         return new VBox(addJourneyButton);
@@ -56,7 +66,7 @@ public class ScheduleView implements View {
         wagons.setCellValueFactory(e -> new SimpleIntegerProperty(e.getValue().getTrain().getCapacity()).asObject());
 
         TableColumn<Journey, String> train = new TableColumn<> ("Trein");
-        train.setCellValueFactory(e -> new SimpleStringProperty(e.getValue().getTrain().getTrainIDNumber())); // todo change to correct id getter from train
+        train.setCellValueFactory(e -> new SimpleStringProperty(e.getValue().getTrain().getTrainIDNumber()));
 
         TableColumn<Journey, Integer> arrival = new TableColumn<> ("Aankomst");
         arrival.setCellValueFactory(new PropertyValueFactory<>("arrivalTime"));
