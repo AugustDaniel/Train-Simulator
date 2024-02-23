@@ -1,11 +1,15 @@
 package guiapplication.scheduleview.popups;
 
+import data.Platform;
 import data.Schedule;
 import data.ScheduleBuilder;
+import data.Train;
 import guiapplication.PopupView;
 import guiapplication.ReturnableView;
+import javafx.collections.FXCollections;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -14,25 +18,47 @@ import javafx.scene.layout.VBox;
 
 public class CreateJourneyPopup extends PopupView {
     private ScheduleBuilder scheduleBuilder;
+    private Schedule schedule;
 
     public CreateJourneyPopup(ReturnableView mainView, Schedule schedule) {
         super(mainView);
         this.scheduleBuilder = new ScheduleBuilder(schedule);
+        this.schedule = schedule;
     }
 
     @Override
     public Node getNode() {
         BorderPane pane = new BorderPane();
 
+        Label arrivalTimeInfo = new Label("Voer aankomsttijd in(ie. 1030):");
+        TextField arrivalTimeInput = new TextField();
+        VBox arrivalTimeBox = new VBox(arrivalTimeInfo, arrivalTimeInput);
+
+        Label departureTimeInfo = new Label("Voer vertrektijd in(ie. 1030):");
+        TextField departureTimeInput = new TextField();
+        VBox departureTimeBox = new VBox(departureTimeInfo, departureTimeInput);
+
+        Label trainInfo = new Label("Kies uit trein:");
+        ComboBox<Train> trainComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getTrainList()));
+        VBox trainBox = new VBox(trainInfo, trainComboBox);
+
+        Label platformInfo = new Label("Kies uit perron:");
+        ComboBox<Platform> platformComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getPlatformList()));
+        VBox platformBox = new VBox(platformInfo, platformComboBox);
+
         Button cancelButton = new Button("Annuleer");
         cancelButton.setOnAction(e -> super.callMainView());
         Button saveButton = new Button("Voeg toe");
-        FlowPane buttonBar = new FlowPane(cancelButton,saveButton);
+        saveButton.setOnAction(e -> this.scheduleBuilder.createJourney(
+                Integer.parseInt(arrivalTimeInput.getText()),
+                Integer.parseInt(departureTimeInput.getText()),
+                trainComboBox.getValue(),
+                platformComboBox.getValue()
+        ));
 
-        Label testLabel = new Label("Lorem Ipsum");
-        TextField testTextField = new TextField();
-        VBox inputBox = new VBox(testLabel, testTextField);
+        FlowPane buttonBar = new FlowPane(cancelButton, saveButton);
 
+        VBox inputBox = new VBox(arrivalTimeBox, departureTimeBox, trainBox, platformBox);
         pane.setCenter(inputBox);
         pane.setBottom(buttonBar);
         return pane; //todo add functionality to this popup

@@ -72,4 +72,12 @@ public class Schedule implements Serializable {
         return this.journeyList;
     }
 
+    public List<Train> getTrainList() {
+        return this.trainList;
+    }
+
+    public List<Platform> getPlatformList() {
+        return this.platformList;
+    }
+
 }
