@@ -8,7 +8,7 @@ public class Train implements Serializable {
     private List<Wagon> wagonList;
     private String TrainIDNumber;
 
-    public Train(String trainIDNumber,ArrayList<Wagon> wagonList) {
+    public Train(String trainIDNumber,List<Wagon> wagonList) {
         this.wagonList = wagonList;
         this.TrainIDNumber = trainIDNumber;
     }
