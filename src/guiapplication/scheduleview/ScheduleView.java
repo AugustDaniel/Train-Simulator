@@ -99,6 +99,7 @@ public class ScheduleView extends ReturnableView {
     }
 
     private Node getTableView() {
+        // todo fix not updating of observable list
         ObservableList<Journey> journeys = FXCollections.observableList(this.schedule.getJourneyList());
 
         TableView<Journey> table = new TableView<>();
