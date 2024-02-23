@@ -37,12 +37,13 @@ public class CreateTrainPopup extends PopupView {
         saveButton.setOnAction(e -> {
             this.scheduleBuilder.createTrain(inputField.getText());
             inputField.clear();
+            super.callMainView();
         });
         FlowPane buttonBar = new FlowPane(cancelButton, saveButton);
         buttonBar.setPadding(new Insets(10));
 
         pane.setCenter(inputBox);
         pane.setBottom(buttonBar);
-        return pane; //todo add functionality to this popup
+        return pane;
     }
 }

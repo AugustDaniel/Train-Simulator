@@ -92,6 +92,7 @@ public class ScheduleView extends ReturnableView {
     private Node getButton(String text, Node popup) {
         Button button = new Button(text);
         button.setOnAction(e -> {
+            returnToView();
             this.mainPane.setBottom(popup);
         });
 
@@ -99,7 +100,6 @@ public class ScheduleView extends ReturnableView {
     }
 
     private Node getTableView() {
-        // todo fix not updating of observable list
         ObservableList<Journey> journeys = FXCollections.observableList(this.schedule.getJourneyList());
 
         TableView<Journey> table = new TableView<>();

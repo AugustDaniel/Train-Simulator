@@ -6,10 +6,7 @@ import data.ScheduleBuilder;
 import data.Train;
 import guiapplication.PopupView;
 import guiapplication.ReturnableView;
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -43,12 +40,10 @@ public class CreateJourneyPopup extends PopupView {
         VBox departureTimeBox = new VBox(departureTimeInfo, departureTimeInput);
 
         Label trainInfo = new Label("Kies uit trein:");
-        // todo fix not updating of observable list
         ComboBox<Train> trainComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getTrainList()));
         VBox trainBox = new VBox(trainInfo, trainComboBox);
 
         Label platformInfo = new Label("Kies uit perron:");
-        // todo fix not updating of observable list
         ObservableList<Platform> platformList = FXCollections.observableArrayList(this.schedule.getPlatformList());
         ComboBox<Platform> platformComboBox = new ComboBox<>(platformList);
         VBox platformBox = new VBox(platformInfo, platformComboBox);
@@ -56,12 +51,14 @@ public class CreateJourneyPopup extends PopupView {
         Button cancelButton = new Button("Annuleer");
         cancelButton.setOnAction(e -> super.callMainView());
         Button saveButton = new Button("Voeg toe");
-        saveButton.setOnAction(e -> this.scheduleBuilder.createJourney(
+        saveButton.setOnAction(e -> {this.scheduleBuilder.createJourney(
                 Integer.parseInt(arrivalTimeInput.getText()),
                 Integer.parseInt(departureTimeInput.getText()),
                 trainComboBox.getValue(),
                 platformComboBox.getValue()
-        ));
+        );
+            super.callMainView();
+        });
 
         FlowPane buttonBar = new FlowPane(cancelButton, saveButton);
 
