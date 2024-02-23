@@ -33,4 +33,9 @@ public class Train implements Serializable {
     public String getTrainIDNumber() {
         return this.TrainIDNumber;
     }
+
+    @Override
+    public String toString() {
+        return getTrainIDNumber();
+    }
 }
