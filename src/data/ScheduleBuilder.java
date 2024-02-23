@@ -10,28 +10,24 @@ public class ScheduleBuilder {
         this.schedule = schedule;
     }
 
-    public boolean createJourney(int arrivalTime, int departureTime, Train train, Platform platform) {
+    public void createJourney(int arrivalTime, int departureTime, Train train, Platform platform) {
         this.schedule.addJourney(new Journey(arrivalTime, departureTime, train, platform));
-        return true;
     }
 
-    public boolean createTrain(String id) {
+    public void createTrain(String id) {
         this.schedule.addTrain(new Train(id));
-        return true;
     }
 
-    public boolean createTrain(String id, List<Wagon> wagons) {
+    public void createTrain(String id, List<Wagon> wagons) {
         this.schedule.addTrain(new Train(id, wagons));
-        return true;
     }
 
-    public boolean createPlatform(int platformNumber) {
+    public void createPlatform(int platformNumber) {
         this.schedule.addPlatform(new Platform(platformNumber));
-        return true;
     }
 
-    public boolean createWagon(String id, int capacity) {
-        return true;
+    public void createWagon(String id, int capacity) {
+
     }
 
 }
