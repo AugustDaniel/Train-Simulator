@@ -21,7 +21,7 @@ public class GuiMain extends Application {
     @Override
     public void init() {
         this.subject = new ScheduleSubject();
-        this.subject.setSchedule(new Schedule());
+        this.subject.setState(new Schedule());
         this.scheduleView = new ScheduleView(this.subject);
     }
 
