@@ -1,6 +1,5 @@
 package guiapplication.scheduleview.components;
 
-import data.ScheduleBuilder;
 import guiapplication.PopupView;
 import guiapplication.ReturnableView;
 import guiapplication.View;
@@ -15,38 +14,42 @@ import data.ScheduleSubject;
 public class ScheduleBuilderView implements View {
 
     private ScheduleSubject subject;
-    private ScheduleBuilder builder;
     private ReturnableView mainView;
     private MenuMode menuToggle;
 
     enum MenuMode {CREATE, DELETE}
 
-    public ScheduleBuilderView(ScheduleSubject subject, ScheduleBuilder builder, ReturnableView mainView) {
+    public ScheduleBuilderView(ScheduleSubject subject, ReturnableView mainView) {
         this.subject = subject;
-        this.builder = builder;
         this.mainView = mainView;
+        this.menuToggle = MenuMode.CREATE;
     }
 
     @Override
     public Node getNode() {
-        return null;
-    }
-
-    private Node getButtons() {
         VBox box = new VBox();
 
         switch (menuToggle) {
-            case CREATE: box = getAddButtons(); break;
-            case DELETE: box = getDeleteButtons(); break;
+            case CREATE:
+                box = getAddButtons();
+                break;
+            case DELETE:
+                box = getDeleteButtons();
+                break;
         }
 
         Button switchModeButton = new Button("Verander modus");
         switchModeButton.setOnAction(event -> {
             switch (menuToggle) {
                 //todo maybe this needs to be better idk
-                case CREATE: menuToggle = ScheduleBuilderView.MenuMode.DELETE; break;
-                case DELETE: menuToggle = ScheduleBuilderView.MenuMode.CREATE; break;
+                case CREATE:
+                    menuToggle = ScheduleBuilderView.MenuMode.DELETE;
+                    break;
+                case DELETE:
+                    menuToggle = ScheduleBuilderView.MenuMode.CREATE;
+                    break;
             }
+            this.mainView.returnToView();
         });
 
         box.getChildren().addAll(switchModeButton);
