@@ -18,7 +18,7 @@ public class IOHelper {
         }
     }
 
-    public static Object loadObject(File file) {
+    public static Object readObject(File file) {
         try(
                 ObjectInputStream input = new ObjectInputStream(Files.newInputStream(file.toPath()))
         ) {

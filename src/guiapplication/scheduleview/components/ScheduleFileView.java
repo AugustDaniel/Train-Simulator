@@ -30,7 +30,7 @@ public class ScheduleFileView implements View {
 
         Button loadScheduleButton = new Button("Laad planning");
         loadScheduleButton.setOnAction(e ->
-            this.subject.setSchedule((Schedule) IOHelper.loadObject(IOHelper.getFileFromChooser("Selecteer planning")))
+            this.subject.setSchedule((Schedule) IOHelper.readObject(IOHelper.getFileFromChooser("Selecteer planning")))
         );
 
         return new VBox(saveScheduleButton,loadScheduleButton);
