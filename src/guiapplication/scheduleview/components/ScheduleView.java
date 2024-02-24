@@ -1,5 +1,6 @@
 package guiapplication.scheduleview.components;
 
+import guiapplication.PopupView;
 import guiapplication.ReturnableView;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
@@ -9,10 +10,16 @@ public class ScheduleView extends ReturnableView {
 
     private ScheduleSubject schedule;
     private final BorderPane mainPane;
+    private PopupView popup;
 
     public ScheduleView(ScheduleSubject schedule) {
         this.schedule = schedule;
         this.mainPane = new BorderPane();
+        this.popup = null;
+    }
+
+    public void setPopup(PopupView popup) {
+        this.popup = popup;
     }
 
     @Override

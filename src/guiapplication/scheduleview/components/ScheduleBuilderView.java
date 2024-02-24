@@ -1,6 +1,8 @@
 package guiapplication.scheduleview.components;
 
 import data.ScheduleBuilder;
+import guiapplication.PopupView;
+import guiapplication.ReturnableView;
 import guiapplication.View;
 import guiapplication.scheduleview.popups.*;
 import javafx.geometry.Insets;
@@ -14,12 +16,15 @@ public class ScheduleBuilderView implements View {
 
     private ScheduleSubject subject;
     private ScheduleBuilder builder;
+    private ReturnableView mainView;
     private MenuMode menuToggle;
 
     enum MenuMode {CREATE, DELETE}
 
-    public ScheduleBuilderView(ScheduleSubject subject, ScheduleBuilder builder) {
-
+    public ScheduleBuilderView(ScheduleSubject subject, ScheduleBuilder builder, ReturnableView mainView) {
+        this.subject = subject;
+        this.builder = builder;
+        this.mainView = mainView;
     }
 
     @Override
@@ -30,54 +35,54 @@ public class ScheduleBuilderView implements View {
     private Node getButtons() {
         VBox box = new VBox();
 
-//        switch (menuToggle) {
-//            case CREATE: box = getAddButtons(); break;
-//            case DELETE: box = getDeleteButtons(); break;
-//        }
-//
-//        Button switchModeButton = new Button("Verander modus");
-//        switchModeButton.setOnAction(event -> {
-//            switch (menuToggle) {
-//                case CREATE: menuToggle = ScheduleView.MenuMode.DELETE; break;
-//                case DELETE: menuToggle = ScheduleView.MenuMode.CREATE; break;
-//            }
-//            this.returnToView();
-//        });
-//
-//        box.getChildren().addAll(switchModeButton);
-//        box.setPadding(new Insets(10));
-//        box.setSpacing(10);
-//        box.setAlignment(Pos.BASELINE_LEFT);
+        switch (menuToggle) {
+            case CREATE: box = getAddButtons(); break;
+            case DELETE: box = getDeleteButtons(); break;
+        }
+
+        Button switchModeButton = new Button("Verander modus");
+        switchModeButton.setOnAction(event -> {
+            switch (menuToggle) {
+                //todo maybe this needs to be better idk
+                case CREATE: menuToggle = ScheduleBuilderView.MenuMode.DELETE; break;
+                case DELETE: menuToggle = ScheduleBuilderView.MenuMode.CREATE; break;
+            }
+        });
+
+        box.getChildren().addAll(switchModeButton);
+        box.setPadding(new Insets(10));
+        box.setSpacing(10);
+        box.setAlignment(Pos.BASELINE_LEFT);
         return box;
     }
 
-//    private VBox getAddButtons() {
-//        VBox box = new VBox(
-//                getButton("Creëer reis", new CreateJourneyPopup(this, this.schedule).getNode()),
-//                getButton("Creëer trein", new CreateTrainPopup(this, this.schedule).getNode()),
-//                getButton("Creëer wagon", new CreateWagonPopup(this, this.schedule).getNode()),
-//                getButton("Creëer perron", new CreatePlatformPopup(this, this.schedule).getNode())
-//        );
-//        return box;
-//    }
-//
-//    private VBox getDeleteButtons() {
-//        VBox box = new VBox(
-//                getButton("Verwijder reis", new DeleteJourneyPopup(this, this.schedule).getNode()),
-//                getButton("Verwijder trein", new DeleteTrainPopup(this, this.schedule).getNode()),
-//                getButton("Verwijder wagon", new DeleteWagonPopup(this, this.schedule).getNode()),
-//                getButton("Verwijder perron", new DeletePlatformPopup(this, this.schedule).getNode())
-//        );
-//        return box;
-//    }
-//
-//    private Node getButton(String text, Node popup) {
-//        Button button = new Button(text);
-//        button.setOnAction(e -> {
-//            returnToView();
-//            this.mainPane.setBottom(popup);
-//        });
-//
-//        return button;
-//    }
+    private VBox getAddButtons() {
+        VBox box = new VBox(
+                getButton("Creëer reis", new CreateJourneyPopup(this.mainView, this.subject.getSchedule())),
+                getButton("Creëer trein", new CreateTrainPopup(this.mainView, this.subject.getSchedule())),
+                getButton("Creëer wagon", new CreateWagonPopup(this.mainView, this.subject.getSchedule())),
+                getButton("Creëer perron", new CreatePlatformPopup(this.mainView, this.subject.getSchedule()))
+        );
+        return box;
+    }
+
+    private VBox getDeleteButtons() {
+        VBox box = new VBox(
+                getButton("Verwijder reis", new DeleteJourneyPopup(this.mainView, this.subject.getSchedule())),
+                getButton("Verwijder trein", new DeleteTrainPopup(this.mainView, this.subject.getSchedule())),
+                getButton("Verwijder wagon", new DeleteWagonPopup(this.mainView, this.subject.getSchedule())),
+                getButton("Verwijder perron", new DeletePlatformPopup(this.mainView, this.subject.getSchedule()))
+        );
+        return box;
+    }
+
+    private Node getButton(String text, PopupView popup) {
+        Button button = new Button(text);
+        button.setOnAction(e -> {
+            this.mainView.setPopup(popup);
+            this.mainView.returnToView();
+        });
+
+        return button;
+    }
 }
