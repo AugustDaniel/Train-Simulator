@@ -1,4 +1,4 @@
-package guiapplication.scheduleview;
+package guiapplication.scheduleview.components;
 
 import data.Journey;
 import data.Schedule;
@@ -17,6 +17,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import util.IOHelper;
+
+import java.io.File;
 
 public class ScheduleView extends ReturnableView {
 
@@ -62,7 +67,9 @@ public class ScheduleView extends ReturnableView {
             this.returnToView();
         });
 
-        box.getChildren().add(switchModeButton);
+
+
+        box.getChildren().addAll(switchModeButton);
         box.setPadding(new Insets(10));
         box.setSpacing(10);
         box.setAlignment(Pos.BASELINE_LEFT);
