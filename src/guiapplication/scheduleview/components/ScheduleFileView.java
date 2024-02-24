@@ -1,17 +1,13 @@
 package guiapplication.scheduleview.components;
 
 import data.Schedule;
-import data.ScheduleBuilder;
 import guiapplication.View;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import util.IOHelper;
-import util.ScheduleSubject;
-
-import java.io.File;
+import data.ScheduleSubject;
 
 public class ScheduleFileView implements View {
 

@@ -21,7 +21,7 @@ public class GuiMain extends Application {
     @Override
     public void init() {
         this.schedule = new Schedule();
-        this.scheduleView = new ScheduleView(this.schedule);
+//        this.scheduleView = new ScheduleView(this.schedule);
     }
 
     @Override
