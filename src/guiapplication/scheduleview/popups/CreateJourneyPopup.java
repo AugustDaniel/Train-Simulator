@@ -8,10 +8,7 @@ import guiapplication.PopupView;
 import guiapplication.ReturnableView;
 import javafx.collections.FXCollections;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
@@ -51,13 +48,21 @@ public class CreateJourneyPopup extends PopupView {
         Button cancelButton = new Button("Annuleer");
         cancelButton.setOnAction(e -> super.callMainView());
         Button saveButton = new Button("Voeg toe");
-        saveButton.setOnAction(e -> {this.scheduleBuilder.createJourney(
-                Integer.parseInt(arrivalTimeInput.getText()),
-                Integer.parseInt(departureTimeInput.getText()),
-                trainComboBox.getValue(),
-                platformComboBox.getValue()
-        );
-            super.callMainView();
+        saveButton.setOnAction(e -> {
+            if (arrivalTimeInput.getText().isEmpty() || departureTimeInput.getText().isEmpty()
+                    || trainComboBox.getSelectionModel().isEmpty() || platformComboBox.getSelectionModel().isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setHeaderText("Error, je bent data vergeten in te vullen");
+                alert.showAndWait();
+            } else {
+                this.scheduleBuilder.createJourney(
+                        Integer.parseInt(arrivalTimeInput.getText()),
+                        Integer.parseInt(departureTimeInput.getText()),
+                        trainComboBox.getValue(),
+                        platformComboBox.getValue()
+                );
+                super.callMainView();
+            }
         });
 
         FlowPane buttonBar = new FlowPane(cancelButton, saveButton);

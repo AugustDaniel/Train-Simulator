@@ -6,6 +6,7 @@ import guiapplication.PopupView;
 import guiapplication.ReturnableView;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -34,9 +35,15 @@ public class CreatePlatformPopup extends PopupView {
         cancelButton.setOnAction(e -> super.callMainView());
         Button saveButton = new Button("Voeg toe");
         saveButton.setOnAction(e -> {
-            this.scheduleBuilder.createPlatform(Integer.parseInt(inputField.getText()));
-            inputField.clear();
-            super.callMainView();
+            try {//try-catch zodat er geen karakters of letters kunnen worden gebruikt. Het geeft dan een warning
+                this.scheduleBuilder.createPlatform(Integer.parseInt(inputField.getText()));
+                inputField.clear();
+                super.callMainView();
+            }catch (Exception numberNotFound){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setHeaderText("Error, Het kan zijn dat je iets anders hebt neergezet dan een nummer");
+                alert.showAndWait();
+            }
         });
         FlowPane buttonBar = new FlowPane(cancelButton, saveButton);
         buttonBar.setPadding(new Insets(10));
