@@ -5,6 +5,7 @@ import guiapplication.View;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -26,13 +27,29 @@ public class ScheduleFileView implements View {
 
         Button saveScheduleButton = new Button("Sla planning op");
         saveScheduleButton.setOnAction(e ->
-            IOHelper.saveObject(this.subject.getSchedule(),
-                    IOHelper.getFileFromChooser("Selecteer gewenste locatie"))
+                {
+                    try {
+                        IOHelper.saveObject(this.subject.getSchedule(),
+                                IOHelper.getFileFromChooser("Selecteer gewenste locatie"));
+                    } catch (Exception ex) {
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setHeaderText("Ongeldige locatie");
+                        alert.showAndWait();
+                    }
+                }
         );
 
         Button loadScheduleButton = new Button("Laad planning");
         loadScheduleButton.setOnAction(e ->
-            this.subject.setSchedule((Schedule) IOHelper.readObject(IOHelper.getFileFromChooser("Selecteer planning")))
+                {
+                    try {
+                        this.subject.setSchedule((Schedule) IOHelper.readObject(IOHelper.getFileFromChooser("Selecteer planning")));
+                    } catch (Exception ex) {
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setHeaderText("Ongeldige planning");
+                        alert.showAndWait();
+                    }
+                }
         );
 
         VBox box = new VBox(saveScheduleButton,loadScheduleButton);

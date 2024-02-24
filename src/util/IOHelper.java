@@ -8,26 +8,13 @@ import java.nio.file.Files;
 
 public class IOHelper {
 
-    public static <T> void saveObject(T object, File file) {
-        try(
-                ObjectOutputStream output = new ObjectOutputStream(Files.newOutputStream(file.toPath()))
-                ) {
-            output.writeObject(object);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+    public static <T> void saveObject(T object, File file) throws Exception {
+        new ObjectOutputStream(Files.newOutputStream(file.toPath()));
     }
 
-    public static Object readObject(File file) {
-        try(
-                ObjectInputStream input = new ObjectInputStream(Files.newInputStream(file.toPath()))
-        ) {
-            return input.readObject();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        return null;
+    public static Object readObject(File file) throws Exception {
+        ObjectInputStream input = new ObjectInputStream(Files.newInputStream(file.toPath()));
+        return input.readObject();
     }
 
     public static File getFileFromChooser(String message) {
