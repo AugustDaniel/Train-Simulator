@@ -1,11 +1,10 @@
 package guiapplication.scheduleview.popups;
 
 import data.Schedule;
-import guiapplication.PopupView;
 import guiapplication.ReturnableView;
 import javafx.scene.Node;
 
-public class DeletePlatformPopup extends PopupView {
+public class DeletePlatformPopup extends SchedulePopupView {
 
     private Schedule schedule;
 
