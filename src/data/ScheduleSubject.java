@@ -1,8 +1,5 @@
 package data;
 
-
-import data.Schedule;
-import util.MethodCall;
 import util.Observer;
 
 import java.util.ArrayList;
@@ -10,14 +7,9 @@ import java.util.List;
 
 public class ScheduleSubject {
 
-    private List<Observer> observers = new ArrayList<Observer>();
+    private List<Observer> observers = new ArrayList<>();
 
     private Schedule schedule;
-
-    public void callMethod(MethodCall method) {
-        method.call();
-        notifyAllObservers();
-    }
 
     public Schedule getSchedule() {
         return this.schedule;
