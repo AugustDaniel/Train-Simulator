@@ -69,9 +69,4 @@ public class CreateJourneyPopup extends SchedulePopupView {
         pane.setBottom(buttonBar);
         return pane;
     }
-
-    @Override
-    public Node getSaveButton() {
-        return super.getSaveButton();//todo
-    }
 }

@@ -30,6 +30,16 @@ public class CreatePlatformPopup extends SchedulePopupView {
         TextField inputField = new TextField();
         VBox inputBox = new VBox(infoLabel, inputField);
 
+        Button saveButton = getSaveButton(inputField);
+        FlowPane buttonBar = new FlowPane(super.getCloseButton(), saveButton);
+        buttonBar.setPadding(new Insets(10));
+
+        pane.setCenter(inputBox);
+        pane.setBottom(buttonBar);
+        return pane;
+    }
+
+    private Button getSaveButton(TextField inputField) {
         Button saveButton = new Button("Voeg toe");
         saveButton.setOnAction(e -> {
             try {//try-catch zodat er geen karakters of letters kunnen worden gebruikt. Het geeft dan een warning
@@ -42,11 +52,6 @@ public class CreatePlatformPopup extends SchedulePopupView {
                 alert.showAndWait();
             }
         });
-        FlowPane buttonBar = new FlowPane(super.getCloseButton(), saveButton);
-        buttonBar.setPadding(new Insets(10));
-
-        pane.setCenter(inputBox);
-        pane.setBottom(buttonBar);
-        return pane;
+        return saveButton;
     }
 }
