@@ -46,7 +46,7 @@ public class ScheduleView extends ReturnableView implements Observer {
     @Override
     public void returnToView() {
         this.mainPane.getChildren().clear();
-        this.mainPane.setLeft(getButtons()); //todo fix
+        this.mainPane.setLeft(getButtons());
         this.mainPane.setCenter(this.tableView.getNode());
 
         if (this.popup != null) {
