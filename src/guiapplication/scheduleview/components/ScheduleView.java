@@ -18,8 +18,8 @@ public class ScheduleView extends ReturnableView implements Observer {
     private View fileView;
     private View tableView;
 
-    public ScheduleView(ScheduleSubject schedule) {
-        this.subject = schedule;
+    public ScheduleView(ScheduleSubject subject) {
+        this.subject = subject;
         this.subject.attach(this);
         this.mainPane = new BorderPane();
         this.popup = null;
