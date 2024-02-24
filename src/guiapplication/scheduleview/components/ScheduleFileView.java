@@ -2,6 +2,8 @@ package guiapplication.scheduleview.components;
 
 import data.Schedule;
 import guiapplication.View;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
@@ -33,6 +35,11 @@ public class ScheduleFileView implements View {
             this.subject.setSchedule((Schedule) IOHelper.readObject(IOHelper.getFileFromChooser("Selecteer planning")))
         );
 
-        return new VBox(saveScheduleButton,loadScheduleButton);
+        VBox box = new VBox(saveScheduleButton,loadScheduleButton);
+        box.setPadding(new Insets(20,10,10,10));
+        box.setSpacing(10);
+        box.setAlignment(Pos.BASELINE_LEFT);
+
+        return box;
     }
 }
