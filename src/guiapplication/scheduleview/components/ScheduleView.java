@@ -7,8 +7,9 @@ import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import data.ScheduleSubject;
 import javafx.scene.layout.VBox;
+import util.Observer;
 
-public class ScheduleView extends ReturnableView {
+public class ScheduleView extends ReturnableView implements Observer {
 
     private ScheduleSubject subject;
     private final BorderPane mainPane;
@@ -19,6 +20,7 @@ public class ScheduleView extends ReturnableView {
 
     public ScheduleView(ScheduleSubject schedule) {
         this.subject = schedule;
+        this.subject.attach(this);
         this.mainPane = new BorderPane();
         this.popup = null;
         this.builderView = new ScheduleBuilderView(this.subject, this);
@@ -28,6 +30,11 @@ public class ScheduleView extends ReturnableView {
 
     public void setPopup(PopupView popup) {
         this.popup = popup;
+    }
+
+    @Override
+    public void update() {
+        returnToView();
     }
 
     @Override

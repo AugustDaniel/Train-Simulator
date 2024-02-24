@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import data.ScheduleSubject;
+import util.Observer;
 
 public class ScheduleBuilderView implements View {
 
