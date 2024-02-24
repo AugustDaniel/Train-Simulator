@@ -67,8 +67,6 @@ public class ScheduleView extends ReturnableView {
             this.returnToView();
         });
 
-
-
         box.getChildren().addAll(switchModeButton);
         box.setPadding(new Insets(10));
         box.setSpacing(10);

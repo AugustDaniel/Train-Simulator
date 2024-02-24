@@ -17,6 +17,10 @@ public class ScheduleSubject {
         notifyAllObservers();
     }
 
+    public Schedule getSchedule() {
+        return this.schedule;
+    }
+
     public void setSchedule(Schedule schedule) {
         this.schedule = schedule;
         notifyAllObservers();
