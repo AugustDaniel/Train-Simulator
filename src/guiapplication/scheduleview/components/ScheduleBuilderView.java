@@ -10,7 +10,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import data.ScheduleSubject;
-import util.Observer;
 
 public class ScheduleBuilderView implements View {
 
@@ -39,25 +38,30 @@ public class ScheduleBuilderView implements View {
                 break;
         }
 
-        Button switchModeButton = new Button("Verander modus");
-        switchModeButton.setOnAction(event -> {
-            switch (menuToggle) {
-                //todo maybe this needs to be better idk
-                case CREATE:
-                    menuToggle = ScheduleBuilderView.MenuMode.DELETE;
-                    break;
-                case DELETE:
-                    menuToggle = ScheduleBuilderView.MenuMode.CREATE;
-                    break;
-            }
-            this.mainView.returnToView();
-        });
+        Button switchModeButton = getSwitchModeButton();
 
         box.getChildren().addAll(switchModeButton);
         box.setPadding(new Insets(10));
         box.setSpacing(10);
         box.setAlignment(Pos.BASELINE_LEFT);
         return box;
+    }
+
+    private Button getSwitchModeButton() {
+        Button switchModeButton = new Button("Verander modus");
+        switchModeButton.setOnAction(event -> {
+            switch (menuToggle) {
+                //todo maybe this needs to be better idk
+                case CREATE:
+                    menuToggle = MenuMode.DELETE;
+                    break;
+                case DELETE:
+                    menuToggle = MenuMode.CREATE;
+                    break;
+            }
+            this.mainView.returnToView();
+        });
+        return switchModeButton;
     }
 
     private VBox getAddButtons() {
