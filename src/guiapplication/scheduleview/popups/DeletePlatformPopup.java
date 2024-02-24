@@ -12,9 +12,4 @@ public class DeletePlatformPopup extends SchedulePopupView {
         super(mainView);
         this.schedule = schedule;
     }
-
-    @Override
-    public Node getNode() {
-        return null;
-    }
 }

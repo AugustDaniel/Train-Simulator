@@ -13,8 +13,4 @@ public class CreateWagonPopup extends SchedulePopupView {
         this.schedule = schedule;
     }
 
-    @Override
-    public Node getNode() {
-        return null;
-    }
 }
