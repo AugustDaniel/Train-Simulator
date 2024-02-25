@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Schedule implements Serializable {
 
-    private ArrayList<Train> trainList;
+    private List<Train> trainList;
     private List<Platform> platformList;
     private List<Journey> journeyList;
 
@@ -76,6 +76,9 @@ public class Schedule implements Serializable {
         }
     }
 
+    public void deleteWagon(Wagon wagon) {
+    }
+
     public List<Journey> getJourneyList(){
         return this.journeyList;
     }
@@ -86,6 +89,14 @@ public class Schedule implements Serializable {
 
     public List<Platform> getPlatformList() {
         return this.platformList;
+    }
+
+    public HashMap<String, List<Wagon>> getWagonSetList() {
+        return wagonSetList;
+    }
+
+    public List<Wagon> getWagonList() {
+        return wagonList;
     }
 
     //TODO tescode
@@ -136,5 +147,4 @@ public class Schedule implements Serializable {
         this.addJourney(new Journey(1020, 1030, this.trainList.get(1), this.platformList.get(1)));
         this.addJourney(new Journey(1040, 1050, this.trainList.get(2), this.platformList.get(2)));
     }
-
 }

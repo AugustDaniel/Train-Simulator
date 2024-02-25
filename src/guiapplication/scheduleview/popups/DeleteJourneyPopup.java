@@ -26,9 +26,9 @@ public class DeleteJourneyPopup extends PopupView {
     public Node getNode() {
         BorderPane pane = new BorderPane();
 
-        Label trainInfo = new Label("Kies uit reis:");
+        Label journeyLable = new Label("Kies uit reis:");
         ComboBox<Journey> journeyComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getJourneyList()));
-        VBox trainBox = new VBox(trainInfo, journeyComboBox);
+        VBox trainBox = new VBox(journeyLable, journeyComboBox);
 
         Button cancelButton = new Button("Annuleer");
         cancelButton.setOnAction(e -> super.callMainView());

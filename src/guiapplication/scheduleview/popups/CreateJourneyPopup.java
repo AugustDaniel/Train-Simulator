@@ -1,9 +1,6 @@
 package guiapplication.scheduleview.popups;
 
-import data.Platform;
-import data.Schedule;
-import data.ScheduleBuilder;
-import data.Train;
+import data.*;
 import guiapplication.PopupView;
 import guiapplication.ReturnableView;
 import javafx.collections.FXCollections;

@@ -33,5 +33,19 @@ public class ScheduleBuilder {
     public void deleteJourney(Journey journey){
         this.schedule.deleteJourney(journey);
     }
+    public void deletePlatform(Platform platform){
+        this.schedule.deletePlatform(platform);
+    }
 
+    public void deleteTrain(Train train){
+        this.schedule.deleteTrain(train);
+    }
+
+    public void deleteWagon(Wagon wagon){
+        this.schedule.deleteWagon(wagon);
+    }
+
+    public Schedule getSchedule() {
+        return schedule;
+    }
 }
