@@ -2,7 +2,6 @@ package guiapplication.scheduleview.popups;
 
 import data.Schedule;
 import data.ScheduleBuilder;
-import guiapplication.PopupView;
 import guiapplication.ReturnableView;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -14,7 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
-public class CreatePlatformPopup extends PopupView {
+public class CreatePlatformPopup extends SchedulePopupView {
 
     private ScheduleBuilder scheduleBuilder;
 
@@ -31,8 +30,16 @@ public class CreatePlatformPopup extends PopupView {
         TextField inputField = new TextField();
         VBox inputBox = new VBox(infoLabel, inputField);
 
-        Button cancelButton = new Button("Annuleer");
-        cancelButton.setOnAction(e -> super.callMainView());
+        Button saveButton = getSaveButton(inputField);
+        FlowPane buttonBar = new FlowPane(super.getCloseButton(), saveButton);
+        buttonBar.setPadding(new Insets(10));
+
+        pane.setCenter(inputBox);
+        pane.setBottom(buttonBar);
+        return pane;
+    }
+
+    private Button getSaveButton(TextField inputField) {
         Button saveButton = new Button("Voeg toe");
         saveButton.setOnAction(e -> {
             try {//try-catch zodat er geen karakters of letters kunnen worden gebruikt. Het geeft dan een warning
@@ -45,11 +52,6 @@ public class CreatePlatformPopup extends PopupView {
                 alert.showAndWait();
             }
         });
-        FlowPane buttonBar = new FlowPane(cancelButton, saveButton);
-        buttonBar.setPadding(new Insets(10));
-
-        pane.setCenter(inputBox);
-        pane.setBottom(buttonBar);
-        return pane;
+        return saveButton;
     }
 }

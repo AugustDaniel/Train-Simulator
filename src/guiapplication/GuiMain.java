@@ -2,7 +2,7 @@ package guiapplication;
 
 
 import data.*;
-import guiapplication.scheduleview.ScheduleView;
+import guiapplication.scheduleview.components.ScheduleView;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 public class GuiMain extends Application {
 
-    private Schedule schedule;
+    private ScheduleSubject subject;
     private ScheduleView scheduleView;
 
     public static void main(String[] args) {
@@ -20,8 +20,9 @@ public class GuiMain extends Application {
 
     @Override
     public void init() {
-        this.schedule = new Schedule();
-        this.scheduleView = new ScheduleView(this.schedule);
+        this.subject = new ScheduleSubject();
+        this.subject.setState(new Schedule());
+        this.scheduleView = new ScheduleView(this.subject);
     }
 
     @Override

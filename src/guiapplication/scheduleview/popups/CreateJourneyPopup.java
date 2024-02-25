@@ -4,7 +4,6 @@ import data.Platform;
 import data.Schedule;
 import data.ScheduleBuilder;
 import data.Train;
-import guiapplication.PopupView;
 import guiapplication.ReturnableView;
 import javafx.collections.FXCollections;
 import javafx.scene.Node;
@@ -14,7 +13,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.collections.ObservableList;
 
-public class CreateJourneyPopup extends PopupView {
+public class CreateJourneyPopup extends SchedulePopupView {
     private ScheduleBuilder scheduleBuilder;
     private Schedule schedule;
 
@@ -45,8 +44,6 @@ public class CreateJourneyPopup extends PopupView {
         ComboBox<Platform> platformComboBox = new ComboBox<>(platformList);
         VBox platformBox = new VBox(platformInfo, platformComboBox);
 
-        Button cancelButton = new Button("Annuleer");
-        cancelButton.setOnAction(e -> super.callMainView());
         Button saveButton = new Button("Voeg toe");
         saveButton.setOnAction(e -> {
             if (arrivalTimeInput.getText().isEmpty() || departureTimeInput.getText().isEmpty()
@@ -65,7 +62,7 @@ public class CreateJourneyPopup extends PopupView {
             }
         });
 
-        FlowPane buttonBar = new FlowPane(cancelButton, saveButton);
+        FlowPane buttonBar = new FlowPane(super.getCloseButton(), saveButton);
 
         VBox inputBox = new VBox(arrivalTimeBox, departureTimeBox, trainBox, platformBox);
         pane.setCenter(inputBox);
