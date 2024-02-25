@@ -1,7 +1,8 @@
-package guiApplication;
+package guiapplication;
 
 
-import data.Schedule;
+import data.*;
+import guiapplication.scheduleview.components.ScheduleView;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
@@ -10,9 +11,8 @@ import javafx.stage.Stage;
 
 public class GuiMain extends Application {
 
-    private Schedule schedule;
+    private ScheduleSubject subject;
     private ScheduleView scheduleView;
-    private EditorView editorView;
 
     public static void main(String[] args) {
         launch(GuiMain.class);
@@ -20,18 +20,15 @@ public class GuiMain extends Application {
 
     @Override
     public void init() {
-        this.schedule = new Schedule();
-        this.scheduleView = new ScheduleView(this.schedule);
-        this.editorView = new EditorView(this.schedule);
-
-
+        this.subject = new ScheduleSubject();
+        this.subject.setState(new Schedule());
+        this.scheduleView = new ScheduleView(this.subject);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         // create tabs
         TabPane tabPane = new TabPane();
-        tabPane.getTabs().add(new Tab("Rooster weergave",editorView.getNode()));
         tabPane.getTabs().add(new Tab("Trein tabel",scheduleView.getNode()));
 
         // prevent removing of tabs

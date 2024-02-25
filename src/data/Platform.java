@@ -14,5 +14,8 @@ public class Platform implements Serializable {
         return platformNumber;
     }
 
-    //todo
+    @Override
+    public String toString() {
+        return "" + getPlatformNumber();
+    }
 }
