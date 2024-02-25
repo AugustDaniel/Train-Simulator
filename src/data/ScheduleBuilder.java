@@ -30,6 +30,8 @@ public class ScheduleBuilder {
         this.schedule.addWagon(new Wagon(id, capacity));
     }
 
-
+    public void deleteJourney(Journey journey){
+        this.schedule.deleteJourney(journey);
+    }
 
 }

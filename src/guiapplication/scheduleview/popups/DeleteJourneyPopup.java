@@ -1,9 +1,6 @@
 package guiapplication.scheduleview.popups;
 
-import data.Journey;
-import data.Platform;
-import data.Schedule;
-import data.Train;
+import data.*;
 import guiapplication.PopupView;
 import guiapplication.ReturnableView;
 import javafx.collections.FXCollections;
@@ -17,37 +14,41 @@ import javafx.scene.layout.VBox;
 public class DeleteJourneyPopup extends PopupView {
 
     private Schedule schedule;
+    private ScheduleBuilder scheduleBuilder;
 
     public DeleteJourneyPopup(ReturnableView mainView, Schedule schedule) {
         super(mainView);
         this.schedule = schedule;
+        this.scheduleBuilder = new ScheduleBuilder(schedule);
     }
 
     @Override
     public Node getNode() {
         BorderPane pane = new BorderPane();
 
-        Label trainInfo = new Label("Kies uit trein:");
-        ComboBox<Journey> trainComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getJourneyList()));
-        VBox trainBox = new VBox(trainInfo, trainComboBox);
+        Label trainInfo = new Label("Kies uit reis:");
+        ComboBox<Journey> journeyComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getJourneyList()));
+        VBox trainBox = new VBox(trainInfo, journeyComboBox);
 
         Button cancelButton = new Button("Annuleer");
         cancelButton.setOnAction(e -> super.callMainView());
-        Button saveButton = new Button("Voeg toe");
+        Button saveButton = new Button("Verwijder");
         saveButton.setOnAction(e -> {
-            if () {
+            if (journeyComboBox.getSelectionModel().isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setHeaderText("Error, je bent data vergeten in te vullen");
                 alert.showAndWait();
             } else {
-                this.scheduleBuilder.;
+                this.scheduleBuilder.deleteJourney(
+                        journeyComboBox.getValue()
+                );
                 super.callMainView();
             }
         });
 
         FlowPane buttonBar = new FlowPane(cancelButton, saveButton);
 
-        VBox inputBox = new VBox(arrivalTimeBox, departureTimeBox, trainBox, platformBox);
+        VBox inputBox = new VBox(trainBox);
         pane.setCenter(inputBox);
         pane.setBottom(buttonBar);
         return pane;
