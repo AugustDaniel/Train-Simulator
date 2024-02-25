@@ -13,12 +13,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
-public class CreateWagonPopup extends PopupView {
+public class CreateWagonSetPopup extends PopupView {
 
     private Schedule schedule;
     private ScheduleBuilder scheduleBuilder;
 
-    public CreateWagonPopup(ReturnableView mainView, Schedule schedule) {
+    public CreateWagonSetPopup(ReturnableView mainView) {
         super(mainView);
         this.schedule = schedule;
         this.scheduleBuilder = new ScheduleBuilder(schedule);
@@ -26,32 +26,22 @@ public class CreateWagonPopup extends PopupView {
 
     @Override
     public Node getNode() {
+
         BorderPane pane = new BorderPane();
 
-
-        Label idNumberWagon = new Label("Voer het ID nummer van de wagon in:");
-        TextField idNumberWagonInput = new TextField();
-        VBox idNumberWagonBox = new VBox(idNumberWagon, idNumberWagonInput);
-
-        Label wagonCapacity = new Label("Voer platform nummer in:");
-        TextField wagonCapacityInput = new TextField();
-        VBox wagonCapacityBox = new VBox(wagonCapacity,wagonCapacityInput);
 
         Button cancelButton = new Button("Annuleer");
         cancelButton.setOnAction(e -> super.callMainView());
 
         Button saveButton = new Button("Voeg toe");
         saveButton.setOnAction(e -> {
-            if (wagonCapacity.getText().isEmpty() || idNumberWagonInput.getText().isEmpty()) {
+            if () {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setHeaderText("Error, je bent data vergeten in te vullen");
                 alert.showAndWait();
             } else {
                 //TODO add correct parameters
-                this.scheduleBuilder.createWagon(
-                        idNumberWagonInput.getText(),
-                        Integer.parseInt(wagonCapacityInput.getText())
-                        );
+                this.scheduleBuilder.();
                 super.callMainView();
             }
         });
