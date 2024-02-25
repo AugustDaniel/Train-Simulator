@@ -1,6 +1,7 @@
 package data;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,13 +12,13 @@ public class Schedule implements Serializable {
     private List<Platform> platformList;
     private List<Journey> journeyList;
 
-    private HashMap<String, List<Wagon>> wagonSetList;
+    private ArrayList<List<Wagon>> wagonSetList;
     private List<Wagon> wagonList;
     public Schedule(){
         this.trainList = new ArrayList<>();
         this.journeyList = new ArrayList<>();
         this.platformList = new ArrayList<>();
-        this.wagonSetList = new HashMap<>();
+        this.wagonSetList = new ArrayList<>();
         this.wagonList = new ArrayList<>();
 
         this.initTestData();
@@ -26,8 +27,8 @@ public class Schedule implements Serializable {
         trainList.add(train);
     }
 
-    public void addWagonSet(String setNumber, ArrayList<Wagon> wagons){
-        wagonSetList.put(setNumber,wagons);
+    public void addWagonSet(ArrayList<Wagon> wagons){
+        wagonSetList.add(wagons);
     }
 
     public void addJourney(Journey journey){
@@ -47,10 +48,13 @@ public class Schedule implements Serializable {
     }
     public void deleteTrain(Train train){
         for (Journey journey : journeyList) {
-            if (journey.getTrain().equals(train)){
+            if (journey.getTrain().equals(train)) {
                 deleteJourney(journey);
                 trainList.remove(train);
             }
+        }
+        if (trainList.contains(train)){
+            trainList.remove(train);
         }
     }
 
@@ -65,18 +69,33 @@ public class Schedule implements Serializable {
                 platformList.remove(platform);
             }
         }
+        if (platformList.contains(platform)){
+            platformList.remove(platform);
+        }
     }
 
-    public void deleteWagons(String wagonsKey){
-        for (Train trainKey : trainList) {
-            if (trainKey.getWagons().equals(wagonSetList.get(wagonsKey))){
-                deleteTrain(trainKey);
-                wagonSetList.remove(wagonsKey, wagonSetList.get(wagonsKey));
+    public void deleteWagonSet(ArrayList<Wagon> wagons){
+        for (Train train : trainList) {
+            if (train.getWagons().equals(wagons)){
+                deleteTrain(train);
+                wagonSetList.remove(wagons);
             }
+        }
+        if (wagonSetList.contains(wagons)){
+            wagonSetList.remove(wagons);
         }
     }
 
     public void deleteWagon(Wagon wagon) {
+        for (List<Wagon> wagonSet : wagonSetList) {
+            if (wagonSet.contains(wagon)){
+                deleteWagonSet((ArrayList<Wagon>) wagonSet);
+                wagonList.remove(wagon);
+            }
+        }
+        if (wagonList.contains(wagon)){
+            wagonList.remove(wagon);
+        }
     }
 
     public List<Journey> getJourneyList(){
@@ -91,7 +110,7 @@ public class Schedule implements Serializable {
         return this.platformList;
     }
 
-    public HashMap<String, List<Wagon>> getWagonSetList() {
+    public ArrayList<List<Wagon>> getWagonSetList() {
         return wagonSetList;
     }
 
@@ -123,15 +142,15 @@ public class Schedule implements Serializable {
         list3.add(wagonList.get(1));
         list3.add(wagonList.get(1));
 
-        this.addWagonSet("11", list1);
-        this.addWagonSet("12", list2);
-        this.addWagonSet("13", list3);
+        this.addWagonSet(list1);
+        this.addWagonSet(list2);
+        this.addWagonSet(list3);
 
 
         //adding some trains to list
-        Train train1 = new Train("21", wagonSetList.get("13"));
-        Train train2 = new Train("22", wagonSetList.get("13"));
-        Train train3 = new Train("23", wagonSetList.get("13"));
+        Train train1 = new Train("21", wagonSetList.get(0));
+        Train train2 = new Train("22", wagonSetList.get(1));
+        Train train3 = new Train("23", wagonSetList.get(2));
 
         this.addTrain(train1);
         this.addTrain(train2);

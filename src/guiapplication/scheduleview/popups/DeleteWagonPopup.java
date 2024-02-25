@@ -41,7 +41,7 @@ public class DeleteWagonPopup extends PopupView {
                 alert.setHeaderText("Error, je bent data vergeten in te vullen");
                 alert.showAndWait();
             } else {
-                this.scheduleBuilder.deleteWagon(
+                this.schedule.deleteWagon(
                         platformComboBox.getValue()
                 );
                 super.callMainView();

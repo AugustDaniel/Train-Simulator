@@ -14,7 +14,10 @@ public class Wagon implements Serializable {
         return maxCapacity;
     }
 
-    public String getIdNumber() {
+    @Override
+    public String toString() {
         return idNumber;
     }
+
+
 }

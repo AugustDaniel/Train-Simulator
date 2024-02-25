@@ -39,7 +39,7 @@ public class DeleteJourneyPopup extends PopupView {
                 alert.setHeaderText("Error, je bent data vergeten in te vullen");
                 alert.showAndWait();
             } else {
-                this.scheduleBuilder.deleteJourney(
+                this.schedule.deleteJourney(
                         journeyComboBox.getValue()
                 );
                 super.callMainView();

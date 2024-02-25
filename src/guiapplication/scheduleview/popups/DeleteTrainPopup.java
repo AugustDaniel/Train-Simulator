@@ -41,7 +41,7 @@ public class DeleteTrainPopup extends PopupView {
                 alert.setHeaderText("Error, je bent data vergeten in te vullen");
                 alert.showAndWait();
             } else {
-                this.scheduleBuilder.deleteTrain(
+                this.schedule.deleteTrain(
                         trainComboBox.getValue()
                 );
                 super.callMainView();

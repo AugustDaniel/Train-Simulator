@@ -41,7 +41,7 @@ public class DeletePlatformPopup extends PopupView {
                 alert.setHeaderText("Error, je bent data vergeten in te vullen");
                 alert.showAndWait();
             } else {
-                this.scheduleBuilder.deletePlatform(
+                this.schedule.deletePlatform(
                         platformComboBox.getValue()
                 );
                 super.callMainView();

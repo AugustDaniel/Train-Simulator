@@ -30,4 +30,6 @@ public class Journey implements Serializable {
     public Platform getPlatform() {
         return platform;
     }
+
+
 }
