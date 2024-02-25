@@ -11,19 +11,21 @@ public class Schedule implements Serializable {
     private List<Platform> platformList;
     private List<Journey> journeyList;
 
-    private HashMap<String, List<Wagon>> wagonList;
+    private HashMap<String, List<Wagon>> wagonSetList;
+    private List<Wagon> wagonList;
     public Schedule(){
         this.trainList = new ArrayList<>();
         this.journeyList = new ArrayList<>();
         this.platformList = new ArrayList<>();
-        this.wagonList = new HashMap<>();
+        this.wagonSetList = new HashMap<>();
+        this.wagonList = new ArrayList<>();
     }
     public void addTrain(Train train){
         trainList.add(train);
     }
 
-    public void addWagons(String IdNumber, ArrayList<Wagon> wagons){
-        wagonList.put(IdNumber,wagons);
+    public void addWagonSet(String setNumber, ArrayList<Wagon> wagons){
+        wagonSetList.put(setNumber,wagons);
     }
 
     public void addJourney(Journey journey){
@@ -32,6 +34,10 @@ public class Schedule implements Serializable {
 
     public void addPlatform(Platform platform){
         this.platformList.add(platform);
+    }
+
+    public void addWagon(Wagon newWagon){
+        this.wagonList.add(newWagon);
     }
 
     public void changeTrain(){
@@ -61,9 +67,9 @@ public class Schedule implements Serializable {
 
     public void deleteWagons(String wagonsKey){
         for (Train trainKey : trainList) {
-            if (trainKey.getWagons().equals(wagonList.get(wagonsKey))){
+            if (trainKey.getWagons().equals(wagonSetList.get(wagonsKey))){
                 deleteTrain(trainKey);
-                wagonList.remove(wagonsKey,wagonList.get(wagonsKey));
+                wagonSetList.remove(wagonsKey, wagonSetList.get(wagonsKey));
             }
         }
     }
