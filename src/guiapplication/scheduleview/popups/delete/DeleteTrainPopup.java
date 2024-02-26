@@ -1,8 +1,9 @@
-package guiapplication.scheduleview.popups;
+package guiapplication.scheduleview.popups.delete;
 
 import data.*;
 import guiapplication.PopupView;
 import guiapplication.ReturnableView;
+import guiapplication.scheduleview.popups.SchedulePopupView;
 import javafx.collections.FXCollections;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -13,12 +14,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
-public class DeletePlatformPopup extends SchedulePopupView {
+public class DeleteTrainPopup extends SchedulePopupView {
 
     private Schedule schedule;
     private ScheduleBuilder scheduleBuilder;
 
-    public DeletePlatformPopup(ReturnableView mainView, Schedule schedule) {
+    public DeleteTrainPopup(ReturnableView mainView, Schedule schedule) {
         super(mainView);
         this.schedule = schedule;
         this.scheduleBuilder = new ScheduleBuilder(schedule);
@@ -28,21 +29,21 @@ public class DeletePlatformPopup extends SchedulePopupView {
     public Node getNode() {
         BorderPane pane = new BorderPane();
 
-        Label platformLabel = new Label("Kies uit de mogelijke perrons:");
-        ComboBox<Platform> platformComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getPlatformList()));
-        VBox trainBox = new VBox(platformLabel, platformComboBox);
+        Label trainLabel = new Label("Kies uit de mogelijke treinen:");
+        ComboBox<Train> trainComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getTrainList()));
+        VBox trainBox = new VBox(trainLabel, trainComboBox);
 
         Button cancelButton = new Button("Annuleer");
         cancelButton.setOnAction(e -> super.callMainView());
         Button saveButton = new Button("Verwijder");
         saveButton.setOnAction(e -> {
-            if (platformComboBox.getSelectionModel().isEmpty()) {
+            if (trainComboBox.getSelectionModel().isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setHeaderText("Error, je bent data vergeten in te vullen");
                 alert.showAndWait();
             } else {
-                this.schedule.deletePlatform(
-                        platformComboBox.getValue()
+                this.schedule.deleteTrain(
+                        trainComboBox.getValue()
                 );
                 super.callMainView();
             }
