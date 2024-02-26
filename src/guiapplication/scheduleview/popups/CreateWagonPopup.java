@@ -32,7 +32,7 @@ public class CreateWagonPopup extends PopupView {
         TextField idNumberWagonInput = new TextField();
         VBox idNumberWagonBox = new VBox(idNumberWagon, idNumberWagonInput);
 
-        Label wagonCapacity = new Label("Voer platform nummer in:");
+        Label wagonCapacity = new Label("Voer maximum capaciteit in:");
         TextField wagonCapacityInput = new TextField();
         VBox wagonCapacityBox = new VBox(wagonCapacity,wagonCapacityInput);
 
