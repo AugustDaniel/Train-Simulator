@@ -14,10 +14,6 @@ public class ScheduleBuilder {
         this.schedule.addJourney(new Journey(arrivalTime, departureTime, train, platform));
     }
 
-    public void createTrain(String id) {
-        this.schedule.addTrain(new Train(id));
-    }
-
     public void createTrain(String id, List<Wagon> wagons) {
         this.schedule.addTrain(new Train(id, wagons));
     }

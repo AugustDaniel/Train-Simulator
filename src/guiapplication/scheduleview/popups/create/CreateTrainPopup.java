@@ -43,7 +43,10 @@ public class CreateTrainPopup extends PopupView {
         Button saveButton = new Button("Voeg toe");
         saveButton.setOnAction(e -> {
             if (inputField.getText().length() < 11 && !inputField.getText().isEmpty()){//heb er een limiet aan gezet
-                this.scheduleBuilder.createTrain(inputField.getText());
+                this.scheduleBuilder.createTrain(
+                        inputField.getText(),
+                        trainComboBox.getValue()
+                );
                 inputField.clear();
                 super.callMainView();
             }else if (inputField.getText().isEmpty() || inputField.getText().length() >= 11){
