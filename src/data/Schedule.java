@@ -47,15 +47,16 @@ public class Schedule implements Serializable {
     }
 
     public void deleteTrain(Train train){
-        for (Journey journey : journeyList) {
-            if (journey.getTrain().equals(train)) {
-                deleteJourney(journey);
-                trainList.remove(train);
+        Iterator<Journey> journeyIterator = journeyList.iterator();
+
+        while (journeyIterator.hasNext()){
+            Journey currentJourney = journeyIterator.next();
+            if (currentJourney.getTrain().equals(train)){
+                journeyIterator.remove();
+                deleteJourney(currentJourney);
             }
         }
-        if (trainList.contains(train)){
-            trainList.remove(train);
-        }
+        trainList.remove(train);
     }
 
     public void deleteJourney(Journey journey) {
@@ -69,19 +70,21 @@ public class Schedule implements Serializable {
             Journey currentJourney = journeyIterator.next();
             if (currentJourney.getPlatform().equals(platform)){
                 journeyIterator.remove();
+                deleteJourney(currentJourney);
             }
         }
         System.out.println(journeyList);
         platformList.remove(platform);
     }
 
-    public void deleteWagonSet(ArrayList<Wagon> wagonSet){
+    public void deleteWagonSet(List<Wagon> wagonSet){
         Iterator<Train> trainIterator = trainList.iterator();
 
         while (trainIterator.hasNext()){
             Train currentTrain = trainIterator.next();
             if (currentTrain.getWagons().equals(wagonSet)){
                 trainIterator.remove();
+                deleteTrain(currentTrain);
             }
         }
         wagonSetList.remove(wagonSet);
@@ -94,8 +97,10 @@ public class Schedule implements Serializable {
             List<Wagon> currentWagonSet = wagonSetListItterator.next();
             if (currentWagonSet.contains(wagon)){
                 wagonSetListItterator.remove();
+                deleteWagonSet(currentWagonSet);
             }
         }
+
         wagonList.remove(wagon);
     }
 
