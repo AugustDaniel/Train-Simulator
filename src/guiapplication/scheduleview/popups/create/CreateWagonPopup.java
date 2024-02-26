@@ -16,12 +16,10 @@ import javafx.scene.layout.VBox;
 public class CreateWagonPopup extends SchedulePopupView {
 
     private Schedule schedule;
-    private ScheduleBuilder scheduleBuilder;
 
     public CreateWagonPopup(ReturnableView mainView, Schedule schedule) {
         super(mainView);
         this.schedule = schedule;
-        this.scheduleBuilder = new ScheduleBuilder(schedule);
     }
 
     @Override
@@ -48,10 +46,10 @@ public class CreateWagonPopup extends SchedulePopupView {
                 alert.showAndWait();
             } else {
                 //TODO add correct parameters
-                this.scheduleBuilder.createWagon(
+                this.schedule.addWagon(new Wagon(
                         idNumberWagonInput.getText(),
                         Integer.parseInt(wagonCapacityInput.getText())
-                        );
+                ));
                 super.callMainView();
             }
         });

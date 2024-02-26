@@ -1,9 +1,6 @@
 package guiapplication.scheduleview.popups.change;
 
-import data.Platform;
-import data.Schedule;
-import data.ScheduleBuilder;
-import data.Train;
+import data.*;
 import guiapplication.ReturnableView;
 import guiapplication.scheduleview.popups.SchedulePopupView;
 import javafx.collections.FXCollections;
@@ -15,12 +12,10 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
 public class ChangeJourneyPopup extends SchedulePopupView {
-    private ScheduleBuilder scheduleBuilder;
     private Schedule schedule;
 
     public ChangeJourneyPopup(ReturnableView mainView, Schedule schedule) {
         super(mainView);
-        this.scheduleBuilder = new ScheduleBuilder(schedule);
         this.schedule = schedule;
     }
 
@@ -53,12 +48,11 @@ public class ChangeJourneyPopup extends SchedulePopupView {
                 alert.setHeaderText("Error, je bent data vergeten in te vullen");
                 alert.showAndWait();
             } else {
-                this.scheduleBuilder.createJourney(
-                        Integer.parseInt(arrivalTimeInput.getText()),
+                this.schedule.addJourney(new Journey(Integer.parseInt(arrivalTimeInput.getText()),
                         Integer.parseInt(departureTimeInput.getText()),
                         trainComboBox.getValue(),
                         platformComboBox.getValue()
-                );
+                ));
                 super.callMainView();
             }
         });

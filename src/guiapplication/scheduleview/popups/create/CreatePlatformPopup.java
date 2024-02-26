@@ -1,7 +1,6 @@
 package guiapplication.scheduleview.popups.create;
 
 import data.*;
-import guiapplication.PopupView;
 import guiapplication.ReturnableView;
 import guiapplication.scheduleview.popups.SchedulePopupView;
 import javafx.geometry.Insets;
@@ -16,11 +15,11 @@ import javafx.scene.layout.VBox;
 
 public class CreatePlatformPopup extends SchedulePopupView {
 
-    private ScheduleBuilder scheduleBuilder;
+    private Schedule schedule;
 
     public CreatePlatformPopup(ReturnableView mainView, Schedule schedule) {
         super(mainView);
-        this.scheduleBuilder = new ScheduleBuilder(schedule);
+        this.schedule = schedule;
     }
 
     @Override
@@ -44,7 +43,7 @@ public class CreatePlatformPopup extends SchedulePopupView {
         Button saveButton = new Button("Voeg toe");
         saveButton.setOnAction(e -> {
             try {//try-catch zodat er geen karakters of letters kunnen worden gebruikt. Het geeft dan een warning
-                this.scheduleBuilder.createPlatform(Integer.parseInt(inputField.getText()));
+                this.schedule.addPlatform(new Platform(Integer.parseInt(inputField.getText())));
                 inputField.clear();
                 super.callMainView();
             }catch (Exception numberNotFound){

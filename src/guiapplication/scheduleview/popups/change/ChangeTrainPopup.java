@@ -1,10 +1,9 @@
 package guiapplication.scheduleview.popups.change;
 
-import data.Schedule;
-import data.ScheduleBuilder;
-import data.Wagon;
+import data.*;
 import guiapplication.PopupView;
 import guiapplication.ReturnableView;
+import guiapplication.scheduleview.popups.SchedulePopupView;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -16,16 +15,13 @@ import javafx.scene.layout.VBox;
 import java.util.List;
 
 
-public class ChangeTrainPopup extends PopupView {
+public class ChangeTrainPopup extends SchedulePopupView {
 
     private Schedule schedule;
-    private ScheduleBuilder scheduleBuilder;
-
 
     public ChangeTrainPopup(ReturnableView mainView, Schedule schedule) {
         super(mainView);
         this.schedule = schedule;
-        this.scheduleBuilder = new ScheduleBuilder(schedule);
     }
 
     @Override
@@ -45,10 +41,10 @@ public class ChangeTrainPopup extends PopupView {
         Button saveButton = new Button("Voeg toe");
         saveButton.setOnAction(e -> {
             if (inputField.getText().length() < 11 && !inputField.getText().isEmpty()){//heb er een limiet aan gezet
-                this.scheduleBuilder.createTrain(
+                this.schedule.addTrain(new Train(
                         inputField.getText(),
                         trainComboBox.getValue()
-                );
+                ));
                 inputField.clear();
                 super.callMainView();
             }else if (inputField.getText().isEmpty() || inputField.getText().length() >= 11){

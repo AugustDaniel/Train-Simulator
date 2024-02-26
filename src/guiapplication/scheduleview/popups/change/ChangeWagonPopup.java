@@ -1,7 +1,6 @@
 package guiapplication.scheduleview.popups.change;
 
-import data.Schedule;
-import data.ScheduleBuilder;
+import data.*;
 import guiapplication.ReturnableView;
 import guiapplication.scheduleview.popups.SchedulePopupView;
 import javafx.scene.Node;
@@ -16,12 +15,10 @@ import javafx.scene.layout.VBox;
 public class ChangeWagonPopup extends SchedulePopupView {
 
     private Schedule schedule;
-    private ScheduleBuilder scheduleBuilder;
 
     public ChangeWagonPopup(ReturnableView mainView, Schedule schedule) {
         super(mainView);
         this.schedule = schedule;
-        this.scheduleBuilder = new ScheduleBuilder(schedule);
     }
 
     @Override
@@ -48,10 +45,10 @@ public class ChangeWagonPopup extends SchedulePopupView {
                 alert.showAndWait();
             } else {
                 //TODO add correct parameters
-                this.scheduleBuilder.createWagon(
+                this.schedule.addWagon(new Wagon(
                         idNumberWagonInput.getText(),
                         Integer.parseInt(wagonCapacityInput.getText())
-                        );
+                        ));
                 super.callMainView();
             }
         });

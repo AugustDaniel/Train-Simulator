@@ -1,9 +1,6 @@
 package guiapplication.scheduleview.popups.create;
 
-import data.Platform;
-import data.Schedule;
-import data.ScheduleBuilder;
-import data.Wagon;
+import data.*;
 import guiapplication.ReturnableView;
 import guiapplication.scheduleview.popups.SchedulePopupView;
 import javafx.collections.FXCollections;
@@ -19,11 +16,9 @@ import java.util.List;
 public class CreateWagonSetPopup extends SchedulePopupView {
 
     private Schedule schedule;
-    private ScheduleBuilder scheduleBuilder;
     public CreateWagonSetPopup(ReturnableView mainView, Schedule schedule) {
         super(mainView);
         this.schedule = schedule;
-        this.scheduleBuilder = new ScheduleBuilder(schedule);
     }
 
     @Override
@@ -69,7 +64,7 @@ public class CreateWagonSetPopup extends SchedulePopupView {
                 addedWagons.add(wagon1ComboBox.getValue());
                 addedWagons.add(wagon2ComboBox.getValue());
                 addedWagons.add(wagon3ComboBox.getValue());
-                this.scheduleBuilder.createWagonSet(addedWagons);
+                this.schedule.addWagonSet(addedWagons);
                 super.callMainView();
             }
         });
