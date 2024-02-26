@@ -6,11 +6,11 @@ import guiapplication.ReturnableView;
 import guiapplication.scheduleview.popups.SchedulePopupView;
 import javafx.scene.Node;
 
-public class CreateWagonSet extends SchedulePopupView {
+public class CreateWagonSetPopup extends SchedulePopupView {
 
     private Schedule schedule;
     private ScheduleBuilder scheduleBuilder;
-    public CreateWagonSet(ReturnableView mainView, Schedule schedule) {
+    public CreateWagonSetPopup(ReturnableView mainView, Schedule schedule) {
         super(mainView);
         this.schedule = schedule;
         this.scheduleBuilder = new ScheduleBuilder(schedule);
