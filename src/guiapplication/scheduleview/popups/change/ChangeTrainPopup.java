@@ -14,7 +14,7 @@ import javafx.scene.layout.VBox;
 
 import java.util.List;
 
-
+//TODO add change functionality
 public class ChangeTrainPopup extends SchedulePopupView {
 
     private Schedule schedule;

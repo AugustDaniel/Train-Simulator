@@ -13,6 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
+//TODO add change functionality
 public class ChangePlatformPopup extends SchedulePopupView {
 
     private Schedule schedule;

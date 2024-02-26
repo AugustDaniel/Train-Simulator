@@ -5,6 +5,7 @@ import guiapplication.ReturnableView;
 import guiapplication.scheduleview.popups.SchedulePopupView;
 import javafx.scene.Node;
 
+//TODO add change functionality
 public class ChangeWagonSetPopup extends SchedulePopupView {
 
     private Schedule schedule;
