@@ -46,6 +46,7 @@ public class Schedule implements Serializable {
     public void changeTrain(){
         //todo needs body
     }
+
     public void deleteTrain(Train train){
         for (Journey journey : journeyList) {
             if (journey.getTrain().equals(train)) {

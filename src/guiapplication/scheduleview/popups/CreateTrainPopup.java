@@ -53,7 +53,7 @@ public class CreateTrainPopup extends PopupView {
             }
 
         });
-        FlowPane buttonBar = new FlowPane(super.getCloseButton(), saveButton);
+        FlowPane buttonBar = new FlowPane(cancelButton, saveButton);
         buttonBar.setPadding(new Insets(10));
 
         VBox inputBox = new VBox(idBox, WagonSetBox);
