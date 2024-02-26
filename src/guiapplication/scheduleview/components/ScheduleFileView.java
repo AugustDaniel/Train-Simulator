@@ -45,9 +45,10 @@ public class ScheduleFileView implements View {
                     try {
                         this.subject.setSchedule((Schedule) IOHelper.readObject(IOHelper.getFileFromChooser("Selecteer planning")));
                     } catch (Exception ex) {
-                        Alert alert = new Alert(Alert.AlertType.WARNING);
-                        alert.setHeaderText("Ongeldige planning");
-                        alert.showAndWait();
+//                        Alert alert = new Alert(Alert.AlertType.WARNING);
+//                        alert.setHeaderText("Ongeldige planning");
+//                        alert.showAndWait();
+                        System.out.println(ex.getMessage());
                     }
                 }
         );
