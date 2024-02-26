@@ -16,7 +16,9 @@ public class IOHelper {
 
     public static Object readObject(File file) throws Exception {
         ObjectInputStream input = new ObjectInputStream(Files.newInputStream(file.toPath()));
-        return input.readObject();
+        Object object = input.readObject();
+        input.close();
+        return object;
     }
 
     public static File getFileFromChooser(String message) {
