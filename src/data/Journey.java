@@ -31,6 +31,22 @@ public class Journey implements Serializable {
         return platform;
     }
 
+    public void setArrivalTime(int arrivalTime) {
+        this.arrivalTime = arrivalTime;
+    }
+
+    public void setDepartureTime(int departureTime) {
+        this.departureTime = departureTime;
+    }
+
+    public void setTrain(Train train) {
+        this.train = train;
+    }
+
+    public void setPlatform(Platform platform) {
+        this.platform = platform;
+    }
+
     @Override
     public String toString() {
         return "platform: " + platform +
