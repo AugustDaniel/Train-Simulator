@@ -1,8 +1,9 @@
-package guiapplication.scheduleview.popups;
+package guiapplication.scheduleview.popups.create;
 
 import data.*;
 import guiapplication.PopupView;
 import guiapplication.ReturnableView;
+import guiapplication.scheduleview.popups.SchedulePopupView;
 import javafx.collections.FXCollections;
 import javafx.scene.Node;
 import javafx.scene.control.*;

@@ -1,24 +1,23 @@
-package guiapplication.scheduleview.popups;
+package guiapplication.scheduleview.popups.delete;
 
 import data.*;
 import guiapplication.PopupView;
 import guiapplication.ReturnableView;
+import guiapplication.scheduleview.popups.SchedulePopupView;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
-public class DeleteWagonPopup extends SchedulePopupView {
+public class DeleteJourneyPopup extends SchedulePopupView {
 
     private Schedule schedule;
     private ScheduleBuilder scheduleBuilder;
 
-    public DeleteWagonPopup(ReturnableView mainView, Schedule schedule) {
+    public DeleteJourneyPopup(ReturnableView mainView, Schedule schedule) {
         super(mainView);
         this.schedule = schedule;
         this.scheduleBuilder = new ScheduleBuilder(schedule);
@@ -28,21 +27,21 @@ public class DeleteWagonPopup extends SchedulePopupView {
     public Node getNode() {
         BorderPane pane = new BorderPane();
 
-        Label trainInfo = new Label("Kies uit de mogelijke Wagons:");
-        ComboBox<Wagon> platformComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getWagonList()));
-        VBox trainBox = new VBox(trainInfo, platformComboBox);
+        Label journeyLable = new Label("Kies uit reis:");
+        ComboBox<Journey> journeyComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getJourneyList()));
+        VBox trainBox = new VBox(journeyLable, journeyComboBox);
 
         Button cancelButton = new Button("Annuleer");
         cancelButton.setOnAction(e -> super.callMainView());
         Button saveButton = new Button("Verwijder");
         saveButton.setOnAction(e -> {
-            if (platformComboBox.getSelectionModel().isEmpty()) {
+            if (journeyComboBox.getSelectionModel().isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setHeaderText("Error, je bent data vergeten in te vullen");
                 alert.showAndWait();
             } else {
-                this.schedule.deleteWagon(
-                        platformComboBox.getValue()
+                this.schedule.deleteJourney(
+                        journeyComboBox.getValue()
                 );
                 super.callMainView();
             }
