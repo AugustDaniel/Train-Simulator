@@ -9,12 +9,16 @@ import java.nio.file.Files;
 public class IOHelper {
 
     public static <T> void saveObject(T object, File file) throws Exception {
-        new ObjectOutputStream(Files.newOutputStream(file.toPath()));
+        ObjectOutputStream output = new ObjectOutputStream(Files.newOutputStream(file.toPath()));
+        output.writeObject(object);
+        output.close();
     }
 
     public static Object readObject(File file) throws Exception {
         ObjectInputStream input = new ObjectInputStream(Files.newInputStream(file.toPath()));
-        return input.readObject();
+        Object object = input.readObject();
+        input.close();
+        return object;
     }
 
     public static File getFileFromChooser(String message) {
