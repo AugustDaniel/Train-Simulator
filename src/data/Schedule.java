@@ -1,9 +1,8 @@
 package data;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 public class Schedule implements Serializable {
@@ -64,39 +63,40 @@ public class Schedule implements Serializable {
     }
 
     public void deletePlatform(Platform platform){
-        for (Journey journey : journeyList) {
-            if (journey.getPlatform().equals(platform)){
-                deleteJourney(journey);
-                platformList.remove(platform);
+        Iterator<Journey> journeyIterator = journeyList.iterator();
+
+        while (journeyIterator.hasNext()){
+            Journey currentJourney = journeyIterator.next();
+            if (currentJourney.getPlatform().equals(platform)){
+                journeyIterator.remove();
             }
         }
-        if (platformList.contains(platform)){
-            platformList.remove(platform);
-        }
+        System.out.println(journeyList);
+        platformList.remove(platform);
     }
 
-    public void deleteWagonSet(ArrayList<Wagon> wagons){
-        for (Train train : trainList) {
-            if (train.getWagons().equals(wagons)){
-                deleteTrain(train);
-                wagonSetList.remove(wagons);
+    public void deleteWagonSet(ArrayList<Wagon> wagonSet){
+        Iterator<Train> trainIterator = trainList.iterator();
+
+        while (trainIterator.hasNext()){
+            Train currentTrain = trainIterator.next();
+            if (currentTrain.getWagons().equals(wagonSet)){
+                trainIterator.remove();
             }
         }
-        if (wagonSetList.contains(wagons)){
-            wagonSetList.remove(wagons);
-        }
+        wagonSetList.remove(wagonSet);
     }
 
     public void deleteWagon(Wagon wagon) {
-        for (List<Wagon> wagonSet : wagonSetList) {
-            if (wagonSet.contains(wagon)){
-                deleteWagonSet((ArrayList<Wagon>) wagonSet);
-                wagonList.remove(wagon);
+        Iterator<List<Wagon>> wagonSetListItterator = wagonSetList.iterator();
+
+        while (wagonSetListItterator.hasNext()){
+            List<Wagon> currentWagonSet = wagonSetListItterator.next();
+            if (currentWagonSet.contains(wagon)){
+                wagonSetListItterator.remove();
             }
         }
-        if (wagonList.contains(wagon)){
-            wagonList.remove(wagon);
-        }
+        wagonList.remove(wagon);
     }
 
     public List<Journey> getJourneyList(){
