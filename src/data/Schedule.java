@@ -26,7 +26,7 @@ public class Schedule implements Serializable {
         trainList.add(train);
     }
 
-    public void addWagonSet(ArrayList<Wagon> wagons){
+    public void addWagonSet(List<Wagon> wagons){
         wagonSetList.add(wagons);
     }
 

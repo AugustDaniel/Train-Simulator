@@ -30,4 +30,8 @@ public class ScheduleBuilder {
     public Schedule getSchedule() {
         return schedule;
     }
+
+    public void createWagonSet(List<Wagon> addedWagons) {
+        this.schedule.addWagonSet(addedWagons);
+    }
 }
