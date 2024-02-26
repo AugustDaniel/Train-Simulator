@@ -6,11 +6,11 @@ import java.util.List;
 
 public class Train implements Serializable {
     private List<Wagon> wagonList;
-    private String TrainIDNumber;
+    private String trainIDNumber;
 
     public Train(String trainIDNumber,List<Wagon> wagonList) {
         this.wagonList = wagonList;
-        this.TrainIDNumber = trainIDNumber;
+        this.trainIDNumber = trainIDNumber;
     }
     public Train(String trainIDNumber){
         this(trainIDNumber,new ArrayList<>());
@@ -31,11 +31,11 @@ public class Train implements Serializable {
     }
 
     public String getTrainIDNumber() {
-        return this.TrainIDNumber;
+        return this.trainIDNumber;
     }
 
     @Override
     public String toString() {
-        return getTrainIDNumber();
+        return trainIDNumber;
     }
 }

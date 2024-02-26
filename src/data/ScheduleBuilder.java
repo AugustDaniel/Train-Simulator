@@ -27,7 +27,11 @@ public class ScheduleBuilder {
     }
 
     public void createWagon(String id, int capacity) {
-
+        this.schedule.addWagon(new Wagon(id, capacity));
     }
 
+
+    public Schedule getSchedule() {
+        return schedule;
+    }
 }
