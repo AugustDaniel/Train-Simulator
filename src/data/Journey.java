@@ -31,5 +31,9 @@ public class Journey implements Serializable {
         return platform;
     }
 
-
+    @Override
+    public String toString() {
+        return "platform: " + platform +
+                "\n train: " + train;
+    }
 }
