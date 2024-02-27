@@ -26,14 +26,11 @@ public class CreateWagonSetPopup extends SchedulePopupView {
         BorderPane pane = new BorderPane();
 
 
-//        ArrayList<Integer> amount = new ArrayList<>();
-//        amount.add(1);
-//        amount.add(2);
-//        amount.add(3);
-
-//        Label amountLabel = new Label("Kies uit de mogelijke wagon set:");
-//        ComboBox<Integer> amountComboBox = new ComboBox<>(FXCollections.observableList(amount));
-//        VBox amountBox = new VBox(amountLabel, amountComboBox);
+        ArrayList<Integer> possibleAmounts = new ArrayList<>();
+        possibleAmounts.add(1);
+        possibleAmounts.add(2);
+        possibleAmounts.add(3);
+        ComboBox<Integer> amountSelectionBox = new ComboBox<>(FXCollections.observableList(possibleAmounts));
 
         Label wagon1Label = new Label("Kies uit de mogelijke wagon:");
         ComboBox<Wagon> wagon1ComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getWagonList()));
@@ -49,6 +46,8 @@ public class CreateWagonSetPopup extends SchedulePopupView {
 
 
 
+
+
         Button cancelButton = new Button("Annuleer");
         cancelButton.setOnAction(e -> super.callMainView());
 
@@ -61,9 +60,21 @@ public class CreateWagonSetPopup extends SchedulePopupView {
             } else {
                 //TODO add correct parameters
                 List<Wagon> addedWagons = new ArrayList<>();
-                addedWagons.add(wagon1ComboBox.getValue());
-                addedWagons.add(wagon2ComboBox.getValue());
-                addedWagons.add(wagon3ComboBox.getValue());
+                switch ((int) amountSelectionBox.getValue()){
+                    case 1:
+                        addedWagons.add(wagon1ComboBox.getValue());
+                        break;
+                    case 2:
+                        addedWagons.add(wagon1ComboBox.getValue());
+                        addedWagons.add(wagon2ComboBox.getValue());
+                        break;
+                    case 3:
+                        addedWagons.add(wagon1ComboBox.getValue());
+                        addedWagons.add(wagon2ComboBox.getValue());
+                        addedWagons.add(wagon3ComboBox.getValue());
+                        break;
+                }
+
                 this.schedule.addWagonSet(addedWagons);
                 super.callMainView();
             }
@@ -71,9 +82,25 @@ public class CreateWagonSetPopup extends SchedulePopupView {
 
         FlowPane buttonBar = new FlowPane(cancelButton, saveButton);
 
-        VBox inputBox = new VBox(wagon1Box, wagon2Box, wagon3Box);
+        VBox inputBox = new VBox(amountSelectionBox);
         pane.setCenter(inputBox);
         pane.setBottom(buttonBar);
+
+        amountSelectionBox.setOnAction((event) -> {
+            if (amountSelectionBox.getValue().equals(1)){
+                VBox addedinputs = new VBox(amountSelectionBox, wagon1Box);
+                pane.setCenter(addedinputs);
+            }
+            else if (amountSelectionBox.getValue().equals(2)){
+                VBox addedinputs = new VBox(amountSelectionBox, wagon1Box, wagon2Box);
+                pane.setCenter(addedinputs);
+            }
+            else if (amountSelectionBox.getValue().equals(3)){
+                VBox addedinputs = new VBox(amountSelectionBox, wagon1Box, wagon2Box, wagon3Box);
+                pane.setCenter(addedinputs);
+            }
+        });
+
         return pane;
     }
 }
