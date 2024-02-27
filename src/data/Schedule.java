@@ -104,6 +104,9 @@ public class Schedule implements Serializable {
         wagonList.remove(wagon);
     }
 
+    public void changeWagonList(List<Wagon> wagonSet){
+    }
+
     public List<Journey> getJourneyList(){
         return this.journeyList;
     }

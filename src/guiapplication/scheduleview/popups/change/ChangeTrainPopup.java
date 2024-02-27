@@ -12,6 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
+import java.util.ArrayList;
 import java.util.List;
 
 //TODO add change functionality
@@ -28,37 +29,30 @@ public class ChangeTrainPopup extends SchedulePopupView {
     public Node getNode() {
         BorderPane pane = new BorderPane();
 
-        Label infoLabel = new Label("Voer trein ID in (max 10 karakters):");
-        TextField inputField = new TextField();
-        VBox idBox = new VBox(infoLabel, inputField);
+        Label amountSelectionLable = new Label("Kies uit de hoeveelheid wagens:");
+        ComboBox<ArrayList> amountSelectionComboBox = new ComboBox<>(FXCollections.observableList(new ArrayList<>()));
+        VBox amountSelectionBox = new VBox(amountSelectionLable,amountSelectionComboBox);
 
-        Label platformInfo = new Label("Kies uit wagon sets:");
-        ComboBox<List<Wagon>> trainComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getWagonSetList()));
-        VBox WagonSetBox = new VBox(platformInfo, trainComboBox);
 
-        Button cancelButton = new Button("Annuleer");
-        cancelButton.setOnAction(e -> super.callMainView());
         Button saveButton = new Button("Voeg toe");
         saveButton.setOnAction(e -> {
-            if (inputField.getText().length() < 11 && !inputField.getText().isEmpty()){//heb er een limiet aan gezet
-                this.schedule.addTrain(new Train(
-                        inputField.getText(),
-                        trainComboBox.getValue()
-                ));
-                inputField.clear();
-                super.callMainView();
-            }else if (inputField.getText().isEmpty() || inputField.getText().length() >= 11){
+            if (false) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setHeaderText("Error, er is geen data of er zijn teveel karakters toegevoegd");
+                alert.setHeaderText("Error, je bent data vergeten in te vullen");
                 alert.showAndWait();
+            } else {
+                super.callMainView();
             }
+        });
+
+        FlowPane buttonBar = new FlowPane(super.getCloseButton(), saveButton);
+
+        VBox inputBox = new VBox();
+        pane.setCenter(inputBox);
+        amountSelectionComboBox.setOnAction((event) -> {
 
         });
-        FlowPane buttonBar = new FlowPane(cancelButton, saveButton);
-        buttonBar.setPadding(new Insets(10));
 
-        VBox inputBox = new VBox(idBox, WagonSetBox);
-        pane.setCenter(inputBox);
         pane.setBottom(buttonBar);
         return pane;
     }

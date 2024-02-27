@@ -48,7 +48,8 @@ public class CreateJourneyPopup extends SchedulePopupView {
                 alert.setHeaderText("Error, je bent data vergeten in te vullen");
                 alert.showAndWait();
             } else {
-                this.schedule.addJourney(new Journey(Integer.parseInt(arrivalTimeInput.getText()),
+                this.schedule.addJourney(new Journey(
+                        Integer.parseInt(arrivalTimeInput.getText()),
                         Integer.parseInt(departureTimeInput.getText()),
                         trainComboBox.getValue(),
                         platformComboBox.getValue()

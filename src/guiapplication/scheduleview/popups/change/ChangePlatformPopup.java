@@ -3,15 +3,15 @@ package guiapplication.scheduleview.popups.change;
 import data.*;
 import guiapplication.ReturnableView;
 import guiapplication.scheduleview.popups.SchedulePopupView;
+import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+
+import java.util.ArrayList;
 
 //TODO add change functionality
 public class ChangePlatformPopup extends SchedulePopupView {
@@ -27,32 +27,31 @@ public class ChangePlatformPopup extends SchedulePopupView {
     public Node getNode() {
         BorderPane pane = new BorderPane();
 
-        Label infoLabel = new Label("Voer platform nummer in:");
-        TextField inputField = new TextField();
-        VBox inputBox = new VBox(infoLabel, inputField);
+        Label amountSelectionLable = new Label("Kies uit de hoeveelheid wagens:");
+        ComboBox<ArrayList> amountSelectionComboBox = new ComboBox<>(FXCollections.observableList(new ArrayList<>()));
+        VBox amountSelectionBox = new VBox(amountSelectionLable,amountSelectionComboBox);
 
-        Button saveButton = getSaveButton(inputField);
-        FlowPane buttonBar = new FlowPane(super.getCloseButton(), saveButton);
-        buttonBar.setPadding(new Insets(10));
 
-        pane.setCenter(inputBox);
-        pane.setBottom(buttonBar);
-        return pane;
-    }
-
-    private Button getSaveButton(TextField inputField) {
         Button saveButton = new Button("Voeg toe");
         saveButton.setOnAction(e -> {
-            try {//try-catch zodat er geen karakters of letters kunnen worden gebruikt. Het geeft dan een warning
-                this.schedule.addPlatform(new Platform(Integer.parseInt(inputField.getText())));
-                inputField.clear();
-                super.callMainView();
-            }catch (Exception numberNotFound){
+            if (false) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setHeaderText("Error, Het kan zijn dat je iets anders hebt neergezet dan een nummer");
+                alert.setHeaderText("Error, je bent data vergeten in te vullen");
                 alert.showAndWait();
+            } else {
+                super.callMainView();
             }
         });
-        return saveButton;
+
+        FlowPane buttonBar = new FlowPane(super.getCloseButton(), saveButton);
+
+        VBox inputBox = new VBox();
+        pane.setCenter(inputBox);
+        amountSelectionComboBox.setOnAction((event) -> {
+
+        });
+
+        pane.setBottom(buttonBar);
+        return pane;
     }
 }

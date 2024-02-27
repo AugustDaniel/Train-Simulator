@@ -99,8 +99,7 @@ public class ScheduleBuilderView implements View {
                 getButton("Verander reis", new ChangeJourneyPopup(this.mainView, this.subject.getSchedule())),
                 getButton("Verander trein", new ChangeTrainPopup(this.mainView, this.subject.getSchedule())),
                 getButton("Verander wagon", new ChangeWagonPopup(this.mainView, this.subject.getSchedule())),
-                getButton("Verander perron", new ChangePlatformPopup(this.mainView, this.subject.getSchedule())),
-                getButton("Verander wagon set", new ChangeWagonSetPopup(this.mainView, this.subject.getSchedule()))
+                getButton("Verander perron", new ChangePlatformPopup(this.mainView, this.subject.getSchedule()))
         );
         return box;
     }
