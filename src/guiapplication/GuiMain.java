@@ -9,6 +9,8 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
 
+import java.awt.*;
+
 public class GuiMain extends Application {
 
     private ScheduleSubject subject;
@@ -30,7 +32,12 @@ public class GuiMain extends Application {
         // create tabs
         TabPane tabPane = new TabPane();
         tabPane.getTabs().add(new Tab("Trein tabel",scheduleView.getNode()));
-        tabPane.setPrefSize(1920, 1080);
+
+        // set screen size of Gui to max
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double width = screenSize.getWidth();
+        double height = screenSize.getHeight();
+        tabPane.setPrefSize(width, height);
 
         // prevent removing of tabs
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
