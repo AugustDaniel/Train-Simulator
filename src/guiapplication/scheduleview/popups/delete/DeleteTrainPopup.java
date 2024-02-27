@@ -31,8 +31,6 @@ public class DeleteTrainPopup extends SchedulePopupView {
         ComboBox<Train> trainComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getTrainList()));
         VBox trainBox = new VBox(trainLabel, trainComboBox);
 
-        Button cancelButton = new Button("Annuleer");
-        cancelButton.setOnAction(e -> super.callMainView());
         Button saveButton = new Button("Verwijder");
         saveButton.setOnAction(e -> {
             if (trainComboBox.getSelectionModel().isEmpty()) {
@@ -47,7 +45,7 @@ public class DeleteTrainPopup extends SchedulePopupView {
             }
         });
 
-        FlowPane buttonBar = new FlowPane(cancelButton, saveButton);
+        FlowPane buttonBar = new FlowPane(super.getCloseButton(), saveButton);
 
         VBox inputBox = new VBox(trainBox);
         pane.setCenter(inputBox);

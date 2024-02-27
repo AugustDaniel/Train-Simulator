@@ -37,8 +37,6 @@ public class CreateTrainPopup extends SchedulePopupView {
         ComboBox<List<Wagon>> trainComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getWagonSetList()));
         VBox WagonSetBox = new VBox(platformInfo, trainComboBox);
 
-        Button cancelButton = new Button("Annuleer");
-        cancelButton.setOnAction(e -> super.callMainView());
         Button saveButton = new Button("Voeg toe");
         saveButton.setOnAction(e -> {
             if (inputField.getText().length() < 11 && !inputField.getText().isEmpty()){//heb er een limiet aan gezet
@@ -55,7 +53,7 @@ public class CreateTrainPopup extends SchedulePopupView {
             }
 
         });
-        FlowPane buttonBar = new FlowPane(cancelButton, saveButton);
+        FlowPane buttonBar = new FlowPane(super.getCloseButton(), saveButton);
         buttonBar.setPadding(new Insets(10));
 
         VBox inputBox = new VBox(idBox, WagonSetBox);
