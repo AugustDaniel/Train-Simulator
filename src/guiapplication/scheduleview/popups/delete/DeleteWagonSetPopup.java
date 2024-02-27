@@ -29,8 +29,6 @@ public class DeleteWagonSetPopup extends SchedulePopupView {
         ComboBox<List<Wagon>> platformComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getWagonSetList()));
         VBox wagonSetBox = new VBox(trainInfo, platformComboBox);
 
-        Button cancelButton = new Button("Annuleer");
-        cancelButton.setOnAction(e -> super.callMainView());
         Button saveButton = new Button("Verwijder");
         saveButton.setOnAction(e -> {
             if (platformComboBox.getSelectionModel().isEmpty()) {
@@ -45,7 +43,7 @@ public class DeleteWagonSetPopup extends SchedulePopupView {
             }
         });
 
-        FlowPane buttonBar = new FlowPane(cancelButton, saveButton);
+        FlowPane buttonBar = new FlowPane(super.getCloseButton(), saveButton);
 
         VBox inputBox = new VBox(wagonSetBox);
         pane.setCenter(inputBox);

@@ -56,14 +56,19 @@ public class CreateJourneyPopup extends SchedulePopupView {
             } else if (timeBetweenArriveAndDeparture() != 0) {
                 if (timeBetweenArriveAndDeparture() == 1) {
                     Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setHeaderText("Error, de tijd tussen de aankomst en vertrek van de trein is niet 5 minuten");
+                    alert.setHeaderText("Error, de tijd tussen de aankomst en vertrek van de trein is niet 10 minuten");
                     alert.showAndWait();
                 } else if (timeBetweenArriveAndDeparture() == 2) {
                     Alert alert = new Alert(Alert.AlertType.WARNING);
                     alert.setHeaderText("Error, de aankomst- en vertrektijd moet tussen 0000 en 2359 zitten");
                     alert.showAndWait();
                 }
-            } else {
+            } else if (timeHigherThan60()) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setHeaderText("Error, de laatste 2 getallen van de aankomst- of vertrektijd zijn hoger dan 59 ");
+                alert.showAndWait();
+            }
+            else {
                 this.schedule.addJourney(new Journey(
                         Integer.parseInt(arrivalTimeInput.getText()),
                         Integer.parseInt(departureTimeInput.getText()),
@@ -94,11 +99,19 @@ public class CreateJourneyPopup extends SchedulePopupView {
 
     public int timeBetweenArriveAndDeparture(){
         int time = 0;
-        if (Integer.parseInt(departureTimeInput.getText()) - Integer.parseInt(arrivalTimeInput.getText()) != 5){
+        if (Integer.parseInt(departureTimeInput.getText()) - Integer.parseInt(arrivalTimeInput.getText()) != 10){
             time = 1;
-        } else if (departureTimeInput.getText().length() == 4 || arrivalTimeInput.getText().length() == 4 || Integer.parseInt(arrivalTimeInput.getText()) > 2359 || Integer.parseInt(departureTimeInput.getText()) > 2359) {
+        } else if (departureTimeInput.getText().length() != 4 || arrivalTimeInput.getText().length() != 4 || Integer.parseInt(arrivalTimeInput.getText()) > 2359 || Integer.parseInt(departureTimeInput.getText()) > 2359) {
             time = 2;
         }
         return time;
+    }
+
+    public Boolean timeHigherThan60(){
+        Boolean higherThan60 = false;
+        if (Integer.parseInt(departureTimeInput.getText().substring(2, 4)) > 59 || Integer.parseInt(arrivalTimeInput.getText().substring(2, 4)) > 59){
+            higherThan60 = true;
+        }
+        return higherThan60;
     }
 }

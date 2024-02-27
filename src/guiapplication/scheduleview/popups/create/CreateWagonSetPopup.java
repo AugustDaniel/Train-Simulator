@@ -46,13 +46,6 @@ public class CreateWagonSetPopup extends SchedulePopupView {
         ComboBox<Wagon> wagon3ComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getWagonList()));;
         VBox wagon3Box = new VBox(wagon3Label, wagon3ComboBox);
 
-
-
-
-
-        Button cancelButton = new Button("Annuleer");
-        cancelButton.setOnAction(e -> super.callMainView());
-
         Button saveButton = new Button("Voeg toe");
         saveButton.setOnAction(e -> {
             if (wagon1Label.getText().isEmpty() || wagon2Label.getText().isEmpty() || wagon3Label.getText().isEmpty()) {
@@ -82,7 +75,7 @@ public class CreateWagonSetPopup extends SchedulePopupView {
             }
         });
 
-        FlowPane buttonBar = new FlowPane(cancelButton, saveButton);
+        FlowPane buttonBar = new FlowPane(super.getCloseButton(), saveButton);
 
         VBox inputBox = new VBox(amountSelectionBox);
         pane.setCenter(inputBox);
