@@ -15,6 +15,8 @@ import javafx.collections.ObservableList;
 public class CreateJourneyPopup extends SchedulePopupView {
     private ScheduleBuilder scheduleBuilder;
     private Schedule schedule;
+    private TextField arrivalTimeInput;
+    private TextField departureTimeInput;
 
     public CreateJourneyPopup(ReturnableView mainView, Schedule schedule) {
         super(mainView);
@@ -27,11 +29,11 @@ public class CreateJourneyPopup extends SchedulePopupView {
         BorderPane pane = new BorderPane();
 
         Label arrivalTimeInfo = new Label("Voer aankomsttijd in(ie. 1030):");
-        TextField arrivalTimeInput = new TextField();
+        this.arrivalTimeInput = new TextField();
         VBox arrivalTimeBox = new VBox(arrivalTimeInfo, arrivalTimeInput);
 
         Label departureTimeInfo = new Label("Voer vertrektijd in(ie. 1030):");
-        TextField departureTimeInput = new TextField();
+        this.departureTimeInput = new TextField();
         VBox departureTimeBox = new VBox(departureTimeInfo, departureTimeInput);
 
         Label trainInfo = new Label("Kies uit trein:");
@@ -50,6 +52,10 @@ public class CreateJourneyPopup extends SchedulePopupView {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setHeaderText("Error, je bent data vergeten in te vullen");
                 alert.showAndWait();
+            } else if (overlappingTrains()) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setHeaderText("Error, 2 treinen overlappen qua tijd");
+                alert.showAndWait();
             } else {
                 this.scheduleBuilder.createJourney(
                         Integer.parseInt(arrivalTimeInput.getText()),
@@ -67,5 +73,15 @@ public class CreateJourneyPopup extends SchedulePopupView {
         pane.setCenter(inputBox);
         pane.setBottom(buttonBar);
         return pane;
+    }
+
+    public Boolean overlappingTrains() {
+        Boolean overlapping = false;
+        for (Journey journey : schedule.getJourneyList()) {
+            if (Integer.parseInt(arrivalTimeInput.getText()) <= journey.getDepartureTime() && Integer.parseInt(departureTimeInput.getText()) >= journey.getArrivalTime()) {
+                overlapping = true;
+            }
+        }
+            return overlapping;
     }
 }
