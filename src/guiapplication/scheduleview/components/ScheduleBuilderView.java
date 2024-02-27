@@ -3,14 +3,9 @@ package guiapplication.scheduleview.components;
 import guiapplication.PopupView;
 import guiapplication.ReturnableView;
 import guiapplication.View;
-import guiapplication.scheduleview.popups.create.CreateJourneyPopup;
-import guiapplication.scheduleview.popups.create.CreatePlatformPopup;
-import guiapplication.scheduleview.popups.create.CreateTrainPopup;
-import guiapplication.scheduleview.popups.create.CreateWagonPopup;
-import guiapplication.scheduleview.popups.delete.DeleteJourneyPopup;
-import guiapplication.scheduleview.popups.delete.DeletePlatformPopup;
-import guiapplication.scheduleview.popups.delete.DeleteTrainPopup;
-import guiapplication.scheduleview.popups.delete.DeleteWagonPopup;
+import guiapplication.scheduleview.popups.change.*;
+import guiapplication.scheduleview.popups.create.*;
+import guiapplication.scheduleview.popups.delete.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -24,7 +19,7 @@ public class ScheduleBuilderView implements View {
     private ReturnableView mainView;
     private MenuMode menuToggle;
 
-    enum MenuMode {CREATE, DELETE}
+    enum MenuMode {CREATE, DELETE, CHANGE}
 
     public ScheduleBuilderView(ScheduleSubject subject, ReturnableView mainView) {
         this.subject = subject;
@@ -42,6 +37,9 @@ public class ScheduleBuilderView implements View {
                 break;
             case DELETE:
                 box = getDeleteButtons();
+                break;
+            case CHANGE:
+                box = getChangeButtons();
                 break;
         }
 
@@ -63,6 +61,9 @@ public class ScheduleBuilderView implements View {
                     menuToggle = MenuMode.DELETE;
                     break;
                 case DELETE:
+                    menuToggle = MenuMode.CHANGE;
+                    break;
+                case CHANGE:
                     menuToggle = MenuMode.CREATE;
                     break;
             }
@@ -76,7 +77,8 @@ public class ScheduleBuilderView implements View {
                 getButton("Creëer reis", new CreateJourneyPopup(this.mainView, this.subject.getSchedule())),
                 getButton("Creëer trein", new CreateTrainPopup(this.mainView, this.subject.getSchedule())),
                 getButton("Creëer wagon", new CreateWagonPopup(this.mainView, this.subject.getSchedule())),
-                getButton("Creëer perron", new CreatePlatformPopup(this.mainView, this.subject.getSchedule()))
+                getButton("Creëer perron", new CreatePlatformPopup(this.mainView, this.subject.getSchedule())),
+                getButton("Creëer wagon set", new CreateWagonSetPopup(this.mainView, this.subject.getSchedule()))
         );
         return box;
     }
@@ -86,7 +88,19 @@ public class ScheduleBuilderView implements View {
                 getButton("Verwijder reis", new DeleteJourneyPopup(this.mainView, this.subject.getSchedule())),
                 getButton("Verwijder trein", new DeleteTrainPopup(this.mainView, this.subject.getSchedule())),
                 getButton("Verwijder wagon", new DeleteWagonPopup(this.mainView, this.subject.getSchedule())),
-                getButton("Verwijder perron", new DeletePlatformPopup(this.mainView, this.subject.getSchedule()))
+                getButton("Verwijder perron", new DeletePlatformPopup(this.mainView, this.subject.getSchedule())),
+                getButton("verwijder wagon set", new DeleteWagonSetPopup(this.mainView, this.subject.getSchedule()))
+        );
+        return box;
+    }
+
+    private VBox getChangeButtons() {
+        VBox box = new VBox(
+                getButton("Verander reis", new ChangeJourneyPopup(this.mainView, this.subject.getSchedule())),
+                getButton("Verander trein", new ChangeTrainPopup(this.mainView, this.subject.getSchedule())),
+                getButton("Verander wagon", new ChangeWagonPopup(this.mainView, this.subject.getSchedule())),
+                getButton("Verander perron", new ChangePlatformPopup(this.mainView, this.subject.getSchedule())),
+                getButton("Verander wagon set", new ChangeWagonSetPopup(this.mainView, this.subject.getSchedule()))
         );
         return box;
     }

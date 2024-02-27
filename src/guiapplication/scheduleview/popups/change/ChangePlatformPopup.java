@@ -1,4 +1,4 @@
-package guiapplication.scheduleview.popups.create;
+package guiapplication.scheduleview.popups.change;
 
 import data.*;
 import guiapplication.ReturnableView;
@@ -13,11 +13,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
-public class CreatePlatformPopup extends SchedulePopupView {
+//TODO add change functionality
+public class ChangePlatformPopup extends SchedulePopupView {
 
     private Schedule schedule;
 
-    public CreatePlatformPopup(ReturnableView mainView, Schedule schedule) {
+    public ChangePlatformPopup(ReturnableView mainView, Schedule schedule) {
         super(mainView);
         this.schedule = schedule;
     }

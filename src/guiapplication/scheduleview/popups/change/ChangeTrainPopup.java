@@ -1,4 +1,4 @@
-package guiapplication.scheduleview.popups.create;
+package guiapplication.scheduleview.popups.change;
 
 import data.*;
 import guiapplication.PopupView;
@@ -14,13 +14,12 @@ import javafx.scene.layout.VBox;
 
 import java.util.List;
 
-
-public class CreateTrainPopup extends SchedulePopupView {
+//TODO add change functionality
+public class ChangeTrainPopup extends SchedulePopupView {
 
     private Schedule schedule;
 
-
-    public CreateTrainPopup(ReturnableView mainView, Schedule schedule) {
+    public ChangeTrainPopup(ReturnableView mainView, Schedule schedule) {
         super(mainView);
         this.schedule = schedule;
     }

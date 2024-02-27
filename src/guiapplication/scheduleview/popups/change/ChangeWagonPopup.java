@@ -1,7 +1,6 @@
-package guiapplication.scheduleview.popups.create;
+package guiapplication.scheduleview.popups.change;
 
 import data.*;
-import guiapplication.PopupView;
 import guiapplication.ReturnableView;
 import guiapplication.scheduleview.popups.SchedulePopupView;
 import javafx.scene.Node;
@@ -13,11 +12,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
-public class CreateWagonPopup extends SchedulePopupView {
+//TODO add change functionality
+public class ChangeWagonPopup extends SchedulePopupView {
 
     private Schedule schedule;
 
-    public CreateWagonPopup(ReturnableView mainView, Schedule schedule) {
+    public ChangeWagonPopup(ReturnableView mainView, Schedule schedule) {
         super(mainView);
         this.schedule = schedule;
     }
@@ -49,7 +49,7 @@ public class CreateWagonPopup extends SchedulePopupView {
                 this.schedule.addWagon(new Wagon(
                         idNumberWagonInput.getText(),
                         Integer.parseInt(wagonCapacityInput.getText())
-                ));
+                        ));
                 super.callMainView();
             }
         });

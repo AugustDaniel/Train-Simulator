@@ -34,6 +34,10 @@ public class Train implements Serializable {
         return this.trainIDNumber;
     }
 
+    public void setWagonList(List<Wagon> wagonList) {
+        this.wagonList = wagonList;
+    }
+
     @Override
     public String toString() {
         return trainIDNumber;

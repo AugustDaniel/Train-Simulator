@@ -17,12 +17,10 @@ import javafx.scene.layout.VBox;
 public class DeletePlatformPopup extends SchedulePopupView {
 
     private Schedule schedule;
-    private ScheduleBuilder scheduleBuilder;
 
     public DeletePlatformPopup(ReturnableView mainView, Schedule schedule) {
         super(mainView);
         this.schedule = schedule;
-        this.scheduleBuilder = new ScheduleBuilder(schedule);
     }
 
     @Override
