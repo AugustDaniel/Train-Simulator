@@ -54,7 +54,8 @@ public class CreateJourneyPopup extends SchedulePopupView {
                 alert.setHeaderText("Error, 2 treinen overlappen qua tijd");
                 alert.showAndWait();
             } else {
-                this.schedule.addJourney(new Journey(Integer.parseInt(arrivalTimeInput.getText()),
+                this.schedule.addJourney(new Journey(
+                        Integer.parseInt(arrivalTimeInput.getText()),
                         Integer.parseInt(departureTimeInput.getText()),
                         trainComboBox.getValue(),
                         platformComboBox.getValue()

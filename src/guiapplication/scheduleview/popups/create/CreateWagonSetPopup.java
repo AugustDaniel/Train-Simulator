@@ -30,7 +30,9 @@ public class CreateWagonSetPopup extends SchedulePopupView {
         possibleAmounts.add(1);
         possibleAmounts.add(2);
         possibleAmounts.add(3);
-        ComboBox<Integer> amountSelectionBox = new ComboBox<>(FXCollections.observableList(possibleAmounts));
+        Label amountSelectionLable = new Label("Kies uit de hoeveelheid wagens:");
+        ComboBox<Integer> amountSelectionComboBox = new ComboBox<>(FXCollections.observableList(possibleAmounts));
+        VBox amountSelectionBox = new VBox(amountSelectionLable,amountSelectionComboBox);
 
         Label wagon1Label = new Label("Kies uit de mogelijke wagon:");
         ComboBox<Wagon> wagon1ComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getWagonList()));
@@ -60,7 +62,7 @@ public class CreateWagonSetPopup extends SchedulePopupView {
             } else {
                 //TODO add correct parameters
                 List<Wagon> addedWagons = new ArrayList<>();
-                switch ((int) amountSelectionBox.getValue()){
+                switch (amountSelectionComboBox.getValue()){
                     case 1:
                         addedWagons.add(wagon1ComboBox.getValue());
                         break;
@@ -86,16 +88,16 @@ public class CreateWagonSetPopup extends SchedulePopupView {
         pane.setCenter(inputBox);
         pane.setBottom(buttonBar);
 
-        amountSelectionBox.setOnAction((event) -> {
-            if (amountSelectionBox.getValue().equals(1)){
+        amountSelectionComboBox.setOnAction((event) -> {
+            if (amountSelectionComboBox.getValue().equals(1)){
                 VBox addedinputs = new VBox(amountSelectionBox, wagon1Box);
                 pane.setCenter(addedinputs);
             }
-            else if (amountSelectionBox.getValue().equals(2)){
+            else if (amountSelectionComboBox.getValue().equals(2)){
                 VBox addedinputs = new VBox(amountSelectionBox, wagon1Box, wagon2Box);
                 pane.setCenter(addedinputs);
             }
-            else if (amountSelectionBox.getValue().equals(3)){
+            else if (amountSelectionComboBox.getValue().equals(3)){
                 VBox addedinputs = new VBox(amountSelectionBox, wagon1Box, wagon2Box, wagon3Box);
                 pane.setCenter(addedinputs);
             }
