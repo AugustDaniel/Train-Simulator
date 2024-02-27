@@ -30,6 +30,7 @@ public class GuiMain extends Application {
         // create tabs
         TabPane tabPane = new TabPane();
         tabPane.getTabs().add(new Tab("Trein tabel",scheduleView.getNode()));
+        tabPane.setPrefSize(1920, 1080);
 
         // prevent removing of tabs
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
