@@ -27,27 +27,33 @@ public class ChangePlatformPopup extends SchedulePopupView {
     public Node getNode() {
         BorderPane pane = new BorderPane();
 
-        Label amountSelectionLable = new Label("Kies uit de hoeveelheid wagens:");
-        ComboBox<ArrayList> amountSelectionComboBox = new ComboBox<>(FXCollections.observableList(new ArrayList<>()));
-        VBox amountSelectionBox = new VBox(amountSelectionLable,amountSelectionComboBox);
+        Label platformSelectionLable = new Label("Kies uit perrons:");
+        ComboBox<Platform> platformSelectionComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getPlatformList()));
+        VBox platformSelectionBox = new VBox(platformSelectionLable,platformSelectionComboBox);
 
+        Label toChangeLabel = new Label("waar wilt u het nummer naar veranderen?:");
+        TextField toChangeTextField = new TextField();
+        VBox toChangeBox = new VBox(toChangeLabel, toChangeTextField);
 
         Button saveButton = new Button("Voeg toe");
         saveButton.setOnAction(e -> {
-            if (false) {
+            if (platformSelectionComboBox.getSelectionModel().isEmpty() || toChangeTextField.getText().isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setHeaderText("Error, je bent data vergeten in te vullen");
                 alert.showAndWait();
             } else {
+                this.schedule.getPlatformList().get(
+                        this.schedule.getPlatformList().indexOf(platformSelectionComboBox.getValue())
+                ).setPlatformNumber(Integer.parseInt(toChangeTextField.getText()));
                 super.callMainView();
             }
         });
 
         FlowPane buttonBar = new FlowPane(super.getCloseButton(), saveButton);
 
-        VBox inputBox = new VBox();
+        VBox inputBox = new VBox(platformSelectionBox, toChangeBox);
         pane.setCenter(inputBox);
-        amountSelectionComboBox.setOnAction((event) -> {
+        platformSelectionComboBox.setOnAction((event) -> {
 
         });
 

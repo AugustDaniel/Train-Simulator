@@ -11,6 +11,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
+import java.util.List;
 
 //TODO add change functionality
 public class ChangeWagonPopup extends SchedulePopupView {
@@ -27,8 +28,12 @@ public class ChangeWagonPopup extends SchedulePopupView {
         BorderPane pane = new BorderPane();
 
         Label amountSelectionLable = new Label("Kies uit de hoeveelheid wagens:");
-        ComboBox<ArrayList> amountSelectionComboBox = new ComboBox<>(FXCollections.observableList(new ArrayList<>()));
+        ComboBox<Wagon> amountSelectionComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getWagonList()));
         VBox amountSelectionBox = new VBox(amountSelectionLable,amountSelectionComboBox);
+
+        Label toChangeLabel = new Label("waar wilt u het nummer naar veranderen?:");
+        TextField toChangeTextField = new TextField();
+        VBox toChangeBox = new VBox(toChangeLabel, toChangeTextField);
 
 
         Button saveButton = new Button("Voeg toe");
@@ -38,13 +43,16 @@ public class ChangeWagonPopup extends SchedulePopupView {
                 alert.setHeaderText("Error, je bent data vergeten in te vullen");
                 alert.showAndWait();
             } else {
+                this.schedule.getWagonList().get(
+                        this.schedule.getWagonList().indexOf(amountSelectionComboBox.getValue())
+                ).setMaxCapacity(Integer.parseInt(toChangeTextField.getText()));
                 super.callMainView();
             }
         });
 
         FlowPane buttonBar = new FlowPane(super.getCloseButton(), saveButton);
 
-        VBox inputBox = new VBox();
+        VBox inputBox = new VBox(amountSelectionBox,toChangeBox);
         pane.setCenter(inputBox);
 
         amountSelectionComboBox.setOnAction((event) -> {

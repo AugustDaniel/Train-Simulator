@@ -67,20 +67,24 @@ public class ChangeJourneyPopup extends SchedulePopupView {
                 alert.showAndWait();
             } else {
                 if (toCangeComboBox.getValue().equals("perron")){
-                    this.schedule.getJourneyList().get(this.schedule.getJourneyList()
-                            .indexOf(journeySelectionComboBox.getValue())).setPlatform(changePlatformIntoComboBox.getValue());
+                    this.schedule.getJourneyList().get(
+                            this.schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
+                    ).setPlatform(changePlatformIntoComboBox.getValue());
 
                 } else if (toCangeComboBox.getValue().equals("trein")) {
-                    this.schedule.getJourneyList().get(this.schedule.getJourneyList()
-                            .indexOf(journeySelectionComboBox.getValue())).setTrain(changeTrainIntoComboBox.getValue());
+                    this.schedule.getJourneyList().get(
+                            this.schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
+                    ).setTrain(changeTrainIntoComboBox.getValue());
 
                 } else if (toCangeComboBox.getValue().equals("aankomst tijd")) {
-                    this.schedule.getJourneyList().get(this.schedule.getJourneyList()
-                            .indexOf(journeySelectionComboBox.getValue())).setArrivalTime(Integer.parseInt(changeArrivalTimeInput.getText()));
+                    this.schedule.getJourneyList().get(
+                            this.schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
+                    ).setArrivalTime(Integer.parseInt(changeArrivalTimeInput.getText()));
 
                 } else if (toCangeComboBox.getValue().equals("vertrek tijd")) {
-                    this.schedule.getJourneyList().get(this.schedule.getJourneyList()
-                            .indexOf(journeySelectionComboBox.getValue())).setDepartureTime(Integer.parseInt(changeDepartureTimeInput.getText()));
+                    this.schedule.getJourneyList().get(
+                            this.schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
+                    ).setDepartureTime(Integer.parseInt(changeDepartureTimeInput.getText()));
 
                 }
                 super.callMainView();
