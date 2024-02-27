@@ -35,9 +35,6 @@ public class CreateWagonPopup extends SchedulePopupView {
         TextField wagonCapacityInput = new TextField();
         VBox wagonCapacityBox = new VBox(wagonCapacity,wagonCapacityInput);
 
-        Button cancelButton = new Button("Annuleer");
-        cancelButton.setOnAction(e -> super.callMainView());
-
         Button saveButton = new Button("Voeg toe");
         saveButton.setOnAction(e -> {
             if (wagonCapacity.getText().isEmpty() || idNumberWagonInput.getText().isEmpty()) {
@@ -54,7 +51,7 @@ public class CreateWagonPopup extends SchedulePopupView {
             }
         });
 
-        FlowPane buttonBar = new FlowPane(cancelButton, saveButton);
+        FlowPane buttonBar = new FlowPane(super.getCloseButton(), saveButton);
 
         VBox inputBox = new VBox(idNumberWagonBox, wagonCapacityBox);
         pane.setCenter(inputBox);

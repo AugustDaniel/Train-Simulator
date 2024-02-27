@@ -31,8 +31,6 @@ public class DeletePlatformPopup extends SchedulePopupView {
         ComboBox<Platform> platformComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getPlatformList()));
         VBox trainBox = new VBox(platformLabel, platformComboBox);
 
-        Button cancelButton = new Button("Annuleer");
-        cancelButton.setOnAction(e -> super.callMainView());
         Button saveButton = new Button("Verwijder");
         saveButton.setOnAction(e -> {
             if (platformComboBox.getSelectionModel().isEmpty()) {
@@ -47,7 +45,7 @@ public class DeletePlatformPopup extends SchedulePopupView {
             }
         });
 
-        FlowPane buttonBar = new FlowPane(cancelButton, saveButton);
+        FlowPane buttonBar = new FlowPane(super.getCloseButton(), saveButton);
 
         VBox inputBox = new VBox(trainBox);
         pane.setCenter(inputBox);
