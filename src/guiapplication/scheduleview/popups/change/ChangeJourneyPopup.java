@@ -59,7 +59,7 @@ public class ChangeJourneyPopup extends SchedulePopupView {
         VBox changeDepartureTimeIntoBox = new VBox(ChangeDepartureTimeIntoLabel,changeDepartureTimeInput);
 
 
-        Button saveButton = new Button("Voeg toe");
+        Button saveButton = new Button("Verander");
         saveButton.setOnAction(e -> {
             if (journeySelectionComboBox.getSelectionModel().isEmpty() || toCangeComboBox.getSelectionModel().isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
