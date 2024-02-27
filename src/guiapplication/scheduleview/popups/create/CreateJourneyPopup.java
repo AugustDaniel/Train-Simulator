@@ -96,7 +96,7 @@ public class CreateJourneyPopup extends SchedulePopupView {
         int time = 0;
         if (Integer.parseInt(departureTimeInput.getText()) - Integer.parseInt(arrivalTimeInput.getText()) != 5){
             time = 1;
-        } else if (departureTimeInput.getText().length() < 4 || arrivalTimeInput.getText().length() < 4 || Integer.parseInt(arrivalTimeInput.getText()) > 2359 || Integer.parseInt(departureTimeInput.getText()) > 2359) {
+        } else if (departureTimeInput.getText().length() == 4 || arrivalTimeInput.getText().length() == 4 || Integer.parseInt(arrivalTimeInput.getText()) > 2359 || Integer.parseInt(departureTimeInput.getText()) > 2359) {
             time = 2;
         }
         return time;
