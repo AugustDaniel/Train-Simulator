@@ -4,9 +4,11 @@ package guiapplication;
 import data.*;
 import guiapplication.scheduleview.components.ScheduleView;
 import javafx.application.Application;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -33,11 +35,14 @@ public class GuiMain extends Application {
         TabPane tabPane = new TabPane();
         tabPane.getTabs().add(new Tab("Trein tabel",scheduleView.getNode()));
 
-        // set screen size of Gui to max
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        double width = screenSize.getWidth();
-        double height = screenSize.getHeight();
-        tabPane.setPrefSize(width, height);
+        // to prevent flashing of screen when launching
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds();
+        primaryStage.setWidth(bounds.getWidth());
+        primaryStage.setHeight(bounds.getHeight());
+
+        // sets window to maximized
+        primaryStage.setMaximized(true);
 
         // prevent removing of tabs
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
