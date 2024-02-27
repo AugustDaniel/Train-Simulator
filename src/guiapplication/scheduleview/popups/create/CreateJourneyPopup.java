@@ -53,6 +53,16 @@ public class CreateJourneyPopup extends SchedulePopupView {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setHeaderText("Error, 2 treinen overlappen qua tijd");
                 alert.showAndWait();
+            } else if (timeBetweenArriveAndDeparture() != 0) {
+                if (timeBetweenArriveAndDeparture() == 1) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setHeaderText("Error, de tijd tussen de aankomst en vertrek van de trein is niet 5 minuten");
+                    alert.showAndWait();
+                } else if (timeBetweenArriveAndDeparture() == 2) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setHeaderText("Error, de aankomst- en vertrektijd moet tussen 0000 en 2359 zitten");
+                    alert.showAndWait();
+                }
             } else {
                 this.schedule.addJourney(new Journey(
                         Integer.parseInt(arrivalTimeInput.getText()),
@@ -80,5 +90,15 @@ public class CreateJourneyPopup extends SchedulePopupView {
             }
         }
             return overlapping;
+    }
+
+    public int timeBetweenArriveAndDeparture(){
+        int time = 0;
+        if (Integer.parseInt(departureTimeInput.getText()) - Integer.parseInt(arrivalTimeInput.getText()) != 5){
+            time = 1;
+        } else if (departureTimeInput.getText().length() < 4 || arrivalTimeInput.getText().length() < 4 || Integer.parseInt(arrivalTimeInput.getText()) > 2359 || Integer.parseInt(departureTimeInput.getText()) > 2359) {
+            time = 2;
+        }
+        return time;
     }
 }
