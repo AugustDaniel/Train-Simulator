@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import util.TimeFormatter;
 
 import java.sql.Time;
+import java.time.LocalTime;
 
 public class CreateJourneyPopup extends SchedulePopupView {
     private Schedule schedule;
@@ -70,9 +71,10 @@ public class CreateJourneyPopup extends SchedulePopupView {
                 alert.setHeaderText("Error, er is geen trein populariteit toegevoegd of is niet tussen de 1 en 10");
                 alert.showAndWait();
             } else {
+                LocalTime inputTime = TimeFormatter.intToLocalTime(Integer.parseInt(departureTimeInput.getText()));
                 this.schedule.addJourney(new Journey(
-                        TimeFormatter.intToLocalTime(Integer.parseInt(departureTimeInput.getText())- 10),
-                        TimeFormatter.intToLocalTime(Integer.parseInt(departureTimeInput.getText())),
+                        inputTime.minusMinutes(10),
+                        inputTime,
                         trainComboBox.getValue(),
                         Integer.parseInt(popularityInput.getText()),
                         platformComboBox.getValue()

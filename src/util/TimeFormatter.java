@@ -21,12 +21,14 @@ public class TimeFormatter {
             minutes = Integer.parseInt(string);
         }
 
+        System.out.println( LocalTime.of(hours, minutes));
         return LocalTime.of(hours, minutes);
     }
 
     public static int localTimeToInt(LocalTime time) {
         int hours = time.getHour() * 100;
         int minutes = time.getMinute();
+//        System.out.println(hours + minutes);
         return hours + minutes;
     }
 }
