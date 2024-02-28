@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+import util.TimeFormatter;
 
 import java.util.ArrayList;
 
@@ -78,12 +79,12 @@ public class ChangeJourneyPopup extends SchedulePopupView {
                 } else if (toCangeComboBox.getValue().equals("aankomst tijd")) {
                     this.schedule.getJourneyList().get(
                             this.schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
-                    ).setArrivalTime(Integer.parseInt(changeArrivalTimeInput.getText()));
+                    ).setArrivalTime(TimeFormatter.intToLocalTime(Integer.parseInt(changeArrivalTimeInput.getText())));
 
                 } else if (toCangeComboBox.getValue().equals("vertrek tijd")) {
                     this.schedule.getJourneyList().get(
                             this.schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
-                    ).setDepartureTime(Integer.parseInt(changeDepartureTimeInput.getText()));
+                    ).setDepartureTime(TimeFormatter.intToLocalTime(Integer.parseInt(changeDepartureTimeInput.getText())));
 
                 }
                 super.callMainView();

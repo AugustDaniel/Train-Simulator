@@ -10,6 +10,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.collections.ObservableList;
+import util.TimeFormatter;
+
+import java.sql.Time;
 
 public class CreateJourneyPopup extends SchedulePopupView {
     private Schedule schedule;
@@ -68,8 +71,8 @@ public class CreateJourneyPopup extends SchedulePopupView {
                 alert.showAndWait();
             } else {
                 this.schedule.addJourney(new Journey(
-                        Integer.parseInt(departureTimeInput.getText()) - 10,
-                        Integer.parseInt(departureTimeInput.getText()),
+                        TimeFormatter.intToLocalTime(Integer.parseInt(departureTimeInput.getText())- 10),
+                        TimeFormatter.intToLocalTime(Integer.parseInt(departureTimeInput.getText())),
                         trainComboBox.getValue(),
                         Integer.parseInt(popularityInput.getText()),
                         platformComboBox.getValue()
@@ -89,7 +92,9 @@ public class CreateJourneyPopup extends SchedulePopupView {
     public Boolean overlappingTrains() {
         Boolean overlapping = false;
         for (Journey journey : schedule.getJourneyList()) {
-            if (Integer.parseInt(departureTimeInput.getText()) - 10 <= journey.getDepartureTime() && Integer.parseInt(departureTimeInput.getText()) >= journey.getArrivalTime() && platformComboBox.getValue().equals(journey.getPlatform())) {
+            if (Integer.parseInt(departureTimeInput.getText()) - 10 <= TimeFormatter.localTimeToInt(journey.getDepartureTime())
+                    && Integer.parseInt(departureTimeInput.getText()) >= TimeFormatter.localTimeToInt(journey.getArrivalTime())
+                    && platformComboBox.getValue().equals(journey.getPlatform())) {
                 overlapping = true;
             }
         }

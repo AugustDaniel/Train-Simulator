@@ -1,15 +1,16 @@
 package data;
 
 import java.io.Serializable;
+import java.time.LocalTime;
 
 public class Journey implements Serializable {
-    private int arrivalTime;
-    private int departureTime;
+    private LocalTime arrivalTime;
+    private LocalTime departureTime;
     private Train train;
     private int popularity;
     private Platform platform;
 
-    public Journey(int arrivalTime, int departureTime, Train train, int popularity, Platform platform) {
+    public Journey(LocalTime arrivalTime, LocalTime departureTime, Train train, int popularity, Platform platform) {
         this.arrivalTime = arrivalTime;
         this.departureTime = departureTime;
         this.train = train;
@@ -17,11 +18,11 @@ public class Journey implements Serializable {
         this.platform = platform;
     }
 
-    public int getArrivalTime() {
+    public LocalTime getArrivalTime() {
         return arrivalTime;
     }
 
-    public int getDepartureTime() {
+    public LocalTime getDepartureTime() {
         return departureTime;
     }
 
@@ -37,11 +38,11 @@ public class Journey implements Serializable {
         return this.popularity;
     }
 
-    public void setArrivalTime(int arrivalTime) {
+    public void setArrivalTime(LocalTime arrivalTime) {
         this.arrivalTime = arrivalTime;
     }
 
-    public void setDepartureTime(int departureTime) {
+    public void setDepartureTime(LocalTime departureTime) {
         this.departureTime = departureTime;
     }
 
