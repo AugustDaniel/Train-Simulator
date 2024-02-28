@@ -17,7 +17,7 @@ public class Journey implements Serializable {
         this.popularity = popularity;
         this.platform = platform;
     }
-
+    
     public LocalTime getArrivalTime() {
         return arrivalTime;
     }
