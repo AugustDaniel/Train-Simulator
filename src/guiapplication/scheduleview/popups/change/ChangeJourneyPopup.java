@@ -81,10 +81,18 @@ public class ChangeJourneyPopup extends SchedulePopupView {
                             this.schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
                     ).setArrivalTime(TimeFormatter.intToLocalTime(Integer.parseInt(changeArrivalTimeInput.getText())));
 
+                    this.schedule.getJourneyList().get(
+                            this.schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
+                    ).setDepartureTime(TimeFormatter.intToLocalTime(Integer.parseInt(changeArrivalTimeInput.getText())).plusMinutes(10));
+
                 } else if (toCangeComboBox.getValue().equals("vertrek tijd")) {
                     this.schedule.getJourneyList().get(
                             this.schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
                     ).setDepartureTime(TimeFormatter.intToLocalTime(Integer.parseInt(changeDepartureTimeInput.getText())));
+
+                    this.schedule.getJourneyList().get(
+                            this.schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
+                    ).setArrivalTime(TimeFormatter.intToLocalTime(Integer.parseInt(changeDepartureTimeInput.getText())).minusMinutes(10));
 
                 }
                 super.callMainView();
