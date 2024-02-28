@@ -51,7 +51,6 @@ public class CreateTrainPopup extends SchedulePopupView {
                 alert.setHeaderText("Error, er is geen data of er zijn teveel karakters toegevoegd");
                 alert.showAndWait();
             }
-
         });
         FlowPane buttonBar = new FlowPane(super.getCloseButton(), saveButton);
         buttonBar.setPadding(new Insets(10));

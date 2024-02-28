@@ -6,12 +6,14 @@ public class Journey implements Serializable {
     private int arrivalTime;
     private int departureTime;
     private Train train;
+    private int popularity;
     private Platform platform;
 
-    public Journey(int arrivalTime, int departureTime, Train train, Platform platform) {
+    public Journey(int arrivalTime, int departureTime, Train train, int popularity, Platform platform) {
         this.arrivalTime = arrivalTime;
         this.departureTime = departureTime;
         this.train = train;
+        this.popularity = popularity;
         this.platform = platform;
     }
 
@@ -29,6 +31,10 @@ public class Journey implements Serializable {
 
     public Platform getPlatform() {
         return platform;
+    }
+
+    public int getTrainPopularity(){
+        return this.popularity;
     }
 
     public void setArrivalTime(int arrivalTime) {

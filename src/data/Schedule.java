@@ -42,10 +42,6 @@ public class Schedule implements Serializable {
         this.wagonList.add(newWagon);
     }
 
-    public void changeTrain(){
-        //todo needs body
-    }
-
     public void deleteTrain(Train train){
         Iterator<Journey> journeyIterator = journeyList.iterator();
 
@@ -127,7 +123,9 @@ public class Schedule implements Serializable {
         return wagonList;
     }
 
-    //TODO tescode
+    /*
+        Testcode
+     */
     public void initTestData(){
 
         //adding some wagons to list
@@ -171,8 +169,8 @@ public class Schedule implements Serializable {
         this.addPlatform(new Platform(3));
 
         //adding some journeys to list
-        this.addJourney(new Journey(1000, 1010, this.trainList.get(0), this.platformList.get(0)));
-        this.addJourney(new Journey(1020, 1030, this.trainList.get(1), this.platformList.get(1)));
-        this.addJourney(new Journey(1040, 1050, this.trainList.get(2), this.platformList.get(2)));
+        this.addJourney(new Journey(1000, 1010, this.trainList.get(0), 6, this.platformList.get(0)));
+        this.addJourney(new Journey(1020, 1030, this.trainList.get(1), 3, this.platformList.get(1)));
+        this.addJourney(new Journey(1040, 1050, this.trainList.get(2), 8, this.platformList.get(2)));
     }
 }

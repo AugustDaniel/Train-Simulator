@@ -13,7 +13,6 @@ import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 
-//TODO add change functionality
 public class ChangePlatformPopup extends SchedulePopupView {
 
     private Schedule schedule;

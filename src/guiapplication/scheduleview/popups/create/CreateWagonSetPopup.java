@@ -53,7 +53,6 @@ public class CreateWagonSetPopup extends SchedulePopupView {
                 alert.setHeaderText("Error, je bent data vergeten in te vullen");
                 alert.showAndWait();
             } else {
-                //TODO add correct parameters
                 List<Wagon> addedWagons = new ArrayList<>();
                 switch (amountSelectionComboBox.getValue()){
                     case 1:

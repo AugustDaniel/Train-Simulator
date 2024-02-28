@@ -56,7 +56,6 @@ public class ScheduleBuilderView implements View {
         Button switchModeButton = new Button("Verander modus");
         switchModeButton.setOnAction(event -> {
             switch (menuToggle) {
-                //todo maybe this needs to be better idk
                 case CREATE:
                     menuToggle = MenuMode.DELETE;
                     break;

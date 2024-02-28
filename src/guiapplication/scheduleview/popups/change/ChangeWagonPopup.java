@@ -13,7 +13,6 @@ import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO add change functionality
 public class ChangeWagonPopup extends SchedulePopupView {
 
     private Schedule schedule;

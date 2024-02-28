@@ -14,6 +14,7 @@ import javafx.collections.ObservableList;
 public class CreateJourneyPopup extends SchedulePopupView {
     private Schedule schedule;
     private TextField departureTimeInput;
+    private TextField popularityInput;
     private ComboBox<Platform> platformComboBox;
 
     public CreateJourneyPopup(ReturnableView mainView, Schedule schedule) {
@@ -29,9 +30,13 @@ public class CreateJourneyPopup extends SchedulePopupView {
         this.departureTimeInput = new TextField();
         VBox departureTimeBox = new VBox(departureTimeLabel, departureTimeInput);
 
-        Label trainInfo = new Label("Kies uit trein:");
+        Label trainLabel = new Label("Kies uit trein:");
         ComboBox<Train> trainComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getTrainList()));
-        VBox trainBox = new VBox(trainInfo, trainComboBox);
+        VBox trainBox = new VBox(trainLabel, trainComboBox);
+
+        Label popularityLabel = new Label("Voer trein populariteit in (1-10):");
+        this.popularityInput = new TextField();
+        VBox popularityBox = new VBox(popularityLabel, popularityInput);
 
         Label platformInfo = new Label("Kies uit perron:");
         ObservableList<Platform> platformList = FXCollections.observableArrayList(this.schedule.getPlatformList());
@@ -57,11 +62,16 @@ public class CreateJourneyPopup extends SchedulePopupView {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setHeaderText("Error, 2 treinen overlappen qua tijd");
                 alert.showAndWait();
+            } else if (Integer.parseInt(popularityInput.getText()) <= 0 || Integer.parseInt(popularityInput.getText()) > 10) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setHeaderText("Error, er is geen trein populariteit toegevoegd of is niet tussen de 1 en 10");
+                alert.showAndWait();
             } else {
                 this.schedule.addJourney(new Journey(
                         Integer.parseInt(departureTimeInput.getText()) - 10,
                         Integer.parseInt(departureTimeInput.getText()),
                         trainComboBox.getValue(),
+                        Integer.parseInt(popularityInput.getText()),
                         platformComboBox.getValue()
                 ));
                 super.callMainView();
@@ -70,7 +80,7 @@ public class CreateJourneyPopup extends SchedulePopupView {
 
         FlowPane buttonBar = new FlowPane(super.getCloseButton(), saveButton);
 
-        VBox inputBox = new VBox(departureTimeBox, trainBox, platformBox);
+        VBox inputBox = new VBox(departureTimeBox, popularityBox, trainBox, platformBox);
         pane.setCenter(inputBox);
         pane.setBottom(buttonBar);
         return pane;
