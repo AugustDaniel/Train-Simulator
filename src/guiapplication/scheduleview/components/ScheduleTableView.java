@@ -27,14 +27,17 @@ public class ScheduleTableView implements View {
         TableView<Journey> table = new TableView<>();
         table.setItems(journeys);
 
-        TableColumn<Journey, Integer> peron = new TableColumn<>("Platform");
-        peron.setCellValueFactory(e -> new SimpleIntegerProperty(e.getValue().getPlatform().getPlatformNumber()).asObject());
+        TableColumn<Journey, Integer> platform = new TableColumn<>("Platform");
+        platform.setCellValueFactory(e -> new SimpleIntegerProperty(e.getValue().getPlatform().getPlatformNumber()).asObject());
 
         TableColumn<Journey, Integer> wagons = new TableColumn<>("Wagons(Capaciteit)");
         wagons.setCellValueFactory(e -> new SimpleIntegerProperty(e.getValue().getTrain().getCapacity()).asObject());
 
-        TableColumn<Journey, String> train = new TableColumn<>("Trein");
-        train.setCellValueFactory(e -> new SimpleStringProperty(e.getValue().getTrain().getTrainIDNumber()));
+        TableColumn<Journey, String> trainID = new TableColumn<>("TreinID");
+        trainID.setCellValueFactory(e -> new SimpleStringProperty(e.getValue().getTrain().getTrainIDNumber()));
+
+        TableColumn<Journey, Integer> trainPopularity = new TableColumn<>("Reis populareit");
+        trainPopularity.setCellValueFactory(e -> new SimpleIntegerProperty(e.getValue().getTrainPopularity()).asObject());
 
         TableColumn<Journey, Integer> arrival = new TableColumn<>("Aankomst");
         arrival.setCellValueFactory(new PropertyValueFactory<>("arrivalTime"));
@@ -42,7 +45,7 @@ public class ScheduleTableView implements View {
         TableColumn<Journey, Integer> departure = new TableColumn<>("Vertrek");
         departure.setCellValueFactory(new PropertyValueFactory<>("departureTime"));
 
-        table.getColumns().addAll(peron, train, wagons, arrival, departure);
+        table.getColumns().addAll(platform, trainID, trainPopularity, wagons, arrival, departure);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         return table;

@@ -38,7 +38,6 @@ public class ScheduleFileView implements View {
                     }
                 }
         );
-
         Button loadScheduleButton = new Button("Laad planning");
         loadScheduleButton.setOnAction(e ->
                 {
@@ -51,12 +50,10 @@ public class ScheduleFileView implements View {
                     }
                 }
         );
-
         VBox box = new VBox(saveScheduleButton,loadScheduleButton);
         box.setPadding(new Insets(20,10,10,10));
         box.setSpacing(10);
         box.setAlignment(Pos.BASELINE_LEFT);
-
         return box;
     }
 }

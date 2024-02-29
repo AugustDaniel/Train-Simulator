@@ -1,26 +1,28 @@
-package guiapplication.scheduleview.popups;
+package guiapplication.scheduleview.popups.create;
 
-import data.Schedule;
-import data.ScheduleBuilder;
+import data.*;
+import guiapplication.PopupView;
 import guiapplication.ReturnableView;
+import guiapplication.scheduleview.popups.SchedulePopupView;
+import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
+import java.util.List;
+
+
 public class CreateTrainPopup extends SchedulePopupView {
 
-    private ScheduleBuilder scheduleBuilder;
+    private Schedule schedule;
 
 
     public CreateTrainPopup(ReturnableView mainView, Schedule schedule) {
         super(mainView);
-        this.scheduleBuilder = new ScheduleBuilder(schedule);
+        this.schedule = schedule;
     }
 
     @Override
@@ -29,12 +31,19 @@ public class CreateTrainPopup extends SchedulePopupView {
 
         Label infoLabel = new Label("Voer trein ID in (max 10 karakters):");
         TextField inputField = new TextField();
-        VBox inputBox = new VBox(infoLabel, inputField);
+        VBox idBox = new VBox(infoLabel, inputField);
+
+        Label platformInfo = new Label("Kies uit wagon sets:");
+        ComboBox<List<Wagon>> trainComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getWagonSetList()));
+        VBox WagonSetBox = new VBox(platformInfo, trainComboBox);
 
         Button saveButton = new Button("Voeg toe");
         saveButton.setOnAction(e -> {
             if (inputField.getText().length() < 11 && !inputField.getText().isEmpty()){//heb er een limiet aan gezet
-                this.scheduleBuilder.createTrain(inputField.getText());
+                this.schedule.addTrain(new Train(
+                        inputField.getText(),
+                        trainComboBox.getValue()
+                ));
                 inputField.clear();
                 super.callMainView();
             }else if (inputField.getText().isEmpty() || inputField.getText().length() >= 11){
@@ -42,11 +51,11 @@ public class CreateTrainPopup extends SchedulePopupView {
                 alert.setHeaderText("Error, er is geen data of er zijn teveel karakters toegevoegd");
                 alert.showAndWait();
             }
-
         });
         FlowPane buttonBar = new FlowPane(super.getCloseButton(), saveButton);
         buttonBar.setPadding(new Insets(10));
 
+        VBox inputBox = new VBox(idBox, WagonSetBox);
         pane.setCenter(inputBox);
         pane.setBottom(buttonBar);
         return pane;
