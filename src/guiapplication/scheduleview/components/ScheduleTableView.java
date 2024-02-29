@@ -27,7 +27,7 @@ public class ScheduleTableView implements View {
         TableView<Journey> table = new TableView<>();
         table.setItems(journeys);
 
-        TableColumn<Journey, Integer> platform = new TableColumn<>("Perron");
+        TableColumn<Journey, Integer> platform = new TableColumn<>("Platform");
         platform.setCellValueFactory(e -> new SimpleIntegerProperty(e.getValue().getPlatform().getPlatformNumber()).asObject());
 
         TableColumn<Journey, Integer> wagons = new TableColumn<>("Wagons(Capaciteit)");
