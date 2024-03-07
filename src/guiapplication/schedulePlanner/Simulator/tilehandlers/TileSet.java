@@ -1,4 +1,4 @@
-package guiapplication.schedulePlanner.Simulator;
+package guiapplication.schedulePlanner.Simulator.tilehandlers;
 
 import javax.imageio.ImageIO;
 import javax.json.JsonArray;

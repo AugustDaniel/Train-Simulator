@@ -1,23 +1,25 @@
 package guiapplication.schedulePlanner.Simulator;
 
+import guiapplication.schedulePlanner.View;
 import javafx.animation.AnimationTimer;
-import javafx.application.Application;
-import javafx.scene.Scene;
+import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 import org.jfree.fx.FXGraphics2D;
 import org.jfree.fx.ResizableCanvas;
 
 import java.awt.*;
 
-public class MapDemo extends Application {
+public class MapView implements View {
 
     private Map map;
     private ResizableCanvas canvas;
 
+    public void update(double deltaTime) {}
+
     @Override
-    public void start(Stage stage) throws Exception {
+    public Node getNode() {
         BorderPane mainPane = new BorderPane();
+        map = new Map("/TrainStationPlannerMap.tmj");
         canvas = new ResizableCanvas(g -> draw(g), mainPane);
         mainPane.setCenter(canvas);
         FXGraphics2D g2d = new FXGraphics2D(canvas.getGraphicsContext2D());
@@ -34,34 +36,14 @@ public class MapDemo extends Application {
             }
         }.start();
 
-        stage.setScene(new Scene(mainPane));
-        stage.setTitle("Json Test");
-        stage.show();
         draw(g2d);
 
-
+        return mainPane;
     }
-
-
-    public void init() {
-        map = new Map("/TrainStationPlannerMap.tmj");
-    }
-
 
     public void draw(Graphics2D g) {
         g.setBackground(Color.black);
         g.clearRect(0, 0, (int) canvas.getWidth(), (int) canvas.getHeight());
         map.draw(g);
     }
-
-    public void update(double deltaTime) {
-
-
-    }
-
-
-    public static void main(String[] args) {
-        launch(MapDemo.class);
-    }
-
 }

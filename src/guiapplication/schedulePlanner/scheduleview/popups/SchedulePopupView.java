@@ -1,7 +1,7 @@
 package guiapplication.schedulePlanner.scheduleview.popups;
 
-import guiapplication.schedulePlanner.scheduleview.PopupView;
-import guiapplication.schedulePlanner.scheduleview.ReturnableView;
+import guiapplication.schedulePlanner.PopupView;
+import guiapplication.schedulePlanner.ReturnableView;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;

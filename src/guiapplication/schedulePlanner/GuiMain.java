@@ -1,7 +1,8 @@
-package guiapplication.schedulePlanner.scheduleview;
+package guiapplication.schedulePlanner;
 
 
 import data.*;
+import guiapplication.schedulePlanner.Simulator.MapView;
 import guiapplication.schedulePlanner.scheduleview.components.ScheduleView;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
@@ -15,6 +16,7 @@ public class GuiMain extends Application {
 
     private ScheduleSubject subject;
     private ScheduleView scheduleView;
+    private MapView mapView;
 
     public static void main(String[] args) {
         launch(GuiMain.class);
@@ -25,6 +27,7 @@ public class GuiMain extends Application {
         this.subject = new ScheduleSubject();
         this.subject.setState(new Schedule());
         this.scheduleView = new ScheduleView(this.subject);
+        this.mapView = new MapView();
     }
 
     @Override
@@ -32,6 +35,7 @@ public class GuiMain extends Application {
         // create tabs
         TabPane tabPane = new TabPane();
         tabPane.getTabs().add(new Tab("Trein tabel",scheduleView.getNode()));
+        tabPane.getTabs().add(new Tab("Simulatie",mapView.getNode()));
 
         // to prevent flashing of screen when launching
         Screen screen = Screen.getPrimary();

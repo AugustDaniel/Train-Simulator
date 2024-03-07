@@ -1,7 +1,7 @@
 package guiapplication.schedulePlanner.scheduleview.components;
 
 import data.Journey;
-import guiapplication.schedulePlanner.scheduleview.View;
+import guiapplication.schedulePlanner.View;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;

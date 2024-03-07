@@ -1,7 +1,7 @@
 package guiapplication.schedulePlanner.scheduleview.components;
 
 import data.Schedule;
-import guiapplication.schedulePlanner.scheduleview.View;
+import guiapplication.schedulePlanner.View;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;

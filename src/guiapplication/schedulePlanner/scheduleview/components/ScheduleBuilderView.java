@@ -1,8 +1,8 @@
 package guiapplication.schedulePlanner.scheduleview.components;
 
-import guiapplication.schedulePlanner.scheduleview.PopupView;
-import guiapplication.schedulePlanner.scheduleview.ReturnableView;
-import guiapplication.schedulePlanner.scheduleview.View;
+import guiapplication.schedulePlanner.PopupView;
+import guiapplication.schedulePlanner.ReturnableView;
+import guiapplication.schedulePlanner.View;
 import guiapplication.schedulePlanner.scheduleview.popups.change.*;
 import guiapplication.schedulePlanner.scheduleview.popups.create.*;
 import guiapplication.schedulePlanner.scheduleview.popups.delete.*;

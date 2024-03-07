@@ -1,4 +1,4 @@
-package guiapplication.schedulePlanner.scheduleview;
+package guiapplication.schedulePlanner;
 
 import javafx.scene.Node;
 

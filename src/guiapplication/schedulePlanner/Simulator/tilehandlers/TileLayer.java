@@ -1,4 +1,4 @@
-package guiapplication.schedulePlanner.Simulator;
+package guiapplication.schedulePlanner.Simulator.tilehandlers;
 
 import javax.json.JsonObject;
 import java.awt.*;
