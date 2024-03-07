@@ -1,4 +1,4 @@
-package guiapplication.schedulePlanner.Simulator;
+package guiapplication.schedulePlanner.Simulator.tilehandlers;
 
 import guiapplication.schedulePlanner.Simulator.tilehandlers.TileHandler;
 import guiapplication.schedulePlanner.Simulator.tilehandlers.TileMap;

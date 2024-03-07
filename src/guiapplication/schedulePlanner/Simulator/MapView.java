@@ -1,5 +1,6 @@
 package guiapplication.schedulePlanner.Simulator;
 
+import guiapplication.schedulePlanner.Simulator.tilehandlers.Map;
 import guiapplication.schedulePlanner.View;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Node;
