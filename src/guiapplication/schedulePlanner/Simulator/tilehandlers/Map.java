@@ -1,9 +1,5 @@
 package guiapplication.schedulePlanner.Simulator.tilehandlers;
 
-import guiapplication.schedulePlanner.Simulator.tilehandlers.TileHandler;
-import guiapplication.schedulePlanner.Simulator.tilehandlers.TileMap;
-import guiapplication.schedulePlanner.Simulator.tilehandlers.TileSet;
-
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
