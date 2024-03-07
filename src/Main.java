@@ -1,4 +1,4 @@
-import guiapplication.GuiMain;
+import guiapplication.schedulePlanner.scheduleview.GuiMain;
 
 class Main{
     public static void main(String[] args) {
