@@ -15,14 +15,8 @@ public class Map implements TileHandler {
 
     public Map(String fileName) {
 
-        JsonReader reader = null;
-//        try {
-//            reader = Json.createReader(new FileInputStream(fileName));
-//        } catch (FileNotFoundException e) {
-//            throw new RuntimeException(e);
-//        }
+        JsonReader reader = Json.createReader(getClass().getResourceAsStream(fileName));
 
-      reader = Json.createReader(getClass().getResourceAsStream(fileName));
 
         this.root = reader.readObject();
         this.tileSet = new TileSet(this.root.getJsonArray("tilesets"));

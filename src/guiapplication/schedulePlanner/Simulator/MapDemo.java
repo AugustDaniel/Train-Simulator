@@ -44,7 +44,7 @@ public class MapDemo extends Application {
 
 
     public void init() {
-        map = new Map("rec/TrainStationPlannerMap.tmj");
+        map = new Map("/TrainStationPlannerMap.tmj");
     }
 
 
