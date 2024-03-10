@@ -7,10 +7,8 @@ public class Camera {
 
     private Point2D target;
     private float zoom;
-    private double screenWidth;
-    private double screenHeight;
 
-    public Camera(Point2D target, float zoom, double screenWidth, double screenHeight) {
+    public Camera(Point2D target, float zoom) {
         this.target = target;
         this.zoom = zoom;
     }
@@ -41,7 +39,6 @@ public class Camera {
 
     public AffineTransform getTransform() {
         AffineTransform transform = new AffineTransform();
-        transform.translate(this.screenWidth/2, this.screenHeight/2);
         transform.scale(this.zoom, this.zoom);
         transform.translate(this.target.getX(), this.target.getY());
         return transform;

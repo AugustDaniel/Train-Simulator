@@ -9,8 +9,7 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
 import org.jfree.fx.FXGraphics2D;
 import org.jfree.fx.ResizableCanvas;
-
-import java.awt.*;
+import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -20,12 +19,23 @@ public class MapView implements View {
 
     private Map map;
     private ResizableCanvas canvas;
+    private BorderPane mainPane;
     ArrayList<NPC> npcs = new ArrayList<>();
     private Camera camera;
     private Point2D screenMousePos;
     private Point2D worldMousePos;
     private Point2D distance;
-    private boolean scrolled = true;
+
+    public MapView() {
+        mainPane = new BorderPane();
+        canvas = new ResizableCanvas(this::draw, mainPane);
+        camera = new Camera(new Point2D.Double(0, 0), 1);
+        map = new Map("/TrainStationPlannerMap.tmj");
+        Point2D nullpoint = new Point2D.Double(0, 0);
+        worldMousePos = nullpoint;
+        screenMousePos = nullpoint;
+        distance = nullpoint;
+    }
 
     public void update(double deltaTime) {
         for (NPC npc : npcs) {
@@ -35,10 +45,6 @@ public class MapView implements View {
 
     @Override
     public Node getNode() {
-        BorderPane mainPane = new BorderPane();
-        map = new Map("/TrainStationPlannerMap.tmj");
-        canvas = new ResizableCanvas(g -> draw(g), mainPane);
-        camera = new Camera(new Point2D.Double(0,0), 1, canvas.getWidth(), canvas.getHeight());
         mainPane.setCenter(canvas);
         FXGraphics2D g2d = new FXGraphics2D(canvas.getGraphicsContext2D());
         new AnimationTimer() {
@@ -53,10 +59,6 @@ public class MapView implements View {
                 draw(g2d);
             }
         }.start();
-        Point2D nullpoint = new Point2D.Double(0,0);
-        worldMousePos = nullpoint;
-        screenMousePos = nullpoint;
-        distance = nullpoint;
 
         canvas.setOnMousePressed(this::mousePressed);
         canvas.setOnMouseReleased(this::mouseReleased);
@@ -84,16 +86,14 @@ public class MapView implements View {
     }
     //todo je zou hier het kunnen plaatsen want dit is waar de tab gemaakt wordt voor de map
 
-    public void draw(Graphics2D g) {
+    public void draw(FXGraphics2D g) {
         g.setBackground(Color.black);
         g.setTransform(new AffineTransform());
-
+        g.clearRect(0, 0, (int) canvas.getWidth(), (int) canvas.getHeight());
         g.setTransform(camera.getTransform());
-        if (scrolled) {
-            g.clearRect(0, 0, (int) canvas.getWidth(), (int) canvas.getHeight());
-            map.draw(g);
-            scrolled = false;
-        }
+
+        map.draw(g);
+
         for (NPC npc : npcs) {
             npc.draw(g);
         }
@@ -118,9 +118,8 @@ public class MapView implements View {
     }
 
     private void mouseScrolled(ScrollEvent e) {
-        camera.incrementZoom((float) e.getDeltaY() / 1000);
-        draw(new FXGraphics2D(canvas.getGraphicsContext2D()));
-        scrolled = true;
+        worldMousePos = getWorldPos(e.getX(), e.getY());
+        camera.incrementZoom((float) e.getDeltaY() / 1500);
     }
 
     private void mouseReleased(MouseEvent e) {

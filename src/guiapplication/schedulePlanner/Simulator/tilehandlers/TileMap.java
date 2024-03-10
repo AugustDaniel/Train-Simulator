@@ -16,10 +16,7 @@ public class TileMap implements TileHandler {
         this.tileLayers = tileLayers;
         this.layers = new ArrayList<>();
         this.tileSet = tileSet;
-        init();
-    }
 
-    private void init() {
         for (int i = 0; i < this.tileLayers.size(); i++) {
             JsonObject object = this.tileLayers.getJsonObject(i);
             this.layers.add(new TileLayer(object, this.tileSet));
