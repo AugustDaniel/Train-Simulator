@@ -25,6 +25,7 @@ public class MapView implements View {
     private Point2D screenMousePos;
     private Point2D worldMousePos;
     private Point2D distance;
+    private boolean scrolled = true;
 
     public void update(double deltaTime) {
         for (NPC npc : npcs) {
@@ -63,12 +64,17 @@ public class MapView implements View {
         canvas.setOnScroll(this::mouseScrolled);
 
         draw(g2d);
-        canvas.setOnMouseClicked(event -> {
-            npcs.add(new NPC(new Point2D.Double(event.getX(),event.getY()), 0));
+        canvas.setOnMouseClicked(e -> {
+            worldMousePos = getWorldPos(e.getX(), e.getY());
+            screenMousePos = new Point2D.Double(e.getX() / camera.getZoom(), e.getY() / camera.getZoom());
+            npcs.add(new NPC(screenMousePos, 0));
         });
-        canvas.setOnMouseMoved(event -> {
+        canvas.setOnMouseMoved(e -> {
             for (NPC npc : npcs) {
-                npc.setTargetPosition(new Point2D.Double(event.getX(), event.getY()));
+                worldMousePos = getWorldPos(e.getX(), e.getY());
+                screenMousePos = new Point2D.Double(e.getX() / camera.getZoom(), e.getY() / camera.getZoom());
+                npc.setTargetPosition(screenMousePos);
+
             }
         });
 
@@ -81,10 +87,13 @@ public class MapView implements View {
     public void draw(Graphics2D g) {
         g.setBackground(Color.black);
         g.setTransform(new AffineTransform());
-        g.clearRect(0, 0, (int) canvas.getWidth(), (int) canvas.getHeight());
+
         g.setTransform(camera.getTransform());
-        map.draw(g);
-        g.setTransform(new AffineTransform());
+        if (scrolled) {
+            g.clearRect(0, 0, (int) canvas.getWidth(), (int) canvas.getHeight());
+            map.draw(g);
+            scrolled = false;
+        }
         for (NPC npc : npcs) {
             npc.draw(g);
         }
@@ -111,6 +120,7 @@ public class MapView implements View {
     private void mouseScrolled(ScrollEvent e) {
         camera.incrementZoom((float) e.getDeltaY() / 1000);
         draw(new FXGraphics2D(canvas.getGraphicsContext2D()));
+        scrolled = true;
     }
 
     private void mouseReleased(MouseEvent e) {
