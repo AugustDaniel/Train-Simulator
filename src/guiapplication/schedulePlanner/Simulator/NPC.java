@@ -55,7 +55,7 @@ public class NPC {
 
         for (NPC npc : npcs) {
             if(npc != this)
-                if(npc.position.distance(newPosition) <= 64)
+                if(npc.position.distance(newPosition) <= image.getHeight()/2)
                     hasCollision = true;
         }
 
