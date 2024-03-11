@@ -80,6 +80,7 @@ public class Camera {
 
     public AffineTransform getTransform() {
         AffineTransform transform = new AffineTransform();
+        transform.translate(this.canvas.getWidth() / 2, this.canvas.getHeight() / 2);
         transform.scale(this.zoom, this.zoom);
         transform.translate(this.target.getX(), this.target.getY());
 
@@ -90,7 +91,7 @@ public class Camera {
         return new Point2D.Double(operator.apply(i.getX(), j.getX()), operator.apply(i.getY(), j.getY()));
     }
 
-    private Point2D getWorldPos(double x, double y) {
+    public Point2D getWorldPos(double x, double y) {
         try {
             return this.getTransform().inverseTransform(new Point2D.Double(x, y), null);
         } catch (Exception e) {
