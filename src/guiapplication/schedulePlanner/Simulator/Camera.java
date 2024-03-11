@@ -17,12 +17,11 @@ public class Camera {
     private Canvas canvas;
     private Resizable resizable;
     private FXGraphics2D g2d;
-    private Point2D worldMousePos;
     private Point2D screenMousePos;
     private Point2D distance;
 
     public Camera(Canvas canvas, Resizable resizable, FXGraphics2D g2d) {
-        this.target = new Point2D.Double(0, 0);
+        this.target = new Point2D.Double(-canvas.getWidth()*4, -canvas.getHeight()*7); //todo magic numbers is zoom for start of map
         this.zoom = 1;
         this.canvas = canvas;
         this.resizable = resizable;
@@ -35,7 +34,6 @@ public class Camera {
     }
 
     private void mousePressed(MouseEvent e) {
-        worldMousePos = getWorldPos(e.getX(), e.getY());
         screenMousePos = new Point2D.Double(e.getX() / this.zoom, e.getY() / this.zoom);
 
         if (e.isSecondaryButtonDown()) {
@@ -44,7 +42,6 @@ public class Camera {
     }
 
     private void mouseDragged(MouseEvent e) {
-        worldMousePos = getWorldPos(e.getX(), e.getY());
         screenMousePos = new Point2D.Double(e.getX() / this.zoom, e.getY() / this.zoom);
 
         if (e.isSecondaryButtonDown()) {
@@ -53,12 +50,10 @@ public class Camera {
     }
 
     private void mouseScrolled(ScrollEvent e) {
-        worldMousePos = getWorldPos(e.getX(), e.getY());
         this.incrementZoom((float) e.getDeltaY() / 1500);
     }
 
     private void mouseReleased(MouseEvent e) {
-        worldMousePos = null;
         distance = null;
     }
 
@@ -83,7 +78,6 @@ public class Camera {
         transform.translate(this.canvas.getWidth() / 2, this.canvas.getHeight() / 2);
         transform.scale(this.zoom, this.zoom);
         transform.translate(this.target.getX(), this.target.getY());
-
         return transform;
     }
 
