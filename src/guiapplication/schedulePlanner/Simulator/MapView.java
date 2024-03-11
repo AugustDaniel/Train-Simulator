@@ -9,6 +9,7 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
 import org.jfree.fx.FXGraphics2D;
 import org.jfree.fx.ResizableCanvas;
+
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
@@ -29,7 +30,7 @@ public class MapView implements View {
     public MapView() {
         mainPane = new BorderPane();
         canvas = new ResizableCanvas(this::draw, mainPane);
-        camera = new Camera(new Point2D.Double(0, 0), 1);
+        camera = new Camera(canvas, this::draw, new FXGraphics2D(canvas.getGraphicsContext2D()));
         map = new Map("/TrainStationPlannerMap.tmj");
         Point2D nullpoint = new Point2D.Double(0, 0);
         worldMousePos = nullpoint;
@@ -59,11 +60,6 @@ public class MapView implements View {
                 draw(g2d);
             }
         }.start();
-
-        canvas.setOnMousePressed(this::mousePressed);
-        canvas.setOnMouseReleased(this::mouseReleased);
-        canvas.setOnMouseDragged(this::mouseDragged);
-        canvas.setOnScroll(this::mouseScrolled);
 
         draw(g2d);
         canvas.setOnMouseClicked(e -> {
@@ -97,34 +93,6 @@ public class MapView implements View {
         for (NPC npc : npcs) {
             npc.draw(g);
         }
-    }
-
-    private void mousePressed(MouseEvent e) {
-        worldMousePos = getWorldPos(e.getX(), e.getY());
-        screenMousePos = new Point2D.Double(e.getX() / camera.getZoom(), e.getY() / camera.getZoom());
-
-        if (e.isSecondaryButtonDown()) {
-            distance = getDistancePoint((a, b) -> a - b, camera.getTarget(), screenMousePos);
-        }
-    }
-
-    private void mouseDragged(MouseEvent e) {
-        worldMousePos = getWorldPos(e.getX(), e.getY());
-        screenMousePos = new Point2D.Double(e.getX() / camera.getZoom(), e.getY() / camera.getZoom());
-
-        if (e.isSecondaryButtonDown()) {
-            camera.setTarget(getDistancePoint(Double::sum, screenMousePos, distance));
-        }
-    }
-
-    private void mouseScrolled(ScrollEvent e) {
-        worldMousePos = getWorldPos(e.getX(), e.getY());
-        camera.incrementZoom((float) e.getDeltaY() / 1500);
-    }
-
-    private void mouseReleased(MouseEvent e) {
-        worldMousePos = null;
-        distance = null;
     }
 
     private Point2D getDistancePoint(BiFunction<Double, Double, Double> operator, Point2D i, Point2D j) {
