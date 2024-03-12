@@ -19,9 +19,7 @@ public class Camera {
     private FXGraphics2D g2d;
     private Point2D screenMousePos;
     private Point2D distance;
-    private boolean scrolling;
     private Point2D zoomPoint;
-    private AffineTransform tx;
 
 
     public Camera(Canvas canvas, Resizable resizable, FXGraphics2D g2d) {
@@ -30,9 +28,7 @@ public class Camera {
         this.canvas = canvas;
         this.resizable = resizable;
         this.g2d = g2d;
-        this.scrolling = false;
         this.zoomPoint = new Point2D.Double(-canvas.getWidth() * 4, -canvas.getHeight() * 7); //todo magic numbers is zoom for start of map
-        this.tx = new AffineTransform();
 
         canvas.setOnMousePressed(this::mousePressed);
         canvas.setOnMouseReleased(this::mouseReleased);
@@ -54,13 +50,20 @@ public class Camera {
         if (e.isSecondaryButtonDown()) {
             this.target = getDistancePoint(Double::sum, screenMousePos, distance);
         }
-        this.scrolling = false;
     }
 
     private void mouseScrolled(ScrollEvent e) {
-        this.zoomPoint = new Point2D.Double(e.getX(), e.getY());
         this.incrementZoom((float) e.getDeltaY() / 1500);
-        this.scrolling = true;
+        this.zoomPoint = new Point2D.Double(e.getX(), e.getY());
+    }
+
+    public AffineTransform getTransform() {
+        AffineTransform transform = new AffineTransform();
+        transform.translate(this.zoomPoint.getX(), this.zoomPoint.getY());
+        transform.scale(this.zoom, this.zoom);
+        transform.translate(-this.zoomPoint.getX(), -this.zoomPoint.getY());
+        transform.translate(this.target.getX(), this.target.getY());
+        return transform;
     }
 
     private void mouseReleased(MouseEvent e) {
@@ -81,15 +84,6 @@ public class Camera {
 
     public void incrementZoom(float amount) {
         setZoom(this.zoom + amount);
-    }
-
-    public AffineTransform getTransform() {
-        AffineTransform transform = new AffineTransform();
-        transform.translate(this.zoomPoint.getX(), this.zoomPoint.getY());
-        transform.scale(this.zoom, this.zoom);
-        transform.translate(-this.zoomPoint.getX(), -this.zoomPoint.getY());
-        transform.translate(this.target.getX(), this.target.getY());
-        return transform;
     }
 
     public Point2D getDistancePoint(BiFunction<Double, Double, Double> operator, Point2D i, Point2D j) {
