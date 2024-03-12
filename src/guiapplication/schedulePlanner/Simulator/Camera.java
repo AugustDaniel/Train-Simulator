@@ -19,13 +19,20 @@ public class Camera {
     private FXGraphics2D g2d;
     private Point2D screenMousePos;
     private Point2D distance;
+    private boolean scrolling;
+    private Point2D zoomPoint;
+    private AffineTransform tx;
+
 
     public Camera(Canvas canvas, Resizable resizable, FXGraphics2D g2d) {
-        this.target = new Point2D.Double(-canvas.getWidth()*4, -canvas.getHeight()*7); //todo magic numbers is zoom for start of map
+        this.target = new Point2D.Double(-canvas.getWidth() * 4, -canvas.getHeight() * 7); //todo magic numbers is zoom for start of map
         this.zoom = 1;
         this.canvas = canvas;
         this.resizable = resizable;
         this.g2d = g2d;
+        this.scrolling = false;
+        this.zoomPoint = new Point2D.Double(-canvas.getWidth() * 4, -canvas.getHeight() * 7); //todo magic numbers is zoom for start of map
+        this.tx = new AffineTransform();
 
         canvas.setOnMousePressed(this::mousePressed);
         canvas.setOnMouseReleased(this::mouseReleased);
@@ -47,10 +54,13 @@ public class Camera {
         if (e.isSecondaryButtonDown()) {
             this.target = getDistancePoint(Double::sum, screenMousePos, distance);
         }
+        this.scrolling = false;
     }
 
     private void mouseScrolled(ScrollEvent e) {
+        this.zoomPoint = new Point2D.Double(e.getX(), e.getY());
         this.incrementZoom((float) e.getDeltaY() / 1500);
+        this.scrolling = true;
     }
 
     private void mouseReleased(MouseEvent e) {
@@ -75,13 +85,14 @@ public class Camera {
 
     public AffineTransform getTransform() {
         AffineTransform transform = new AffineTransform();
-        transform.translate(this.canvas.getWidth() / 2, this.canvas.getHeight() / 2);
+        transform.translate(this.zoomPoint.getX(), this.zoomPoint.getY());
         transform.scale(this.zoom, this.zoom);
+        transform.translate(-this.zoomPoint.getX(), -this.zoomPoint.getY());
         transform.translate(this.target.getX(), this.target.getY());
         return transform;
     }
 
-    private Point2D getDistancePoint(BiFunction<Double, Double, Double> operator, Point2D i, Point2D j) {
+    public Point2D getDistancePoint(BiFunction<Double, Double, Double> operator, Point2D i, Point2D j) {
         return new Point2D.Double(operator.apply(i.getX(), j.getX()), operator.apply(i.getY(), j.getY()));
     }
 
