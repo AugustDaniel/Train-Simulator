@@ -32,7 +32,7 @@ public class GuiMain extends Application {
         this.subject = new ScheduleSubject();
         this.subject.setState(new Schedule());
         this.scheduleView = new ScheduleView(this.subject);
-        this.mapView = new MapView();
+        this.mapView = new MapView(this.subject);
     }
 
     @Override
