@@ -1,26 +1,20 @@
 package guiapplication.schedulePlanner;
 
 
-import data.*;
+import data.Schedule;
+import data.ScheduleSubject;
 import guiapplication.schedulePlanner.Simulator.MapView;
-import guiapplication.schedulePlanner.Simulator.NPC;
 import guiapplication.schedulePlanner.scheduleview.components.ScheduleView;
-import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import org.jfree.fx.FXGraphics2D;
 import org.jfree.fx.ResizableCanvas;
 
-import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
-import java.util.ArrayList;
+import java.io.IOException;
 
 public class GuiMain extends Application {
 
@@ -34,24 +28,11 @@ public class GuiMain extends Application {
     }
 
     @Override
-    public void init() {
+    public void init() throws IOException {
         this.subject = new ScheduleSubject();
         this.subject.setState(new Schedule());
         this.scheduleView = new ScheduleView(this.subject);
         this.mapView = new MapView();
-//        while(npcs.size() < 10) {
-//            Point2D newPosition = new Point2D.Double(1900 + Math.random()*200, 1900 + Math.random()*200);
-//            boolean hasCollision = false;
-//            for (NPC visitor : npcs) {
-//                if(visitor.getPosition().distance(newPosition) < 64)
-//                    hasCollision = true;
-//            }
-//            if(!hasCollision) {
-//                npcs.add(new NPC(newPosition, 0));
-//                System.out.println("Toegevoegd");
-//            }
-//
-//        }
     }
 
     @Override
