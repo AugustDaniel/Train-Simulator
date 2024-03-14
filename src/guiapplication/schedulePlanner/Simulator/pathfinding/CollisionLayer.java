@@ -4,11 +4,9 @@ import util.graph.Graph;
 import util.graph.Node;
 
 import javax.json.JsonObject;
+import java.awt.geom.Point2D;
 
 public class CollisionLayer {
-
-
-    private JsonObject object;
 
     private Node[][] nodePositions;
     private int layerHeight;
@@ -32,7 +30,7 @@ public class CollisionLayer {
                     continue;
                 }
 
-                nodePositions[y][x] = new Node();
+                nodePositions[y][x] = new Node(new Point2D.Double(x * 32, y * 32));
                 index++;
             }
         }
@@ -57,7 +55,7 @@ public class CollisionLayer {
                     addNodeAsAdjacent(currentNode, nodePositions[y + 1][x]);
                 }
 
-                graph.addNode(y, x , currentNode);
+                graph.addNode(y, x, currentNode);
                 index++;
             }
         }
@@ -65,8 +63,12 @@ public class CollisionLayer {
 
     public void addNodeAsAdjacent(Node currentNode, Node toAdd) {
         if (toAdd != null && currentNode != null) {
-            currentNode.addAdjacentNode(toAdd, 1);
+            currentNode.addAdjacentNode(toAdd);
         }
+    }
+
+    public Graph getGraph() {
+        return this.graph;
     }
 
 }

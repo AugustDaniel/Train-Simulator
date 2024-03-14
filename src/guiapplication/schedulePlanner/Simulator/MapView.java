@@ -1,5 +1,7 @@
 package guiapplication.schedulePlanner.Simulator;
 
+import guiapplication.schedulePlanner.Simulator.pathfinding.PathFinding;
+import guiapplication.schedulePlanner.Simulator.pathfinding.Target;
 import guiapplication.schedulePlanner.Simulator.tilehandlers.Map;
 import guiapplication.schedulePlanner.View;
 import javafx.animation.AnimationTimer;
@@ -23,20 +25,13 @@ public class MapView implements View {
     private BorderPane mainPane;
     ArrayList<NPC> npcs = new ArrayList<>();
     private Camera camera;
-    private Point2D screenMousePos;
-    private Point2D worldMousePos;
-    private Point2D distance;
-//    private BufferedImage image = ImageIO.read(this.getClass().getResourceAsStream("/astronautHelmet.png"));
+
 
     public MapView() throws IOException {
         mainPane = new BorderPane();
         canvas = new ResizableCanvas(this::draw, mainPane);
         camera = new Camera(canvas, this::draw, new FXGraphics2D(canvas.getGraphicsContext2D()));
         map = new Map("/TrainStationPlannerMap.tmj");
-        Point2D nullpoint = new Point2D.Double(0, 0);
-        worldMousePos = nullpoint;
-        screenMousePos = nullpoint;
-        distance = nullpoint;
     }
 
     public void update(double deltaTime) {
@@ -64,20 +59,15 @@ public class MapView implements View {
 
         draw(g2d);
         canvas.setOnMouseClicked(e -> {
-            worldMousePos = camera.getWorldPos(e.getX(), e.getY());
-            npcs.add(new NPC(worldMousePos, 0));
-        });
-        canvas.setOnMouseMoved(e -> {
-            for (NPC npc : npcs) {
-                worldMousePos = camera.getWorldPos(e.getX(), e.getY());
-                npc.setTargetPosition(worldMousePos);
-
+            if(e.isShiftDown()) {
+                npcs.clear();
+                return;
             }
+
+            npcs.add(new Traveler(map.getGraph().getNodes()[121][110], new Target(map.getGraph().getNodes()[12][115])));
         });
 
         return mainPane;
-
-
     }
 
     public void draw(FXGraphics2D g) {

@@ -1,7 +1,7 @@
 package guiapplication.schedulePlanner.Simulator.tilehandlers;
 
 import guiapplication.schedulePlanner.Simulator.pathfinding.CollisionLayer;
-import guiapplication.schedulePlanner.Simulator.pathfinding.PathFinding;
+import util.graph.Graph;
 
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -14,12 +14,12 @@ public class TileMap implements TileHandler {
     private JsonArray tileLayers;
     private List<TileLayer> layers;
     private TileSet tileSet;
-    private List<CollisionLayer> collisionLayers;
+    private CollisionLayer collisionLayer;
 
     public TileMap(JsonArray tileLayers, TileSet tileSet) {
         this.tileLayers = tileLayers;
         this.layers = new ArrayList<>();
-        this.collisionLayers = new ArrayList<>();
+        this.collisionLayer = null;
         this.tileSet = tileSet;
 
         for (int i = 0; i < this.tileLayers.size(); i++) {
@@ -29,7 +29,7 @@ public class TileMap implements TileHandler {
                 continue;
             }
             if (object.getString("name").equals("CollisionLayer")) {
-                collisionLayers.add(new CollisionLayer(object));
+                collisionLayer = new CollisionLayer(object);
                 continue;
             }
 
@@ -43,5 +43,9 @@ public class TileMap implements TileHandler {
         for (TileLayer layer : this.layers) {
             layer.draw(graphics);
         }
+    }
+
+    public Graph getGraph() {
+        return collisionLayer.getGraph();
     }
 }

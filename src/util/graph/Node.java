@@ -1,43 +1,27 @@
 package util.graph;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.awt.geom.Point2D;
+import java.util.*;
 
 public class Node {
 
-    private List<Node> shortestPath = new LinkedList<>();
+    Point2D position;
 
-    private Integer distance = Integer.MAX_VALUE;
+    List<Node> adjacentNodes = new ArrayList<>();
 
-    Map<Node, Integer> adjacentNodes = new HashMap<>();
-
-    public void addDestination(Node destination, int distance) {
-        adjacentNodes.put(destination, distance);
+    public Node(Point2D position) {
+        this.position = position;
     }
 
-    public void addAdjacentNode(Node toAdd, int weight) {
-        adjacentNodes.put(toAdd, weight);
+    public void addAdjacentNode(Node toAdd) {
+        adjacentNodes.add(toAdd);
     }
 
-    public List<Node> getShortestPath() {
-        return shortestPath;
-    }
-
-    public void setShortestPath(List<Node> shortestPath) {
-        this.shortestPath = shortestPath;
-    }
-
-    public Integer getDistance() {
-        return distance;
-    }
-
-    public void setDistance(Integer distance) {
-        this.distance = distance;
-    }
-
-    public Map<Node, Integer> getAdjacentNodes() {
+    public List<Node> getAdjacentNodes() {
         return adjacentNodes;
+    }
+
+    public Point2D getPosition() {
+        return position;
     }
 }

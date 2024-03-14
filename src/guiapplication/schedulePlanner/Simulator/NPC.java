@@ -90,4 +90,24 @@ public class NPC {
     {
         return this.position;
     }
+
+    public double getAngle() {
+        return angle;
+    }
+
+    public double getSpeed() {
+        return speed;
+    }
+
+    public Point2D getTargetPosition() {
+        return targetPosition;
+    }
+
+    public void setPosition(Point2D position) {
+        this.position = position;
+    }
+
+    public void setAngle(double angle) {
+        this.angle = angle;
+    }
 }
