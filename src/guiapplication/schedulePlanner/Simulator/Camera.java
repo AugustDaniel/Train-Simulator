@@ -20,7 +20,6 @@ public class Camera {
     private Point2D screenMousePos;
     private Point2D distance;
     private Point2D zoomPoint;
-    private Point2D offset;
 
 
     public Camera(Canvas canvas, Resizable resizable, FXGraphics2D g2d) {
@@ -30,7 +29,6 @@ public class Camera {
         this.resizable = resizable;
         this.g2d = g2d;
         this.zoomPoint = new Point2D.Double(0, 0);
-        this.offset = new Point2D.Double(0, 0);
 
         canvas.setOnMousePressed(this::mousePressed);
         canvas.setOnMouseReleased(this::mouseReleased);
