@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Train implements Serializable {
-    private List<Wagon> wagonList;
     private String trainIDNumber;
+    private List<Wagon> wagonList;
 
-    public Train(String trainIDNumber,List<Wagon> wagonList) {
+    public Train(String trainIDNumber, List<Wagon> wagonList) {
         this.wagonList = wagonList;
         this.trainIDNumber = trainIDNumber;
     }
@@ -22,16 +22,18 @@ public class Train implements Serializable {
 
     public int getCapacity() {
         int sum = 0;
-
         for (Wagon wagon : this.wagonList) {
             sum += wagon.getMaxCapacity();
         }
-
         return sum;
     }
 
     public String getTrainIDNumber() {
         return this.trainIDNumber;
+    }
+
+    public void setWagonList(List<Wagon> wagonList) {
+        this.wagonList = wagonList;
     }
 
     @Override

@@ -14,6 +14,10 @@ public class Platform implements Serializable {
         return platformNumber;
     }
 
+    public void setPlatformNumber(int platformNumber) {
+        this.platformNumber = platformNumber;
+    }
+
     @Override
     public String toString() {
         return "" + getPlatformNumber();

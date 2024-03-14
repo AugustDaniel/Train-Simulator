@@ -8,6 +8,7 @@ public class Wagon implements Serializable {
 
     public Wagon(String idNumber, int maxCapacity) {
         this.maxCapacity = maxCapacity;
+        this.idNumber = idNumber;
     }
 
     public int getMaxCapacity() {
@@ -16,8 +17,10 @@ public class Wagon implements Serializable {
 
     @Override
     public String toString() {
-        return idNumber;
+        return this.idNumber;
     }
 
-
+    public void setMaxCapacity(int maxCapacity) {
+        this.maxCapacity = maxCapacity;
+    }
 }
