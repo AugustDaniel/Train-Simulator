@@ -1,4 +1,4 @@
-package guiapplication.schedulePlanner.Simulator;
+package guiapplication.schedulePlanner.Simulator.pathfinding;
 
 import util.graph.Graph;
 import util.graph.Node;
@@ -21,7 +21,7 @@ public class PathFinding {
 
         unsettledNodes.add(source);
 
-        while (unsettledNodes.size() != 0) {
+        while (!unsettledNodes.isEmpty()) {
             Node currentNode = getLowestDistanceNode(unsettledNodes);
             unsettledNodes.remove(currentNode);
             for (Map.Entry< Node, Integer> adjacencyPair:

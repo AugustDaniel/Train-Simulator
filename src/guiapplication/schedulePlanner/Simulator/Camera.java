@@ -44,6 +44,7 @@ public class Camera {
     private void mouseDragged(MouseEvent e) {
         screenMousePos = new Point2D.Double(e.getX() / this.zoom, e.getY() / this.zoom);
 
+        System.out.println(getWorldPos(e.getX(), e.getY()));
         if (e.isSecondaryButtonDown()) {
             this.target = getDistancePoint(Double::sum, screenMousePos, distance);
         }

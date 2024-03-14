@@ -14,10 +14,10 @@
         },
         "TrainStationPlannerMap.tmj": {
             "scale": 0.25,
-            "selectedLayer": 0,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 2082,
-                "y": 1902
+                "x": 2774,
+                "y": 1896
             }
         },
         "TrainStationPlannerMap.tmj#Modern_Exteriors_Complete_Tileset_32x32": {
@@ -25,6 +25,9 @@
         },
         "TrainStationPlannerMap.tmj#Subway_and_Train_Station_32x32": {
             "scaleInDock": 0.33
+        },
+        "TrainStationPlannerMap.tmj#spacebackground": {
+            "scaleInDock": 1
         }
     },
     "last.imagePath": "C:/Users/ST-se/Downloads/modernexteriors-win/Modern_Exteriors_32x32/ME_Theme_Sorter_32x32",

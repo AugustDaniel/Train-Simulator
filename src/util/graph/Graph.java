@@ -1,21 +1,18 @@
 package util.graph;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class Graph {
 
-    private Set<Node> nodes = new HashSet<>();
+    private Node[][] nodes;
 
-    public void addNode(Node nodeA) {
-        nodes.add(nodeA);
+    public Graph(int height, int width) {
+        nodes = new Node[height][width];
     }
 
-    public Set<Node> getNodes() {
+    public void addNode(int y, int x ,Node nodeA) {
+        nodes[y][x] = nodeA;
+    }
+
+    public Node[][] getNodes() {
         return nodes;
-    }
-
-    public void setNodes(Set<Node> nodes) {
-        this.nodes = nodes;
     }
 }
