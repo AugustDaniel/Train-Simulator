@@ -22,27 +22,7 @@ public class Traveler extends NPC {
 
     @Override
     public void update(ArrayList<NPC> npcs) {
-        double newAngle = Math.atan2(getTargetPosition().getY() - getPosition().getY(), getTargetPosition().getX() - getPosition().getX());
-
-        double angleDifference = getAngle() - newAngle;
-        while (angleDifference > Math.PI)
-            angleDifference -= 2 * Math.PI;
-        while (angleDifference < -Math.PI)
-            angleDifference += 2 * Math.PI;
-
-        if (angleDifference < -0.1)
-            setAngle(getAngle() + 0.1);
-        else if (angleDifference > 0.1)
-            setAngle(getAngle() - 0.1);
-        else
-            setAngle(newAngle);
-
-        Point2D newPosition = new Point2D.Double(
-                getPosition().getX() + getSpeed() * Math.cos(getAngle()),
-                getPosition().getY() + getSpeed() * Math.sin(getAngle())
-        );
-
-        setPosition(newPosition);
+        super.update(npcs);
 
         if (getPosition().distance(getTargetPosition()) < 50) {
             currentNode = closestNode;
