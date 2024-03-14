@@ -8,6 +8,7 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class NPC {
 
@@ -21,12 +22,14 @@ public class NPC {
         this.position = position;
         this.angle = angle;
         this.speed = 2 + Math.random() * 2;
+
         try {
-            image = ImageIO.read(this.getClass().getResourceAsStream("/astronautHelmet.png"));
+            this.image = ImageIO.read(Objects.requireNonNull(this.getClass().getResourceAsStream("/astronautHelmet.png")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        this.targetPosition = new Point2D.Double(100,  10);
+
+        this.targetPosition = new Point2D.Double(100, 10);
 
     }
 

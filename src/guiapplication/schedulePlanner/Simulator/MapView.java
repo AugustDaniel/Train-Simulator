@@ -7,9 +7,13 @@ import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import org.jfree.fx.FXGraphics2D;
 import org.jfree.fx.ResizableCanvas;
+
+import javax.imageio.ImageIO;
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MapView implements View {
@@ -22,8 +26,9 @@ public class MapView implements View {
     private Point2D screenMousePos;
     private Point2D worldMousePos;
     private Point2D distance;
+//    private BufferedImage image = ImageIO.read(this.getClass().getResourceAsStream("/astronautHelmet.png"));
 
-    public MapView() {
+    public MapView() throws IOException {
         mainPane = new BorderPane();
         canvas = new ResizableCanvas(this::draw, mainPane);
         camera = new Camera(canvas, this::draw, new FXGraphics2D(canvas.getGraphicsContext2D()));
@@ -60,23 +65,20 @@ public class MapView implements View {
         draw(g2d);
         canvas.setOnMouseClicked(e -> {
             worldMousePos = camera.getWorldPos(e.getX(), e.getY());
-            screenMousePos = new Point2D.Double(e.getX() / camera.getZoom(), e.getY() / camera.getZoom());
-            npcs.add(new NPC(screenMousePos, 0));
+            npcs.add(new NPC(worldMousePos, 0));
         });
         canvas.setOnMouseMoved(e -> {
             for (NPC npc : npcs) {
                 worldMousePos = camera.getWorldPos(e.getX(), e.getY());
-                screenMousePos = new Point2D.Double(e.getX() / camera.getZoom(), e.getY() / camera.getZoom());
-                npc.setTargetPosition(screenMousePos);
+                npc.setTargetPosition(worldMousePos);
 
             }
         });
 
         return mainPane;
-        /*fixme de npcs werken soortvan want ze spawnen op de muis als je klikt alleen de astonout helm is iets te groot, dus die mmoet kleiner
-       (fixme) worden. En ze lopen vloeiend ze happeren een beetje.  */
+
+
     }
-    //todo je zou hier het kunnen plaatsen want dit is waar de tab gemaakt wordt voor de map
 
     public void draw(FXGraphics2D g) {
         g.setBackground(Color.black);
