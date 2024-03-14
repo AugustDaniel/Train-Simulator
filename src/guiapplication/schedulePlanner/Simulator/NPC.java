@@ -61,7 +61,6 @@ public class NPC {
 
     public void draw(Graphics2D g2d)
     {
-
         AffineTransform tx = new AffineTransform();
 
         tx.translate(position.getX() - (double) image.getWidth() /2, position.getY() - (double) image.getHeight() / 2);

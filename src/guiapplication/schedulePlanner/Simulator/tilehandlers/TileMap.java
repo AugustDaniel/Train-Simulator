@@ -11,10 +11,12 @@ public class TileMap implements TileHandler {
     private JsonArray tileLayers;
     private List<TileLayer> layers;
     private TileSet tileSet;
+    private List<TileLayer> collisionLayers;
 
     public TileMap(JsonArray tileLayers, TileSet tileSet) {
         this.tileLayers = tileLayers;
         this.layers = new ArrayList<>();
+        this.collisionLayers = new ArrayList<>();
         this.tileSet = tileSet;
 
         for (int i = 0; i < this.tileLayers.size(); i++) {
@@ -23,8 +25,13 @@ public class TileMap implements TileHandler {
             if (object.getString("type").equals("objectgroup")) {
                 continue;
             }
+            if (object.getString("name").equals("CollisionLayer")) {
+                collisionLayers.add(new TileLayer(object, this.tileSet));
+                continue;
+            }
 
             this.layers.add(new TileLayer(object, this.tileSet));
+
         }
     }
 
