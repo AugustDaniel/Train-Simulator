@@ -2,8 +2,6 @@ package guiapplication.schedulePlanner.Simulator;
 
 import guiapplication.schedulePlanner.Simulator.pathfinding.Target;
 import util.graph.Node;
-
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public class Traveler extends NPC {
