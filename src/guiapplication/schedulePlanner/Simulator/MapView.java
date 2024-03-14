@@ -26,7 +26,7 @@ public class MapView implements View {
     private Point2D screenMousePos;
     private Point2D worldMousePos;
     private Point2D distance;
-    private BufferedImage image = ImageIO.read(this.getClass().getResourceAsStream("/astronautHelmet.png"));
+//    private BufferedImage image = ImageIO.read(this.getClass().getResourceAsStream("/astronautHelmet.png"));
 
     public MapView() throws IOException {
         mainPane = new BorderPane();
@@ -65,7 +65,7 @@ public class MapView implements View {
         draw(g2d);
         canvas.setOnMouseClicked(e -> {
             worldMousePos = camera.getWorldPos(e.getX(), e.getY());
-            npcs.add(new NPC(worldMousePos, 0, image));
+            npcs.add(new NPC(worldMousePos, 0));
         });
         canvas.setOnMouseMoved(e -> {
             for (NPC npc : npcs) {
