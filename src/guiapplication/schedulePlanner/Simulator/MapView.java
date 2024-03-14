@@ -30,7 +30,7 @@ public class MapView implements View {
 
     public MapView(ScheduleSubject subject) throws IOException {
         this.subject = subject;
-        this.clock = new Clock(this.subject.getSchedule(), 5);
+        this.clock = new Clock(this.subject.getSchedule(), 0.016);
         mainPane = new BorderPane();
         canvas = new ResizableCanvas(this::draw, mainPane);
         camera = new Camera(canvas, this::draw, new FXGraphics2D(canvas.getGraphicsContext2D()));
