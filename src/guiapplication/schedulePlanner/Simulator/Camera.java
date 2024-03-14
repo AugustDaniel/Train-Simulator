@@ -24,13 +24,14 @@ public class Camera {
 
 
     public Camera(Canvas canvas, Resizable resizable, FXGraphics2D g2d) {
-        this.target = new Point2D.Double(-canvas.getWidth() * 4, -canvas.getHeight() * 7); //todo magic numbers is zoom for start of map
+        this.target = new Point2D.Double(-canvas.getWidth(), -canvas.getHeight());
         this.zoom = 1;
         this.canvas = canvas;
         this.resizable = resizable;
         this.g2d = g2d;
-        this.zoomPoint = new Point2D.Double(-canvas.getWidth() * 4, -canvas.getHeight() * 7); //todo magic numbers is zoom for start of map
+        this.zoomPoint = new Point2D.Double(0, 0);
         this.offset = new Point2D.Double(0, 0);
+
         canvas.setOnMousePressed(this::mousePressed);
         canvas.setOnMouseReleased(this::mouseReleased);
         canvas.setOnMouseDragged(this::mouseDragged);
