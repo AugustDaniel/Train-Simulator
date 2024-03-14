@@ -1,6 +1,5 @@
 package guiapplication.schedulePlanner.Simulator.pathfinding;
 
-import util.graph.Graph;
 import util.graph.Node;
 import java.util.Map;
 
