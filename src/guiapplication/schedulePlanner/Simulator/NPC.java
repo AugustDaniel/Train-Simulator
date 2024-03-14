@@ -1,11 +1,14 @@
 package guiapplication.schedulePlanner.Simulator;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class NPC {
 
@@ -15,11 +18,17 @@ public class NPC {
     private double speed;
     private Point2D targetPosition;
 
-    public NPC(Point2D position, double angle, BufferedImage image){
+    public NPC(Point2D position, double angle){
         this.position = position;
         this.angle = angle;
         this.speed = 2 + Math.random() * 2;
-        this.image = image;
+
+        try {
+            this.image = ImageIO.read(Objects.requireNonNull(this.getClass().getResourceAsStream("/astronautHelmet.png")));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         this.targetPosition = new Point2D.Double(100, 10);
 
     }
