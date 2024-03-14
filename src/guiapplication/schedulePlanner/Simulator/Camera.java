@@ -30,7 +30,7 @@ public class Camera {
         this.resizable = resizable;
         this.g2d = g2d;
         this.zoomPoint = new Point2D.Double(-canvas.getWidth() * 4, -canvas.getHeight() * 7); //todo magic numbers is zoom for start of map
-        this.offset = new Point2D.Double(0,0);
+        this.offset = new Point2D.Double(0, 0);
         canvas.setOnMousePressed(this::mousePressed);
         canvas.setOnMouseReleased(this::mouseReleased);
         canvas.setOnMouseDragged(this::mouseDragged);
@@ -65,6 +65,7 @@ public class Camera {
         offset = getDistancePoint((a, b) -> a - b, oldWorldPos, worldPos);
 
         this.zoomPoint = new Point2D.Double(e.getX()  + offset.getX(), e.getY() + offset.getY());
+        this.target = new Point2D.Double(target.getX() + offset.getX(), target.getY() + offset.getY());
     }
 
     public AffineTransform getTransform() {
@@ -72,7 +73,7 @@ public class Camera {
         transform.translate(this.zoomPoint.getX(), this.zoomPoint.getY());
         transform.scale(this.zoom, this.zoom);
         transform.translate(-this.zoomPoint.getX(), -this.zoomPoint.getY());
-        transform.translate(this.target.getX() , this.target.getY());
+        transform.translate(this.target.getX(), this.target.getY());
         return transform;
     }
 
