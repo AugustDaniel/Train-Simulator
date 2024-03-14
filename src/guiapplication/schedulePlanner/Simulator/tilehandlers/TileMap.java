@@ -17,8 +17,13 @@ public class TileMap implements TileHandler {
         this.layers = new ArrayList<>();
         this.tileSet = tileSet;
 
-        for (int i = 0; i < this.tileLayers.size()-1; i++) {    //todo -1 weghalen en kunnen runnen met de collision dingen
+        for (int i = 0; i < this.tileLayers.size(); i++) {
             JsonObject object = this.tileLayers.getJsonObject(i);
+
+            if (object.getString("type").equals("objectgroup")) {
+                continue;
+            }
+
             this.layers.add(new TileLayer(object, this.tileSet));
         }
     }
