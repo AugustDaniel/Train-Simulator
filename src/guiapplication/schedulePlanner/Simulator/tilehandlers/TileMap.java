@@ -16,12 +16,14 @@ public class TileMap implements TileHandler {
         this.tileLayers = tileLayers;
         this.layers = new ArrayList<>();
         this.tileSet = tileSet;
-        init();
-    }
 
-    private void init() {
         for (int i = 0; i < this.tileLayers.size(); i++) {
             JsonObject object = this.tileLayers.getJsonObject(i);
+
+            if (object.getString("type").equals("objectgroup")) {
+                continue;
+            }
+
             this.layers.add(new TileLayer(object, this.tileSet));
         }
     }
