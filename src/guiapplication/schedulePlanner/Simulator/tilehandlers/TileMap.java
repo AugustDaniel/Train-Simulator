@@ -1,7 +1,8 @@
 package guiapplication.schedulePlanner.Simulator.tilehandlers;
 
+import guiapplication.schedulePlanner.Simulator.GraphTargetDB;
 import guiapplication.schedulePlanner.Simulator.pathfinding.CollisionLayer;
-import util.graph.Graph;
+import guiapplication.schedulePlanner.Simulator.pathfinding.Target;
 
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -45,7 +46,5 @@ public class TileMap implements TileHandler {
         }
     }
 
-    public Graph getGraph() {
-        return collisionLayer.getGraph();
-    }
+
 }

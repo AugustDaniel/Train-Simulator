@@ -1,16 +1,10 @@
 package guiapplication.schedulePlanner.Simulator.pathfinding;
 
-import util.graph.Graph;
 import util.graph.Node;
 
 import java.util.*;
 
 public class PathFinding {
-
-
-    public PathFinding() {
-
-    }
 
     public static Map<Node, Integer> getShortestPath(Node source) {
         Queue<Node> nodes = new LinkedList<>();

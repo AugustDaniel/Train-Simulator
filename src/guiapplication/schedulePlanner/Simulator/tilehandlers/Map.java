@@ -27,7 +27,5 @@ public class Map implements TileHandler {
         this.tileMap.draw(graphics);
     }
 
-    public Graph getGraph() {
-        return tileMap.getGraph();
-    }
+
 }

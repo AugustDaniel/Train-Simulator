@@ -1,6 +1,5 @@
 package guiapplication.schedulePlanner.Simulator;
 
-import guiapplication.schedulePlanner.Simulator.pathfinding.PathFinding;
 import guiapplication.schedulePlanner.Simulator.pathfinding.Target;
 import guiapplication.schedulePlanner.Simulator.tilehandlers.Map;
 import guiapplication.schedulePlanner.View;
@@ -10,11 +9,9 @@ import javafx.scene.layout.BorderPane;
 import org.jfree.fx.FXGraphics2D;
 import org.jfree.fx.ResizableCanvas;
 
-import javax.imageio.ImageIO;
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -73,7 +70,7 @@ public class MapView implements View {
                 }
             }
             if (!hasCollision) {
-                npcs.add(new Traveler(map.getGraph().getNodes()[y][x], new Target(map.getGraph().getNodes()[30][120])));
+                npcs.add(new Traveler(GraphTargetDB.getInstance().getGraph().getNodes()[y][x], new Target(GraphTargetDB.getInstance().getGraph().getNodes()[30][120])));
             }
         });
 

@@ -1,5 +1,6 @@
 package guiapplication.schedulePlanner.Simulator.pathfinding;
 
+import guiapplication.schedulePlanner.Simulator.GraphTargetDB;
 import util.graph.Graph;
 import util.graph.Node;
 
@@ -59,6 +60,7 @@ public class CollisionLayer {
                 index++;
             }
         }
+        GraphTargetDB.getInstance().setGraphs(graph);
     }
 
     public void addNodeAsAdjacent(Node currentNode, Node toAdd) {
@@ -67,8 +69,6 @@ public class CollisionLayer {
         }
     }
 
-    public Graph getGraph() {
-        return this.graph;
-    }
+
 
 }
