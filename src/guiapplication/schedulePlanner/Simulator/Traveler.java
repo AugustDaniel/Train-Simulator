@@ -22,7 +22,7 @@ public class Traveler extends NPC {
     public void update(ArrayList<NPC> npcs) {
         super.update(npcs);
 
-        if (getPosition().distance(getTargetPosition()) < 50) {
+        if (getPosition().distance(getTargetPosition()) < 100) {
             currentNode = closestNode;
             checkPosition();
         }

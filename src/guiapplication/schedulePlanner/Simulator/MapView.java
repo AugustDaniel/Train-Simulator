@@ -64,7 +64,17 @@ public class MapView implements View {
                 return;
             }
 
-            npcs.add(new Traveler(map.getGraph().getNodes()[121][110], new Target(map.getGraph().getNodes()[12][115])));
+            int y = (int) (120 + Math.random()*8);
+            int x = (int) (112 +  Math.random()*16);
+            boolean hasCollision = false;
+            for (NPC npc : npcs) {
+                if (npc.getPosition().distance(new Point2D.Double(x* 32,y * 32)) <= npc.getImageSize()) {
+                    hasCollision = true;
+                }
+            }
+            if (!hasCollision) {
+                npcs.add(new Traveler(map.getGraph().getNodes()[y][x], new Target(map.getGraph().getNodes()[30][120])));
+            }
         });
 
         return mainPane;

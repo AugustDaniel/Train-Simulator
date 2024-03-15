@@ -17,11 +17,11 @@ public class NPC {
     private BufferedImage image;
     private double speed;
     private Point2D targetPosition;
-
+    private int scale = 6;
     public NPC(Point2D position, double angle){
         this.position = position;
         this.angle = angle;
-        this.speed = 2 + Math.random() * 2;
+        this.speed = 1 + Math.random() * 0.5;
 
         try {
             this.image = ImageIO.read(Objects.requireNonNull(this.getClass().getResourceAsStream("/astronautHelmet.png")));
@@ -58,7 +58,7 @@ public class NPC {
 
         for (NPC npc : npcs) {
             if(npc != this)
-                if(npc.position.distance(newPosition) <= image.getHeight()/2)
+                if(npc.position.distance(newPosition) <= (double) image.getHeight() /scale)
                     hasCollision = true;
         }
 
@@ -70,10 +70,11 @@ public class NPC {
 
     public void draw(Graphics2D g2d)
     {
-        AffineTransform tx = new AffineTransform();
 
-        tx.translate(position.getX() - (double) image.getWidth() /2, position.getY() - (double) image.getHeight() / 2);
-        tx.rotate(angle, (double) image.getWidth() /2, (double) image.getHeight()/2);
+        AffineTransform tx = new AffineTransform();
+        tx.translate(this.position.getX() - (double) image.getWidth() /scale, this.position.getY() - (double) image.getHeight() / scale);
+        tx.rotate(angle, (double) image.getWidth() /scale, (double) image.getHeight()/scale);
+        tx.scale((double) 2 /scale, (double) 2 /scale);
         g2d.drawImage(image, tx, null);
 
         g2d.setColor(Color.RED);
@@ -109,5 +110,8 @@ public class NPC {
 
     public void setAngle(double angle) {
         this.angle = angle;
+    }
+    public int getImageSize(){
+        return image.getHeight()/scale;
     }
 }

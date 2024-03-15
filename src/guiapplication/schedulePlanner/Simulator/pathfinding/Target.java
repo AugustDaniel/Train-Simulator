@@ -4,7 +4,6 @@ import util.graph.Node;
 import java.util.Map;
 
 public class Target {
-
     private Map<Node, Integer> shortestPath;
 
     public Target(Node node) {
@@ -14,5 +13,4 @@ public class Target {
     public Integer getDistance(Node node) {
         return shortestPath.get(node);
     }
-
 }
