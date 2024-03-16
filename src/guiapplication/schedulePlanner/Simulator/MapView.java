@@ -32,7 +32,7 @@ public class MapView implements View {
 
     public MapView(ScheduleSubject subject) throws IOException {
         this.subject = subject;
-        this.clock = new Clock(this.subject.getSchedule(), 1.0, this);
+        this.clock = new Clock(this.subject.getSchedule(), 0.5, this);
         this.canvas = new ResizableCanvas(this::draw, mainPane);
         this.camera = new Camera(canvas, this::draw, new FXGraphics2D(canvas.getGraphicsContext2D()));
         this.map = new Map("/TrainStationPlannerMap.tmj");

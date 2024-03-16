@@ -14,9 +14,11 @@ public class SpawnTrain {
     private BufferedImage trainWagon;
     private BufferedImage trainHeadLeft;
     private BufferedImage trainHeadRight;
+    private double traveling;
 
     public SpawnTrain(Platform platform){
         this.platform = platform;
+        this.traveling = 0;
 
         try {
             this.trainWagon = ImageIO.read(Objects.requireNonNull(this.getClass().getResourceAsStream("/wagontrain.png")));
@@ -31,18 +33,16 @@ public class SpawnTrain {
         traveling += 4;
     }
 
-    private double traveling = 0;
     public void draw(Graphics2D g2d){
         AffineTransform tx = new AffineTransform();
 
         tx.translate(30 + traveling, -9 );
         g2d.drawImage(trainHeadRight, tx, null);
 
-        tx.translate(trainHeadRight.getWidth()+10,0);
+        tx.translate(trainHeadRight.getWidth() - 20,0);
         g2d.drawImage(trainWagon, tx, null);
 
-        tx.translate(trainWagon.getWidth()+10,0);
+        tx.translate(trainWagon.getWidth() - 30,0);
         g2d.drawImage(trainHeadLeft, tx, null);
-
     }
 }

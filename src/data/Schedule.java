@@ -174,6 +174,7 @@ public class Schedule implements Serializable {
         this.addJourney(new Journey(TimeFormatter.intToLocalTime(1000), TimeFormatter.intToLocalTime(1010), this.trainList.get(0), 6, this.platformList.get(0)));
         this.addJourney(new Journey(TimeFormatter.intToLocalTime(1020), TimeFormatter.intToLocalTime(1030), this.trainList.get(1), 3, this.platformList.get(1)));
         this.addJourney(new Journey(TimeFormatter.intToLocalTime(1040), TimeFormatter.intToLocalTime(1050), this.trainList.get(2), 8, this.platformList.get(2)));
-        this.addJourney(new Journey(TimeFormatter.intToLocalTime(30), TimeFormatter.intToLocalTime(100), this.trainList.get(2), 8, this.platformList.get(2)));
+        this.addJourney(new Journey(TimeFormatter.intToLocalTime(30), TimeFormatter.intToLocalTime(100), this.trainList.get(1), 8, this.platformList.get(0)));
+        this.addJourney(new Journey(TimeFormatter.intToLocalTime(50), TimeFormatter.intToLocalTime(120), this.trainList.get(2), 8, this.platformList.get(2)));
     }
 }
