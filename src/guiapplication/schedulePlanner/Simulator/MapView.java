@@ -9,7 +9,7 @@ import javafx.scene.layout.BorderPane;
 import org.jfree.fx.FXGraphics2D;
 import org.jfree.fx.ResizableCanvas;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.io.IOException;
@@ -22,26 +22,31 @@ public class MapView implements View {
     private final ResizableCanvas canvas;
     private final BorderPane mainPane;
     ArrayList<NPC> npcs = new ArrayList<>();
+    ArrayList<SpawnTrain> trains = new ArrayList<>();
     private final Camera camera;
     private Point2D worldMousePos;
     private Clock clock;
+    private Boolean spawntrain;
 
 //    private BufferedImage image = ImageIO.read(this.getClass().getResourceAsStream("/astronautHelmet.png"));
 
     public MapView(ScheduleSubject subject) throws IOException {
         this.subject = subject;
         this.clock = new Clock(this.subject.getSchedule(), 0.016);
-        mainPane = new BorderPane();
-        canvas = new ResizableCanvas(this::draw, mainPane);
-        camera = new Camera(canvas, this::draw, new FXGraphics2D(canvas.getGraphicsContext2D()));
-        map = new Map("/TrainStationPlannerMap.tmj");
+        this.mainPane = new BorderPane();
+        this.canvas = new ResizableCanvas(this::draw, mainPane);
+        this.camera = new Camera(canvas, this::draw, new FXGraphics2D(canvas.getGraphicsContext2D()));
+        this.map = new Map("/TrainStationPlannerMap.tmj");
         Point2D nullpoint = new Point2D.Double(0, 0);
-        worldMousePos = nullpoint;
+        this.worldMousePos = nullpoint;
     }
 
     public void update(double deltaTime) {
         for (NPC npc : npcs) {
             npc.update(this.npcs);
+        }
+        for (SpawnTrain train : trains) {
+            train.update();
         }
         clock.update(deltaTime);
     }
@@ -72,13 +77,10 @@ public class MapView implements View {
             for (NPC npc : npcs) {
                 worldMousePos = camera.getWorldPos(e.getX(), e.getY());
                 npc.setTargetPosition(worldMousePos);
-
             }
         });
 
         return mainPane;
-
-
     }
 
     public void draw(FXGraphics2D g) {
@@ -91,6 +93,9 @@ public class MapView implements View {
 
         for (NPC npc : npcs) {
             npc.draw(g);
+        }
+        for (SpawnTrain train : trains) {
+            train.draw(g);
         }
     }
 }

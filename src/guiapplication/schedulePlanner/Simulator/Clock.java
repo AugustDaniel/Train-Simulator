@@ -4,7 +4,6 @@ import data.Journey;
 import data.Schedule;
 import util.TimeFormatter;
 
-import java.sql.Time;
 import java.time.LocalTime;
 
 
@@ -14,6 +13,7 @@ public class Clock {
     private double timePassed;
     private int currentTimeInt;
     private LocalTime currentTime;
+    private SpawnTrain train;
 
     public Clock(Schedule schedule, double timeSpeed) {
         this.schedule = schedule;
@@ -39,6 +39,8 @@ public class Clock {
 
         for (Journey journey : this.schedule.getJourneyList()) {
             if (currentTime.equals(journey.getArrivalTime())){
+                this.train = new SpawnTrain(journey.getPlatform());
+//                this.train.draw();
                 System.out.println(currentTimeInt);
                 System.out.println("train number " + journey.getTrain() + " should now arrive at platform " + journey.getPlatform());
             }

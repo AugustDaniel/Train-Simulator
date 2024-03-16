@@ -68,9 +68,7 @@ public class NPC {
             this.angle += 0.2;
     }
 
-    public void draw(Graphics2D g2d)
-    {
-
+    public void draw(Graphics2D g2d){
         AffineTransform tx = new AffineTransform();
 
         tx.translate(position.getX() - (double) image.getWidth() /2, position.getY() - (double) image.getHeight() / 2);
@@ -79,16 +77,13 @@ public class NPC {
 
         g2d.setColor(Color.RED);
         g2d.fill(new Ellipse2D.Double(position.getX()-5, position.getY()-5, 10, 10));
-
     }
 
-    public void setTargetPosition(Point2D targetPosition)
-    {
+    public void setTargetPosition(Point2D targetPosition){
         this.targetPosition = targetPosition;
     }
 
-    public Point2D getPosition()
-    {
+    public Point2D getPosition(){
         return this.position;
     }
 }
