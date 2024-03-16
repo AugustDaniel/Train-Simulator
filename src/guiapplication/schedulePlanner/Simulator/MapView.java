@@ -14,26 +14,25 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class MapView implements View {
 
     private ScheduleSubject subject;
     private final Map map;
     private final ResizableCanvas canvas;
-    private final BorderPane mainPane;
+    private final BorderPane mainPane = new BorderPane();
     ArrayList<NPC> npcs = new ArrayList<>();
-    ArrayList<SpawnTrain> trains = new ArrayList<>();
+    LinkedList<SpawnTrain> trains = new LinkedList<>();
     private final Camera camera;
     private Point2D worldMousePos;
     private Clock clock;
-    private Boolean spawntrain;
 
 //    private BufferedImage image = ImageIO.read(this.getClass().getResourceAsStream("/astronautHelmet.png"));
 
     public MapView(ScheduleSubject subject) throws IOException {
         this.subject = subject;
-        this.clock = new Clock(this.subject.getSchedule(), 0.016);
-        this.mainPane = new BorderPane();
+        this.clock = new Clock(this.subject.getSchedule(), 1.0, this);
         this.canvas = new ResizableCanvas(this::draw, mainPane);
         this.camera = new Camera(canvas, this::draw, new FXGraphics2D(canvas.getGraphicsContext2D()));
         this.map = new Map("/TrainStationPlannerMap.tmj");
@@ -69,6 +68,7 @@ public class MapView implements View {
         }.start();
 
         draw(g2d);
+
         canvas.setOnMouseClicked(e -> {
             worldMousePos = camera.getWorldPos(e.getX(), e.getY());
             npcs.add(new NPC(worldMousePos, 0));

@@ -13,13 +13,14 @@ public class Clock {
     private double timePassed;
     private int currentTimeInt;
     private LocalTime currentTime;
-    private SpawnTrain train;
+    private MapView mapView;
 
-    public Clock(Schedule schedule, double timeSpeed) {
+    public Clock(Schedule schedule, double timeSpeed, MapView mapView) {
         this.schedule = schedule;
         this.timeSpeed = timeSpeed;
         this.currentTime = TimeFormatter.intToLocalTime(currentTimeInt);
-        timePassed = 0;
+        this.timePassed = 0;
+        this.mapView = mapView;
     }
 
     public void update(double deltaTime) {
@@ -35,14 +36,16 @@ public class Clock {
             }
             timePassed-=timeSpeed;
             currentTime = TimeFormatter.intToLocalTime(currentTimeInt);
+            System.out.println(currentTimeInt);
         }
 
         for (Journey journey : this.schedule.getJourneyList()) {
             if (currentTime.equals(journey.getArrivalTime())){
-                this.train = new SpawnTrain(journey.getPlatform());
-//                this.train.draw();
-                System.out.println(currentTimeInt);
-                System.out.println("train number " + journey.getTrain() + " should now arrive at platform " + journey.getPlatform());
+                this.mapView.trains.add(new SpawnTrain(journey.getPlatform()));
+//                System.out.println(currentTimeInt);
+//                System.out.println("train number " + journey.getTrain() + " should now arrive at platform " + journey.getPlatform());
+            } if (currentTime.equals(journey.getDepartureTime().plusMinutes(10)) && !this.mapView.trains.isEmpty()) {
+                this.mapView.trains.removeFirst();
             }
         }
     }

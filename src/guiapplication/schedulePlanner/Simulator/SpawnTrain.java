@@ -7,7 +7,6 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Objects;
 
 public class SpawnTrain {
@@ -15,12 +14,9 @@ public class SpawnTrain {
     private BufferedImage trainWagon;
     private BufferedImage trainHeadLeft;
     private BufferedImage trainHeadRight;
-    private HashMap<Platform, Double> arrivingPlatform;
 
     public SpawnTrain(Platform platform){
         this.platform = platform;
-        this.arrivingPlatform = new HashMap<>();
-        addPlatformToHashmap();
 
         try {
             this.trainWagon = ImageIO.read(Objects.requireNonNull(this.getClass().getResourceAsStream("/wagontrain.png")));
@@ -34,15 +30,12 @@ public class SpawnTrain {
     public void update(){
     }
 
+    private int traveling = 0;
     public void draw(Graphics2D g2d){
         AffineTransform tx = new AffineTransform();
 
-        tx.translate(30, -7 );
+        tx.translate(30 + traveling, -9 );
         g2d.drawImage(trainWagon, tx, null);
-        System.out.println("test");
-    }
-
-    public void addPlatformToHashmap(){
-//        this.arrivingPlatform.put(1, )
+        traveling += 5;
     }
 }
