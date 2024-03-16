@@ -28,14 +28,21 @@ public class SpawnTrain {
     }
 
     public void update(){
+        traveling += 4;
     }
 
-    private int traveling = 0;
+    private double traveling = 0;
     public void draw(Graphics2D g2d){
         AffineTransform tx = new AffineTransform();
 
         tx.translate(30 + traveling, -9 );
+        g2d.drawImage(trainHeadRight, tx, null);
+
+        tx.translate(trainHeadRight.getWidth()+10,0);
         g2d.drawImage(trainWagon, tx, null);
-        traveling += 5;
+
+        tx.translate(trainWagon.getWidth()+10,0);
+        g2d.drawImage(trainHeadLeft, tx, null);
+
     }
 }
