@@ -14,6 +14,7 @@ public class Clock {
     private int currentTimeInt;
     private LocalTime currentTime;
     private MapView mapView;
+    private boolean spawned = false;
 
     public Clock(Schedule schedule, double timeSpeed, MapView mapView) {
         this.schedule = schedule;
@@ -40,11 +41,13 @@ public class Clock {
         }
 
         for (Journey journey : this.schedule.getJourneyList()) {
-            if (currentTime.equals(journey.getArrivalTime())){
+            if (currentTime.equals(journey.getArrivalTime()) && !spawned){
                 this.mapView.trains.add(new SpawnTrain(journey.getPlatform()));
+                spawned = true;
 //                System.out.println(currentTimeInt);
 //                System.out.println("train number " + journey.getTrain() + " should now arrive at platform " + journey.getPlatform());
             } if (currentTime.equals(journey.getDepartureTime().plusMinutes(10)) && !this.mapView.trains.isEmpty()) {
+                System.out.println("suiiii");
                 this.mapView.trains.removeFirst();
             }
         }
