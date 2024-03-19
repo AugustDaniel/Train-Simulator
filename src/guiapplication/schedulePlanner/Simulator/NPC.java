@@ -18,6 +18,7 @@ public class NPC {
     private double speed;
     private Point2D targetPosition;
     private int scale = 6;
+    private boolean draw;
     public NPC(Point2D position, double angle){
         this.position = position;
         this.angle = angle;
@@ -34,6 +35,7 @@ public class NPC {
     }
 
     public void update(ArrayList<NPC> npcs){
+        this.draw = true;
         double newAngle = Math.atan2(this.targetPosition.getY() - this.position.getY(), this.targetPosition.getX() - this.position.getX());
 
         double angleDifference = angle - newAngle;
@@ -62,14 +64,20 @@ public class NPC {
                     hasCollision = true;
         }
 
-        if(!hasCollision)
+        if(!hasCollision) {
             this.position = newPosition;
+        }
         else
             this.angle += 0.2;
+        if (this.position.getY() < 4096-800 && this.position.getX() < 4096 - 416 && this.position.getX() > 4096- 528) {
+            this.draw = false;
+        }
     }
 
     public void draw(Graphics2D g2d)
     {
+        if (!draw)
+            return;
 
         AffineTransform tx = new AffineTransform();
         tx.translate(this.position.getX() - (double) image.getWidth() /scale, this.position.getY() - (double) image.getHeight() / scale);
