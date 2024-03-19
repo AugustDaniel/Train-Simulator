@@ -3,6 +3,7 @@ package guiapplication.schedulePlanner.Simulator;
 import guiapplication.schedulePlanner.Simulator.pathfinding.Target;
 import util.graph.Graph;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GraphTargetDB {
@@ -11,6 +12,10 @@ public class GraphTargetDB {
     private List<Target> targets;
     private Graph graphs;
 
+    private GraphTargetDB() {
+        this.targets = new ArrayList<>();
+        this.graphs = new Graph(128,128);
+    }
 
     public static GraphTargetDB getInstance() {
         return instance;

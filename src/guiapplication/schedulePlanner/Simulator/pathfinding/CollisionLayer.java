@@ -68,7 +68,4 @@ public class CollisionLayer {
             currentNode.addAdjacentNode(toAdd);
         }
     }
-
-
-
 }

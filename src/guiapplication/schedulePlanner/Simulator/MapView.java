@@ -14,6 +14,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MapView implements View {
 
@@ -70,7 +71,8 @@ public class MapView implements View {
                 }
             }
             if (!hasCollision) {
-                npcs.add(new Traveler(GraphTargetDB.getInstance().getGraph().getNodes()[y][x], new Target(GraphTargetDB.getInstance().getGraph().getNodes()[30][120])));
+                int size = GraphTargetDB.getInstance().getTargets().size();
+                npcs.add(new Traveler(GraphTargetDB.getInstance().getGraph().getNodes()[y][x], GraphTargetDB.getInstance().getTargets().get((int) (Math.random() * size))));
             }
         });
 
