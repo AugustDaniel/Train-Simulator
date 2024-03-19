@@ -35,6 +35,7 @@ public class NPC {
     }
 
     public void update(ArrayList<NPC> npcs){
+        checkAtTarget();
         this.draw = true;
         double newAngle = Math.atan2(this.targetPosition.getY() - this.position.getY(), this.targetPosition.getX() - this.position.getX());
 
@@ -59,11 +60,15 @@ public class NPC {
         boolean hasCollision = false;
 
         for (NPC npc : npcs) {
-            if(npc != this)
-                if(npc.position.distance(newPosition) <= (double) image.getHeight() /scale)
+            if (npc != this) {
+                if (npc.getSpeed() == 0) {
+                    continue;
+                }
+                if (npc.position.distance(newPosition) <= (double) image.getHeight() / scale) {
                     hasCollision = true;
+                }
+            }
         }
-
         if(!hasCollision) {
             this.position = newPosition;
         }
@@ -121,5 +126,11 @@ public class NPC {
     }
     public int getImageSize(){
         return image.getHeight()/scale;
+    }
+    public void checkAtTarget(){
+        if (position.distance(targetPosition) < 7){
+            speed = 0;
+
+        }
     }
 }
