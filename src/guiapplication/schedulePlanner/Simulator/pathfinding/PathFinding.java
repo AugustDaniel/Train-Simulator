@@ -75,6 +75,51 @@ public class PathFinding {
                 index++;
             }
         }
+
+//        int layerHeight = object.getInt("height");
+//        int layerWidth = object.getInt("width");
+//
+//        graph = new Graph(layerHeight, layerWidth);
+//        int index = 0;
+//
+//        Node[][] nodePositions = new Node[layerHeight][layerWidth];
+//        for (int y = 0; y < layerHeight; y++) {
+//            for (int x = 0; x < layerWidth; x++) {
+//
+//                if (object.getJsonArray("data").getInt(index) == 1) {
+//                    index++;
+//                    continue;
+//                }
+//
+//                nodePositions[y][x] = new Node(new Point2D.Double(x * 32, y * 32));
+//                index++;
+//            }
+//        }
+//
+//        for (int y = 0; y < layerHeight; y++) {
+//            for (int x = 0; x < layerWidth; x++) {
+//                Node currentNode = nodePositions[y][x];
+//
+//                if (!(x - 1 < 0)) {
+//                    addNodeAsAdjacent(currentNode, nodePositions[y][x - 1]);
+//                }
+//
+//                if (!(x + 1 > layerWidth - 1)) {
+//                    addNodeAsAdjacent(currentNode, nodePositions[y][x + 1]);
+//                }
+//
+//                if (!(y - 1 < 0)) {
+//                    addNodeAsAdjacent(currentNode, nodePositions[y - 1][x]);
+//                }
+//
+//                if (!(y + 1 > layerHeight - 1)) {
+//                    addNodeAsAdjacent(currentNode, nodePositions[y + 1][x]);
+//                }
+//
+//                graph.addNode(y, x, currentNode);
+//                index++;
+//            }
+//        }
     }
 
     private static void addNodeAsAdjacent(Node currentNode, Node toAdd) {
