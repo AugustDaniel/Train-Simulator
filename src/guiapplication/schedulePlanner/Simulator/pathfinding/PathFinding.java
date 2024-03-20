@@ -10,9 +10,9 @@ import java.util.*;
 
 public class PathFinding {
 
-    private static int COLLISIONTILE = 1;
-    private static int TILESIZE = 32;
-    private static int OFFSET = 2;
+    private final static int COLLISION_TILE = 1;
+    private final static int TILE_SIZE = 32;
+    private final static int OFFSET = 2;
 
     public static List<Target> targets = new ArrayList<>();
     public static Graph graph = new Graph(0, 0);
@@ -48,7 +48,7 @@ public class PathFinding {
         for (int y = 0; y < layerHeight; y++) {
             for (int x = 0; x < layerWidth; x++) {
 
-                if (object.getJsonArray("data").getInt(index) == COLLISIONTILE) {
+                if (object.getJsonArray("data").getInt(index) == COLLISION_TILE) {
                     index++;
                     continue;
                 }
@@ -92,11 +92,11 @@ public class PathFinding {
 
         for (int i = 0; i < objects.size(); i++) {
 
-            int xObject = objects.getJsonObject(i).getInt("x") / TILESIZE;
-            int yObject = objects.getJsonObject(i).getInt("y") / TILESIZE;
+            int xObject = objects.getJsonObject(i).getInt("x") / TILE_SIZE;
+            int yObject = objects.getJsonObject(i).getInt("y") / TILE_SIZE;
 
-            for (int y = 0; y < objects.getJsonObject(i).getInt("height") / TILESIZE; y += OFFSET) {
-                for (int x = 0; x < objects.getJsonObject(i).getInt("width") / TILESIZE; x += OFFSET) {
+            for (int y = 0; y < objects.getJsonObject(i).getInt("height") / TILE_SIZE; y += OFFSET) {
+                for (int x = 0; x < objects.getJsonObject(i).getInt("width") / TILE_SIZE; x += OFFSET) {
 
                     Node nodeToAdd = graph.getNodes()[yObject + y][xObject + x];
 
