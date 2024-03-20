@@ -15,13 +15,13 @@ public class ObjectGroup {
         Node[][] graphNodes = graph.getNodes();
        GraphTargetDB instanceGraph = GraphTargetDB.getInstance();
         for (int i = 0; i < objects.size(); i++) {
-            
+
             int xObject = objects.getJsonObject(i).getInt("x") / 32;
             int yObject = objects.getJsonObject(i).getInt("y") / 32;
 
-            for (int y = 0; y < objects.getJsonObject(i).getInt("height") / 32; y += 3) {
+            for (int y = 0; y < objects.getJsonObject(i).getInt("height") / 32; y += 2) {
 
-                for (int x = 0; x < objects.getJsonObject(i).getInt("width") / 32; x += 3) {
+                for (int x = 0; x < objects.getJsonObject(i).getInt("width") / 32; x += 2) {
 
                     Node nodeToAdd = graphNodes[yObject + y][xObject + x];
 
