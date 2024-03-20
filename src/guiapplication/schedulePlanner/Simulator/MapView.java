@@ -35,7 +35,7 @@ public class MapView implements View {
 
     public void update(double deltaTime) {
         for (NPC npc : npcs) {
-            npc.update(this.npcs);
+            npc.update(npcs);
         }
     }
 
@@ -58,17 +58,17 @@ public class MapView implements View {
 
         draw(g2d);
         canvas.setOnMouseClicked(e -> {
-            if(e.isShiftDown()) {
+            if (e.isShiftDown()) {
                 npcs.clear();
                 return;
             }
 
-            int y = (int) (120 + Math.random()*8);
-            int x = (int) (112 +  Math.random()*16);
+            int y = (int) (120 + Math.random() * 8);
+            int x = (int) (112 + Math.random() * 16);
             boolean hasCollision = false;
 
             for (NPC npc : npcs) {
-                if (npc.getPosition().distance(new Point2D.Double(x* 32,y * 32)) <= npc.getImageSize()) {
+                if (npc.getPosition().distance(new Point2D.Double(x * 32, y * 32)) <= npc.getImageSize()) {
                     hasCollision = true;
                 }
             }
@@ -92,6 +92,11 @@ public class MapView implements View {
 
         for (NPC npc : npcs) {
             npc.draw(g);
+        }
+
+        if (this.npcs.size() == 1) {
+            Traveler tr = (Traveler) this.npcs.get(0);
+            tr.debugDraw(g);
         }
     }
 }

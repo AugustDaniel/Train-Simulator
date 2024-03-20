@@ -1,6 +1,7 @@
 package guiapplication.schedulePlanner.Simulator.pathfinding;
 
 import util.graph.Node;
+
 import java.util.Map;
 
 public class Target {
@@ -12,5 +13,9 @@ public class Target {
 
     public Integer getDistance(Node node) {
         return shortestPath.get(node);
+    }
+
+    public Map<Node, Integer> getShortestPath() {
+        return this.shortestPath;
     }
 }
