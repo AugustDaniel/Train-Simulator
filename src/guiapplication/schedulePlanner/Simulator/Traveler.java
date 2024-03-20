@@ -44,7 +44,7 @@ public class Traveler extends NPC {
     public void debugDraw(FXGraphics2D g) {
         target.getShortestPath().forEach((k, v) -> {
             g.draw(new Rectangle2D.Double(k.getPosition().getX(), k.getPosition().getY(), 32, 32));
-            g.drawString(v.toString(), (int) k.getPosition().getX(), (int) k.getPosition().getY());
+            g.drawString(v.toString(), (int) k.getPosition().getX(), (int) k.getPosition().getY() + 20);
         });
     }
 }
