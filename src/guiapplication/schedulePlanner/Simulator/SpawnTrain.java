@@ -15,10 +15,16 @@ public class SpawnTrain {
     private BufferedImage trainHeadLeft;
     private BufferedImage trainHeadRight;
     private double traveling;
+    private String ID;
 
-    public SpawnTrain(Platform platform){
+    public String getID() {
+        return ID;
+    }
+
+    public SpawnTrain(Platform platform, String ID){
         this.platform = platform;
         this.traveling = 0;
+        this.ID = ID;
 
         try {
             this.trainWagon = ImageIO.read(Objects.requireNonNull(this.getClass().getResourceAsStream("/wagontrain.png")));

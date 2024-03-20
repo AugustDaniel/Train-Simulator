@@ -14,7 +14,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.HashMap;
 
 public class MapView implements View {
 
@@ -23,7 +23,7 @@ public class MapView implements View {
     private final ResizableCanvas canvas;
     private final BorderPane mainPane = new BorderPane();
     ArrayList<NPC> npcs = new ArrayList<>();
-    LinkedList<SpawnTrain> trains = new LinkedList<>();
+    HashMap<String, SpawnTrain> trains = new HashMap();
     private final Camera camera;
     private Point2D worldMousePos;
     private Clock clock;
@@ -44,9 +44,7 @@ public class MapView implements View {
         for (NPC npc : npcs) {
             npc.update(this.npcs);
         }
-        for (SpawnTrain train : trains) {
-            train.update();
-        }
+        trains.forEach((k,v) -> v.update());
         clock.update(deltaTime);
     }
 
@@ -94,8 +92,7 @@ public class MapView implements View {
         for (NPC npc : npcs) {
             npc.draw(g);
         }
-        for (SpawnTrain train : trains) {
-            train.draw(g);
-        }
+        trains.forEach((k,v) -> v.draw(g));
+
     }
 }
