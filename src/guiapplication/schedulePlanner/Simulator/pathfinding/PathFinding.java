@@ -15,7 +15,7 @@ public class PathFinding {
     private static int OFFSET = 2;
 
     public static List<Target> targets = new ArrayList<>();
-    public static Graph graph = new Graph(0,0);
+    public static Graph graph = new Graph(0, 0);
 
     public static Map<Node, Integer> getShortestPath(Node source) {
         Queue<Node> nodes = new LinkedList<>();
@@ -26,7 +26,7 @@ public class PathFinding {
         while (!nodes.isEmpty()) {
             Node current = nodes.poll();
 
-            for(Node adjacent : current.getAdjacentNodes()) {
+            for (Node adjacent : current.getAdjacentNodes()) {
                 if (!distances.containsKey(adjacent)) {
                     nodes.offer(adjacent);
                     distances.put(adjacent, 1 + distances.get(current));
@@ -81,13 +81,13 @@ public class PathFinding {
         if (toAdd != null && currentNode != null) {
             currentNode.addAdjacentNode(toAdd);
 
-            if (!toAdd.getAdjacentNodes().contains(currentNode)){
+            if (!toAdd.getAdjacentNodes().contains(currentNode)) {
                 toAdd.addAdjacentNode(currentNode);
             }
         }
     }
 
-    public static void addTargets(JsonObject jsonObject){
+    public static void addTargets(JsonObject jsonObject) {
         JsonArray objects = jsonObject.getJsonArray("objects");
 
         for (int i = 0; i < objects.size(); i++) {
@@ -96,7 +96,6 @@ public class PathFinding {
             int yObject = objects.getJsonObject(i).getInt("y") / TILESIZE;
 
             for (int y = 0; y < objects.getJsonObject(i).getInt("height") / TILESIZE; y += OFFSET) {
-
                 for (int x = 0; x < objects.getJsonObject(i).getInt("width") / TILESIZE; x += OFFSET) {
 
                     Node nodeToAdd = graph.getNodes()[yObject + y][xObject + x];
