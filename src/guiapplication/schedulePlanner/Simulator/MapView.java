@@ -64,19 +64,18 @@ public class MapView implements View {
                 return;
             }
 
-            int y = (int) (120 + Math.random() * 8);
-            int x = (int) (112 + Math.random() * 16);
             boolean hasCollision = false;
+            util.graph.Node spawnPoint = PathFinding.spawnPoints.get((int) (Math.random() * (PathFinding.spawnPoints.size() - 1)));
 
             for (NPC npc : npcs) {
-                if (npc.getPosition().distance(new Point2D.Double(x * 32, y * 32)) <= npc.getImageSize()) {
+                if (npc.getPosition().distance(spawnPoint.getPosition()) <= npc.getImageSize()) {
                     hasCollision = true;
                 }
             }
 
             if (!hasCollision) {
                 int size = PathFinding.targets.size();
-                npcs.add(new Traveler(PathFinding.spawnPoints.get((int) (Math.random() * (PathFinding.spawnPoints.size() - 1))), PathFinding.targets.get((int) (Math.random() * size))));
+                npcs.add(new Traveler(spawnPoint, PathFinding.targets.get((int) (Math.random() * size))));
             }
         });
 
