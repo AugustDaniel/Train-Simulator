@@ -20,26 +20,20 @@ public class Camera {
     private Point2D screenMousePos;
     private Point2D distance;
     private Point2D zoomPoint;
-    private Point2D offset;
 
 
     public Camera(Canvas canvas, Resizable resizable, FXGraphics2D g2d) {
-        this.target = new Point2D.Double(-canvas.getWidth() * 4, -canvas.getHeight() * 7); //todo magic numbers is zoom for start of map
+        this.target = new Point2D.Double(-canvas.getWidth(), -canvas.getHeight());
         this.zoom = 1;
         this.canvas = canvas;
         this.resizable = resizable;
         this.g2d = g2d;
-        this.zoomPoint = new Point2D.Double(-canvas.getWidth() * 4, -canvas.getHeight() * 7); //todo magic numbers is zoom for start of map
-        this.offset = new Point2D.Double(0,0);
+        this.zoomPoint = new Point2D.Double(0, 0);
+
         canvas.setOnMousePressed(this::mousePressed);
         canvas.setOnMouseReleased(this::mouseReleased);
         canvas.setOnMouseDragged(this::mouseDragged);
         canvas.setOnScroll(this::mouseScrolled);
-        canvas.setOnMouseMoved(this::mouseMoved);
-    }
-
-    private void mouseMoved(MouseEvent mouseEvent) {
-        this.zoomPoint = new Point2D.Double(mouseEvent.getX(), mouseEvent.getY());
     }
 
     private void mousePressed(MouseEvent e) {
@@ -59,20 +53,14 @@ public class Camera {
     }
 
     private void mouseScrolled(ScrollEvent e) {
-        Point2D worldPos = getWorldPos(e.getX(), e.getY());
         this.incrementZoom((float) e.getDeltaY() / 1500);
-        Point2D oldWorldPos = getWorldPos(e.getX(), e.getY());
-        offset = getDistancePoint((a, b) -> a - b, oldWorldPos, worldPos);
-
-        this.zoomPoint = new Point2D.Double(e.getX()  + offset.getX(), e.getY() + offset.getY());
     }
 
     public AffineTransform getTransform() {
         AffineTransform transform = new AffineTransform();
-        transform.translate(this.zoomPoint.getX(), this.zoomPoint.getY());
+        transform.translate(this.canvas.getWidth() / 2, this.canvas.getHeight() / 2);
         transform.scale(this.zoom, this.zoom);
-        transform.translate(-this.zoomPoint.getX(), -this.zoomPoint.getY());
-        transform.translate(this.target.getX() , this.target.getY());
+        transform.translate(this.target.getX(), this.target.getY());
         return transform;
     }
 
