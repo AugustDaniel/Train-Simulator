@@ -99,6 +99,16 @@ public class Traveler extends NPC {
 
         g.setColor(Color.BLACK);
         g.draw(new Rectangle2D.Double(closestNode.getPosition().getX() - 16, closestNode.getPosition().getY() - 16,32,32 ));
+
+
+        for (Node node : currentNode.getAdjacentNodes()) {
+            if(node.isOccupied()) {
+                g.setColor(Color.MAGENTA);
+            } else {
+                g.setColor(Color.GREEN);
+            }
+            g.draw(new Rectangle2D.Double(node.getPosition().getX() - 16, node.getPosition().getY() - 16,32,32 ));
+        }
     }
 
     public void setDebug(boolean b) {
