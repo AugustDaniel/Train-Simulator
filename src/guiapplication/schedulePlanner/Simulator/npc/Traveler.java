@@ -26,11 +26,11 @@ public class Traveler extends NPC {
 
     @Override
     public void update(ArrayList<NPC> npcs) {
-        super.update(npcs);
-
-        if (this.position.distance(this.targetPosition) < 100) {
+        if (atTargetPosition()) {
             checkPosition();
         }
+
+        super.update(npcs);
     }
 
     private void checkPosition() {
@@ -62,18 +62,18 @@ public class Traveler extends NPC {
 
     public void debugDraw(Graphics2D g) {
         //todo tile pathfinding debugging
-//        target.getShortestPath().forEach((k, v) -> {
-//            g.draw(new Rectangle2D.Double(k.getPosition().getX() - 16, k.getPosition().getY() - 16, 32, 32)); //todo change magic number 16 = half tilesize 32 tilesize
-//            g.drawString(v.toString(), (int) k.getPosition().getX() - 16, (int) k.getPosition().getY() - 16 + 20); //todo change magic number 16 = half tilesize 32 tilesize 20 is random offset number
-//        });
+        target.getShortestPath().forEach((k, v) -> {
+            g.draw(new Rectangle2D.Double(k.getPosition().getX() - 16, k.getPosition().getY() - 16, 32, 32)); //todo change magic number 16 = half tilesize 32 tilesize
+            g.drawString(v.toString(), (int) k.getPosition().getX() - 16, (int) k.getPosition().getY() - 16 + 20); //todo change magic number 16 = half tilesize 32 tilesize 20 is random offset number
+        });
 
         int rectX = (int) (this.position.getX() + 50);
         int rectY = (int) (this.position.getY() - 50);
         int rectWidth = 300;
-        int rectHeight = 50;
+        int rectHeight = 90;
 
-        g.setColor(Color.WHITE);
         g.setClip(rectX, rectY, rectWidth, rectHeight);
+        g.setColor(Color.WHITE);
         g.fill(new Rectangle2D.Double(rectX, rectY, rectWidth, rectHeight));
 
         g.setColor(Color.BLACK);
@@ -83,6 +83,9 @@ public class Traveler extends NPC {
                 "Target position: x = " +((int)this.targetPosition.getX()) + ", y = " + ((int)this.targetPosition.getY()),
                 "Current node: " + this.currentNode.toString(),
                 "Closest node: " + this.closestNode.toString(),
+                "Distance p2d: " + this.position.distance(this.targetPosition),
+                "Current tile distance: " + target.getDistance(currentNode),
+                "Closest tile distance: " + target.getDistance(closestNode)
         };
 
         int lineHeight = g.getFontMetrics().getHeight();
@@ -93,6 +96,9 @@ public class Traveler extends NPC {
         }
 
         g.setClip(null);
+
+        g.setColor(Color.BLACK);
+        g.draw(new Rectangle2D.Double(closestNode.getPosition().getX() - 16, closestNode.getPosition().getY() - 16,32,32 ));
     }
 
     public void setDebug(boolean b) {

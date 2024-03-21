@@ -29,7 +29,7 @@ public class NPC {
             throw new RuntimeException(e);
         }
 
-        this.targetPosition = new Point2D.Double(100, 10);
+        this.targetPosition = new Point2D.Double(100, 10); //todo maybe change this idk
 
     }
 
