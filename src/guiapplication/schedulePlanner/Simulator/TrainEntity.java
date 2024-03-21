@@ -47,7 +47,7 @@ public class TrainEntity {
     }
 
     public void update(){
-        if (mapView.getClock().getCurrentTime().isAfter(journey.getArrivalTime().minusMinutes(10)) &&
+        if (mapView.getClock().getCurrentTime().isAfter(journey.getArrivalTime().minusMinutes(25)) &&
                 mapView.getClock().getCurrentTime().isBefore(journey.getArrivalTime())){
             position = new Point2D.Double(position.getX() + 4, position.getY());
             draw = true;
