@@ -57,7 +57,7 @@ public class PathFinding {
 
                 Node node = new Node(new Point2D.Double(x * 32, y * 32));
 
-                if (!(x - 1 < 0)) {
+                if (x - 1 > 0) {
                     addNodeAsAdjacent(node, graph.getNodes()[y][x - 1]);
 
                     if (y + 1 < layerHeight - 1) {
@@ -69,7 +69,7 @@ public class PathFinding {
                     }
                 }
 
-                if (!(x + 1 > layerWidth - 1)) {
+                if (x + 1 < layerWidth - 1) {
                     addNodeAsAdjacent(node, graph.getNodes()[y][x + 1]);
 
                     if (y + 1 < layerHeight - 1) {
@@ -81,12 +81,12 @@ public class PathFinding {
                     }
                 }
 
-                if (!(y - 1 < 0)) {
+                if (y - 1 > 0) {
                     addNodeAsAdjacent(node, graph.getNodes()[y - 1][x]);
 
                 }
 
-                if (!(y + 1 > layerHeight - 1)) {
+                if (y + 1 < layerHeight - 1) {
                     addNodeAsAdjacent(node, graph.getNodes()[y + 1][x]);
                 }
 
