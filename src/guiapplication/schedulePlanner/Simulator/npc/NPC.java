@@ -97,7 +97,11 @@ public class NPC {
         g2d.fill(new Ellipse2D.Double(position.getX(), position.getY(), 10, 10));
     }
 
-    public Point2D getPosition() {
+    public void setTargetPosition(Point2D targetPosition){
+        this.targetPosition = targetPosition;
+    }
+
+    public Point2D getPosition(){
         return this.position;
     }
 

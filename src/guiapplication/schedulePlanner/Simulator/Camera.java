@@ -15,17 +15,14 @@ public class Camera {
     private Point2D target;
     private float zoom;
     private Canvas canvas;
-    private Resizable resizable;
-    private FXGraphics2D g2d;
     private Point2D screenMousePos;
     private Point2D distance;
 
-    public Camera(Canvas canvas, Resizable resizable, FXGraphics2D g2d) {
+
+    public Camera(Canvas canvas) {
         this.target = new Point2D.Double(-canvas.getWidth()*4, -canvas.getHeight()*7); //todo magic numbers is zoom for start of map
         this.zoom = 1;
         this.canvas = canvas;
-        this.resizable = resizable;
-        this.g2d = g2d;
 
         canvas.setOnMousePressed(this::mousePressed);
         canvas.setOnMouseReleased(this::mouseReleased);
@@ -53,6 +50,14 @@ public class Camera {
         this.incrementZoom((float) e.getDeltaY() / 1500);
     }
 
+    public AffineTransform getTransform() {
+        AffineTransform transform = new AffineTransform();
+        transform.translate(this.canvas.getWidth() / 2, this.canvas.getHeight() / 2);
+        transform.scale(this.zoom, this.zoom);
+        transform.translate(this.target.getX(), this.target.getY());
+        return transform;
+    }
+
     private void mouseReleased(MouseEvent e) {
         distance = null;
     }
@@ -73,15 +78,7 @@ public class Camera {
         setZoom(this.zoom + amount);
     }
 
-    public AffineTransform getTransform() {
-        AffineTransform transform = new AffineTransform();
-        transform.translate(this.canvas.getWidth() / 2, this.canvas.getHeight() / 2);
-        transform.scale(this.zoom, this.zoom);
-        transform.translate(this.target.getX(), this.target.getY());
-        return transform;
-    }
-
-    private Point2D getDistancePoint(BiFunction<Double, Double, Double> operator, Point2D i, Point2D j) {
+    public Point2D getDistancePoint(BiFunction<Double, Double, Double> operator, Point2D i, Point2D j) {
         return new Point2D.Double(operator.apply(i.getX(), j.getX()), operator.apply(i.getY(), j.getY()));
     }
 

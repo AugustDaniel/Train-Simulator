@@ -3,6 +3,8 @@ package guiapplication.schedulePlanner.Simulator;
 import guiapplication.schedulePlanner.Simulator.npc.NPC;
 import guiapplication.schedulePlanner.Simulator.npc.Traveler;
 import guiapplication.schedulePlanner.Simulator.pathfinding.PathFinding;
+import data.Journey;
+import data.ScheduleSubject;
 import guiapplication.schedulePlanner.Simulator.tilehandlers.Map;
 import guiapplication.schedulePlanner.View;
 import javafx.animation.AnimationTimer;
@@ -13,29 +15,38 @@ import org.jfree.fx.ResizableCanvas;
 
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class MapView implements View {
 
-    private Map map;
-    private ResizableCanvas canvas;
+    private ScheduleSubject subject;
+    private final Map map;
+    private final ResizableCanvas canvas;
     private BorderPane mainPane;
     ArrayList<NPC> npcs = new ArrayList<>();
-    private Camera camera;
+    ArrayList<TrainEntity> trains = new ArrayList<>();
+    private final Camera camera;
+    private Clock clock;
 
-
-    public MapView() throws IOException {
+    public MapView(ScheduleSubject subject) throws IOException {
         mainPane = new BorderPane();
-        canvas = new ResizableCanvas(this::draw, mainPane);
-        camera = new Camera(canvas, this::draw, new FXGraphics2D(canvas.getGraphicsContext2D()));
-        map = new Map("/TrainStationPlannerMap.tmj");
+        this.subject = subject;
+        this.clock = new Clock(0.5);
+        this.canvas = new ResizableCanvas(this::draw, mainPane);
+        this.camera = new Camera(canvas);
+        this.map = new Map("/TrainStationPlannerMap.tmj");
     }
 
     public void update(double deltaTime) {
         for (NPC npc : npcs) {
             npc.update(npcs);
         }
+        for (TrainEntity train : trains) {
+            train.update();
+        }
+        clock.update(deltaTime);
     }
 
     @Override
@@ -56,6 +67,7 @@ public class MapView implements View {
         }.start();
 
         draw(g2d);
+
         canvas.setOnMouseClicked(e -> {
             if (e.isShiftDown()) {
                 npcs.clear();
@@ -76,7 +88,7 @@ public class MapView implements View {
 
             npcs.add(new Traveler(spawnPoint, PathFinding.targets.get((int) (Math.random() * size))));
         });
-
+        init();
         return mainPane;
     }
 
@@ -113,5 +125,24 @@ public class MapView implements View {
 //            Point2D p = node.getPosition();
 //            g.draw(new Rectangle2D.Double(p.getX() - 16, p.getY() - 16, 32 ,32)); //todo change magic number 16 = half tilesize 32 tilesize
 //        }
+
+        for (TrainEntity train : trains) {
+            train.draw(g);
+        }
+
+    }
+
+    public void init(){
+        for (Journey journey : subject.getSchedule().getJourneyList()) {
+            trains.add(new TrainEntity(journey,this));
+        }
+    }
+
+    public ScheduleSubject getSubject() {
+        return subject;
+    }
+
+    public Clock getClock() {
+        return clock;
     }
 }
