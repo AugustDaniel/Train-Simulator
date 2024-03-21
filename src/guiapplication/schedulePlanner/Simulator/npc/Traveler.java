@@ -38,12 +38,6 @@ public class Traveler extends NPC {
         currentNode = closestNode;
 
         for (Node node : currentNode.getAdjacentNodes()) {
-
-            if (debug) {
-                System.out.println(node);
-                System.out.println(node.isOccupied());
-            }
-
             if (node.isOccupied()) {
                 continue;
             }
@@ -91,6 +85,7 @@ public class Traveler extends NPC {
             g.drawString(line, rectX + 10, textY);
             textY += lineHeight;
         }
+
         g.setClip(oldClip);
     }
 
@@ -100,13 +95,5 @@ public class Traveler extends NPC {
 
     public void toggleDebug() {
         setDebug(!this.debug);
-    }
-
-    public Node getCurrentNode() {
-        return currentNode;
-    }
-
-    public Node getClosestNode() {
-        return closestNode;
     }
 }
