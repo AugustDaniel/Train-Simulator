@@ -1,10 +1,21 @@
 package guiapplication.schedulePlanner.Simulator.pathfinding;
 
+import util.graph.Graph;
 import util.graph.Node;
 
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import java.awt.geom.Point2D;
 import java.util.*;
 
 public class PathFinding {
+
+    private final static int COLLISION_TILE = 1;
+    private final static int TILE_SIZE = 32;
+    private final static int OFFSET = 2;
+
+    public static List<Target> targets = new ArrayList<>();
+    public static Graph graph = new Graph(0, 0);
 
     public static Map<Node, Integer> getShortestPath(Node source) {
         Queue<Node> nodes = new LinkedList<>();
@@ -15,7 +26,7 @@ public class PathFinding {
         while (!nodes.isEmpty()) {
             Node current = nodes.poll();
 
-            for(Node adjacent : current.getAdjacentNodes()) {
+            for (Node adjacent : current.getAdjacentNodes()) {
                 if (!distances.containsKey(adjacent)) {
                     nodes.offer(adjacent);
                     distances.put(adjacent, 1 + distances.get(current));
@@ -26,4 +37,119 @@ public class PathFinding {
         return distances;
     }
 
+    public static void addCollision(JsonObject object) {
+
+        int layerHeight = object.getInt("height");
+        int layerWidth = object.getInt("width");
+
+        graph = new Graph(layerHeight, layerWidth);
+        int index = 0;
+
+        for (int y = 0; y < layerHeight; y++) {
+            for (int x = 0; x < layerWidth; x++) {
+
+                if (object.getJsonArray("data").getInt(index) == COLLISION_TILE) {
+                    index++;
+                    continue;
+                }
+
+                Node node = new Node(new Point2D.Double(x * 32, y * 32));
+
+                if (!(x - 1 < 0)) {
+                    addNodeAsAdjacent(node, graph.getNodes()[y][x - 1]);
+                }
+
+                if (!(x + 1 > layerWidth - 1)) {
+                    addNodeAsAdjacent(node, graph.getNodes()[y][x + 1]);
+                }
+
+                if (!(y - 1 < 0)) {
+                    addNodeAsAdjacent(node, graph.getNodes()[y - 1][x]);
+                }
+
+                if (!(y + 1 > layerHeight - 1)) {
+                    addNodeAsAdjacent(node, graph.getNodes()[y + 1][x]);
+                }
+
+                graph.addNode(y, x, node);
+                index++;
+            }
+        }
+
+//        int layerHeight = object.getInt("height");
+//        int layerWidth = object.getInt("width");
+//
+//        graph = new Graph(layerHeight, layerWidth);
+//        int index = 0;
+//
+//        Node[][] nodePositions = new Node[layerHeight][layerWidth];
+//        for (int y = 0; y < layerHeight; y++) {
+//            for (int x = 0; x < layerWidth; x++) {
+//
+//                if (object.getJsonArray("data").getInt(index) == 1) {
+//                    index++;
+//                    continue;
+//                }
+//
+//                nodePositions[y][x] = new Node(new Point2D.Double(x * 32, y * 32));
+//                index++;
+//            }
+//        }
+//
+//        for (int y = 0; y < layerHeight; y++) {
+//            for (int x = 0; x < layerWidth; x++) {
+//                Node currentNode = nodePositions[y][x];
+//
+//                if (!(x - 1 < 0)) {
+//                    addNodeAsAdjacent(currentNode, nodePositions[y][x - 1]);
+//                }
+//
+//                if (!(x + 1 > layerWidth - 1)) {
+//                    addNodeAsAdjacent(currentNode, nodePositions[y][x + 1]);
+//                }
+//
+//                if (!(y - 1 < 0)) {
+//                    addNodeAsAdjacent(currentNode, nodePositions[y - 1][x]);
+//                }
+//
+//                if (!(y + 1 > layerHeight - 1)) {
+//                    addNodeAsAdjacent(currentNode, nodePositions[y + 1][x]);
+//                }
+//
+//                graph.addNode(y, x, currentNode);
+//                index++;
+//            }
+//        }
+    }
+
+    private static void addNodeAsAdjacent(Node currentNode, Node toAdd) {
+        if (toAdd != null && currentNode != null) {
+            currentNode.addAdjacentNode(toAdd);
+
+            if (!toAdd.getAdjacentNodes().contains(currentNode)) {
+                toAdd.addAdjacentNode(currentNode);
+            }
+        }
+    }
+
+    public static void addTargets(JsonObject jsonObject) {
+        JsonArray objects = jsonObject.getJsonArray("objects");
+
+        for (int i = 0; i < objects.size(); i++) {
+
+            int xObject = objects.getJsonObject(i).getInt("x") / TILE_SIZE;
+            int yObject = objects.getJsonObject(i).getInt("y") / TILE_SIZE;
+
+            for (int y = 0; y < objects.getJsonObject(i).getInt("height") / TILE_SIZE; y += OFFSET) {
+                for (int x = 0; x < objects.getJsonObject(i).getInt("width") / TILE_SIZE; x += OFFSET) {
+
+                    Node nodeToAdd = graph.getNodes()[yObject + y][xObject + x];
+
+                    if (nodeToAdd != null) {
+                        targets.add(new Target(nodeToAdd));
+                    }
+                }
+            }
+        }
+    }
 }

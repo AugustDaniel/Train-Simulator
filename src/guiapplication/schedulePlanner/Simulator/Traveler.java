@@ -1,7 +1,10 @@
 package guiapplication.schedulePlanner.Simulator;
 
 import guiapplication.schedulePlanner.Simulator.pathfinding.Target;
+import org.jfree.fx.FXGraphics2D;
 import util.graph.Node;
+
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 public class Traveler extends NPC {
@@ -36,5 +39,12 @@ public class Traveler extends NPC {
         }
 
         setTargetPosition(closestNode.getPosition());
+    }
+
+    public void debugDraw(FXGraphics2D g) {
+        target.getShortestPath().forEach((k, v) -> {
+            g.draw(new Rectangle2D.Double(k.getPosition().getX(), k.getPosition().getY(), 32, 32));
+            g.drawString(v.toString(), (int) k.getPosition().getX(), (int) k.getPosition().getY() + 20);
+        });
     }
 }
