@@ -34,7 +34,7 @@ public class NPC {
     }
 
     public void update(ArrayList<NPC> npcs) {
-        if (atTarget()) {
+        if (atTargetPosition()) {
             this.speed = 0;
             return;
         }
@@ -79,8 +79,8 @@ public class NPC {
         }
     }
 
-    private boolean atTarget() {
-        return position.distance(targetPosition) < 7;
+    public boolean atTargetPosition() {
+        return position.distance(targetPosition) <= 5;
     }
 
     public void draw(Graphics2D g2d) {

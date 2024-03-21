@@ -3,7 +3,6 @@ package guiapplication.schedulePlanner.Simulator;
 import guiapplication.schedulePlanner.Simulator.npc.NPC;
 import guiapplication.schedulePlanner.Simulator.npc.Traveler;
 import guiapplication.schedulePlanner.Simulator.pathfinding.PathFinding;
-import guiapplication.schedulePlanner.Simulator.pathfinding.Target;
 import guiapplication.schedulePlanner.Simulator.tilehandlers.Map;
 import guiapplication.schedulePlanner.View;
 import javafx.animation.AnimationTimer;
@@ -14,8 +13,6 @@ import org.jfree.fx.ResizableCanvas;
 
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -65,6 +62,7 @@ public class MapView implements View {
                 return;
             }
 
+            //todo npc debug
             for (NPC npc : npcs) {
                 if (npc.contains(camera.getWorldPos(e.getX(), e.getY()))) {
                     Traveler tr = (Traveler) npc;
@@ -102,11 +100,6 @@ public class MapView implements View {
 
         for (NPC npc : npcs) {
             npc.draw(g);
-        }
-
-        if (this.npcs.size() == 1) {
-            Traveler tr = (Traveler) this.npcs.get(0);
-            tr.debugDraw(g);
         }
 
 //        //todo target debug

@@ -39,6 +39,11 @@ public class Traveler extends NPC {
 
         for (Node node : currentNode.getAdjacentNodes()) {
 
+            if (debug) {
+                System.out.println(node);
+                System.out.println(node.isOccupied());
+            }
+
             if (node.isOccupied()) {
                 continue;
             }
@@ -54,7 +59,7 @@ public class Traveler extends NPC {
 
     @Override
     public void draw(Graphics2D g) {
-        if(debug) {
+        if (debug) {
             debugDraw(g);
         }
 
@@ -66,6 +71,27 @@ public class Traveler extends NPC {
             g.draw(new Rectangle2D.Double(k.getPosition().getX() - 16, k.getPosition().getY() - 16, 32, 32)); //todo change magic number 16 = half tilesize 32 tilesize
             g.drawString(v.toString(), (int) k.getPosition().getX() - 16, (int) k.getPosition().getY() - 16 + 20); //todo change magic number 16 = half tilesize 32 tilesize 20 is random offset number
         });
+
+        int rectX = (int) (this.position.getX() + 20);
+        int rectY = (int) (this.position.getY() - 50);
+        int rectWidth = 200;
+        int rectHeight = 50;
+
+        g.setColor(Color.WHITE);
+        g.draw(new Rectangle2D.Double(rectX, rectY, rectWidth, rectHeight));
+
+        Shape oldClip = g.getClip();
+        g.setClip(rectX, rectY, rectWidth, rectHeight);
+
+        g.setColor(Color.BLACK);
+        String[] lines = {this.position.toString(), this.targetPosition.toString(), this.currentNode.toString(), this.closestNode.toString()};
+        int lineHeight = g.getFontMetrics().getHeight();
+        int textY =  rectY;
+        for (String line : lines) {
+            g.drawString(line, rectX + 10, textY);
+            textY += lineHeight;
+        }
+        g.setClip(oldClip);
     }
 
     public void setDebug(boolean b) {
@@ -74,5 +100,13 @@ public class Traveler extends NPC {
 
     public void toggleDebug() {
         setDebug(!this.debug);
+    }
+
+    public Node getCurrentNode() {
+        return currentNode;
+    }
+
+    public Node getClosestNode() {
+        return closestNode;
     }
 }
