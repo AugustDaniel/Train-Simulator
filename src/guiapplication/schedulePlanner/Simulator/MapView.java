@@ -25,7 +25,7 @@ public class MapView implements View {
     private ScheduleSubject subject;
     private final Map map;
     private final ResizableCanvas canvas;
-    private final BorderPane mainPane = new BorderPane();
+    private BorderPane mainPane;
     ArrayList<NPC> npcs = new ArrayList<>();
     ArrayList<TrainEntity> trains = new ArrayList<>();
     private final Camera camera;
@@ -33,9 +33,9 @@ public class MapView implements View {
     private Clock clock;
 
 //    private BufferedImage image = ImageIO.read(this.getClass().getResourceAsStream("/astronautHelmet.png"));
-    private Camera camera;
 
     public MapView(ScheduleSubject subject) throws IOException {
+        mainPane = new BorderPane();
         this.subject = subject;
         this.clock = new Clock(0.5);
         this.canvas = new ResizableCanvas(this::draw, mainPane);
@@ -43,7 +43,6 @@ public class MapView implements View {
         this.map = new Map("/TrainStationPlannerMap.tmj");
         Point2D nullpoint = new Point2D.Double(0, 0);
         this.worldMousePos = nullpoint;
-        mainPane = new BorderPane();
     }
 
     public void update(double deltaTime) {

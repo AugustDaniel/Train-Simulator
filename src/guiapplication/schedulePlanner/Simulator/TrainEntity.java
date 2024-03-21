@@ -24,9 +24,18 @@ public class TrainEntity {
 
     public TrainEntity(Journey journey, MapView mapView){
         this.journey = journey;
-        this.position = new Point2D.Double(30, -9);
         this.mapView = mapView;
         this.draw = false;
+        int yLocation;
+        if (journey.getPlatform().getPlatformNumber() %2 == 0) {
+            yLocation = journey.getPlatform().getPlatformNumber() * 20;
+        }
+        else {
+            yLocation = journey.getPlatform().getPlatformNumber() * 35;
+        }
+
+
+        this.position = new Point2D.Double(30, yLocation);
 
         try {
             this.trainWagon = ImageIO.read(Objects.requireNonNull(this.getClass().getResourceAsStream("/wagontrain.png")));
@@ -38,7 +47,7 @@ public class TrainEntity {
     }
 
     public void update(){
-        if (mapView.getClock().getCurrentTime().isAfter(journey.getArrivalTime().minusMinutes(5)) &&
+        if (mapView.getClock().getCurrentTime().isAfter(journey.getArrivalTime().minusMinutes(10)) &&
                 mapView.getClock().getCurrentTime().isBefore(journey.getArrivalTime())){
             position  = new Point2D.Double(position.getX() + 4, position.getY());
             draw = true;
