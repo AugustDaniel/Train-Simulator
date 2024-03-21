@@ -10,13 +10,6 @@ import java.util.ArrayList;
 
 public class Traveler extends NPC {
 
-    private final String[] debugLines = {
-            "Current position: x = " + ((int)this.position.getX()) + ", y = " + ((int)this.position.getY()),
-            "Target position: x = " +((int)this.targetPosition.getX()) + ", y = " + ((int)this.targetPosition.getY()),
-            "Current node: " + this.currentNode.toString(),
-            "Closest node: " + this.closestNode.toString(),
-    };
-
     private Target target;
     private Node currentNode;
     private Node closestNode;
@@ -85,9 +78,16 @@ public class Traveler extends NPC {
 
         g.setColor(Color.BLACK);
 
+        String[] debugLines = {
+                "Current position: x = " + ((int)this.position.getX()) + ", y = " + ((int)this.position.getY()),
+                "Target position: x = " +((int)this.targetPosition.getX()) + ", y = " + ((int)this.targetPosition.getY()),
+                "Current node: " + this.currentNode.toString(),
+                "Closest node: " + this.closestNode.toString(),
+        };
+
         int lineHeight = g.getFontMetrics().getHeight();
         int textY =  rectY + lineHeight;
-        for (String line : this.debugLines) {
+        for (String line : debugLines) {
             g.drawString(line, rectX + 10, textY);
             textY += lineHeight;
         }
