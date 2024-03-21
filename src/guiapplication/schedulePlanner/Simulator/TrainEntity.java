@@ -35,7 +35,7 @@ public class TrainEntity {
         }
 
 
-        this.position = new Point2D.Double(30, yLocation);
+        this.position = new Point2D.Double(0, yLocation);
 
         try {
             this.trainWagon = ImageIO.read(Objects.requireNonNull(this.getClass().getResourceAsStream("/wagontrain.png")));
@@ -49,7 +49,7 @@ public class TrainEntity {
     public void update(){
         if (mapView.getClock().getCurrentTime().isAfter(journey.getArrivalTime().minusMinutes(10)) &&
                 mapView.getClock().getCurrentTime().isBefore(journey.getArrivalTime())){
-            position  = new Point2D.Double(position.getX() + 4, position.getY());
+            position = new Point2D.Double(position.getX() + 4, position.getY());
             draw = true;
         }
         else if (mapView.getClock().getCurrentTime().isAfter(journey.getDepartureTime())) {
@@ -62,16 +62,16 @@ public class TrainEntity {
         if (!draw) {
             return;
         }
-        g2d.setClip(0,0,3600,4000);
+        g2d.setClip(0,0,3584,4000);
         AffineTransform tx = new AffineTransform();
 
         tx.translate(position.getX(), position.getY());
         g2d.drawImage(trainHeadRight, tx, null);
 
-        tx.translate(trainHeadRight.getWidth() - 20,0);
+        tx.translate(trainHeadRight.getWidth(),-4);
         g2d.drawImage(trainWagon, tx, null);
 
-        tx.translate(trainWagon.getWidth() - 30,0);
+        tx.translate(trainWagon.getWidth(),2);
         g2d.drawImage(trainHeadLeft, tx, null);
         g2d.setClip(null);
     }
