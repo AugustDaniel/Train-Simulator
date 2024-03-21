@@ -1,7 +1,5 @@
 package guiapplication.schedulePlanner.Simulator;
 
-import data.Journey;
-import data.Schedule;
 import util.TimeFormatter;
 
 import java.time.LocalTime;
@@ -9,20 +7,14 @@ import java.time.LocalTime;
 
 public class Clock {
     private double timeSpeed;
-    private Schedule schedule;
     private double timePassed;
     private int currentTimeInt;
     private LocalTime currentTime;
-    private MapView mapView;
-    private boolean spawned = false;
-    private LocalTime localTime;
 
-    public Clock(Schedule schedule, double timeSpeed, MapView mapView) {
-        this.schedule = schedule;
+    public Clock(double timeSpeed) {
         this.timeSpeed = timeSpeed;
         this.currentTime = TimeFormatter.intToLocalTime(currentTimeInt);
         this.timePassed = 0;
-        this.mapView = mapView;
     }
 
     public void update(double deltaTime) {
@@ -39,20 +31,18 @@ public class Clock {
             timePassed -= timeSpeed;
             currentTime = TimeFormatter.intToLocalTime(currentTimeInt);
             System.out.println(currentTimeInt);
-//            System.out.println(currentTime);
         }
+    }
 
-        for (Journey journey : this.schedule.getJourneyList()) {
+    public LocalTime getCurrentTime() {
+        return currentTime;
+    }
 
-            if (currentTime.equals(journey.getArrivalTime())) {
-                if (!this.mapView.trains.containsKey(journey.getTrainID())) {
-                    this.mapView.trains.put(journey.getTrainID(), new SpawnTrain(journey.getPlatform(), journey.getTrainID()));
-                }
-            }
-            if (currentTime.equals(journey.getDepartureTime().plusMinutes(10)) && this.mapView.trains.containsKey(journey.getTrainID())) {
-//                System.out.println("suiiii");
-                this.mapView.trains.remove(journey.getTrainID());
-            }
-        }
+    public void setCurrentTime(LocalTime currentTime) {
+        this.currentTime = currentTime;
+    }
+
+    public int getCurrentTimeInt() {
+        return currentTimeInt;
     }
 }

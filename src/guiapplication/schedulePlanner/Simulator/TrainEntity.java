@@ -1,30 +1,32 @@
 package guiapplication.schedulePlanner.Simulator;
 
+import data.Journey;
 import data.Platform;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class SpawnTrain {
+public class TrainEntity {
     private Platform platform;
     private BufferedImage trainWagon;
     private BufferedImage trainHeadLeft;
     private BufferedImage trainHeadRight;
-    private double traveling;
-    private String ID;
+    private Point2D position;
+    private Journey journey;
+    private MapView mapView;
+    private boolean draw;
 
-    public String getID() {
-        return ID;
-    }
 
-    public SpawnTrain(Platform platform, String ID){
-        this.platform = platform;
-        this.traveling = 0;
-        this.ID = ID;
+    public TrainEntity(Journey journey, MapView mapView){
+        this.journey = journey;
+        this.position = new Point2D.Double(30, -9);
+        this.mapView = mapView;
+        this.draw = false;
 
         try {
             this.trainWagon = ImageIO.read(Objects.requireNonNull(this.getClass().getResourceAsStream("/wagontrain.png")));
@@ -36,13 +38,25 @@ public class SpawnTrain {
     }
 
     public void update(){
-        traveling += 4;
+        if (mapView.getClock().getCurrentTime().isAfter(journey.getArrivalTime().minusMinutes(5)) &&
+                mapView.getClock().getCurrentTime().isBefore(journey.getArrivalTime())){
+            position  = new Point2D.Double(position.getX() + 4, position.getY());
+            draw = true;
+        }
+        else if (mapView.getClock().getCurrentTime().isAfter(journey.getDepartureTime())) {
+            position  = new Point2D.Double(position.getX() + 4, position.getY());
+        }
+
     }
 
     public void draw(Graphics2D g2d){
+        if (!draw) {
+            return;
+        }
+        g2d.setClip(0,0,3600,4000);
         AffineTransform tx = new AffineTransform();
 
-        tx.translate(30 + traveling, -9 );
+        tx.translate(position.getX(), position.getY());
         g2d.drawImage(trainHeadRight, tx, null);
 
         tx.translate(trainHeadRight.getWidth() - 20,0);
@@ -50,5 +64,6 @@ public class SpawnTrain {
 
         tx.translate(trainWagon.getWidth() - 30,0);
         g2d.drawImage(trainHeadLeft, tx, null);
+        g2d.setClip(null);
     }
 }

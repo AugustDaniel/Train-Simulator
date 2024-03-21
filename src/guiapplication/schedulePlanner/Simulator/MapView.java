@@ -1,5 +1,6 @@
 package guiapplication.schedulePlanner.Simulator;
 
+import data.Journey;
 import data.ScheduleSubject;
 import guiapplication.schedulePlanner.Simulator.tilehandlers.Map;
 import guiapplication.schedulePlanner.View;
@@ -14,7 +15,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class MapView implements View {
 
@@ -23,7 +23,7 @@ public class MapView implements View {
     private final ResizableCanvas canvas;
     private final BorderPane mainPane = new BorderPane();
     ArrayList<NPC> npcs = new ArrayList<>();
-    HashMap<String, SpawnTrain> trains = new HashMap();
+    ArrayList<TrainEntity> trains = new ArrayList<>();
     private final Camera camera;
     private Point2D worldMousePos;
     private Clock clock;
@@ -32,7 +32,7 @@ public class MapView implements View {
 
     public MapView(ScheduleSubject subject) throws IOException {
         this.subject = subject;
-        this.clock = new Clock(this.subject.getSchedule(), 0.5, this);
+        this.clock = new Clock(0.5);
         this.canvas = new ResizableCanvas(this::draw, mainPane);
         this.camera = new Camera(canvas, this::draw, new FXGraphics2D(canvas.getGraphicsContext2D()));
         this.map = new Map("/TrainStationPlannerMap.tmj");
@@ -44,7 +44,9 @@ public class MapView implements View {
         for (NPC npc : npcs) {
             npc.update(this.npcs);
         }
-        trains.forEach((k,v) -> v.update());
+        for (TrainEntity train : trains) {
+            train.update();
+        }
         clock.update(deltaTime);
     }
 
@@ -77,7 +79,7 @@ public class MapView implements View {
                 npc.setTargetPosition(worldMousePos);
             }
         });
-
+        init();
         return mainPane;
     }
 
@@ -92,7 +94,23 @@ public class MapView implements View {
         for (NPC npc : npcs) {
             npc.draw(g);
         }
-        trains.forEach((k,v) -> v.draw(g));
+        for (TrainEntity train : trains) {
+            train.draw(g);
+        }
 
+    }
+
+    public void init(){
+        for (Journey journey : subject.getSchedule().getJourneyList()) {
+            trains.add(new TrainEntity(journey,this));
+        }
+    }
+
+    public ScheduleSubject getSubject() {
+        return subject;
+    }
+
+    public Clock getClock() {
+        return clock;
     }
 }
