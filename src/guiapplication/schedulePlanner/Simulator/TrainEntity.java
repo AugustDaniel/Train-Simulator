@@ -35,7 +35,7 @@ public class TrainEntity {
         }
 
 
-        this.position = new Point2D.Double(0, yLocation);
+        this.position = new Point2D.Double(-900, yLocation);
 
         try {
             this.trainWagon = ImageIO.read(Objects.requireNonNull(this.getClass().getResourceAsStream("/wagontrain.png")));
