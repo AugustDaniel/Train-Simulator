@@ -61,26 +61,33 @@ public class Traveler extends NPC {
     }
 
     public void debugDraw(Graphics2D g) {
-        target.getShortestPath().forEach((k, v) -> {
-            g.draw(new Rectangle2D.Double(k.getPosition().getX() - 16, k.getPosition().getY() - 16, 32, 32)); //todo change magic number 16 = half tilesize 32 tilesize
-            g.drawString(v.toString(), (int) k.getPosition().getX() - 16, (int) k.getPosition().getY() - 16 + 20); //todo change magic number 16 = half tilesize 32 tilesize 20 is random offset number
-        });
+        //todo tile pathfinding debugging
+//        target.getShortestPath().forEach((k, v) -> {
+//            g.draw(new Rectangle2D.Double(k.getPosition().getX() - 16, k.getPosition().getY() - 16, 32, 32)); //todo change magic number 16 = half tilesize 32 tilesize
+//            g.drawString(v.toString(), (int) k.getPosition().getX() - 16, (int) k.getPosition().getY() - 16 + 20); //todo change magic number 16 = half tilesize 32 tilesize 20 is random offset number
+//        });
 
-        int rectX = (int) (this.position.getX() + 20);
+        int rectX = (int) (this.position.getX() + 50);
         int rectY = (int) (this.position.getY() - 50);
-        int rectWidth = 200;
+        int rectWidth = 300;
         int rectHeight = 50;
 
         g.setColor(Color.WHITE);
-        g.draw(new Rectangle2D.Double(rectX, rectY, rectWidth, rectHeight));
+        g.fill(new Rectangle2D.Double(rectX, rectY, rectWidth, rectHeight));
 
         Shape oldClip = g.getClip();
         g.setClip(rectX, rectY, rectWidth, rectHeight);
 
         g.setColor(Color.BLACK);
-        String[] lines = {this.position.toString(), this.targetPosition.toString(), this.currentNode.toString(), this.closestNode.toString()};
+        String[] lines = {
+                "Current position: x = " + ((int)this.position.getX()) + ", y = " + ((int)this.position.getY()),
+                "Target position: x = " +((int)this.targetPosition.getX()) + ", y = " + ((int)this.targetPosition.getY()),
+                "Current node: " + this.currentNode.toString(),
+                "Closest node: " + this.closestNode.toString(),
+        };
+
         int lineHeight = g.getFontMetrics().getHeight();
-        int textY =  rectY;
+        int textY =  rectY + lineHeight;
         for (String line : lines) {
             g.drawString(line, rectX + 10, textY);
             textY += lineHeight;
