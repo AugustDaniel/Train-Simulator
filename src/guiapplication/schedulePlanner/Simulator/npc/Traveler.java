@@ -4,6 +4,7 @@ import guiapplication.schedulePlanner.Simulator.pathfinding.Target;
 import org.jfree.fx.FXGraphics2D;
 import util.graph.Node;
 
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
@@ -12,6 +13,7 @@ public class Traveler extends NPC {
     private Target target;
     private Node currentNode;
     private Node closestNode;
+    private boolean debug;
 
     public Traveler(Node node, Target target) {
         super(node.getPosition(), 0);
@@ -50,10 +52,27 @@ public class Traveler extends NPC {
         this.targetPosition = closestNode.getPosition();
     }
 
-    public void debugDraw(FXGraphics2D g) {
+    @Override
+    public void draw(Graphics2D g) {
+        if(debug) {
+            debugDraw(g);
+        }
+
+        super.draw(g);
+    }
+
+    public void debugDraw(Graphics2D g) {
         target.getShortestPath().forEach((k, v) -> {
             g.draw(new Rectangle2D.Double(k.getPosition().getX() - 16, k.getPosition().getY() - 16, 32, 32)); //todo change magic number 16 = half tilesize 32 tilesize
             g.drawString(v.toString(), (int) k.getPosition().getX() - 16, (int) k.getPosition().getY() - 16 + 20); //todo change magic number 16 = half tilesize 32 tilesize 20 is random offset number
         });
+    }
+
+    public void setDebug(boolean b) {
+        this.debug = b;
+    }
+
+    public void toggleDebug() {
+        setDebug(!this.debug);
     }
 }

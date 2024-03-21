@@ -65,6 +65,14 @@ public class MapView implements View {
                 return;
             }
 
+            for (NPC npc : npcs) {
+                if (npc.contains(camera.getWorldPos(e.getX(), e.getY()))) {
+                    Traveler tr = (Traveler) npc;
+                    tr.toggleDebug();
+                    return;
+                }
+            }
+
             util.graph.Node spawnPoint = checkCollision(PathFinding.spawnPoints.get((int) (Math.random() * (PathFinding.spawnPoints.size() - 1))));
             int size = PathFinding.targets.size();
 
@@ -101,9 +109,16 @@ public class MapView implements View {
             tr.debugDraw(g);
         }
 
-        for (Target target : PathFinding.targets) {
-            Point2D p = target.getNode().getPosition();
-            g.draw(new Rectangle2D.Double(p.getX() - 16, p.getY() - 16, 32 ,32)); //todo change magic number 16 = half tilesize 32 tilesize
-        }
+//        //todo target debug
+//        for (Target target : PathFinding.targets) {
+//            Point2D p = target.getNode().getPosition();
+//            g.draw(new Rectangle2D.Double(p.getX() - 16, p.getY() - 16, 32 ,32)); //todo change magic number 16 = half tilesize 32 tilesize
+//        }
+//
+//        //todo spawnpoint debug
+//        for (util.graph.Node node : PathFinding.spawnPoints) {
+//            Point2D p = node.getPosition();
+//            g.draw(new Rectangle2D.Double(p.getX() - 16, p.getY() - 16, 32 ,32)); //todo change magic number 16 = half tilesize 32 tilesize
+//        }
     }
 }

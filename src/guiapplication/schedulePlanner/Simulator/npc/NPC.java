@@ -2,9 +2,7 @@ package guiapplication.schedulePlanner.Simulator.npc;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Point2D;
+import java.awt.geom.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,7 +18,7 @@ public class NPC {
     protected int scale = 6;
     protected boolean draw;
 
-    public NPC(Point2D position, double angle){
+    public NPC(Point2D position, double angle) {
         this.position = position;
         this.angle = angle;
         this.speed = 1 + Math.random() * 0.5;
@@ -35,20 +33,25 @@ public class NPC {
 
     }
 
-    public void update(ArrayList<NPC> npcs){
-        checkAtTarget();
+    public void update(ArrayList<NPC> npcs) {
+        if (atTarget()) {
+            this.speed = 0;
+            return;
+        }
+
+        this.speed = 1 + Math.random() * 0.5;
         this.draw = true;
         double newAngle = Math.atan2(this.targetPosition.getY() - this.position.getY(), this.targetPosition.getX() - this.position.getX());
 
         double angleDifference = angle - newAngle;
-        while(angleDifference > Math.PI)
+        while (angleDifference > Math.PI)
             angleDifference -= 2 * Math.PI;
-        while(angleDifference < -Math.PI)
+        while (angleDifference < -Math.PI)
             angleDifference += 2 * Math.PI;
 
-        if(angleDifference < -0.1)
+        if (angleDifference < -0.1)
             angle += 0.1;
-        else if(angleDifference > 0.1)
+        else if (angleDifference > 0.1)
             angle -= 0.1;
         else
             angle = newAngle;
@@ -62,22 +65,22 @@ public class NPC {
 
         for (NPC npc : npcs) {
             if (npc != this) {
-                if (npc.getSpeed() == 0) {
-                    continue;
-                }
                 if (npc.position.distance(newPosition) <= (double) image.getHeight() / scale) {
                     hasCollision = true;
                 }
             }
         }
-        if(!hasCollision) {
+        if (!hasCollision) {
             this.position = newPosition;
-        }
-        else
+        } else
             this.angle += 0.2;
-        if (this.position.getY() < 4096-800 && this.position.getX() < 4096 - 416 && this.position.getX() > 4096- 528) {
+        if (this.position.getY() < 4096 - 800 && this.position.getX() < 4096 - 416 && this.position.getX() > 4096 - 528) {
             this.draw = false;
         }
+    }
+
+    private boolean atTarget() {
+        return position.distance(targetPosition) < 7;
     }
 
     public void draw(Graphics2D g2d) {
@@ -91,12 +94,10 @@ public class NPC {
         g2d.drawImage(image, tx, null);
 
         g2d.setColor(Color.RED);
-        g2d.fill(new Ellipse2D.Double(position.getX() - 5, position.getY() - 5, 10, 10));
-
+        g2d.fill(new Ellipse2D.Double(position.getX(), position.getY(), 10, 10));
     }
 
-    public Point2D getPosition()
-    {
+    public Point2D getPosition() {
         return this.position;
     }
 
@@ -104,12 +105,16 @@ public class NPC {
         return speed;
     }
 
-    public int getImageSize(){
-        return image.getHeight()/scale;
+    public int getImageSize() {
+        return image.getHeight() / scale;
     }
-    public void checkAtTarget(){
-        if (position.distance(targetPosition) < 7){
-            speed = 0;
-        }
+
+    public Point2D getTargetPosition() {
+        return this.targetPosition;
+    }
+
+    public boolean contains(Point2D p) {
+        int size = getImageSize();
+        return new Rectangle2D.Double(this.position.getX() - (double) size / 2, this.position.getY() - (double) size / 2, size, size).contains(p);
     }
 }
