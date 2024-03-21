@@ -6,9 +6,11 @@ import java.util.Map;
 
 public class Target {
     private Map<Node, Integer> shortestPath;
+    private Node node;
 
     public Target(Node node) {
         this.shortestPath = PathFinding.getShortestPath(node);
+        this.node = node;
     }
 
     public Integer getDistance(Node node) {
@@ -17,5 +19,9 @@ public class Target {
 
     public Map<Node, Integer> getShortestPath() {
         return this.shortestPath;
+    }
+
+    public Node getNode() {
+        return node;
     }
 }

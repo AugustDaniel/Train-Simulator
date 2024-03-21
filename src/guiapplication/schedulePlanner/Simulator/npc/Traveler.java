@@ -15,6 +15,7 @@ public class Traveler extends NPC {
 
     public Traveler(Node node, Target target) {
         super(node.getPosition(), 0);
+        node.setOccupied(true);
         this.currentNode = node;
         this.closestNode = node;
         this.target = target;
@@ -26,14 +27,22 @@ public class Traveler extends NPC {
         super.update(npcs);
 
         if (this.position.distance(this.targetPosition) < 100) {
-            currentNode = closestNode;
             checkPosition();
         }
     }
 
     private void checkPosition() {
+        currentNode.setOccupied(false);
+        currentNode = closestNode;
+
         for (Node node : currentNode.getAdjacentNodes()) {
+
+            if (node.isOccupied()) {
+                continue;
+            }
+
             if (target.getDistance(node) < target.getDistance(closestNode)) {
+                node.setOccupied(true);
                 closestNode = node;
             }
         }
@@ -43,8 +52,8 @@ public class Traveler extends NPC {
 
     public void debugDraw(FXGraphics2D g) {
         target.getShortestPath().forEach((k, v) -> {
-            g.draw(new Rectangle2D.Double(k.getPosition().getX(), k.getPosition().getY(), 32, 32));
-            g.drawString(v.toString(), (int) k.getPosition().getX(), (int) k.getPosition().getY() + 20);
+            g.draw(new Rectangle2D.Double(k.getPosition().getX() - 16, k.getPosition().getY() - 16, 32, 32)); //todo change magic number 16 = half tilesize 32 tilesize
+            g.drawString(v.toString(), (int) k.getPosition().getX() - 16, (int) k.getPosition().getY() - 16 + 20); //todo change magic number 16 = half tilesize 32 tilesize 20 is random offset number
         });
     }
 }

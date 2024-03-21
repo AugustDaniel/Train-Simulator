@@ -72,12 +72,9 @@ public class NPC {
         }
         if(!hasCollision) {
             this.position = newPosition;
-            this.speed = 1 + Math.random() * 0.5;
         }
-        else{
+        else
             this.angle += 0.2;
-            this.speed = 0;
-        }
         if (this.position.getY() < 4096-800 && this.position.getX() < 4096 - 416 && this.position.getX() > 4096- 528) {
             this.draw = false;
         }

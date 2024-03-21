@@ -136,7 +136,7 @@
          "name":"backround",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":128,
          "x":0,
          "y":0
@@ -275,7 +275,7 @@
          "name":"middleground",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":128,
          "x":0,
          "y":0
@@ -553,7 +553,7 @@
          "name":"CollisionLayer",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":128,
          "x":0,
          "y":0
@@ -564,169 +564,169 @@
          "name":"TargetObjects",
          "objects":[
                 {
-                 "height":66,
+                 "height":47,
                  "id":23,
                  "name":"Peron 0",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":2559.33333333333,
-                 "x":992.666666666667,
-                 "y":3232
+                 "width":2546.33333333333,
+                 "x":1001.66666666667,
+                 "y":3241
                 }, 
                 {
-                 "height":64.6666666666665,
+                 "height":45.6666666666665,
                  "id":24,
                  "name":"Peron 1",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":2559.66666666667,
-                 "x":992.333333333333,
-                 "y":3104
+                 "width":2542.66666666667,
+                 "x":1001.33333333333,
+                 "y":3113
                 }, 
                 {
-                 "height":66.5,
+                 "height":48.5,
                  "id":25,
                  "name":"Peron 2",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":2558.5,
-                 "x":993.5,
-                 "y":2783.5
+                 "width":2540.5,
+                 "x":1001.5,
+                 "y":2792.5
                 }, 
                 {
-                 "height":63.5,
+                 "height":47.5,
                  "id":26,
                  "name":"Peron 3",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":2559.5,
-                 "x":992.5,
-                 "y":2656
+                 "width":2540.5,
+                 "x":1001.5,
+                 "y":2665
                 }, 
                 {
-                 "height":65.5,
+                 "height":46.5,
                  "id":27,
                  "name":"Peron 4",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":2559.5,
-                 "x":992.5,
-                 "y":2336.5
+                 "width":2543.5,
+                 "x":999.5,
+                 "y":2345.5
                 }, 
                 {
-                 "height":65.5,
+                 "height":45.5,
                  "id":28,
                  "name":"Peron 5",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":2560.5,
-                 "x":991.5,
-                 "y":2208
+                 "width":2541.5,
+                 "x":1002.5,
+                 "y":2218
                 }, 
                 {
-                 "height":65.3333333333333,
+                 "height":51.3333333333333,
                  "id":29,
                  "name":"Peron 6",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":2559.33333333333,
-                 "x":992.666666666667,
-                 "y":1888.66666666667
+                 "width":2541.33333333333,
+                 "x":998.666666666667,
+                 "y":1895.66666666667
                 }, 
                 {
-                 "height":65.3333333333335,
+                 "height":45.3333333333335,
                  "id":30,
                  "name":"Peron 7",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":2561.33333333333,
-                 "x":990.666666666667,
-                 "y":1760
+                 "width":2536.33333333333,
+                 "x":1006.66666666667,
+                 "y":1769
                 }, 
                 {
-                 "height":64.6666666666667,
+                 "height":48.6666666666667,
                  "id":31,
                  "name":"Peron 8",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":2558.66666666667,
-                 "x":993.333333333333,
-                 "y":1441.33333333333
+                 "width":2540.66666666667,
+                 "x":1002.33333333333,
+                 "y":1446.33333333333
                 }, 
                 {
-                 "height":64.6666666666665,
+                 "height":48.6666666666665,
                  "id":32,
                  "name":"Peron 9",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":2559.33333333333,
-                 "x":992.666666666667,
-                 "y":1312
+                 "width":2537.33333333333,
+                 "x":1005.66666666667,
+                 "y":1319
                 }, 
                 {
-                 "height":66.6666666666666,
+                 "height":50.6666666666665,
                  "id":33,
                  "name":"Peron 10",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":2560,
-                 "x":992,
-                 "y":991.333333333333
+                 "width":2540,
+                 "x":1000,
+                 "y":999.333333333333
                 }, 
                 {
-                 "height":64.3333333333334,
+                 "height":50.3333333333334,
                  "id":34,
                  "name":"Peron 11",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":2560.33333333333,
-                 "x":991.666666666667,
-                 "y":864
+                 "width":2539.33333333333,
+                 "x":1000.66666666667,
+                 "y":870
                 }, 
                 {
-                 "height":65.3333333333334,
+                 "height":45.3333333333334,
                  "id":35,
                  "name":"Peron 12",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":2559.66666666667,
-                 "x":992.333333333333,
-                 "y":544.666666666667
+                 "width":2541.66666666667,
+                 "x":1001.33333333333,
+                 "y":555.666666666667
                 }, 
                 {
-                 "height":64,
+                 "height":49,
                  "id":36,
                  "name":"Peron 13",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":2559.33333333333,
-                 "x":992.666666666667,
-                 "y":416
+                 "width":2540.33333333333,
+                 "x":1001.66666666667,
+                 "y":424
                 }, 
                 {
-                 "height":95.3333333333333,
+                 "height":75.3333333333333,
                  "id":37,
                  "name":"Peron 14",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":2559.33333333333,
-                 "x":992.666666666667,
-                 "y":32
+                 "width":2536.33333333333,
+                 "x":1002.66666666667,
+                 "y":41
                 }, 
                 {
                  "height":41.333333333333,

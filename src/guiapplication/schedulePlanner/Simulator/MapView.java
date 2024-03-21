@@ -3,6 +3,7 @@ package guiapplication.schedulePlanner.Simulator;
 import guiapplication.schedulePlanner.Simulator.npc.NPC;
 import guiapplication.schedulePlanner.Simulator.npc.Traveler;
 import guiapplication.schedulePlanner.Simulator.pathfinding.PathFinding;
+import guiapplication.schedulePlanner.Simulator.pathfinding.Target;
 import guiapplication.schedulePlanner.Simulator.tilehandlers.Map;
 import guiapplication.schedulePlanner.View;
 import javafx.animation.AnimationTimer;
@@ -13,6 +14,8 @@ import org.jfree.fx.ResizableCanvas;
 
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -96,6 +99,11 @@ public class MapView implements View {
         if (this.npcs.size() == 1) {
             Traveler tr = (Traveler) this.npcs.get(0);
             tr.debugDraw(g);
+        }
+
+        for (Target target : PathFinding.targets) {
+            Point2D p = target.getNode().getPosition();
+            g.draw(new Rectangle2D.Double(p.getX() - 16, p.getY() - 16, 32 ,32)); //todo change magic number 16 = half tilesize 32 tilesize
         }
     }
 }

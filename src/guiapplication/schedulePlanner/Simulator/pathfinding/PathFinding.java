@@ -55,7 +55,7 @@ public class PathFinding {
                     continue;
                 }
 
-                Node node = new Node(new Point2D.Double(x * 32, y * 32));
+                Node node = new Node(new Point2D.Double(x * TILE_SIZE + ((double) TILE_SIZE / 2), y * TILE_SIZE + ((double) TILE_SIZE / 2)));
 
                 if (x - 1 > 0) {
                     addNodeAsAdjacent(node, graph.getNodes()[y][x - 1]);
@@ -101,13 +101,15 @@ public class PathFinding {
 
             if (o.getString("name").equals("spawn")) {
                 createSpawnPoints(o);
+                continue;
             }
 
             int xObject = o.getInt("x") / TILE_SIZE;
             int yObject = o.getInt("y") / TILE_SIZE;
+            int xStartingPoint = 0;
 
-            for (int y = 0; y < o.getInt("height") / TILE_SIZE; y += OFFSET) {
-                for (int x = 0; x < o.getInt("width") / TILE_SIZE; x += OFFSET) {
+            for (int y = 0; y < Math.ceil((double) o.getInt("height") / TILE_SIZE); y++) {
+                for (int x = xStartingPoint; x < Math.ceil((double) o.getInt("width") / TILE_SIZE); x += OFFSET) {
 
                     Node nodeToAdd = graph.getNodes()[yObject + y][xObject + x];
 
@@ -115,6 +117,8 @@ public class PathFinding {
                         targets.add(new Target(nodeToAdd));
                     }
                 }
+
+                xStartingPoint++;
             }
         }
     }
