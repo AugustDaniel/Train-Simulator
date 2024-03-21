@@ -19,6 +19,7 @@ public class NPC {
     private Point2D targetPosition;
     private int scale = 6;
     private boolean draw;
+
     public NPC(Point2D position, double angle){
         this.position = position;
         this.angle = angle;

@@ -14,6 +14,7 @@ import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -75,7 +76,7 @@ public class MapView implements View {
 
             if (!hasCollision) {
                 int size = PathFinding.targets.size();
-                npcs.add(new Traveler(PathFinding.graph.getNodes()[y][x], PathFinding.targets.get((int) (Math.random() * size))));
+                npcs.add(new Traveler(PathFinding.spawnPoints.get((int) (Math.random() * (PathFinding.spawnPoints.size() - 1))), PathFinding.targets.get((int) (Math.random() * size))));
             }
         });
 
