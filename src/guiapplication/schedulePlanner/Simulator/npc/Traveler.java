@@ -1,4 +1,4 @@
-package guiapplication.schedulePlanner.Simulator;
+package guiapplication.schedulePlanner.Simulator.npc;
 
 import guiapplication.schedulePlanner.Simulator.pathfinding.Target;
 import org.jfree.fx.FXGraphics2D;
@@ -25,7 +25,7 @@ public class Traveler extends NPC {
     public void update(ArrayList<NPC> npcs) {
         super.update(npcs);
 
-        if (getPosition().distance(getTargetPosition()) < 100) {
+        if (this.position.distance(this.targetPosition) < 100) {
             currentNode = closestNode;
             checkPosition();
         }
@@ -38,7 +38,7 @@ public class Traveler extends NPC {
             }
         }
 
-        setTargetPosition(closestNode.getPosition());
+        this.targetPosition = closestNode.getPosition();
     }
 
     public void debugDraw(FXGraphics2D g) {

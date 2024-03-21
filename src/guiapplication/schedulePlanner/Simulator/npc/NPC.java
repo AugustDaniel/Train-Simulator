@@ -1,4 +1,4 @@
-package guiapplication.schedulePlanner.Simulator;
+package guiapplication.schedulePlanner.Simulator.npc;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -12,13 +12,13 @@ import java.util.Objects;
 
 public class NPC {
 
-    private Point2D position;
-    private double angle;
-    private BufferedImage image;
-    private double speed;
-    private Point2D targetPosition;
-    private int scale = 6;
-    private boolean draw;
+    protected Point2D position;
+    protected double angle;
+    protected BufferedImage image;
+    protected double speed;
+    protected Point2D targetPosition;
+    protected int scale = 6;
+    protected boolean draw;
 
     public NPC(Point2D position, double angle){
         this.position = position;
@@ -83,25 +83,19 @@ public class NPC {
         }
     }
 
-    public void draw(Graphics2D g2d)
-    {
+    public void draw(Graphics2D g2d) {
         if (!draw)
             return;
 
         AffineTransform tx = new AffineTransform();
-        tx.translate(this.position.getX() - (double) image.getWidth() /scale, this.position.getY() - (double) image.getHeight() / scale);
-        tx.rotate(angle, (double) image.getWidth() /scale, (double) image.getHeight()/scale);
-        tx.scale((double) 2 /scale, (double) 2 /scale);
+        tx.translate(this.position.getX() - (double) image.getWidth() / scale, this.position.getY() - (double) image.getHeight() / scale);
+        tx.rotate(angle, (double) image.getWidth() / scale, (double) image.getHeight() / scale);
+        tx.scale((double) 2 / scale, (double) 2 / scale);
         g2d.drawImage(image, tx, null);
 
         g2d.setColor(Color.RED);
-        g2d.fill(new Ellipse2D.Double(position.getX()-5, position.getY()-5, 10, 10));
+        g2d.fill(new Ellipse2D.Double(position.getX() - 5, position.getY() - 5, 10, 10));
 
-    }
-
-    public void setTargetPosition(Point2D targetPosition)
-    {
-        this.targetPosition = targetPosition;
     }
 
     public Point2D getPosition()
@@ -109,32 +103,16 @@ public class NPC {
         return this.position;
     }
 
-    public double getAngle() {
-        return angle;
-    }
-
     public double getSpeed() {
         return speed;
     }
 
-    public Point2D getTargetPosition() {
-        return targetPosition;
-    }
-
-    public void setPosition(Point2D position) {
-        this.position = position;
-    }
-
-    public void setAngle(double angle) {
-        this.angle = angle;
-    }
     public int getImageSize(){
         return image.getHeight()/scale;
     }
     public void checkAtTarget(){
         if (position.distance(targetPosition) < 7){
             speed = 0;
-
         }
     }
 }

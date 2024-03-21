@@ -1,7 +1,8 @@
 package guiapplication.schedulePlanner.Simulator;
 
+import guiapplication.schedulePlanner.Simulator.npc.NPC;
+import guiapplication.schedulePlanner.Simulator.npc.Traveler;
 import guiapplication.schedulePlanner.Simulator.pathfinding.PathFinding;
-import guiapplication.schedulePlanner.Simulator.pathfinding.Target;
 import guiapplication.schedulePlanner.Simulator.tilehandlers.Map;
 import guiapplication.schedulePlanner.View;
 import javafx.animation.AnimationTimer;
@@ -12,11 +13,8 @@ import org.jfree.fx.ResizableCanvas;
 
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class MapView implements View {
 
