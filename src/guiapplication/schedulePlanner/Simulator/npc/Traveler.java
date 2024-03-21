@@ -73,10 +73,8 @@ public class Traveler extends NPC {
         int rectHeight = 50;
 
         g.setColor(Color.WHITE);
-        g.fill(new Rectangle2D.Double(rectX, rectY, rectWidth, rectHeight));
-
-        Shape oldClip = g.getClip();
         g.setClip(rectX, rectY, rectWidth, rectHeight);
+        g.fill(new Rectangle2D.Double(rectX, rectY, rectWidth, rectHeight));
 
         g.setColor(Color.BLACK);
         String[] lines = {
@@ -93,7 +91,7 @@ public class Traveler extends NPC {
             textY += lineHeight;
         }
 
-        g.setClip(oldClip);
+        g.setClip(null);
     }
 
     public void setDebug(boolean b) {
