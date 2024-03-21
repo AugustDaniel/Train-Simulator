@@ -17,11 +17,13 @@ public class NPC {
     private BufferedImage image;
     private double speed;
     private Point2D targetPosition;
+    private int scale = 6;
+    private boolean draw;
 
     public NPC(Point2D position, double angle){
         this.position = position;
         this.angle = angle;
-        this.speed = 2 + Math.random() * 2;
+        this.speed = 1 + Math.random() * 0.5;
 
         try {
             this.image = ImageIO.read(Objects.requireNonNull(this.getClass().getResourceAsStream("/astronautHelmet.png")));
@@ -34,6 +36,8 @@ public class NPC {
     }
 
     public void update(ArrayList<NPC> npcs){
+        checkAtTarget();
+        this.draw = true;
         double newAngle = Math.atan2(this.targetPosition.getY() - this.position.getY(), this.targetPosition.getX() - this.position.getX());
 
         double angleDifference = angle - newAngle;
@@ -57,22 +61,34 @@ public class NPC {
         boolean hasCollision = false;
 
         for (NPC npc : npcs) {
-            if(npc != this)
-                if(npc.position.distance(newPosition) <= image.getHeight()/2)
+            if (npc != this) {
+                if (npc.getSpeed() == 0) {
+                    continue;
+                }
+                if (npc.position.distance(newPosition) <= (double) image.getHeight() / scale) {
                     hasCollision = true;
+                }
+            }
         }
-
-        if(!hasCollision)
+        if(!hasCollision) {
             this.position = newPosition;
+        }
         else
             this.angle += 0.2;
+        if (this.position.getY() < 4096-800 && this.position.getX() < 4096 - 416 && this.position.getX() > 4096- 528) {
+            this.draw = false;
+        }
     }
 
-    public void draw(Graphics2D g2d){
-        AffineTransform tx = new AffineTransform();
+    public void draw(Graphics2D g2d)
+    {
+        if (!draw)
+            return;
 
-        tx.translate(position.getX() - (double) image.getWidth() /2, position.getY() - (double) image.getHeight() / 2);
-        tx.rotate(angle, (double) image.getWidth() /2, (double) image.getHeight()/2);
+        AffineTransform tx = new AffineTransform();
+        tx.translate(this.position.getX() - (double) image.getWidth() /scale, this.position.getY() - (double) image.getHeight() / scale);
+        tx.rotate(angle, (double) image.getWidth() /scale, (double) image.getHeight()/scale);
+        tx.scale((double) 2 /scale, (double) 2 /scale);
         g2d.drawImage(image, tx, null);
 
         g2d.setColor(Color.RED);
@@ -85,5 +101,34 @@ public class NPC {
 
     public Point2D getPosition(){
         return this.position;
+    }
+
+    public double getAngle() {
+        return angle;
+    }
+
+    public double getSpeed() {
+        return speed;
+    }
+
+    public Point2D getTargetPosition() {
+        return targetPosition;
+    }
+
+    public void setPosition(Point2D position) {
+        this.position = position;
+    }
+
+    public void setAngle(double angle) {
+        this.angle = angle;
+    }
+    public int getImageSize(){
+        return image.getHeight()/scale;
+    }
+    public void checkAtTarget(){
+        if (position.distance(targetPosition) < 7){
+            speed = 0;
+
+        }
     }
 }

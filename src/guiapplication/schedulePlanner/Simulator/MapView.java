@@ -1,5 +1,7 @@
 package guiapplication.schedulePlanner.Simulator;
 
+import guiapplication.schedulePlanner.Simulator.pathfinding.PathFinding;
+import guiapplication.schedulePlanner.Simulator.pathfinding.Target;
 import data.Journey;
 import data.ScheduleSubject;
 import guiapplication.schedulePlanner.Simulator.tilehandlers.Map;
@@ -10,11 +12,13 @@ import javafx.scene.layout.BorderPane;
 import org.jfree.fx.FXGraphics2D;
 import org.jfree.fx.ResizableCanvas;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MapView implements View {
 
@@ -29,6 +33,7 @@ public class MapView implements View {
     private Clock clock;
 
 //    private BufferedImage image = ImageIO.read(this.getClass().getResourceAsStream("/astronautHelmet.png"));
+    private Camera camera;
 
     public MapView(ScheduleSubject subject) throws IOException {
         this.subject = subject;
@@ -38,11 +43,12 @@ public class MapView implements View {
         this.map = new Map("/TrainStationPlannerMap.tmj");
         Point2D nullpoint = new Point2D.Double(0, 0);
         this.worldMousePos = nullpoint;
+        mainPane = new BorderPane();
     }
 
     public void update(double deltaTime) {
         for (NPC npc : npcs) {
-            npc.update(this.npcs);
+            npc.update(npcs);
         }
         for (TrainEntity train : trains) {
             train.update();
@@ -70,13 +76,23 @@ public class MapView implements View {
         draw(g2d);
 
         canvas.setOnMouseClicked(e -> {
-            worldMousePos = camera.getWorldPos(e.getX(), e.getY());
-            npcs.add(new NPC(worldMousePos, 0));
-        });
-        canvas.setOnMouseMoved(e -> {
+            if (e.isShiftDown()) {
+                npcs.clear();
+                return;
+            }
+
+            boolean hasCollision = false;
+            util.graph.Node spawnPoint = PathFinding.spawnPoints.get((int) (Math.random() * (PathFinding.spawnPoints.size() - 1)));
+
             for (NPC npc : npcs) {
-                worldMousePos = camera.getWorldPos(e.getX(), e.getY());
-                npc.setTargetPosition(worldMousePos);
+                if (npc.getPosition().distance(spawnPoint.getPosition()) <= npc.getImageSize()) {
+                    hasCollision = true;
+                }
+            }
+
+            if (!hasCollision) {
+                int size = PathFinding.targets.size();
+                npcs.add(new Traveler(spawnPoint, PathFinding.targets.get((int) (Math.random() * size))));
             }
         });
         init();
@@ -93,6 +109,11 @@ public class MapView implements View {
 
         for (NPC npc : npcs) {
             npc.draw(g);
+        }
+
+        if (this.npcs.size() == 1) {
+            Traveler tr = (Traveler) this.npcs.get(0);
+            tr.debugDraw(g);
         }
         for (TrainEntity train : trains) {
             train.draw(g);
