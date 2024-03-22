@@ -1,7 +1,6 @@
 package guiapplication.schedulePlanner.Simulator;
 
 import data.Journey;
-import data.Platform;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -12,19 +11,18 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class TrainEntity {
-    private Platform platform;
     private BufferedImage trainWagon;
     private BufferedImage trainHeadLeft;
     private BufferedImage trainHeadRight;
     private Point2D position;
     private Journey journey;
-    private MapView mapView;
+    private Clock clock;
     private boolean draw;
 
 
-    public TrainEntity(Journey journey, MapView mapView){
+    public TrainEntity(Journey journey, Clock clock){
         this.journey = journey;
-        this.mapView = mapView;
+        this.clock = clock;
         this.draw = false;
         int yLocation;
         if (journey.getPlatform().getPlatformNumber() %2 == 0) {
@@ -47,12 +45,12 @@ public class TrainEntity {
     }
 
     public void update(){
-        if (mapView.getClock().getCurrentTime().isAfter(journey.getArrivalTime().minusMinutes(25)) &&
-                mapView.getClock().getCurrentTime().isBefore(journey.getArrivalTime())){
+        if (this.clock.getCurrentTime().isAfter(journey.getArrivalTime().minusMinutes(25)) &&
+                this.clock.getCurrentTime().isBefore(journey.getArrivalTime())){
             position = new Point2D.Double(position.getX() + 4, position.getY());
             draw = true;
         }
-        else if (mapView.getClock().getCurrentTime().isAfter(journey.getDepartureTime())) {
+        else if (this.clock.getCurrentTime().isAfter(journey.getDepartureTime())) {
             position  = new Point2D.Double(position.getX() + 4, position.getY());
         }
 

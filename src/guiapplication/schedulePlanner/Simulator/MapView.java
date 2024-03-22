@@ -1,9 +1,8 @@
 package guiapplication.schedulePlanner.Simulator;
 
-import guiapplication.schedulePlanner.Simulator.pathfinding.PathFinding;
-import guiapplication.schedulePlanner.Simulator.pathfinding.Target;
 import data.Journey;
 import data.ScheduleSubject;
+import guiapplication.schedulePlanner.Simulator.pathfinding.PathFinding;
 import guiapplication.schedulePlanner.Simulator.tilehandlers.Map;
 import guiapplication.schedulePlanner.View;
 import javafx.animation.AnimationTimer;
@@ -12,13 +11,11 @@ import javafx.scene.layout.BorderPane;
 import org.jfree.fx.FXGraphics2D;
 import org.jfree.fx.ResizableCanvas;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class MapView implements View {
 
@@ -122,7 +119,7 @@ public class MapView implements View {
 
     public void init(){
         for (Journey journey : subject.getSchedule().getJourneyList()) {
-            trains.add(new TrainEntity(journey,this));
+            trains.add(new TrainEntity(journey,this.clock));
         }
     }
 
