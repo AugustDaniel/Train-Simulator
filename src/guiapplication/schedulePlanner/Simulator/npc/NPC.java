@@ -44,17 +44,22 @@ public class NPC {
         double newAngle = Math.atan2(this.targetPosition.getY() - this.position.getY(), this.targetPosition.getX() - this.position.getX());
 
         double angleDifference = angle - newAngle;
-        while (angleDifference > Math.PI)
+        while (angleDifference > Math.PI){
             angleDifference -= 2 * Math.PI;
-        while (angleDifference < -Math.PI)
+        }
+        while (angleDifference < -Math.PI){
             angleDifference += 2 * Math.PI;
+        }
 
-        if (angleDifference < -0.1)
+        if (angleDifference < -0.1){
             angle += 0.1;
-        else if (angleDifference > 0.1)
+        }
+        else if (angleDifference > 0.1){
             angle -= 0.1;
-        else
+        }
+        else {
             angle = newAngle;
+        }
 
         Point2D newPosition = new Point2D.Double(
                 this.position.getX() + speed * Math.cos(angle),
