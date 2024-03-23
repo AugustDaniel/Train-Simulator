@@ -15,7 +15,7 @@ public class NPC {
     protected BufferedImage image;
     protected double speed;
     protected Point2D targetPosition;
-    protected int scale = 6;
+    protected int scale = 8;
     protected boolean draw;
 
     public NPC(Point2D position, double angle) {
@@ -72,8 +72,9 @@ public class NPC {
         }
         if (!hasCollision) {
             this.position = newPosition;
-        } else
+        } else {
             this.angle += 0.2;
+        }
         if (this.position.getY() < 4096 - 800 && this.position.getX() < 4096 - 416 && this.position.getX() > 4096 - 528) {
             this.draw = false;
         }

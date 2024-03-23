@@ -30,7 +30,7 @@ public class Clock {
             }
             timePassed -= timeSpeed;
             currentTime = TimeFormatter.intToLocalTime(currentTimeInt);
-            System.out.println(currentTimeInt);
+            System.out.println("Time: " + currentTimeInt);
         }
     }
 

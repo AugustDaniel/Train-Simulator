@@ -4,6 +4,7 @@ import guiapplication.schedulePlanner.Simulator.pathfinding.Target;
 import org.jfree.fx.FXGraphics2D;
 import util.graph.Node;
 
+import javax.print.attribute.standard.RequestingUserName;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class Traveler extends NPC {
     private boolean debug;
 
     public Traveler(Node node, Target target) {
-        super(node.getPosition(), 0);
+        super(node.getPosition(), -2);
         node.setOccupied(true);
         this.currentNode = node;
         this.closestNode = node;
@@ -26,7 +27,7 @@ public class Traveler extends NPC {
 
     @Override
     public void update(ArrayList<NPC> npcs) {
-        if (atTargetPosition()) {
+        if (this.position.distance(getTargetPosition()) < 5) {
             checkPosition();
         }
 
@@ -37,6 +38,7 @@ public class Traveler extends NPC {
         currentNode.setOccupied(false);
         currentNode = closestNode;
 
+
         for (Node node : currentNode.getAdjacentNodes()) {
             if (node.isOccupied()) {
                 continue;
@@ -45,6 +47,7 @@ public class Traveler extends NPC {
             if (target.getDistance(node) < target.getDistance(closestNode)) {
                 node.setOccupied(true);
                 closestNode = node;
+                break;
             }
         }
 
@@ -62,10 +65,10 @@ public class Traveler extends NPC {
 
     public void debugDraw(Graphics2D g) {
         //todo tile pathfinding debugging
-        target.getShortestPath().forEach((k, v) -> {
-            g.draw(new Rectangle2D.Double(k.getPosition().getX() - 16, k.getPosition().getY() - 16, 32, 32)); //todo change magic number 16 = half tilesize 32 tilesize
-            g.drawString(v.toString(), (int) k.getPosition().getX() - 16, (int) k.getPosition().getY() - 16 + 20); //todo change magic number 16 = half tilesize 32 tilesize 20 is random offset number
-        });
+//        target.getShortestPath().forEach((k, v) -> {
+//            g.draw(new Rectangle2D.Double(k.getPosition().getX() - 16, k.getPosition().getY() - 16, 32, 32)); //todo change magic number 16 = half tilesize 32 tilesize
+//            g.drawString(v.toString(), (int) k.getPosition().getX() - 16, (int) k.getPosition().getY() - 16 + 20); //todo change magic number 16 = half tilesize 32 tilesize 20 is random offset number
+//        });
 
         int rectX = (int) (this.position.getX() + 50);
         int rectY = (int) (this.position.getY() - 50);
@@ -79,8 +82,8 @@ public class Traveler extends NPC {
         g.setColor(Color.BLACK);
 
         String[] debugLines = {
-                "Current position: x = " + ((int)this.position.getX()) + ", y = " + ((int)this.position.getY()),
-                "Target position: x = " +((int)this.targetPosition.getX()) + ", y = " + ((int)this.targetPosition.getY()),
+                "Current position: x = " + ((int) this.position.getX()) + ", y = " + ((int) this.position.getY()),
+                "Target position: x = " + ((int) this.targetPosition.getX()) + ", y = " + ((int) this.targetPosition.getY()),
                 "Current node: " + this.currentNode.toString(),
                 "Closest node: " + this.closestNode.toString(),
                 "Distance p2d: " + this.position.distance(this.targetPosition),
@@ -89,7 +92,7 @@ public class Traveler extends NPC {
         };
 
         int lineHeight = g.getFontMetrics().getHeight();
-        int textY =  rectY + lineHeight;
+        int textY = rectY + lineHeight;
         for (String line : debugLines) {
             g.drawString(line, rectX + 10, textY);
             textY += lineHeight;
@@ -98,16 +101,16 @@ public class Traveler extends NPC {
         g.setClip(null);
 
         g.setColor(Color.BLACK);
-        g.draw(new Rectangle2D.Double(closestNode.getPosition().getX() - 16, closestNode.getPosition().getY() - 16,32,32 ));
+        g.draw(new Rectangle2D.Double(closestNode.getPosition().getX() - 16, closestNode.getPosition().getY() - 16, 32, 32));
 
 
         for (Node node : currentNode.getAdjacentNodes()) {
-            if(node.isOccupied()) {
+            if (node.isOccupied()) {
                 g.setColor(Color.MAGENTA);
             } else {
                 g.setColor(Color.GREEN);
             }
-            g.draw(new Rectangle2D.Double(node.getPosition().getX() - 16, node.getPosition().getY() - 16,32,32 ));
+            g.draw(new Rectangle2D.Double(node.getPosition().getX() - 16, node.getPosition().getY() - 16, 32, 32));
         }
     }
 
