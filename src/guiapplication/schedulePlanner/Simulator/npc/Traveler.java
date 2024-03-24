@@ -18,7 +18,6 @@ public class Traveler extends NPC {
 
     public Traveler(Node node, Target target) {
         super(node.getPosition(), -2);
-        node.setOccupied(true);
         this.currentNode = node;
         this.closestNode = node;
         this.target = target;
@@ -27,7 +26,7 @@ public class Traveler extends NPC {
 
     @Override
     public void update(ArrayList<NPC> npcs) {
-        if (this.position.distance(getTargetPosition()) < 5) {
+        if (this.position.distance(getTargetPosition()) < 100) {
             checkPosition();
         }
 
@@ -35,17 +34,11 @@ public class Traveler extends NPC {
     }
 
     private void checkPosition() {
-        currentNode.setOccupied(false);
         currentNode = closestNode;
 
-
         for (Node node : currentNode.getAdjacentNodes()) {
-            if (node.isOccupied()) {
-                continue;
-            }
-
-            if (target.getDistance(node) < target.getDistance(closestNode)) {
-                node.setOccupied(true);
+            if (target.getDistance(node) < target.getDistance(closestNode)
+                    && node.occupy(this)) {
                 closestNode = node;
                 break;
             }
@@ -103,13 +96,8 @@ public class Traveler extends NPC {
         g.setColor(Color.BLACK);
         g.draw(new Rectangle2D.Double(closestNode.getPosition().getX() - 16, closestNode.getPosition().getY() - 16, 32, 32));
 
-
         for (Node node : currentNode.getAdjacentNodes()) {
-            if (node.isOccupied()) {
-                g.setColor(Color.MAGENTA);
-            } else {
-                g.setColor(Color.GREEN);
-            }
+            g.setColor(Color.GREEN);
             g.draw(new Rectangle2D.Double(node.getPosition().getX() - 16, node.getPosition().getY() - 16, 32, 32));
         }
     }

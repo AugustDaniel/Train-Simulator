@@ -15,49 +15,47 @@ public class NPC {
     protected BufferedImage image;
     protected double speed;
     protected Point2D targetPosition;
-    protected int scale = 8;
+    protected int scale;
     protected boolean draw;
 
     public NPC(Point2D position, double angle) {
         this.position = position;
+        this.targetPosition = position;
         this.angle = angle;
-        this.speed = 1 + Math.random() * 0.5;
+        this.speed = 1;
+        this.draw = true;
+        this.scale = 8;
 
         try {
             this.image = ImageIO.read(Objects.requireNonNull(this.getClass().getResourceAsStream("/astronautHelmet.png")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        this.targetPosition = new Point2D.Double(100, 10); //todo maybe change this idk
-
     }
 
     public void update(ArrayList<NPC> npcs) {
         if (atTargetPosition()) {
-            this.speed = 0;
             return;
         }
 
-        this.speed = 1 + Math.random() * 0.5;
         this.draw = true;
         double newAngle = Math.atan2(this.targetPosition.getY() - this.position.getY(), this.targetPosition.getX() - this.position.getX());
 
         double angleDifference = angle - newAngle;
-        while (angleDifference > Math.PI){
+
+        while (angleDifference > Math.PI) {
             angleDifference -= 2 * Math.PI;
         }
-        while (angleDifference < -Math.PI){
+
+        while (angleDifference < -Math.PI) {
             angleDifference += 2 * Math.PI;
         }
 
-        if (angleDifference < -0.1){
+        if (angleDifference < -0.1) {
             angle += 0.1;
-        }
-        else if (angleDifference > 0.1){
+        } else if (angleDifference > 0.1) {
             angle -= 0.1;
-        }
-        else {
+        } else {
             angle = newAngle;
         }
 
@@ -69,17 +67,23 @@ public class NPC {
         boolean hasCollision = false;
 
         for (NPC npc : npcs) {
-            if (npc != this) {
-                if (npc.position.distance(newPosition) <= (double) image.getHeight() / scale) {
-                    hasCollision = true;
-                }
+            if (npc == this) {
+                continue;
+            }
+
+            if (npc.position.distance(newPosition) <= (double) image.getHeight() / scale) {
+                hasCollision = true;
             }
         }
+
         if (!hasCollision) {
+            this.speed = 1;
             this.position = newPosition;
         } else {
-            this.angle += 0.2;
+            this.speed *= 0.5;
+            this.angle += 0.18;
         }
+
         if (this.position.getY() < 4096 - 800 && this.position.getX() < 4096 - 416 && this.position.getX() > 4096 - 528) {
             this.draw = false;
         }
@@ -90,8 +94,9 @@ public class NPC {
     }
 
     public void draw(Graphics2D g2d) {
-        if (!draw)
+        if (!draw) {
             return;
+        }
 
         AffineTransform tx = new AffineTransform();
         tx.translate(this.position.getX() - (double) image.getWidth() / scale, this.position.getY() - (double) image.getHeight() / scale);
@@ -103,16 +108,8 @@ public class NPC {
         g2d.fill(new Ellipse2D.Double(position.getX(), position.getY(), 10, 10));
     }
 
-    public void setTargetPosition(Point2D targetPosition){
-        this.targetPosition = targetPosition;
-    }
-
-    public Point2D getPosition(){
+    public Point2D getPosition() {
         return this.position;
-    }
-
-    public double getSpeed() {
-        return speed;
     }
 
     public int getImageSize() {
