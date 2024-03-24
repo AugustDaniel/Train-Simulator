@@ -1,10 +1,8 @@
 package guiapplication.schedulePlanner.Simulator.npc;
 
 import guiapplication.schedulePlanner.Simulator.pathfinding.Target;
-import org.jfree.fx.FXGraphics2D;
 import util.graph.Node;
 
-import javax.print.attribute.standard.RequestingUserName;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -26,7 +24,7 @@ public class Traveler extends NPC {
 
     @Override
     public void update(ArrayList<NPC> npcs) {
-        if (this.position.distance(getTargetPosition()) < 100) {
+        if (this.position.distance(getTargetPosition()) < 110) {
             checkPosition();
         }
 
@@ -37,8 +35,7 @@ public class Traveler extends NPC {
         currentNode = closestNode;
 
         for (Node node : currentNode.getAdjacentNodes()) {
-            if (target.getDistance(node) < target.getDistance(closestNode)
-                    && node.occupy(this)) {
+            if (target.getDistance(node) < target.getDistance(closestNode)) {
                 closestNode = node;
                 break;
             }
