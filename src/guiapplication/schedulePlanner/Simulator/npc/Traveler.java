@@ -55,10 +55,9 @@ public class Traveler extends NPC {
 
     public void debugDraw(Graphics2D g) {
         //todo tile pathfinding debugging
-//        target.getShortestPath().forEach((k, v) -> {
-//            g.draw(new Rectangle2D.Double(k.getPosition().getX() - 16, k.getPosition().getY() - 16, 32, 32)); //todo change magic number 16 = half tilesize 32 tilesize
-//            g.drawString(v.toString(), (int) k.getPosition().getX() - 16, (int) k.getPosition().getY() - 16 + 20); //todo change magic number 16 = half tilesize 32 tilesize 20 is random offset number
-//        });
+        target.getShortestPath().forEach((k, v) -> {
+            g.drawString(v.toString(), (int) k.getPosition().getX() - 16, (int) k.getPosition().getY() - 16 + 20); //todo change magic number 16 = half tilesize 32 tilesize 20 is random offset number
+        });
 
         int rectX = (int) (this.position.getX() + 50);
         int rectY = (int) (this.position.getY() - 50);
