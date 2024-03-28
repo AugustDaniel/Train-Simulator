@@ -28,13 +28,15 @@ public class MapView implements View {
     private final Camera camera;
     private Point2D worldMousePos;
     private Clock clock;
+    private double timeSpeed;
 
 //    private BufferedImage image = ImageIO.read(this.getClass().getResourceAsStream("/astronautHelmet.png"));
 
     public MapView(ScheduleSubject subject) throws IOException {
+        this.timeSpeed = 0.5;
         mainPane = new BorderPane();
         this.subject = subject;
-        this.clock = new Clock(0.5);
+        this.clock = new Clock(this.timeSpeed);
         this.canvas = new ResizableCanvas(this::draw, mainPane);
         this.camera = new Camera(canvas, this::draw, new FXGraphics2D(canvas.getGraphicsContext2D()));
         this.map = new Map("/TrainStationPlannerMap.tmj");
@@ -49,7 +51,7 @@ public class MapView implements View {
         for (TrainEntity train : trains) {
             train.update();
         }
-        clock.update(deltaTime);
+        clock.update(deltaTime, this.timeSpeed);
     }
 
     @Override

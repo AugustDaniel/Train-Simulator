@@ -17,8 +17,9 @@ public class Clock {
         this.timePassed = 0;
     }
 
-    public void update(double deltaTime) {
-        this.timePassed += deltaTime;
+    public void update(double deltaTime, double timeSpeed) {
+        this.timeSpeed = timeSpeed;
+        this.timePassed += 60;
         if (timePassed > this.timeSpeed) {
             currentTimeInt++;
             if (currentTimeInt % 100 > 59) {
