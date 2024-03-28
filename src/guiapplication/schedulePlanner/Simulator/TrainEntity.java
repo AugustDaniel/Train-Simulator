@@ -29,7 +29,7 @@ public class TrainEntity {
             yLocation = 106 * 32 - (((journey.getPlatform().getPlatformNumber() / 2 -1) * 14 + 10) * 32) - 152;
         }
         else {
-            yLocation = 106 * 32 -((((journey.getPlatform().getPlatformNumber() - 1 + 2) / 2) * 14) * 32) - 152;
+            yLocation = 106 * 32 -((((journey.getPlatform().getPlatformNumber() - 1) / 2) * 14) * 32) - 152;
         }
 
 
