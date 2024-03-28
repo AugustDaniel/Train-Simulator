@@ -8,7 +8,6 @@ import util.graph.Node;
 import java.awt.*;
 import java.util.List;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
 
 public class Traveler extends NPC {
 

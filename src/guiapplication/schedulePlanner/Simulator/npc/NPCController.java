@@ -40,7 +40,6 @@ public class NPCController implements util.Observer {
         npcs.add(new Traveler(spawnPoint, this.schedule.getJourneyList().get(0)));
     }
 
-
     public void update(double deltaTime) {
         for (NPC npc : npcs) {
             npc.update(npcs);

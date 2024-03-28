@@ -29,6 +29,7 @@ public class MapView implements View {
     private final Camera camera;
     private Clock clock;
     private NPCController npcController;
+    private double tijd = 0;
 
     public MapView(ScheduleSubject subject) throws IOException {
         mainPane = new BorderPane();
@@ -41,11 +42,16 @@ public class MapView implements View {
     }
 
     public void update(double deltaTime) {
-        for (TrainEntity train : trains) {
-            train.update();
+        //dit zorgt ervoor dat die een fps limit heeft op ongeveer 60 fps
+        tijd += deltaTime;
+        if (tijd > 0.016){
+            for (TrainEntity train : trains) {
+                train.update();
+            }
+            clock.update(deltaTime);
+            npcController.update(deltaTime);
+            tijd = 0;
         }
-        clock.update(deltaTime);
-        npcController.update(deltaTime);
     }
 
     @Override
