@@ -42,7 +42,7 @@ public class NPCController implements util.Observer, MouseCallback {
 
         this.schedule.getJourneyList().forEach(journey -> {
                     if (journey.getArrivalTime().minusMinutes(20).equals(this.clock.getCurrentTime())) {
-                        double timerEnd = timer + (double) journey.getTrainPopularity() / 50;
+                        double timerEnd = timer + (double) journey.getTrainPopularity() / 50; //todo magic number for popularity
                         this.journeysToSpawn.offer(new AbstractMap.SimpleEntry<>(journey, timerEnd));
                     }
                 }
@@ -53,7 +53,7 @@ public class NPCController implements util.Observer, MouseCallback {
 
     private void spawnNPCs() {
         if (this.journeysToSpawn.isEmpty() ||
-                (this.timer % 1) > 0.5) {
+                (this.timer % 1) > 0.5) { //todo magic number for spawn rate
             return;
         }
 
