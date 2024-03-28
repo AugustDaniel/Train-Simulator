@@ -4,6 +4,7 @@ import guiapplication.schedulePlanner.Simulator.mouselistener.MouseListener;
 import guiapplication.schedulePlanner.Simulator.npc.NPCController;
 import data.Journey;
 import data.ScheduleSubject;
+import guiapplication.schedulePlanner.Simulator.pathfinding.PathFinding;
 import guiapplication.schedulePlanner.Simulator.tilehandlers.Map;
 import guiapplication.schedulePlanner.View;
 import javafx.animation.AnimationTimer;
@@ -12,7 +13,7 @@ import javafx.scene.layout.BorderPane;
 import org.jfree.fx.FXGraphics2D;
 import org.jfree.fx.ResizableCanvas;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,9 +32,10 @@ public class MapView implements View {
 
 
     public MapView(ScheduleSubject subject) throws IOException {
+        this.timeSpeed = 0.5;
         mainPane = new BorderPane();
         this.subject = subject;
-        this.clock = new Clock(0.5);
+        this.clock = new Clock(this.timeSpeed);
         this.canvas = new ResizableCanvas(this::draw, mainPane);
         this.camera = new Camera(canvas);
         this.map = new Map("/TrainStationPlannerMap.tmj");
@@ -108,7 +110,7 @@ public class MapView implements View {
 
     public void init(){
         for (Journey journey : subject.getSchedule().getJourneyList()) {
-            trains.add(new TrainEntity(journey,this));
+            trains.add(new TrainEntity(journey,this.clock));
         }
     }
 
