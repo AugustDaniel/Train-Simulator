@@ -166,7 +166,7 @@ public class Schedule implements Serializable {
         this.addTrain(train3);
 
         //adding some platforms to list
-        this.addPlatform(new Platform(0));
+        this.addPlatform(new Platform(1));
         this.addPlatform(new Platform(2));
         this.addPlatform(new Platform(3));
 
