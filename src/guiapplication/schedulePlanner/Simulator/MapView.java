@@ -29,6 +29,7 @@ public class MapView implements View {
     private Point2D worldMousePos;
     private Clock clock;
     private double timeSpeed;
+    private double tijd = 0;
 
 //    private BufferedImage image = ImageIO.read(this.getClass().getResourceAsStream("/astronautHelmet.png"));
 
@@ -48,10 +49,14 @@ public class MapView implements View {
         for (NPC npc : npcs) {
             npc.update(npcs);
         }
-        for (TrainEntity train : trains) {
-            train.update();
+        tijd += deltaTime;
+        if (tijd > 0.016){
+            for (TrainEntity train : trains) {
+                train.update();
+            }
+            clock.update(deltaTime);
+            tijd = 0;
         }
-        clock.update(deltaTime, this.timeSpeed);
     }
 
     @Override

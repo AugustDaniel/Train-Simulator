@@ -26,10 +26,10 @@ public class TrainEntity {
         this.draw = false;
         int yLocation;
         if (journey.getPlatform().getPlatformNumber() %2 == 0) {
-            yLocation = (76 * 32 - ((journey.getPlatform().getPlatformNumber() / 2 -1) * 16 + 12) * 32) - 152;
+            yLocation = 106 * 32 - (((journey.getPlatform().getPlatformNumber() / 2 -1) * 14 + 10) * 32) - 152;
         }
         else {
-            yLocation = ((((journey.getPlatform().getPlatformNumber() - 1) / 2) * 16 + 8) * 32) - 152;
+            yLocation = 106 * 32 -((((journey.getPlatform().getPlatformNumber() - 1 + 2) / 2) * 14) * 32) - 152;
         }
 
 

@@ -17,9 +17,8 @@ public class Clock {
         this.timePassed = 0;
     }
 
-    public void update(double deltaTime, double timeSpeed) {
-        this.timeSpeed = timeSpeed;
-        this.timePassed += 60;
+    public void update(double deltaTime) {
+        this.timePassed += deltaTime;
         if (timePassed > this.timeSpeed) {
             currentTimeInt++;
             if (currentTimeInt % 100 > 59) {
@@ -31,7 +30,6 @@ public class Clock {
             }
             timePassed -= timeSpeed;
             currentTime = TimeFormatter.intToLocalTime(currentTimeInt);
-            System.out.println(currentTimeInt);
         }
     }
 
