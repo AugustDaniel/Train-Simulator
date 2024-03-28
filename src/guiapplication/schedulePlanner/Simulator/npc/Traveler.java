@@ -16,12 +16,16 @@ public class Traveler extends NPC {
     private Node closestNode;
     private boolean clicked;
     private Journey journey;
+    private String name;
+    private int age;
 
     public Traveler(Node node, Journey journey) {
         super(node.getPosition(), -2);
         this.journey = journey;
         this.currentNode = node;
         this.closestNode = node;
+        this.age = (int) (Math.random() * 100);
+        this.name = "Reiziger " + (int) (Math.random() * 1000);
 
         //todo
         List<Target> targets = PathFinding.platformTargets.get("Platform " + this.journey.getPlatform().getPlatformNumber());
@@ -62,10 +66,10 @@ public class Traveler extends NPC {
     }
 
     public void infoDraw(Graphics2D g) {
-        int rectX = (int) (this.position.getX() + 50);
+        int rectX = (int) (this.position.getX() + 25);
         int rectY = (int) (this.position.getY() - 50);
-        int rectWidth = 300;
-        int rectHeight = 90;
+        int rectWidth = 150;
+        int rectHeight = 70;
 
         g.setClip(rectX, rectY, rectWidth, rectHeight);
         g.setColor(Color.WHITE);
@@ -74,7 +78,11 @@ public class Traveler extends NPC {
         g.setColor(Color.BLACK);
 
         String[] debugLines = {
-                "Platform: " + this.journey.getPlatform().toString()
+                "Naam: " + this.name,
+                "Leeftijd: " + this.age,
+                "Perron: " + this.journey.getPlatform().toString(),
+                "Trein aankomst: " + this.journey.getArrivalTime().toString(),
+                "Trein vertrek: " + this.journey.getDepartureTime().toString(),
         };
 
         int lineHeight = g.getFontMetrics().getHeight();
