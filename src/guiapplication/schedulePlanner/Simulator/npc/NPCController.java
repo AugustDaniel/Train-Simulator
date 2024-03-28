@@ -1,5 +1,6 @@
 package guiapplication.schedulePlanner.Simulator.npc;
 
+import data.Journey;
 import data.Schedule;
 import data.ScheduleSubject;
 import guiapplication.schedulePlanner.Simulator.mouselistener.MouseCallback;
@@ -11,17 +12,16 @@ import javafx.scene.input.ScrollEvent;
 import org.jfree.fx.FXGraphics2D;
 import util.graph.Node;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class NPCController implements util.Observer, MouseCallback {
     private List<NPC> npcs = new ArrayList<>();
     private Clock clock;
     private Schedule schedule;
     private ScheduleSubject subject;
-    private double timer = 0;
-    private int populairity = 5;
     private Camera camera;
+    private Queue<Map.Entry<Journey, Double>> journeysToSpawn;
+    private double timer;
 
     public NPCController(Clock clock, ScheduleSubject subject, Camera camera) {
         this.subject = subject;
@@ -29,22 +29,42 @@ public class NPCController implements util.Observer, MouseCallback {
         this.schedule = subject.getSchedule();
         this.clock = clock;
         this.camera = camera;
-
-        // todo
-        Node spawnPoint = checkSpawnPoint(PathFinding.spawnPoints.get((int) (Math.random() * (PathFinding.spawnPoints.size() - 1))));
-        npcs.add(new Traveler(spawnPoint, this.schedule.getJourneyList().get(0)));
+        this.journeysToSpawn = new ArrayDeque<>();
+        this.timer = 0;
     }
 
     public void update(double deltaTime) {
         timer += deltaTime;
-        if (timer > (double) 10 / populairity) {
-            npcs.add(new Traveler(PathFinding.spawnPoints.get((int) (Math.random() * (PathFinding.spawnPoints.size() - 1))), this.schedule.getJourneyList().get(0)));
-            timer -= (double) 10 / populairity;
-        }
+
         for (NPC npc : npcs) {
             npc.update(npcs);
         }
 
+        this.schedule.getJourneyList().forEach(journey -> {
+                    if (journey.getArrivalTime().minusMinutes(20).equals(this.clock.getCurrentTime())) {
+                        double timerEnd = timer + (double) journey.getTrainPopularity() / 50;
+                        this.journeysToSpawn.offer(new AbstractMap.SimpleEntry<>(journey, timerEnd));
+                    }
+                }
+        );
+
+        spawnNPCs();
+    }
+
+    private void spawnNPCs() {
+        if (this.journeysToSpawn.isEmpty() ||
+                (this.timer % 1) > 0.5) {
+            return;
+        }
+
+        Map.Entry<Journey, Double> journey = this.journeysToSpawn.peek();
+
+        if (journey.getValue() >= timer) {
+            Node spawnPoint = checkSpawnPoint(PathFinding.spawnPoints.get((int) (Math.random() * (PathFinding.spawnPoints.size() - 1))));
+            npcs.add(new Traveler(spawnPoint, journey.getKey()));
+        } else {
+            this.journeysToSpawn.poll();
+        }
     }
 
     private util.graph.Node checkSpawnPoint(util.graph.Node spawnPoint) {
