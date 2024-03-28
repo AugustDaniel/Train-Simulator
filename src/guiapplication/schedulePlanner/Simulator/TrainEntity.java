@@ -61,6 +61,7 @@ public class TrainEntity {
             return;
         }
         g2d.setClip(0,0,3584,4000);
+//        g2d.setClip(3968, 0, 128,4000); // todo beter maken van de clip omdat deze nu de andere clip overwrite.
         AffineTransform tx = new AffineTransform();
 
         tx.translate(position.getX(), position.getY());
