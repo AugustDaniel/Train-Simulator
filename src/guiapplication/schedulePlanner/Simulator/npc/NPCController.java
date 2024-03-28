@@ -22,6 +22,7 @@ public class NPCController implements util.Observer {
         this.subject = subject;
         this.subject.attach(this);
         this.schedule = subject.getSchedule();
+        this.clock = clock;
 
         canvas.setOnMouseClicked(e -> {
                     if (e.isShiftDown()) {
@@ -38,10 +39,9 @@ public class NPCController implements util.Observer {
                     }
                 }
         );
-                    Node spawnPoint = checkSpawnPoint(PathFinding.spawnPoints.get((int) (Math.random() * (PathFinding.spawnPoints.size() - 1))));
-//
-//            npcs.add(new Traveler(spawnPoint, PathFinding.targets.get((int) (Math.random() * size))));
 
+        // todo
+        Node spawnPoint = checkSpawnPoint(PathFinding.spawnPoints.get((int) (Math.random() * (PathFinding.spawnPoints.size() - 1))));
         npcs.add(new Traveler(spawnPoint, this.schedule.getJourneyList().get(0)));
     }
 
