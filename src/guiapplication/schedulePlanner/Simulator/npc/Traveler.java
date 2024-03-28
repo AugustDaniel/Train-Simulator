@@ -6,6 +6,7 @@ import guiapplication.schedulePlanner.Simulator.pathfinding.Target;
 import util.graph.Node;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.util.List;
 import java.awt.geom.Rectangle2D;
 
@@ -16,16 +17,23 @@ public class Traveler extends NPC {
     private Node closestNode;
     private boolean clicked;
     private Journey journey;
-    private String name;
-    private int age;
+    private InfoScreen infoScreen;
 
     public Traveler(Node node, Journey journey) {
         super(node.getPosition(), -2);
         this.journey = journey;
         this.currentNode = node;
         this.closestNode = node;
-        this.age = (int) (Math.random() * 100);
-        this.name = "Reiziger " + (int) (Math.random() * 1000);
+        this.infoScreen = new InfoScreen(
+                new String[]{
+                        "Naam: " + (int) (Math.random() * 100),
+                        "Leeftijd: " + (int) (Math.random() * 1000),
+                        "Perron: " + this.journey.getPlatform().toString(),
+                        "Trein aankomst: " + this.journey.getArrivalTime().toString(),
+                        "Trein vertrek: " + this.journey.getDepartureTime().toString(),
+                },
+                new Point2D.Double(0, 0)
+        );
 
         //todo
         List<Target> targets = PathFinding.platformTargets.get("Platform " + this.journey.getPlatform().getPlatformNumber());
@@ -59,40 +67,11 @@ public class Traveler extends NPC {
     @Override
     public void draw(Graphics2D g) {
         if (clicked) {
-            infoDraw(g);
+            infoScreen.updatePosition(this.position.getX(), this.position.getY());
+            infoScreen.draw(g);
         }
 
         super.draw(g);
-    }
-
-    public void infoDraw(Graphics2D g) {
-        int rectX = (int) (this.position.getX() + 25);
-        int rectY = (int) (this.position.getY() - 50);
-        int rectWidth = 150;
-        int rectHeight = 70;
-
-        g.setClip(rectX, rectY, rectWidth, rectHeight);
-        g.setColor(Color.WHITE);
-        g.fill(new Rectangle2D.Double(rectX, rectY, rectWidth, rectHeight));
-
-        g.setColor(Color.BLACK);
-
-        String[] debugLines = {
-                "Naam: " + this.name,
-                "Leeftijd: " + this.age,
-                "Perron: " + this.journey.getPlatform().toString(),
-                "Trein aankomst: " + this.journey.getArrivalTime().toString(),
-                "Trein vertrek: " + this.journey.getDepartureTime().toString(),
-        };
-
-        int lineHeight = g.getFontMetrics().getHeight();
-        int textY = rectY + lineHeight;
-        for (String line : debugLines) {
-            g.drawString(line, rectX + 10, textY);
-            textY += lineHeight;
-        }
-
-        g.setClip(null);
     }
 
     public void toggleClicked() {
