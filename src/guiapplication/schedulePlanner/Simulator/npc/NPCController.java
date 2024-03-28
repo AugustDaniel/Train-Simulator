@@ -17,6 +17,8 @@ public class NPCController implements util.Observer {
     private Clock clock;
     private Schedule schedule;
     private ScheduleSubject subject;
+    private double timer = 0;
+    private int populairity = 5;
 
     public NPCController(Clock clock, ScheduleSubject subject, ResizableCanvas canvas, Camera camera) {
         this.subject = subject;
@@ -41,9 +43,15 @@ public class NPCController implements util.Observer {
     }
 
     public void update(double deltaTime) {
+        timer += deltaTime;
+        if (timer > (double) 10 / populairity) {
+            npcs.add(new Traveler(PathFinding.spawnPoints.get((int) (Math.random() * (PathFinding.spawnPoints.size() - 1))), this.schedule.getJourneyList().get(0)));
+            timer -= (double) 10 / populairity;
+        }
         for (NPC npc : npcs) {
             npc.update(npcs);
         }
+
     }
 
     private util.graph.Node checkSpawnPoint(util.graph.Node spawnPoint) {
