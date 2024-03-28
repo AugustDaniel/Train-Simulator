@@ -7,6 +7,7 @@ import guiapplication.schedulePlanner.Simulator.Clock;
 import guiapplication.schedulePlanner.Simulator.pathfinding.PathFinding;
 import org.jfree.fx.FXGraphics2D;
 import org.jfree.fx.ResizableCanvas;
+import util.graph.Node;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,11 +38,11 @@ public class NPCController implements util.Observer {
                     }
                 }
         );
-
-        //            util.graph.Node spawnPoint = checkCollision(PathFinding.spawnPoints.get((int) (Math.random() * (PathFinding.spawnPoints.size() - 1))));
-//            int size = PathFinding.targets.size();
+                    Node spawnPoint = checkSpawnPoint(PathFinding.spawnPoints.get((int) (Math.random() * (PathFinding.spawnPoints.size() - 1))));
 //
 //            npcs.add(new Traveler(spawnPoint, PathFinding.targets.get((int) (Math.random() * size))));
+
+        npcs.add(new Traveler(spawnPoint, this.schedule.getJourneyList().get(0)));
     }
 
 

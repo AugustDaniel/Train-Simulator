@@ -1,5 +1,7 @@
 package guiapplication.schedulePlanner.Simulator.npc;
 
+import data.Journey;
+import guiapplication.schedulePlanner.Simulator.pathfinding.PathFinding;
 import guiapplication.schedulePlanner.Simulator.pathfinding.Target;
 import util.graph.Node;
 
@@ -14,12 +16,18 @@ public class Traveler extends NPC {
     private Node currentNode;
     private Node closestNode;
     private boolean clicked;
+    private Journey journey;
 
-    public Traveler(Node node, Target target) {
+    public Traveler(Node node, Journey journey) {
         super(node.getPosition(), -2);
+        this.journey = journey;
         this.currentNode = node;
         this.closestNode = node;
-        this.target = target;
+
+        //todo
+        List<Target> targets = PathFinding.targets.get("Peron " + this.journey.getPlatform().getPlatformNumber());
+        this.target = targets.get((int) (Math.random() * targets.size()));
+
         checkPosition();
     }
 
@@ -67,7 +75,7 @@ public class Traveler extends NPC {
         g.setColor(Color.BLACK);
 
         String[] debugLines = {
-
+                "Platform: " + this.journey.getPlatform().toString()
         };
 
         int lineHeight = g.getFontMetrics().getHeight();
