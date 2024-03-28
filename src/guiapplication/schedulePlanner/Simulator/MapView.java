@@ -4,7 +4,6 @@ import guiapplication.schedulePlanner.Simulator.mouselistener.MouseListener;
 import guiapplication.schedulePlanner.Simulator.npc.NPCController;
 import data.Journey;
 import data.ScheduleSubject;
-import guiapplication.schedulePlanner.Simulator.pathfinding.PathFinding;
 import guiapplication.schedulePlanner.Simulator.tilehandlers.Map;
 import guiapplication.schedulePlanner.View;
 import javafx.animation.AnimationTimer;
@@ -28,14 +27,13 @@ public class MapView implements View {
     private final Camera camera;
     private Clock clock;
     private NPCController npcController;
-    private double tijd = 0;
+    private double timer  = 0;
 
 
     public MapView(ScheduleSubject subject) throws IOException {
-        this.timeSpeed = 0.5;
         mainPane = new BorderPane();
         this.subject = subject;
-        this.clock = new Clock(this.timeSpeed);
+        this.clock = new Clock(0.5);
         this.canvas = new ResizableCanvas(this::draw, mainPane);
         this.camera = new Camera(canvas);
         this.map = new Map("/TrainStationPlannerMap.tmj");
@@ -48,14 +46,14 @@ public class MapView implements View {
 
     public void update(double deltaTime) {
         //dit zorgt ervoor dat die een fps limit heeft op ongeveer 60 fps
-        tijd += deltaTime;
-        if (tijd > 0.016){
+        timer += deltaTime;
+        if (timer > 0.016){
             for (TrainEntity train : trains) {
                 train.update();
             }
             clock.update(deltaTime);
             npcController.update(deltaTime);
-            tijd = 0;
+            timer = 0;
         }
     }
 
