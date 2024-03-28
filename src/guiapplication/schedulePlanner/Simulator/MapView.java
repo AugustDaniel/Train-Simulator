@@ -15,7 +15,6 @@ import org.jfree.fx.ResizableCanvas;
 
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -78,7 +77,7 @@ public class MapView implements View {
             for (NPC npc : npcs) {
                 if (npc.contains(camera.getWorldPos(e.getX(), e.getY()))) {
                     Traveler tr = (Traveler) npc;
-                    tr.toggleDebug();
+                    tr.toggleClicked();
                     return;
                 }
             }

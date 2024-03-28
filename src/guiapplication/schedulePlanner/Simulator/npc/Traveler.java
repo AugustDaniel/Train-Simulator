@@ -12,7 +12,7 @@ public class Traveler extends NPC {
     private Target target;
     private Node currentNode;
     private Node closestNode;
-    private boolean debug;
+    private boolean clicked;
 
     public Traveler(Node node, Target target) {
         super(node.getPosition(), -2);
@@ -46,19 +46,14 @@ public class Traveler extends NPC {
 
     @Override
     public void draw(Graphics2D g) {
-        if (debug) {
-            debugDraw(g);
+        if (clicked) {
+            infoDraw(g);
         }
 
         super.draw(g);
     }
 
-    public void debugDraw(Graphics2D g) {
-        //todo tile pathfinding debugging
-        target.getShortestPath().forEach((k, v) -> {
-            g.drawString(v.toString(), (int) k.getPosition().getX() - 16, (int) k.getPosition().getY() - 16 + 20); //todo change magic number 16 = half tilesize 32 tilesize 20 is random offset number
-        });
-
+    public void infoDraw(Graphics2D g) {
         int rectX = (int) (this.position.getX() + 50);
         int rectY = (int) (this.position.getY() - 50);
         int rectWidth = 300;
@@ -71,13 +66,7 @@ public class Traveler extends NPC {
         g.setColor(Color.BLACK);
 
         String[] debugLines = {
-                "Current position: x = " + ((int) this.position.getX()) + ", y = " + ((int) this.position.getY()),
-                "Target position: x = " + ((int) this.targetPosition.getX()) + ", y = " + ((int) this.targetPosition.getY()),
-                "Current node: " + this.currentNode.toString(),
-                "Closest node: " + this.closestNode.toString(),
-                "Distance p2d: " + this.position.distance(this.targetPosition),
-                "Current tile distance: " + target.getDistance(currentNode),
-                "Closest tile distance: " + target.getDistance(closestNode)
+
         };
 
         int lineHeight = g.getFontMetrics().getHeight();
@@ -88,21 +77,9 @@ public class Traveler extends NPC {
         }
 
         g.setClip(null);
-
-        g.setColor(Color.BLACK);
-        g.draw(new Rectangle2D.Double(closestNode.getPosition().getX() - 16, closestNode.getPosition().getY() - 16, 32, 32));
-
-        for (Node node : currentNode.getAdjacentNodes()) {
-            g.setColor(Color.GREEN);
-            g.draw(new Rectangle2D.Double(node.getPosition().getX() - 16, node.getPosition().getY() - 16, 32, 32));
-        }
     }
 
-    public void setDebug(boolean b) {
-        this.debug = b;
-    }
-
-    public void toggleDebug() {
-        setDebug(!this.debug);
+    public void toggleClicked() {
+        this.clicked = !this.clicked;
     }
 }
