@@ -24,7 +24,7 @@ public class Traveler extends NPC {
         this.closestNode = node;
 
         //todo
-        List<Target> targets = PathFinding.targets.get("Peron " + this.journey.getPlatform().getPlatformNumber());
+        List<Target> targets = PathFinding.targets.get("Platform " + this.journey.getPlatform().getPlatformNumber());
         this.target = targets.get((int) (Math.random() * targets.size()));
 
         checkPosition();

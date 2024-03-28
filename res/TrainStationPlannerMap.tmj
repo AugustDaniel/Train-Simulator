@@ -566,7 +566,7 @@
                 {
                  "height":47,
                  "id":23,
-                 "name":"Peron 0",
+                 "name":"Platform 1",
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -577,7 +577,7 @@
                 {
                  "height":45.6666666666665,
                  "id":24,
-                 "name":"Peron 1",
+                 "name":"Platform 2",
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -588,7 +588,7 @@
                 {
                  "height":48.5,
                  "id":25,
-                 "name":"Peron 2",
+                 "name":"Platform 3",
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -599,7 +599,7 @@
                 {
                  "height":47.5,
                  "id":26,
-                 "name":"Peron 3",
+                 "name":"Platform 4",
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -610,7 +610,7 @@
                 {
                  "height":46.5,
                  "id":27,
-                 "name":"Peron 4",
+                 "name":"Platform 5",
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -621,7 +621,7 @@
                 {
                  "height":45.5,
                  "id":28,
-                 "name":"Peron 5",
+                 "name":"Platform 6",
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -632,7 +632,7 @@
                 {
                  "height":51.3333333333333,
                  "id":29,
-                 "name":"Peron 6",
+                 "name":"Platform 7",
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -643,7 +643,7 @@
                 {
                  "height":45.3333333333335,
                  "id":30,
-                 "name":"Peron 7",
+                 "name":"Platform 8",
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -654,7 +654,7 @@
                 {
                  "height":48.6666666666667,
                  "id":31,
-                 "name":"Peron 8",
+                 "name":"Platform 9",
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -665,7 +665,7 @@
                 {
                  "height":48.6666666666665,
                  "id":32,
-                 "name":"Peron 9",
+                 "name":"Platform 10",
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -676,7 +676,7 @@
                 {
                  "height":50.6666666666665,
                  "id":33,
-                 "name":"Peron 10",
+                 "name":"Platform 11",
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -687,7 +687,7 @@
                 {
                  "height":50.3333333333334,
                  "id":34,
-                 "name":"Peron 11",
+                 "name":"Platform 12",
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -698,7 +698,7 @@
                 {
                  "height":45.3333333333334,
                  "id":35,
-                 "name":"Peron 12",
+                 "name":"Platform 13",
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -709,7 +709,7 @@
                 {
                  "height":49,
                  "id":36,
-                 "name":"Peron 13",
+                 "name":"Platform 14",
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -720,7 +720,7 @@
                 {
                  "height":75.3333333333333,
                  "id":37,
-                 "name":"Peron 14",
+                 "name":"Platform 15",
                  "rotation":0,
                  "type":"",
                  "visible":true,

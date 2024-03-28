@@ -29,7 +29,6 @@ public class MapView implements View {
     private NPCController npcController;
     private double timer  = 0;
 
-
     public MapView(ScheduleSubject subject) throws IOException {
         mainPane = new BorderPane();
         this.subject = subject;
