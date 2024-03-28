@@ -90,4 +90,12 @@ public class Traveler extends NPC {
     public void toggleClicked() {
         this.clicked = !this.clicked;
     }
+
+    public Journey getJourney() {
+        return this.journey;
+    }
+
+    public void setTarget(Target target) {
+        this.target = target;
+    }
 }

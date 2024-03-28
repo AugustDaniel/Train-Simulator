@@ -23,7 +23,7 @@ public class NPC {
         this.position = position;
         this.targetPosition = position;
         this.angle = angle;
-        this.speed = 1;
+        this.speed = 2;
         this.draw = true;
         this.scale = 8;
 
@@ -78,7 +78,7 @@ public class NPC {
         }
 
         if (!hasCollision) {
-            this.speed = 1;
+            this.speed = 2;
             this.position = newPosition;
         } else {
             this.speed *= 0.5;

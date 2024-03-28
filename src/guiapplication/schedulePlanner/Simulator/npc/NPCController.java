@@ -36,19 +36,36 @@ public class NPCController implements util.Observer, MouseCallback {
     public void update(double deltaTime) {
         timer += deltaTime;
 
-        for (NPC npc : npcs) {
-            npc.update(npcs);
-        }
-
         this.schedule.getJourneyList().forEach(journey -> {
-                    if (journey.getArrivalTime().minusMinutes(20).equals(this.clock.getCurrentTime())) {
+                    if (journey.getArrivalTime().minusMinutes(30).equals(this.clock.getCurrentTime())) {
                         double timerEnd = timer + (double) journey.getTrainPopularity() / 50; //todo magic number for popularity
                         this.journeysToSpawn.offer(new AbstractMap.SimpleEntry<>(journey, timerEnd));
                     }
                 }
         );
 
+        updateNPCs();
         spawnNPCs();
+    }
+
+    private void updateNPCs() {
+        Iterator<NPC> iterator = npcs.iterator();
+
+        while (iterator.hasNext()) {
+            NPC npc = iterator.next();
+            npc.update(npcs);
+
+            Traveler tr = (Traveler) npc;
+            if (clock.getCurrentTime().isAfter(tr.getJourney().getArrivalTime())
+                    || clock.getCurrentTime().equals(tr.getJourney().getArrivalTime())) {
+
+                tr.setTarget(PathFinding.trainTargets.get("Train " + tr.getJourney().getPlatform()).get(0)); //todo change spawnpoint
+
+                if (npc.atTargetPosition()) {
+                    iterator.remove();
+                }
+            }
+        }
     }
 
     private void spawnNPCs() {
