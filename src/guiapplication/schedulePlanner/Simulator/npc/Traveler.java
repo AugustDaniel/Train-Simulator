@@ -4,6 +4,7 @@ import guiapplication.schedulePlanner.Simulator.pathfinding.Target;
 import util.graph.Node;
 
 import java.awt.*;
+import java.util.List;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
@@ -23,7 +24,7 @@ public class Traveler extends NPC {
     }
 
     @Override
-    public void update(ArrayList<NPC> npcs) {
+    public void update(List<NPC> npcs) {
         if (this.position.distance(getTargetPosition()) < 110) {
             checkPosition();
         }

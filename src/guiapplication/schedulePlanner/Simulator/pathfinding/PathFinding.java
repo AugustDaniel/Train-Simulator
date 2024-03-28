@@ -7,7 +7,6 @@ import javax.json.JsonArray;
 import javax.json.JsonObject;
 import java.awt.geom.Point2D;
 import java.util.*;
-import java.util.stream.Stream;
 
 public class PathFinding {
 

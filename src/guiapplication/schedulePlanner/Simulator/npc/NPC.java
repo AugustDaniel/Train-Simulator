@@ -2,6 +2,7 @@ package guiapplication.schedulePlanner.Simulator.npc;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.util.List;
 import java.awt.geom.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -33,7 +34,7 @@ public class NPC {
         }
     }
 
-    public void update(ArrayList<NPC> npcs) {
+    public void update(List<NPC> npcs) {
         if (atTargetPosition()) {
             return;
         }
