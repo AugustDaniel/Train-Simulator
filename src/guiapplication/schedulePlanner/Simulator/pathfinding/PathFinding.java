@@ -14,7 +14,7 @@ public class PathFinding {
     private final static int TILE_SIZE = 32;
     private final static int OFFSET = 2;
 
-    public static List<Target> targets = new ArrayList<>();
+    public static Map<String, List<Target>> targets = new HashMap<>();
     public static List<Node> spawnPoints = new ArrayList<>();
     public static Graph graph = new Graph(0, 0);
 
@@ -113,7 +113,11 @@ public class PathFinding {
                     Node nodeToAdd = graph.getNodes()[yObject + y][xObject + x];
 
                     if (nodeToAdd != null) {
-                        targets.add(new Target(nodeToAdd));
+                        if (!targets.containsKey(o.getString("name"))) {
+                            targets.put(o.getString("name"), new ArrayList<>());
+                        }
+
+                        targets.get(o.getString("name")).add(new Target(nodeToAdd));
                     }
                 }
 
