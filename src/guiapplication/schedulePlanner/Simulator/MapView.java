@@ -99,12 +99,6 @@ public class MapView implements View {
 //            });
 //        });
 
-//        //todo spawnpoint debug
-//        for (util.graph.Node node : PathFinding.spawnPoints) {
-//            Point2D p = node.getPosition();
-//            g.draw(new Rectangle2D.Double(p.getX() - 16, p.getY() - 16, 32 ,32)); //todo change magic number 16 = half tilesize 32 tilesize
-//        }
-
         npcController.draw(g);
 
         for (TrainEntity train : trains) {
@@ -116,13 +110,5 @@ public class MapView implements View {
         for (Journey journey : subject.getSchedule().getJourneyList()) {
             trains.add(new TrainEntity(journey,this.clock));
         }
-    }
-
-    public ScheduleSubject getSubject() {
-        return subject;
-    }
-
-    public Clock getClock() {
-        return clock;
     }
 }
