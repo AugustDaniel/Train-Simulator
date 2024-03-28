@@ -1,10 +1,7 @@
 package guiapplication.schedulePlanner.Simulator;
 
-import guiapplication.schedulePlanner.MouseListener;
-import guiapplication.schedulePlanner.Simulator.npc.NPC;
+import guiapplication.schedulePlanner.Simulator.mouselistener.MouseListener;
 import guiapplication.schedulePlanner.Simulator.npc.NPCController;
-import guiapplication.schedulePlanner.Simulator.npc.Traveler;
-import guiapplication.schedulePlanner.Simulator.pathfinding.PathFinding;
 import data.Journey;
 import data.ScheduleSubject;
 import guiapplication.schedulePlanner.Simulator.tilehandlers.Map;

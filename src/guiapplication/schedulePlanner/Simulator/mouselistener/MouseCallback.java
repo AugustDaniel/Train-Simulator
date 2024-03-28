@@ -1,4 +1,4 @@
-package guiapplication.schedulePlanner;
+package guiapplication.schedulePlanner.Simulator.mouselistener;
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;

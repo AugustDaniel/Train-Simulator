@@ -2,7 +2,7 @@ package guiapplication.schedulePlanner.Simulator.npc;
 
 import data.Schedule;
 import data.ScheduleSubject;
-import guiapplication.schedulePlanner.MouseCallback;
+import guiapplication.schedulePlanner.Simulator.mouselistener.MouseCallback;
 import guiapplication.schedulePlanner.Simulator.Camera;
 import guiapplication.schedulePlanner.Simulator.Clock;
 import guiapplication.schedulePlanner.Simulator.pathfinding.PathFinding;
