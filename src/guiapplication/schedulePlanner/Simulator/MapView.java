@@ -98,11 +98,11 @@ public class MapView implements View {
 //            g.draw(new Rectangle2D.Double(p.getX() - 16, p.getY() - 16, 32 ,32)); //todo change magic number 16 = half tilesize 32 tilesize
 //        }
 
+        npcController.draw(g);
+
         for (TrainEntity train : trains) {
             train.draw(g);
         }
-
-        npcController.draw(g);
     }
 
     public void init(){
