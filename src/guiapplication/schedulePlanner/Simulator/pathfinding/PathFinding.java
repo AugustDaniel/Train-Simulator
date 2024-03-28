@@ -117,9 +117,9 @@ public class PathFinding {
                         String name = o.getString("name");
 
                         if (name.contains("Platform")) {
-                            addToMap(platformTargets, o, nodeToAdd);
+                            addToMap(platformTargets, name, nodeToAdd);
                         } else if (name.contains("Train")) {
-                            addToMap(trainTargets, o, nodeToAdd);
+                            addToMap(trainTargets, name, nodeToAdd);
                         }
                     }
                 }
@@ -129,12 +129,12 @@ public class PathFinding {
         }
     }
 
-    private static void addToMap(Map<String, List<Target>> map, JsonObject o, Node nodeToAdd) {
-        if (!map.containsKey(o.getString("name"))) {
-            map.put(o.getString("name"), new ArrayList<>());
+    private static void addToMap(Map<String, List<Target>> map, String name, Node nodeToAdd) {
+        if (!map.containsKey(name)) {
+            map.put(name, new ArrayList<>());
         }
 
-        map.get(o.getString("name")).add(new Target(nodeToAdd));
+        map.get(name).add(new Target(nodeToAdd));
     }
 
     private static void createSpawnPoints(JsonObject o) {
