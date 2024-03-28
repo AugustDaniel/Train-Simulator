@@ -25,11 +25,6 @@ public class NPCController implements util.Observer {
         this.clock = clock;
 
         canvas.setOnMouseClicked(e -> {
-                    if (e.isShiftDown()) {
-                        npcs.clear();
-                        return;
-                    }
-
                     for (NPC npc : npcs) {
                         if (npc.contains(camera.getWorldPos(e.getX(), e.getY()))) {
                             Traveler tr = (Traveler) npc;
