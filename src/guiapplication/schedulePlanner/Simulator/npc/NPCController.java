@@ -59,7 +59,11 @@ public class NPCController implements util.Observer, MouseCallback {
             if (clock.getCurrentTime().isAfter(tr.getJourney().getArrivalTime())
                     || clock.getCurrentTime().equals(tr.getJourney().getArrivalTime())) {
 
-                tr.setTarget(PathFinding.trainTargets.get("Train " + tr.getJourney().getPlatform()).get(0)); //todo change target from train
+                if (!tr.isBoarding()) {
+                    tr.setBoarding(true);
+                    int size = PathFinding.trainTargets.get("Train " + tr.getJourney().getPlatform()).size();
+                    tr.setTarget(PathFinding.trainTargets.get("Train " + tr.getJourney().getPlatform()).get((int) (Math.random() * size)));
+                }
 
                 if (npc.atTargetPosition()) {
                     iterator.remove();

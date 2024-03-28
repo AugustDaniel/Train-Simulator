@@ -8,7 +8,6 @@ import util.graph.Node;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.List;
-import java.awt.geom.Rectangle2D;
 
 public class Traveler extends NPC {
 
@@ -18,6 +17,7 @@ public class Traveler extends NPC {
     private boolean clicked;
     private Journey journey;
     private InfoScreen infoScreen;
+    private boolean boarding;
 
     public Traveler(Node node, Journey journey) {
         super(node.getPosition(), -2);
@@ -85,5 +85,13 @@ public class Traveler extends NPC {
     public void setTarget(Target target) {
         this.target = target;
         checkPosition();
+    }
+
+    public void setBoarding(boolean boarding) {
+        this.boarding = boarding;
+    }
+
+    public boolean isBoarding() {
+        return this.boarding;
     }
 }
