@@ -1,5 +1,6 @@
 package guiapplication.schedulePlanner.Simulator;
 
+import guiapplication.schedulePlanner.MouseListener;
 import guiapplication.schedulePlanner.Simulator.npc.NPC;
 import guiapplication.schedulePlanner.Simulator.npc.NPCController;
 import guiapplication.schedulePlanner.Simulator.npc.Traveler;
@@ -31,6 +32,7 @@ public class MapView implements View {
     private NPCController npcController;
     private double tijd = 0;
 
+
     public MapView(ScheduleSubject subject) throws IOException {
         mainPane = new BorderPane();
         this.subject = subject;
@@ -38,7 +40,11 @@ public class MapView implements View {
         this.canvas = new ResizableCanvas(this::draw, mainPane);
         this.camera = new Camera(canvas);
         this.map = new Map("/TrainStationPlannerMap.tmj");
-        this.npcController = new NPCController(clock,subject,canvas, camera);
+        this.npcController = new NPCController(clock,subject,camera);
+
+        MouseListener ml = new MouseListener(canvas);
+        ml.addCallback(this.camera);
+        ml.addCallback(this.npcController);
     }
 
     public void update(double deltaTime) {
