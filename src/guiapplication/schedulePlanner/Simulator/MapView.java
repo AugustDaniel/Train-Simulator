@@ -4,6 +4,8 @@ import guiapplication.schedulePlanner.Simulator.mouselistener.MouseListener;
 import guiapplication.schedulePlanner.Simulator.npc.NPCController;
 import data.Journey;
 import data.ScheduleSubject;
+import guiapplication.schedulePlanner.Simulator.pathfinding.PathFinding;
+import guiapplication.schedulePlanner.Simulator.pathfinding.Target;
 import guiapplication.schedulePlanner.Simulator.tilehandlers.Map;
 import guiapplication.schedulePlanner.View;
 import javafx.animation.AnimationTimer;
@@ -14,7 +16,10 @@ import org.jfree.fx.ResizableCanvas;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class MapView implements View {
@@ -86,12 +91,14 @@ public class MapView implements View {
 
         map.draw(g);
 
-//        //todo target debug
-//        for (Target target : PathFinding.targets) {
-//            Point2D p = target.getNode().getPosition();
-//            g.draw(new Rectangle2D.Double(p.getX() - 16, p.getY() - 16, 32 ,32)); //todo change magic number 16 = half tilesize 32 tilesize
-//        }
-//
+        //todo target debug
+//        PathFinding.trainTargets.forEach((s, targets) -> {
+//            targets.forEach(target -> {
+//                Point2D p = target.getNode().getPosition();
+//                g.draw(new Rectangle2D.Double(p.getX() - 16, p.getY() - 16, 32 ,32)); //todo change magic number 16 = half tilesize 32 tilesize
+//            });
+//        });
+
 //        //todo spawnpoint debug
 //        for (util.graph.Node node : PathFinding.spawnPoints) {
 //            Point2D p = node.getPosition();

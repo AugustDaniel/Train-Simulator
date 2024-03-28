@@ -14,7 +14,8 @@ public class PathFinding {
     private final static int TILE_SIZE = 32;
     private final static int OFFSET = 2;
 
-    public static Map<String, List<Target>> targets = new HashMap<>();
+    public static Map<String, List<Target>> platformTargets = new HashMap<>();
+    public static Map<String, List<Target>> trainTargets = new HashMap<>();
     public static List<Node> spawnPoints = new ArrayList<>();
     public static Graph graph = new Graph(0, 0);
 
@@ -113,17 +114,27 @@ public class PathFinding {
                     Node nodeToAdd = graph.getNodes()[yObject + y][xObject + x];
 
                     if (nodeToAdd != null) {
-                        if (!targets.containsKey(o.getString("name"))) {
-                            targets.put(o.getString("name"), new ArrayList<>());
-                        }
+                        String name = o.getString("name");
 
-                        targets.get(o.getString("name")).add(new Target(nodeToAdd));
+                        if (name.contains("Platform")) {
+                            addToMap(platformTargets, o, nodeToAdd);
+                        } else if (name.contains("Train")) {
+                            addToMap(trainTargets, o, nodeToAdd);
+                        }
                     }
                 }
 
                 xStartingPoint++;
             }
         }
+    }
+
+    private static void addToMap(Map<String, List<Target>> map, JsonObject o, Node nodeToAdd) {
+        if (!map.containsKey(o.getString("name"))) {
+            map.put(o.getString("name"), new ArrayList<>());
+        }
+
+        map.get(o.getString("name")).add(new Target(nodeToAdd));
     }
 
     private static void createSpawnPoints(JsonObject o) {
