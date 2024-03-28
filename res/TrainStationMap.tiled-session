@@ -13,11 +13,11 @@
             "scaleInDock": 0.33
         },
         "TrainStationPlannerMap.tmj": {
-            "scale": 1,
+            "scale": 0.33,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 1281.5,
-                "y": 3166
+                "x": 2259.090909090909,
+                "y": 772.7272727272726
             }
         },
         "TrainStationPlannerMap.tmj#Modern_Exteriors_Complete_Tileset_32x32": {
