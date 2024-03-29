@@ -16,7 +16,7 @@ public class Traveler extends NPC {
     private Node closestNode;
     private boolean clicked;
     private Journey journey;
-    private InfoScreen infoScreen;
+    private NPCInfo infoScreen;
     private Status status;
 
     public enum Status {BOARDING, SHOPPING, ARRIVING, LEAVING}
@@ -27,7 +27,7 @@ public class Traveler extends NPC {
         this.currentNode = node;
         this.closestNode = node;
         this.status = Status.ARRIVING;
-        this.infoScreen = new InfoScreen(
+        this.infoScreen = new NPCInfo(
                 new String[]{
                         "Naam: " + (int) (Math.random() * 100),
                         "Leeftijd: " + (int) (Math.random() * 1000),

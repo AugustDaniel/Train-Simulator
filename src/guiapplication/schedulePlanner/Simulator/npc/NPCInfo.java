@@ -1,19 +1,17 @@
 package guiapplication.schedulePlanner.Simulator.npc;
 
-import org.jfree.fx.FXGraphics2D;
-
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
-public class InfoScreen {
+public class NPCInfo {
 
     private String[] info;
     private double width;
     private double height;
     private Point2D position;
 
-    public InfoScreen(String[] info, Point2D position) {
+    public NPCInfo(String[] info, Point2D position) {
         this.info = info;
         this.position = position;
         this.width = 150;
