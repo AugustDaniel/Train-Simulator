@@ -17,13 +17,16 @@ public class Traveler extends NPC {
     private boolean clicked;
     private Journey journey;
     private InfoScreen infoScreen;
-    private boolean boarding;
+    private Status status;
+
+    public enum Status {BOARDING, SHOPPING, ARRIVING, LEAVING}
 
     public Traveler(Node node, Journey journey) {
         super(node.getPosition(), -2);
         this.journey = journey;
         this.currentNode = node;
         this.closestNode = node;
+        this.status = Status.ARRIVING;
         this.infoScreen = new InfoScreen(
                 new String[]{
                         "Naam: " + (int) (Math.random() * 100),
@@ -87,11 +90,11 @@ public class Traveler extends NPC {
         checkPosition();
     }
 
-    public void setBoarding(boolean boarding) {
-        this.boarding = boarding;
+    public void setstatus(Status status) {
+        this.status = status;
     }
 
-    public boolean isBoarding() {
-        return this.boarding;
+    public Status getStatus() {
+        return this.status;
     }
 }
