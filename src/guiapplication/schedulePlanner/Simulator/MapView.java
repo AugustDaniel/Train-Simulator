@@ -30,10 +30,11 @@ public class MapView implements View {
     private Clock clock;
     private double timeSpeed;
     private double tijd = 0;
+    private int maxNPCs;
 
 //    private BufferedImage image = ImageIO.read(this.getClass().getResourceAsStream("/astronautHelmet.png"));
 
-    public MapView(ScheduleSubject subject) throws IOException {
+    public MapView(ScheduleSubject subject, int maxNPCs) throws IOException {
         this.timeSpeed = 0.5;
         mainPane = new BorderPane();
         this.subject = subject;
@@ -43,6 +44,7 @@ public class MapView implements View {
         this.map = new Map("/TrainStationPlannerMap.tmj");
         Point2D nullpoint = new Point2D.Double(0, 0);
         this.worldMousePos = nullpoint;
+        this.maxNPCs = maxNPCs;
     }
 
     public void update(double deltaTime) {
@@ -84,6 +86,11 @@ public class MapView implements View {
                 return;
             }
 
+            if (npcs.size() >= maxNPCs) {
+                System.out.println("Maximum number of NPCs reached. Cannot add more.");
+                return;
+            }
+
             boolean hasCollision = false;
             util.graph.Node spawnPoint = PathFinding.spawnPoints.get((int) (Math.random() * (PathFinding.spawnPoints.size() - 1)));
 
@@ -93,7 +100,7 @@ public class MapView implements View {
                 }
             }
 
-            if (!hasCollision) {
+            if (!hasCollision && npcs.size() < maxNPCs) {
                 int size = PathFinding.targets.size();
                 npcs.add(new Traveler(spawnPoint, PathFinding.targets.get((int) (Math.random() * size))));
             }
@@ -129,6 +136,18 @@ public class MapView implements View {
             trains.add(new TrainEntity(journey,this.clock));
         }
     }
+
+    public void updatePeopleCount(int newPeopleCount) {
+        if (newPeopleCount < npcs.size()) {
+            int numToRemove = npcs.size() - newPeopleCount;
+            for (int i = 0; i < numToRemove; i++) {
+                npcs.remove(0);
+            }
+        }
+        this.maxNPCs = newPeopleCount;
+    }
+
+
 
     public ScheduleSubject getSubject() {
         return subject;
