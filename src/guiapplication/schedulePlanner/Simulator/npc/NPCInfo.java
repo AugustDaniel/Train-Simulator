@@ -30,8 +30,6 @@ public class NPCInfo {
             g.drawString(line, (int) (this.position.getX() + 10), textY);
             textY += lineHeight;
         }
-
-        g.setClip(null);
     }
 
     public void updatePosition(double x, double y) {
