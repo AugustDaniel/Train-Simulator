@@ -36,6 +36,10 @@ public class NPCController implements util.Observer, MouseCallback {
     public void update(double deltaTime) {
         timer += deltaTime;
 
+        if (timer > Double.MAX_VALUE - 100) {
+            timer = 0;
+        }
+
         this.schedule.getJourneyList().forEach(journey -> {
                     if (journey.getArrivalTime().minusMinutes(30).equals(this.clock.getCurrentTime())) {
                         double timerEnd = timer + (double) journey.getTrainPopularity() / 50; //todo magic number for popularity
