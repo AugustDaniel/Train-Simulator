@@ -1,7 +1,6 @@
 package guiapplication.schedulePlanner.Simulator.npc;
 
 import data.Journey;
-import data.Schedule;
 import data.ScheduleSubject;
 import guiapplication.schedulePlanner.Simulator.mouselistener.MouseCallback;
 import guiapplication.schedulePlanner.Simulator.Camera;
@@ -9,7 +8,6 @@ import guiapplication.schedulePlanner.Simulator.Clock;
 import guiapplication.schedulePlanner.Simulator.pathfinding.PathFinding;
 import guiapplication.schedulePlanner.Simulator.pathfinding.Target;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
 import org.jfree.fx.FXGraphics2D;
 import util.graph.Node;
 
@@ -58,41 +56,31 @@ public class NPCController implements MouseCallback {
             npc.update(npcs);
 
             Traveler tr = (Traveler) npc;
+            if (npc.atTargetPosition() &&
+                    (tr.getStatus() == Traveler.Status.BOARDING || tr.getStatus() == Traveler.Status.LEAVING)) {
+                iterator.remove();
+            }
 
-            if (clock.getCurrentTime().isAfter(tr.getJourney().getDepartureTime())
-                    || clock.getCurrentTime().equals(tr.getJourney().getDepartureTime())) {
-
-                if (tr.isBoarding()) {
-                    tr.setBoarding(false);
-                    tr.setTarget(new Target(PathFinding.spawnPoints.get((int) (Math.random() * (PathFinding.spawnPoints.size() - 1)))));
-                }
-
-                if (npc.atTargetPosition()) {
-                    iterator.remove();
-                }
-
+            if (isDepartureTime(tr)) {
+                handleStatus(tr, Traveler.Status.LEAVING, new Target(PathFinding.getRandomSpawnPoint()));
                 continue;
             }
 
-            if (clock.getCurrentTime().isAfter(tr.getJourney().getArrivalTime())
-                    || clock.getCurrentTime().equals(tr.getJourney().getArrivalTime())) {
-
-                if (!tr.isBoarding()) {
-                    tr.setBoarding(true);
-                    int size = PathFinding.trainTargets.get("Train " + tr.getJourney().getPlatform()).size();
-                    tr.setTarget(PathFinding.trainTargets.get("Train " + tr.getJourney().getPlatform()).get((int) (Math.random() * size)));
-                }
-
-                if (npc.atTargetPosition()) {
-                    iterator.remove();
-                }
+            if (isArrivalTime(tr)) {
+                handleStatus(tr, Traveler.Status.BOARDING, PathFinding.getRandomTrainTarget("Train " + tr.getJourney().getPlatform()));
             }
         }
     }
 
+    private void handleStatus(Traveler tr, Traveler.Status status, Target target) {
+        if (tr.getStatus() != status) {
+            tr.setstatus(status);
+            tr.setTarget(target);
+        }
+    }
+
     private void spawnNPCs() {
-        if (this.journeysToSpawn.isEmpty())
-                 { //todo magic number for spawn rate
+        if (this.journeysToSpawn.isEmpty()) { //todo magic number for spawn rate
             return;
         }
 
@@ -114,6 +102,16 @@ public class NPCController implements MouseCallback {
         }
 
         return spawnPoint;
+    }
+
+    private boolean isDepartureTime(Traveler tr) {
+        return clock.getCurrentTime().isAfter(tr.getJourney().getDepartureTime())
+                || clock.getCurrentTime().equals(tr.getJourney().getDepartureTime());
+    }
+
+    private boolean isArrivalTime(Traveler tr) {
+        return clock.getCurrentTime().isAfter(tr.getJourney().getArrivalTime())
+                || clock.getCurrentTime().equals(tr.getJourney().getArrivalTime());
     }
 
     public void draw(FXGraphics2D g) {

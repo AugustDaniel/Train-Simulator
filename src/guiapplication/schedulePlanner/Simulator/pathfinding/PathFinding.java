@@ -147,4 +147,18 @@ public class PathFinding {
             }
         }
     }
+
+    public static Target getRandomPlatformTarget(String platform) {
+        int size = platformTargets.get(platform).size();
+        return platformTargets.get(platform).get((int) (Math.random() * size));
+    }
+
+    public static Target getRandomTrainTarget(String train) {
+        int size = trainTargets.get(train).size();
+        return trainTargets.get(train).get((int) (Math.random() * size));
+    }
+
+    public static Node getRandomSpawnPoint() {
+        return spawnPoints.get((int) (Math.random() * spawnPoints.size()));
+    }
 }

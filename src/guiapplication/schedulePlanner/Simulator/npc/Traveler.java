@@ -38,10 +38,8 @@ public class Traveler extends NPC {
                 new Point2D.Double(0, 0)
         );
 
-        //todo
-        List<Target> targets = PathFinding.platformTargets.get("Platform " + this.journey.getPlatform().getPlatformNumber());
-        this.target = targets.get((int) (Math.random() * targets.size()));
 
+        this.target = PathFinding.getRandomPlatformTarget("Platform " + this.journey.getPlatform());
         checkPosition();
     }
 
