@@ -15,10 +15,9 @@ import util.graph.Node;
 
 import java.util.*;
 
-public class NPCController implements util.Observer, MouseCallback {
+public class NPCController implements MouseCallback {
     private List<NPC> npcs = new ArrayList<>();
     private Clock clock;
-    private Schedule schedule;
     private ScheduleSubject subject;
     private Camera camera;
     private Queue<Map.Entry<Journey, Double>> journeysToSpawn;
@@ -26,8 +25,6 @@ public class NPCController implements util.Observer, MouseCallback {
 
     public NPCController(Clock clock, ScheduleSubject subject, Camera camera) {
         this.subject = subject;
-        this.subject.attach(this);
-        this.schedule = subject.getSchedule();
         this.clock = clock;
         this.camera = camera;
         this.journeysToSpawn = new ArrayDeque<>();
@@ -41,7 +38,7 @@ public class NPCController implements util.Observer, MouseCallback {
             timer = 0;
         }
 
-        this.schedule.getJourneyList().forEach(journey -> {
+        this.subject.getSchedule().getJourneyList().forEach(journey -> {
                     if (journey.getArrivalTime().minusMinutes(30).equals(this.clock.getCurrentTime())) {
                         double timerEnd = timer + (double) journey.getTrainPopularity() / 10; //todo magic number for popularity
                         this.journeysToSpawn.offer(new AbstractMap.SimpleEntry<>(journey, timerEnd));
@@ -123,11 +120,6 @@ public class NPCController implements util.Observer, MouseCallback {
         for (NPC npc : npcs) {
             npc.draw(g);
         }
-    }
-
-    @Override
-    public void update() {
-        this.schedule = this.subject.getSchedule();
     }
 
     @Override
