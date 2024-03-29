@@ -85,7 +85,7 @@ public class NPC {
             this.angle += 0.18;
         }
 
-        //todo change to clipping maybe
+        // clipping performance is terrible with large amounts of npcs, this is way better
         if (this.position.getY() < 4096 - 800 && this.position.getX() < 4096 - 416 && this.position.getX() > 4096 - 528) {
             this.draw = false;
         }
