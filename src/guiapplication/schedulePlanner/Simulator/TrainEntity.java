@@ -5,6 +5,7 @@ import data.Journey;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Area;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -20,16 +21,15 @@ public class TrainEntity {
     private boolean draw;
 
 
-    public TrainEntity(Journey journey, Clock clock){
+    public TrainEntity(Journey journey, Clock clock) {
         this.journey = journey;
         this.clock = clock;
         this.draw = false;
         int yLocation;
-        if (journey.getPlatform().getPlatformNumber() %2 == 0) {
-            yLocation = 106 * 32 - (((journey.getPlatform().getPlatformNumber() / 2 -1) * 14 + 10) * 32) - 152;
-        }
-        else {
-            yLocation = 106 * 32 -((((journey.getPlatform().getPlatformNumber() - 1) / 2) * 14) * 32) - 152;
+        if (journey.getPlatform().getPlatformNumber() % 2 == 0) {
+            yLocation = 106 * 32 - (((journey.getPlatform().getPlatformNumber() / 2 - 1) * 14 + 10) * 32) - 152;
+        } else {
+            yLocation = 106 * 32 - ((((journey.getPlatform().getPlatformNumber() - 1) / 2) * 14) * 32) - 152;
         }
 
 
@@ -44,34 +44,36 @@ public class TrainEntity {
         }
     }
 
-    public void update(){
+    public void update() {
         if (this.clock.getCurrentTime().isAfter(journey.getArrivalTime().minusMinutes(25)) &&
-                this.clock.getCurrentTime().isBefore(journey.getArrivalTime())){
+                this.clock.getCurrentTime().isBefore(journey.getArrivalTime())) {
             position = new Point2D.Double(position.getX() + 4, position.getY());
             draw = true;
-        }
-        else if (this.clock.getCurrentTime().isAfter(journey.getDepartureTime())) {
-            position  = new Point2D.Double(position.getX() + 4, position.getY());
+        } else if (this.clock.getCurrentTime().isAfter(journey.getDepartureTime())) {
+            position = new Point2D.Double(position.getX() + 4, position.getY());
         }
 
     }
 
-    public void draw(Graphics2D g2d){
+    public void draw(Graphics2D g2d) {
         if (!draw) {
             return;
         }
-        g2d.setClip(0,0,3584,4000);
-//        g2d.setClip(3968, 0, 128,4000); // todo beter maken van de clip omdat deze nu de andere clip overwrite.
-        AffineTransform tx = new AffineTransform();
 
+        Area clipArea = new Area(new Rectangle(0, 0, 112 * 32, 4000));
+        clipArea.add(new Area(new Rectangle(124 * 32, 0, 4 * 32, 4000)));
+        g2d.setClip(clipArea);
+
+        AffineTransform tx = new AffineTransform();
         tx.translate(position.getX(), position.getY());
         g2d.drawImage(trainHeadRight, tx, null);
 
-        tx.translate(trainHeadRight.getWidth(),-4);
+        tx.translate(trainHeadRight.getWidth(), -4);
         g2d.drawImage(trainWagon, tx, null);
 
-        tx.translate(trainWagon.getWidth(),2);
+        tx.translate(trainWagon.getWidth(), 2);
         g2d.drawImage(trainHeadLeft, tx, null);
+
         g2d.setClip(null);
     }
 }
