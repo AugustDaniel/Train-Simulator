@@ -50,14 +50,14 @@ public class MapView implements View {
 
     public void update(double deltaTime) {
         //dit zorgt ervoor dat die een fps limit heeft op ongeveer 60 fps
-        timer += deltaTime;
-        if (timer > 0.016){
+        timer += deltaTime * 60;
+        if (timer >= 1){
             for (TrainEntity train : trains) {
                 train.update();
             }
             clock.update(deltaTime);
             npcController.update(deltaTime);
-            timer = 0;
+            timer -= 1;
         }
     }
 
