@@ -144,19 +144,4 @@ public class NPCController implements util.Observer, MouseCallback {
             }
         }
     }
-
-    @Override
-    public void onMouseReleased(MouseEvent e) {
-        return;
-    }
-
-    @Override
-    public void onMouseDragged(MouseEvent e) {
-        return;
-    }
-
-    @Override
-    public void onMouseScrolled(ScrollEvent e) {
-        return;
-    }
 }
