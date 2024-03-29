@@ -62,19 +62,26 @@ public class NPCController implements MouseCallback {
             }
 
             if (isDepartureTime(tr)) {
-                handleStatus(tr, Traveler.Status.LEAVING, new Target(PathFinding.getRandomSpawnPoint()));
+                handleStatus(tr, Traveler.Status.LEAVING);
                 continue;
             }
 
             if (isArrivalTime(tr)) {
-                handleStatus(tr, Traveler.Status.BOARDING, PathFinding.getRandomTrainTarget("Train " + tr.getJourney().getPlatform()));
+                handleStatus(tr, Traveler.Status.BOARDING);
             }
         }
     }
 
-    private void handleStatus(Traveler tr, Traveler.Status status, Target target) {
+    private void handleStatus(Traveler tr, Traveler.Status status) {
         if (tr.getStatus() != status) {
             tr.setstatus(status);
+
+            Target target = null;
+            switch (status) {
+                case BOARDING: target = PathFinding.getRandomTrainTarget("Train " + tr.getJourney().getPlatform()); break;
+                case LEAVING: target = new Target(PathFinding.getRandomSpawnPoint()); break;
+            }
+
             tr.setTarget(target);
         }
     }
