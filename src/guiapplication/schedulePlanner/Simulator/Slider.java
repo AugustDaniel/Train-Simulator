@@ -20,7 +20,6 @@ public class Slider extends VBox {
             mapView.updatePeopleCount(newPeopleCount);
         });
 
-        setSpacing(0); // Set spacing between children to zero
         getChildren().add(slider);
     }
 }

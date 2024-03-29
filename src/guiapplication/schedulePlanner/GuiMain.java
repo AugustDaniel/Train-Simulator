@@ -46,6 +46,8 @@ public class GuiMain extends Application {
         Tab simulationTab = new Tab("Simulatie", mapView.getNode());
         // Add slider to the simulation tab
         Slider peopleSlider = new Slider(mapView);
+//        simulationTab.setContent(new VBox(peopleSlider, mapView.getNode()));
+        VBox.setVgrow(mapView.getNode(), javafx.scene.layout.Priority.ALWAYS);
         simulationTab.setContent(new VBox(mapView.getNode(), peopleSlider));
         tabPane.getTabs().add(simulationTab);
 
