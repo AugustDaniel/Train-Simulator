@@ -7,6 +7,7 @@ import guiapplication.schedulePlanner.Simulator.mouselistener.MouseCallback;
 import guiapplication.schedulePlanner.Simulator.Camera;
 import guiapplication.schedulePlanner.Simulator.Clock;
 import guiapplication.schedulePlanner.Simulator.pathfinding.PathFinding;
+import guiapplication.schedulePlanner.Simulator.pathfinding.Target;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import org.jfree.fx.FXGraphics2D;
@@ -42,7 +43,7 @@ public class NPCController implements util.Observer, MouseCallback {
 
         this.schedule.getJourneyList().forEach(journey -> {
                     if (journey.getArrivalTime().minusMinutes(30).equals(this.clock.getCurrentTime())) {
-                        double timerEnd = timer + (double) journey.getTrainPopularity() / 50; //todo magic number for popularity
+                        double timerEnd = timer + (double) journey.getTrainPopularity() / 10; //todo magic number for popularity
                         this.journeysToSpawn.offer(new AbstractMap.SimpleEntry<>(journey, timerEnd));
                     }
                 }
@@ -60,6 +61,22 @@ public class NPCController implements util.Observer, MouseCallback {
             npc.update(npcs);
 
             Traveler tr = (Traveler) npc;
+
+            if (clock.getCurrentTime().isAfter(tr.getJourney().getDepartureTime())
+                    || clock.getCurrentTime().equals(tr.getJourney().getDepartureTime())) {
+
+                if (tr.isBoarding()) {
+                    tr.setBoarding(false);
+                    tr.setTarget(new Target(PathFinding.spawnPoints.get((int) (Math.random() * (PathFinding.spawnPoints.size() - 1)))));
+                }
+
+                if (npc.atTargetPosition()) {
+                    iterator.remove();
+                }
+
+                continue;
+            }
+
             if (clock.getCurrentTime().isAfter(tr.getJourney().getArrivalTime())
                     || clock.getCurrentTime().equals(tr.getJourney().getArrivalTime())) {
 
@@ -77,8 +94,8 @@ public class NPCController implements util.Observer, MouseCallback {
     }
 
     private void spawnNPCs() {
-        if (this.journeysToSpawn.isEmpty() ||
-                (this.timer % 1) > 0.5) { //todo magic number for spawn rate
+        if (this.journeysToSpawn.isEmpty())
+                 { //todo magic number for spawn rate
             return;
         }
 
