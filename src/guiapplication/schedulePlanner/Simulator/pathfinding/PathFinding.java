@@ -12,7 +12,6 @@ public class PathFinding {
 
     private final static int COLLISION_TILE = 1;
     private final static int TILE_SIZE = 32;
-    private final static int OFFSET = 2;
 
     public static Map<String, List<Target>> platformTargets = new HashMap<>();
     public static Map<String, List<Target>> trainTargets = new HashMap<>();
