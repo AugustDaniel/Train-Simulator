@@ -90,7 +90,7 @@ public class Traveler extends NPC {
         checkPosition();
     }
 
-    public void setstatus(Status status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

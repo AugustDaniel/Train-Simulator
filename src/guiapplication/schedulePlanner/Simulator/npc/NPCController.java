@@ -76,7 +76,7 @@ public class NPCController implements MouseCallback, util.Observer {
 
     private void handleStatus(Traveler tr, Traveler.Status status) {
         if (tr.getStatus() != status) {
-            tr.setstatus(status);
+            tr.setStatus(status);
 
             Target target = null;
             switch (status) {
