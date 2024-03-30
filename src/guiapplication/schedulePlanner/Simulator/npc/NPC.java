@@ -23,7 +23,7 @@ public class NPC {
         this.position = position;
         this.targetPosition = position;
         this.angle = angle;
-        this.standardSpeed = 2;
+        this.standardSpeed = 1;
         this.draw = true;
         this.scale = 8;
         this.currentSpeed = this.standardSpeed;
@@ -33,6 +33,11 @@ public class NPC {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public NPC(Point2D position, double angle, double standardSpeed) {
+        this(position, angle);
+        this.standardSpeed = standardSpeed;
     }
 
     public void update(List<NPC> npcs) {

@@ -26,7 +26,7 @@ public class NPCController implements MouseCallback, util.Observer {
         this.clock = clock;
         this.clock.attach(this);
         this.camera = camera;
-        this.spawner = new NPCSpawner(this.npcs);
+        this.spawner = new NPCSpawner(this.npcs, this.clock);
     }
 
     public void update(double deltaTime) {

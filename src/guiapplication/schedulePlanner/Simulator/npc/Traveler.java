@@ -45,6 +45,11 @@ public class Traveler extends NPC {
         checkPosition();
     }
 
+    public Traveler(Node node, Journey journey, double standardSpeed) {
+        this(node, journey);
+        this.standardSpeed = standardSpeed;
+    }
+
     @Override
     public void update(List<NPC> npcs) {
         if (this.position.distance(getTargetPosition()) < 110) {
