@@ -108,8 +108,10 @@ public class PathFinding {
             int yObject = o.getInt("y") / TILE_SIZE;
             int xStartingPoint = 0;
 
-            for (int y = 0; y < Math.ceil((double) o.getInt("height") / TILE_SIZE); y++) {
-                for (int x = xStartingPoint; x < Math.ceil((double) o.getInt("width") / TILE_SIZE); x += OFFSET) {
+            double yLimit = Math.ceil((double) o.getInt("height") / TILE_SIZE);
+            double xLimit = Math.ceil((double) o.getInt("width") / TILE_SIZE);
+            for (int y = 0; y < yLimit; y++) {
+                for (int x = xStartingPoint; x < xLimit; x += OFFSET) {
 
                     Node nodeToAdd = graph.getNodes()[yObject + y][xObject + x];
 
@@ -131,7 +133,7 @@ public class PathFinding {
 
     private static void addToMap(Map<String, List<Target>> map, String name, Node nodeToAdd) {
         if (!map.containsKey(name)) {
-            map.put(name, new ArrayList<>());
+            map.put(name, new LinkedList<>());
         }
 
         map.get(name).add(new Target(nodeToAdd));

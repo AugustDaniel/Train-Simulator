@@ -30,7 +30,7 @@ public class Traveler extends NPC {
         this.infoScreen = new NPCInfo(
                 new String[]{
                         "Naam: " + (int) (Math.random() * 100),
-                        "Leeftijd: " + (int) (Math.random() * 1000),
+                        "Leeftijd: " + (int) (Math.random() * 100),
                         "Perron: " + this.journey.getPlatform().toString(),
                         "Trein aankomst: " + this.journey.getArrivalTime().toString(),
                         "Trein vertrek: " + this.journey.getDepartureTime().toString(),
@@ -40,6 +40,7 @@ public class Traveler extends NPC {
 
 
         this.target = PathFinding.getRandomPlatformTarget("Platform " + this.journey.getPlatform());
+        this.target.calculateShortestPath();
         checkPosition();
     }
 

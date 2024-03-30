@@ -35,4 +35,6 @@ public class NPCInfo {
     public void updatePosition(double x, double y) {
         this.position = new Point2D.Double(x + 25, y - 50); //todo change these magic offsets
     }
+
+
 }

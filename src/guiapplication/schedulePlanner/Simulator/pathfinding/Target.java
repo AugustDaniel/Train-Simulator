@@ -2,6 +2,7 @@ package guiapplication.schedulePlanner.Simulator.pathfinding;
 
 import util.graph.Node;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Target {
@@ -9,7 +10,7 @@ public class Target {
     private Node node;
 
     public Target(Node node) {
-        this.shortestPath = PathFinding.getShortestPath(node);
+        this.shortestPath = new HashMap<>();
         this.node = node;
     }
 
@@ -17,11 +18,11 @@ public class Target {
         return shortestPath.get(node);
     }
 
-    public Map<Node, Integer> getShortestPath() {
-        return this.shortestPath;
-    }
-
     public Node getNode() {
         return node;
+    }
+
+    public void calculateShortestPath() {
+        this.shortestPath = PathFinding.getShortestPath(node);
     }
 }
