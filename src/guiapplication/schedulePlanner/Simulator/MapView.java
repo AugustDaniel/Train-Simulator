@@ -45,7 +45,7 @@ public class MapView implements View {
 
     public void update(double deltaTime) {
         //dit zorgt ervoor dat die een fps limit heeft op ongeveer 60 fps
-        timer += deltaTime * 60;
+        timer += deltaTime * 144;
         if (timer >= 1){
             for (TrainEntity train : trains) {
                 train.update();
