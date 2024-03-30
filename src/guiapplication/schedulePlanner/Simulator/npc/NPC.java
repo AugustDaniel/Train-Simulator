@@ -18,6 +18,7 @@ public class NPC {
     protected Point2D targetPosition;
     protected int scale;
     protected boolean draw;
+    protected boolean clicked;
 
     public NPC(Point2D position, double angle) {
         this.position = position;
@@ -132,5 +133,9 @@ public class NPC {
 
     public void setStandardSpeed(double standardSpeed) {
         this.standardSpeed = standardSpeed;
+    }
+
+    public void toggleClicked() {
+        this.clicked = !this.clicked;
     }
 }

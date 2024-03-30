@@ -14,7 +14,6 @@ public class Traveler extends NPC {
     private Target target;
     private Node currentNode;
     private Node closestNode;
-    private boolean clicked;
     private Journey journey;
     private NPCInfo infoScreen;
     private Status status;
@@ -80,10 +79,6 @@ public class Traveler extends NPC {
         }
 
         super.draw(g);
-    }
-
-    public void toggleClicked() {
-        this.clicked = !this.clicked;
     }
 
     public Journey getJourney() {

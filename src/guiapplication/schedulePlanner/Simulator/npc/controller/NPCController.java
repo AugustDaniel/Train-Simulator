@@ -103,8 +103,7 @@ public class NPCController implements MouseCallback, util.Observer {
 
         for (NPC npc : npcs) {
             if (npc.contains(camera.getWorldPos(e.getX(), e.getY()))) {
-                Traveler tr = (Traveler) npc;
-                tr.toggleClicked();
+                npc.toggleClicked();
                 return;
             }
         }
