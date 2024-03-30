@@ -16,40 +16,31 @@ import util.graph.Node;
 import java.util.*;
 
 public class NPCController implements MouseCallback, util.Observer {
-    private List<NPC> npcs = new ArrayList<>();
+    private List<NPC> npcs;
     private Clock clock;
     private ScheduleSubject subject;
     private Camera camera;
-    private Queue<Map.Entry<Journey, Double>> journeysToSpawn;
-    private double timer;
-    private int spawnRate;
+    private NPCSpawner spawner;
 
     public NPCController(Clock clock, ScheduleSubject subject, Camera camera) {
+        this.npcs = new ArrayList<>();
         this.subject = subject;
         this.clock = clock;
         this.clock.attach(this);
         this.camera = camera;
-        this.journeysToSpawn = new ArrayDeque<>();
-        this.timer = 0;
+        this.spawner = new NPCSpawner(this.npcs);
     }
 
     public void update(double deltaTime) {
-        timer += deltaTime;
-
-        if (timer > Double.MAX_VALUE - 100) {
-            timer = 0;
-        }
-
         this.subject.getSchedule().getJourneyList().forEach(journey -> {
                     if (journey.getArrivalTime().minusMinutes(30).equals(this.clock.getCurrentTime())) {
-                        double timerEnd = timer + (double) journey.getTrainPopularity() / (2000 - spawnRate); //todo magic number is max spawnrate in slider
-                        this.journeysToSpawn.offer(new AbstractMap.SimpleEntry<>(journey, timerEnd));
+                        this.spawner.addToQueue(journey);
                     }
                 }
         );
 
         updateNPCs();
-        spawnNPCs();
+        spawner.update(deltaTime);
     }
 
     private void updateNPCs() {
@@ -90,31 +81,6 @@ public class NPCController implements MouseCallback, util.Observer {
         }
     }
 
-    private void spawnNPCs() {
-        if (this.journeysToSpawn.isEmpty()) {
-            return;
-        }
-
-        Map.Entry<Journey, Double> journey = this.journeysToSpawn.peek();
-
-        if (journey.getValue() >= timer) {
-            Node spawnPoint = checkSpawnPoint(PathFinding.spawnPoints.get((int) (Math.random() * (PathFinding.spawnPoints.size() - 1))));
-            npcs.add(new Traveler(spawnPoint, journey.getKey()));
-        } else {
-            this.journeysToSpawn.poll();
-        }
-    }
-
-    private util.graph.Node checkSpawnPoint(util.graph.Node spawnPoint) {
-        for (NPC npc : npcs) {
-            if (npc.getPosition().distance(spawnPoint.getPosition()) <= npc.getImageSize()) {
-                spawnPoint = checkSpawnPoint(PathFinding.spawnPoints.get((int) (Math.random() * (PathFinding.spawnPoints.size() - 1))));
-            }
-        }
-
-        return spawnPoint;
-    }
-
     private boolean isDepartureTime(Traveler tr) {
         return clock.getCurrentTime().isAfter(tr.getJourney().getDepartureTime())
                 || clock.getCurrentTime().equals(tr.getJourney().getDepartureTime());
@@ -147,7 +113,7 @@ public class NPCController implements MouseCallback, util.Observer {
     }
 
     public void setSpawnRate(int newPeopleCount) {
-        this.spawnRate = newPeopleCount;
+        this.spawner.setSpawnRate(newPeopleCount);
     }
 
     @Override
