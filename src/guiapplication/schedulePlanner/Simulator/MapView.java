@@ -111,4 +111,12 @@ public class MapView implements View {
             trains.add(new TrainEntity(journey,this.clock));
         }
     }
+
+    public void updateClock(int timeSpeed){
+        clock.updateTimeSpeed(timeSpeed);
+    }
+
+    public void updatePeopleCount(int newPeopleCount) {
+        this.npcController.setSpawnRate(newPeopleCount);
+    }
 }

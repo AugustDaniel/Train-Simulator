@@ -15,6 +15,7 @@ public class NPC {
     protected double angle;
     protected BufferedImage image;
     protected double speed;
+    protected double currentSpeed;
     protected Point2D targetPosition;
     protected int scale;
     protected boolean draw;
@@ -26,6 +27,7 @@ public class NPC {
         this.speed = 2;
         this.draw = true;
         this.scale = 8;
+        this.currentSpeed = this.speed;
 
         try {
             this.image = ImageIO.read(Objects.requireNonNull(this.getClass().getResourceAsStream("/astronautHelmet.png")));
@@ -61,8 +63,8 @@ public class NPC {
         }
 
         Point2D newPosition = new Point2D.Double(
-                this.position.getX() + speed * Math.cos(angle),
-                this.position.getY() + speed * Math.sin(angle)
+                this.position.getX() + currentSpeed * Math.cos(angle),
+                this.position.getY() + currentSpeed * Math.sin(angle)
         );
 
         boolean hasCollision = false;
@@ -78,10 +80,10 @@ public class NPC {
         }
 
         if (!hasCollision) {
-            this.speed = 2;
+            this.currentSpeed = speed;
             this.position = newPosition;
         } else {
-            this.speed *= 0.5;
+            this.currentSpeed *= 0.5;
             this.angle += 0.18;
         }
 
@@ -125,5 +127,9 @@ public class NPC {
     public boolean contains(Point2D p) {
         int size = getImageSize();
         return new Rectangle2D.Double(this.position.getX() - (double) size / 2, this.position.getY() - (double) size / 2, size, size).contains(p);
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
     }
 }

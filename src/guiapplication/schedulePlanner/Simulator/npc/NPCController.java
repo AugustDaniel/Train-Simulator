@@ -13,17 +13,19 @@ import util.graph.Node;
 
 import java.util.*;
 
-public class NPCController implements MouseCallback {
+public class NPCController implements MouseCallback, util.Observer {
     private List<NPC> npcs = new ArrayList<>();
     private Clock clock;
     private ScheduleSubject subject;
     private Camera camera;
     private Queue<Map.Entry<Journey, Double>> journeysToSpawn;
     private double timer;
+    private int spawnRate;
 
     public NPCController(Clock clock, ScheduleSubject subject, Camera camera) {
         this.subject = subject;
         this.clock = clock;
+        this.clock.attach(this);
         this.camera = camera;
         this.journeysToSpawn = new ArrayDeque<>();
         this.timer = 0;
@@ -38,7 +40,7 @@ public class NPCController implements MouseCallback {
 
         this.subject.getSchedule().getJourneyList().forEach(journey -> {
                     if (journey.getArrivalTime().minusMinutes(30).equals(this.clock.getCurrentTime())) {
-                        double timerEnd = timer + (double) journey.getTrainPopularity() / 10; //todo magic number for popularity
+                        double timerEnd = timer + (double) journey.getTrainPopularity() / (2000 - spawnRate); //todo magic number is max spawnrate in slider
                         this.journeysToSpawn.offer(new AbstractMap.SimpleEntry<>(journey, timerEnd));
                     }
                 }
@@ -87,7 +89,7 @@ public class NPCController implements MouseCallback {
     }
 
     private void spawnNPCs() {
-        if (this.journeysToSpawn.isEmpty()) { //todo magic number for spawn rate
+        if (this.journeysToSpawn.isEmpty()) {
             return;
         }
 
@@ -139,6 +141,19 @@ public class NPCController implements MouseCallback {
                 tr.toggleClicked();
                 return;
             }
+        }
+    }
+
+    public void setSpawnRate(int newPeopleCount) {
+        this.spawnRate = newPeopleCount;
+    }
+
+    @Override
+    public void update() {
+        double speed = this.clock.getTimeSpeed();
+
+        for (NPC npc : npcs) {
+            npc.setSpeed(speed);
         }
     }
 }
