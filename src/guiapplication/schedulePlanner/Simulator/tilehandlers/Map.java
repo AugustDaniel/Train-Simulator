@@ -10,14 +10,12 @@ import javax.json.JsonReader;
 import java.awt.*;
 
 public class Map implements TileHandler {
-    private TileSet tileSet;
     private TileMap tileMap;
 
     public Map(String fileName) {
         JsonReader reader = Json.createReader(getClass().getResourceAsStream(fileName));
         JsonObject root = reader.readObject();
-        this.tileSet = new TileSet(root.getJsonArray("tilesets"));
-        this.tileMap = new TileMap(root.getJsonArray("layers"), this.tileSet);
+        this.tileMap = new TileMap(root.getJsonArray("layers"), root.getJsonArray("tilesets"));
     }
 
     @Override
