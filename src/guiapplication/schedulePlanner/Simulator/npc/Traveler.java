@@ -31,6 +31,7 @@ public class Traveler extends NPC {
                 new String[]{
                         "Naam: " + (int) (Math.random() * 100),
                         "Leeftijd: " + (int) (Math.random() * 100),
+                        "Status: " + this.status.toString(),
                         "Perron: " + this.journey.getPlatform().toString(),
                         "Trein aankomst: " + this.journey.getArrivalTime().toString(),
                         "Trein vertrek: " + this.journey.getDepartureTime().toString(),
@@ -92,6 +93,7 @@ public class Traveler extends NPC {
 
     public void setStatus(Status status) {
         this.status = status;
+        this.infoScreen.updateInfo("Status: " + this.status.toString(), 2);
     }
 
     public Status getStatus() {

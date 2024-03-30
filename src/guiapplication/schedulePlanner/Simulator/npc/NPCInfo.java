@@ -15,7 +15,7 @@ public class NPCInfo {
         this.info = info;
         this.position = position;
         this.width = 150;
-        this.height = 70; //todo calculate these
+        this.height = 80; //todo calculate these
     }
 
     public void draw(Graphics2D g) {
@@ -36,5 +36,7 @@ public class NPCInfo {
         this.position = new Point2D.Double(x + 25, y - 50); //todo change these magic offsets
     }
 
-
+    public void updateInfo(String s, int index) {
+        this.info[index] = s;
+    }
 }
