@@ -21,6 +21,7 @@ public class Clock extends Subject<Clock> {
     public void update(double deltaTime) {
         this.timePassed += deltaTime;
         if (timePassed > this.timeSpeed) {
+            System.out.println(timePassed);
             currentTimeInt++;
             if (currentTimeInt % 100 > 59) {
                 currentTimeInt -= 60;
@@ -31,12 +32,12 @@ public class Clock extends Subject<Clock> {
             }
             timePassed -= timeSpeed;
             currentTime = TimeFormatter.intToLocalTime(currentTimeInt);
+            System.out.println(currentTime);
         }
-        System.out.println(currentTime);
     }
 
     public void updateTimeSpeed(double timeSpeed){
-        this.timeSpeed = (double) 1 / timeSpeed;
+        this.timeSpeed = 1.0 / timeSpeed;
         super.setState(this);
     }
 
