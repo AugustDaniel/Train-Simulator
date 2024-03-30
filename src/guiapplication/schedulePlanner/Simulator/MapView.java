@@ -1,5 +1,9 @@
 package guiapplication.schedulePlanner.Simulator;
 
+import guiapplication.schedulePlanner.Simulator.mouselistener.MouseListener;
+import guiapplication.schedulePlanner.Simulator.npc.controller.NPCController;
+import data.Journey;
+import data.ScheduleSubject;
 import guiapplication.schedulePlanner.Simulator.tilehandlers.Map;
 import guiapplication.schedulePlanner.View;
 import javafx.animation.AnimationTimer;
@@ -7,36 +11,48 @@ import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import org.jfree.fx.FXGraphics2D;
 import org.jfree.fx.ResizableCanvas;
-import java.awt.Color;
+
+import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MapView implements View {
 
-    private Map map;
-    private ResizableCanvas canvas;
+    private ScheduleSubject subject;
+    private final Map map;
+    private final ResizableCanvas canvas;
     private BorderPane mainPane;
-    ArrayList<NPC> npcs = new ArrayList<>();
-    private Camera camera;
-    private Point2D screenMousePos;
-    private Point2D worldMousePos;
-    private Point2D distance;
+    ArrayList<TrainEntity> trains = new ArrayList<>();
+    private final Camera camera;
+    private Clock clock;
+    private NPCController npcController;
+    private double timer  = 0;
 
-    public MapView() {
+    public MapView(ScheduleSubject subject) throws IOException {
         mainPane = new BorderPane();
-        canvas = new ResizableCanvas(this::draw, mainPane);
-        camera = new Camera(canvas, this::draw, new FXGraphics2D(canvas.getGraphicsContext2D()));
-        map = new Map("/TrainStationPlannerMap.tmj");
-        Point2D nullpoint = new Point2D.Double(0, 0);
-        worldMousePos = nullpoint;
-        screenMousePos = nullpoint;
-        distance = nullpoint;
+        this.subject = subject;
+        this.clock = new Clock(0.5);
+        this.canvas = new ResizableCanvas(this::draw, mainPane);
+        this.camera = new Camera(canvas);
+        this.map = new Map("/TrainStationPlannerMap.tmj");
+        this.npcController = new NPCController(clock,subject,camera);
+
+        MouseListener ml = new MouseListener(canvas);
+        ml.addCallback(this.camera);
+        ml.addCallback(this.npcController);
     }
 
     public void update(double deltaTime) {
-        for (NPC npc : npcs) {
-            npc.update(this.npcs);
+        //dit zorgt ervoor dat die een fps limit heeft op ongeveer 60 fps
+        timer += deltaTime * 60;
+        if (timer >= 1){
+            for (TrainEntity train : trains) {
+                train.update();
+            }
+            clock.update(deltaTime);
+            npcController.update(deltaTime);
+            timer -= 1;
         }
     }
 
@@ -58,25 +74,9 @@ public class MapView implements View {
         }.start();
 
         draw(g2d);
-        canvas.setOnMouseClicked(e -> {
-            worldMousePos = camera.getWorldPos(e.getX(), e.getY());
-            screenMousePos = new Point2D.Double(e.getX() / camera.getZoom(), e.getY() / camera.getZoom());
-            npcs.add(new NPC(screenMousePos, 0));
-        });
-        canvas.setOnMouseMoved(e -> {
-            for (NPC npc : npcs) {
-                worldMousePos = camera.getWorldPos(e.getX(), e.getY());
-                screenMousePos = new Point2D.Double(e.getX() / camera.getZoom(), e.getY() / camera.getZoom());
-                npc.setTargetPosition(screenMousePos);
-
-            }
-        });
-
+        init();
         return mainPane;
-        /*fixme de npcs werken soortvan want ze spawnen op de muis als je klikt alleen de astonout helm is iets te groot, dus die mmoet kleiner
-       (fixme) worden. En ze lopen vloeiend ze happeren een beetje.  */
     }
-    //todo je zou hier het kunnen plaatsen want dit is waar de tab gemaakt wordt voor de map
 
     public void draw(FXGraphics2D g) {
         g.setBackground(Color.black);
@@ -86,8 +86,32 @@ public class MapView implements View {
 
         map.draw(g);
 
-        for (NPC npc : npcs) {
-            npc.draw(g);
+        //todo target debug
+//        PathFinding.trainTargets.forEach((s, targets) -> {
+//            targets.forEach(target -> {
+//                Point2D p = target.getNode().getPosition();
+//                g.draw(new Rectangle2D.Double(p.getX() - 16, p.getY() - 16, 32 ,32)); //todo change magic number 16 = half tilesize 32 tilesize
+//            });
+//        });
+
+        npcController.draw(g);
+
+        for (TrainEntity train : trains) {
+            train.draw(g);
         }
+    }
+
+    public void init(){
+        for (Journey journey : subject.getSchedule().getJourneyList()) {
+            trains.add(new TrainEntity(journey,this.clock));
+        }
+    }
+
+    public void updateClock(int timeSpeed){
+        clock.updateTimeSpeed(timeSpeed);
+    }
+
+    public void updatePeopleCount(int newPeopleCount) {
+        this.npcController.setSpawnRate(newPeopleCount);
     }
 }

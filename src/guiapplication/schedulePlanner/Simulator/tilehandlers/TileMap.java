@@ -1,5 +1,7 @@
 package guiapplication.schedulePlanner.Simulator.tilehandlers;
 
+import guiapplication.schedulePlanner.Simulator.pathfinding.PathFinding;
+
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import java.awt.*;
@@ -21,6 +23,12 @@ public class TileMap implements TileHandler {
             JsonObject object = this.tileLayers.getJsonObject(i);
 
             if (object.getString("type").equals("objectgroup")) {
+                PathFinding.addTargets(object);
+                continue;
+            }
+
+            if (object.getString("name").equals("CollisionLayer")) {
+                PathFinding.addCollision(object);
                 continue;
             }
 
@@ -34,4 +42,6 @@ public class TileMap implements TileHandler {
             layer.draw(graphics);
         }
     }
+
+
 }
