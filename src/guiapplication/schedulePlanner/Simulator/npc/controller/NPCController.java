@@ -1,10 +1,12 @@
-package guiapplication.schedulePlanner.Simulator.npc;
+package guiapplication.schedulePlanner.Simulator.npc.controller;
 
 import data.Journey;
 import data.ScheduleSubject;
 import guiapplication.schedulePlanner.Simulator.mouselistener.MouseCallback;
 import guiapplication.schedulePlanner.Simulator.Camera;
 import guiapplication.schedulePlanner.Simulator.Clock;
+import guiapplication.schedulePlanner.Simulator.npc.NPC;
+import guiapplication.schedulePlanner.Simulator.npc.Traveler;
 import guiapplication.schedulePlanner.Simulator.pathfinding.PathFinding;
 import guiapplication.schedulePlanner.Simulator.pathfinding.Target;
 import javafx.scene.input.MouseEvent;
