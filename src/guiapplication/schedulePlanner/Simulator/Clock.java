@@ -32,7 +32,6 @@ public class Clock extends Subject<Clock> {
             timePassed -= timeSpeed;
             currentTime = TimeFormatter.intToLocalTime(currentTimeInt);
         }
-        System.out.println(currentTime);
     }
 
     public void updateTimeSpeed(double timeSpeed){

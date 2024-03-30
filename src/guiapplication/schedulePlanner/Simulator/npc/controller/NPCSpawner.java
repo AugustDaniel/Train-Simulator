@@ -59,8 +59,12 @@ public class NPCSpawner {
         this.spawnRate = newPeopleCount;
     }
 
-    public void addToQueue(Journey journey) {
-        double timerEnd = timer + (double) journey.getTrainPopularity() / (2001 - spawnRate); //todo magic number is max spawnrate in slider
+    public void addToQueue(Journey journey, double timerSnapshot) {
+        if (this.journeysToSpawn.stream().anyMatch(e -> e.getKey().equals(journey))) {
+            return;
+        }
+
+        double timerEnd = timerSnapshot + (double) journey.getTrainPopularity() / (2001 - spawnRate); //todo magic number is max spawnrate in slider
         this.journeysToSpawn.offer(new AbstractMap.SimpleEntry<>(journey, timerEnd));
     }
 }

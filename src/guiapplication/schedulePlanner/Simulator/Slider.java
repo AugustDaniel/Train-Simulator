@@ -19,7 +19,6 @@ public class Slider extends VBox {
 
         amountOfPeopleSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             int newPeopleCount = newValue.intValue();
-            System.out.println("new people " + newPeopleCount);
             mapView.updatePeopleCount(newPeopleCount);
         });
 
@@ -36,7 +35,6 @@ public class Slider extends VBox {
             if ((newClockSpeed % 1) > 0.5){
                 newClockSpeed += 1;
             }
-            System.out.println("new speed " + (int) newClockSpeed);
             mapView.updateClock((int) newClockSpeed);
         });
 
