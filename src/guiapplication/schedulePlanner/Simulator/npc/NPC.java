@@ -107,9 +107,6 @@ public class NPC {
         tx.rotate(angle, (double) image.getWidth() / scale, (double) image.getHeight() / scale);
         tx.scale((double) 2 / scale, (double) 2 / scale);
         g2d.drawImage(image, tx, null);
-
-        g2d.setColor(Color.RED);
-        g2d.fill(new Ellipse2D.Double(position.getX(), position.getY(), 10, 10));
     }
 
     public Point2D getPosition() {
