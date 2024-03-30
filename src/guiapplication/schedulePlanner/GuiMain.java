@@ -45,10 +45,10 @@ public class GuiMain extends Application {
         // Create simulation tab
         Tab simulationTab = new Tab("Simulatie", mapView.getNode());
         // Add slider to the simulation tab
-        Slider peopleSlider = new Slider(mapView);
-//        simulationTab.setContent(new VBox(peopleSlider, mapView.getNode()));
+        Slider slider = new Slider(mapView);
+//        simulationTab.setContent(new VBox(slider, mapView.getNode()));
         VBox.setVgrow(mapView.getNode(), javafx.scene.layout.Priority.ALWAYS);
-        simulationTab.setContent(new VBox(mapView.getNode(), peopleSlider));
+        simulationTab.setContent(new VBox(mapView.getNode(), slider));
         tabPane.getTabs().add(simulationTab);
 
         // to prevent flashing of screen when launching

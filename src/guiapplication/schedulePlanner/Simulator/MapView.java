@@ -147,6 +147,11 @@ public class MapView implements View {
         this.maxNPCs = newPeopleCount;
     }
 
+    public void updateClock(int timeSpeed){
+        this.timeSpeed = (double) 1 / timeSpeed;
+        clock.updateTimeSpeed(this.timeSpeed);
+    }
+
 
 
     public ScheduleSubject getSubject() {

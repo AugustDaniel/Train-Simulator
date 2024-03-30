@@ -31,6 +31,11 @@ public class Clock {
             timePassed -= timeSpeed;
             currentTime = TimeFormatter.intToLocalTime(currentTimeInt);
         }
+        System.out.println(currentTime);
+    }
+
+    public void updateTimeSpeed(double timeSpeed){
+        this.timeSpeed = timeSpeed;
     }
 
     public LocalTime getCurrentTime() {
