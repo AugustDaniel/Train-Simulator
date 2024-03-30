@@ -1,11 +1,12 @@
 package guiapplication.schedulePlanner.Simulator;
 
+import util.Subject;
 import util.TimeFormatter;
 
 import java.time.LocalTime;
 
 
-public class Clock {
+public class Clock extends Subject<Clock> {
     private double timeSpeed;
     private double timePassed;
     private int currentTimeInt;
@@ -35,18 +36,15 @@ public class Clock {
     }
 
     public void updateTimeSpeed(double timeSpeed){
-        this.timeSpeed = timeSpeed;
+        this.timeSpeed = (double) 1 / timeSpeed;
+        super.setState(this);
+    }
+
+    public double getTimeSpeed() {
+        return timeSpeed;
     }
 
     public LocalTime getCurrentTime() {
         return currentTime;
-    }
-
-    public void setCurrentTime(LocalTime currentTime) {
-        this.currentTime = currentTime;
-    }
-
-    public int getCurrentTimeInt() {
-        return currentTimeInt;
     }
 }

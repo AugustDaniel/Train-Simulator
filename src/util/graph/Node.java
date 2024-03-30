@@ -1,16 +1,17 @@
 package util.graph;
 
+
 import java.awt.geom.Point2D;
 import java.util.*;
 
 public class Node {
 
-    Point2D position;
-
-    List<Node> adjacentNodes = new ArrayList<>();
+    private Point2D position;
+    private List<Node> adjacentNodes;
 
     public Node(Point2D position) {
         this.position = position;
+        this.adjacentNodes = new ArrayList<>();
     }
 
     public void addAdjacentNode(Node toAdd) {
@@ -24,4 +25,5 @@ public class Node {
     public Point2D getPosition() {
         return position;
     }
+
 }

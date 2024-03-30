@@ -8,7 +8,6 @@ public class TileLayer implements TileHandler {
 
     private JsonObject object;
     private TileSet tileSet;
-    private int[][] tilePositions;
     private int layerHeight;
     private int layerWidth;
     private BufferedImage layerImage;
@@ -28,7 +27,6 @@ public class TileLayer implements TileHandler {
         layerImage = new BufferedImage(layerHeight * 32, layerWidth * 32 ,BufferedImage.TYPE_INT_ARGB); // todo change magic numbers
         Graphics2D g = layerImage.createGraphics();
 
-        this.tilePositions = new int[this.layerHeight][this.layerWidth];
         for (int y = 0; y < this.layerHeight; y++) {
             for (int x = 0; x < this.layerWidth; x++) {
 
@@ -37,7 +35,6 @@ public class TileLayer implements TileHandler {
                         x * 32, y * 32, //todo change magic number to tileheight etc...
                         null);
 
-                this.tilePositions[y][x] = object.getJsonArray("data").getInt(index); //todo check if array can go, have image now
                 index++;
             }
         }

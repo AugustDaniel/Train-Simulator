@@ -22,7 +22,6 @@ public class GuiMain extends Application {
     private ScheduleSubject subject;
     private ScheduleView scheduleView;
     private MapView mapView;
-    private ResizableCanvas canvas;
 
     public static void main(String[] args) {
         launch(GuiMain.class);
@@ -33,7 +32,7 @@ public class GuiMain extends Application {
         this.subject = new ScheduleSubject();
         this.subject.setState(new Schedule());
         this.scheduleView = new ScheduleView(this.subject);
-        this.mapView = new MapView(this.subject, 50);
+        this.mapView = new MapView(this.subject);
     }
 
     @Override
@@ -44,12 +43,12 @@ public class GuiMain extends Application {
 
         // Create simulation tab
         Tab simulationTab = new Tab("Simulatie", mapView.getNode());
+        tabPane.getTabs().add(simulationTab);
+
         // Add slider to the simulation tab
         Slider slider = new Slider(mapView);
-//        simulationTab.setContent(new VBox(slider, mapView.getNode()));
         VBox.setVgrow(mapView.getNode(), javafx.scene.layout.Priority.ALWAYS);
         simulationTab.setContent(new VBox(mapView.getNode(), slider));
-        tabPane.getTabs().add(simulationTab);
 
         // to prevent flashing of screen when launching
         Screen screen = Screen.getPrimary();

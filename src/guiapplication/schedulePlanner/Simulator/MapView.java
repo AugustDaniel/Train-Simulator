@@ -1,8 +1,9 @@
 package guiapplication.schedulePlanner.Simulator;
 
+import guiapplication.schedulePlanner.Simulator.mouselistener.MouseListener;
+import guiapplication.schedulePlanner.Simulator.npc.controller.NPCController;
 import data.Journey;
 import data.ScheduleSubject;
-import guiapplication.schedulePlanner.Simulator.pathfinding.PathFinding;
 import guiapplication.schedulePlanner.Simulator.tilehandlers.Map;
 import guiapplication.schedulePlanner.View;
 import javafx.animation.AnimationTimer;
@@ -13,7 +14,6 @@ import org.jfree.fx.ResizableCanvas;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -23,41 +23,36 @@ public class MapView implements View {
     private final Map map;
     private final ResizableCanvas canvas;
     private BorderPane mainPane;
-    ArrayList<NPC> npcs = new ArrayList<>();
     ArrayList<TrainEntity> trains = new ArrayList<>();
     private final Camera camera;
-    private Point2D worldMousePos;
     private Clock clock;
-    private double timeSpeed;
-    private double tijd = 0;
-    private int maxNPCs;
+    private NPCController npcController;
+    private double timer  = 0;
 
-//    private BufferedImage image = ImageIO.read(this.getClass().getResourceAsStream("/astronautHelmet.png"));
-
-    public MapView(ScheduleSubject subject, int maxNPCs) throws IOException {
-        this.timeSpeed = 0.5;
+    public MapView(ScheduleSubject subject) throws IOException {
         mainPane = new BorderPane();
         this.subject = subject;
-        this.clock = new Clock(this.timeSpeed);
+        this.clock = new Clock(0.5);
         this.canvas = new ResizableCanvas(this::draw, mainPane);
-        this.camera = new Camera(canvas, this::draw, new FXGraphics2D(canvas.getGraphicsContext2D()));
+        this.camera = new Camera(canvas);
         this.map = new Map("/TrainStationPlannerMap.tmj");
-        Point2D nullpoint = new Point2D.Double(0, 0);
-        this.worldMousePos = nullpoint;
-        this.maxNPCs = maxNPCs;
+        this.npcController = new NPCController(clock,subject,camera);
+
+        MouseListener ml = new MouseListener(canvas);
+        ml.addCallback(this.camera);
+        ml.addCallback(this.npcController);
     }
 
     public void update(double deltaTime) {
-        for (NPC npc : npcs) {
-            npc.update(npcs);
-        }
-        tijd += deltaTime;
-        if (tijd > 0.016){
+        //dit zorgt ervoor dat die een fps limit heeft op ongeveer 60 fps
+        timer += deltaTime * 144;
+        if (timer >= 1){
             for (TrainEntity train : trains) {
                 train.update();
             }
             clock.update(deltaTime);
-            tijd = 0;
+            npcController.update(deltaTime);
+            timer -= 1;
         }
     }
 
@@ -79,32 +74,6 @@ public class MapView implements View {
         }.start();
 
         draw(g2d);
-
-        canvas.setOnMouseClicked(e -> {
-            if (e.isShiftDown()) {
-                npcs.clear();
-                return;
-            }
-
-            if (npcs.size() >= maxNPCs) {
-                System.out.println("Maximum number of NPCs reached. Cannot add more.");
-                return;
-            }
-
-            boolean hasCollision = false;
-            util.graph.Node spawnPoint = PathFinding.spawnPoints.get((int) (Math.random() * (PathFinding.spawnPoints.size() - 1)));
-
-            for (NPC npc : npcs) {
-                if (npc.getPosition().distance(spawnPoint.getPosition()) <= npc.getImageSize()) {
-                    hasCollision = true;
-                }
-            }
-
-            if (!hasCollision && npcs.size() < maxNPCs) {
-                int size = PathFinding.targets.size();
-                npcs.add(new Traveler(spawnPoint, PathFinding.targets.get((int) (Math.random() * size))));
-            }
-        });
         init();
         return mainPane;
     }
@@ -117,18 +86,19 @@ public class MapView implements View {
 
         map.draw(g);
 
-        for (NPC npc : npcs) {
-            npc.draw(g);
-        }
+        //todo target debug
+//        PathFinding.trainTargets.forEach((s, targets) -> {
+//            targets.forEach(target -> {
+//                Point2D p = target.getNode().getPosition();
+//                g.draw(new Rectangle2D.Double(p.getX() - 16, p.getY() - 16, 32 ,32)); //todo change magic number 16 = half tilesize 32 tilesize
+//            });
+//        });
 
-        if (this.npcs.size() == 1) {
-            Traveler tr = (Traveler) this.npcs.get(0);
-            tr.debugDraw(g);
-        }
+        npcController.draw(g);
+
         for (TrainEntity train : trains) {
             train.draw(g);
         }
-
     }
 
     public void init(){
@@ -137,28 +107,11 @@ public class MapView implements View {
         }
     }
 
-    public void updatePeopleCount(int newPeopleCount) {
-        if (newPeopleCount < npcs.size()) {
-            int numToRemove = npcs.size() - newPeopleCount;
-            for (int i = 0; i < numToRemove; i++) {
-                npcs.remove(0);
-            }
-        }
-        this.maxNPCs = newPeopleCount;
-    }
-
     public void updateClock(int timeSpeed){
-        this.timeSpeed = (double) 1 / timeSpeed;
-        clock.updateTimeSpeed(this.timeSpeed);
+        clock.updateTimeSpeed(timeSpeed);
     }
 
-
-
-    public ScheduleSubject getSubject() {
-        return subject;
-    }
-
-    public Clock getClock() {
-        return clock;
+    public void updatePeopleCount(int newPeopleCount) {
+        this.npcController.setSpawnRate(newPeopleCount);
     }
 }

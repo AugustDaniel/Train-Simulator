@@ -1,42 +1,31 @@
 package guiapplication.schedulePlanner.Simulator;
 
+import guiapplication.schedulePlanner.Simulator.mouselistener.MouseCallback;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
-import org.jfree.fx.FXGraphics2D;
-import org.jfree.fx.Resizable;
 
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.util.function.BiFunction;
 
-public class Camera {
+public class Camera implements MouseCallback {
 
     private Point2D target;
     private float zoom;
     private Canvas canvas;
-    private Resizable resizable;
-    private FXGraphics2D g2d;
     private Point2D screenMousePos;
     private Point2D distance;
-    private Point2D zoomPoint;
 
 
-    public Camera(Canvas canvas, Resizable resizable, FXGraphics2D g2d) {
-        this.target = new Point2D.Double(-canvas.getWidth(), -canvas.getHeight());
+    public Camera(Canvas canvas) {
+        this.target = new Point2D.Double(-canvas.getWidth()*4, -canvas.getHeight()*7); //todo magic numbers is zoom for start of map
         this.zoom = 1;
         this.canvas = canvas;
-        this.resizable = resizable;
-        this.g2d = g2d;
-        this.zoomPoint = new Point2D.Double(0, 0);
-
-        canvas.setOnMousePressed(this::mousePressed);
-        canvas.setOnMouseReleased(this::mouseReleased);
-        canvas.setOnMouseDragged(this::mouseDragged);
-        canvas.setOnScroll(this::mouseScrolled);
     }
 
-    private void mousePressed(MouseEvent e) {
+    @Override
+    public void onMousePressed(MouseEvent e) {
         screenMousePos = new Point2D.Double(e.getX() / this.zoom, e.getY() / this.zoom);
 
         if (e.isSecondaryButtonDown()) {
@@ -44,7 +33,8 @@ public class Camera {
         }
     }
 
-    private void mouseDragged(MouseEvent e) {
+    @Override
+    public void onMouseDragged(MouseEvent e) {
         screenMousePos = new Point2D.Double(e.getX() / this.zoom, e.getY() / this.zoom);
 
         if (e.isSecondaryButtonDown()) {
@@ -52,7 +42,8 @@ public class Camera {
         }
     }
 
-    private void mouseScrolled(ScrollEvent e) {
+    @Override
+    public void onMouseScrolled(ScrollEvent e) {
         this.incrementZoom((float) e.getDeltaY() / 1500);
     }
 
@@ -64,7 +55,8 @@ public class Camera {
         return transform;
     }
 
-    private void mouseReleased(MouseEvent e) {
+    @Override
+    public void onMouseReleased(MouseEvent e) {
         distance = null;
     }
 
