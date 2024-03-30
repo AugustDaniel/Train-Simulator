@@ -1,6 +1,6 @@
 package guiapplication.schedulePlanner.Simulator.mouselistener;
 
-import javafx.scene.canvas.Canvas;
+import javafx.scene.Node;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -9,28 +9,28 @@ public class MouseListener {
 
     private List<MouseCallback> callbacks;
 
-    public MouseListener(Canvas canvas) {
+    public MouseListener(Node node) {
         this.callbacks = new LinkedList<>();
 
-        canvas.setOnMousePressed(e -> {
+        node.setOnMousePressed(e -> {
             for (MouseCallback callback : callbacks) {
                 callback.onMousePressed(e);
             }
         });
 
-        canvas.setOnMouseReleased(e -> {
+        node.setOnMouseReleased(e -> {
             for (MouseCallback callback : callbacks) {
                 callback.onMouseReleased(e);
             }
         });
 
-        canvas.setOnMouseDragged(e -> {
+        node.setOnMouseDragged(e -> {
             for (MouseCallback callback : callbacks) {
                 callback.onMouseDragged(e);
             }
         });
 
-        canvas.setOnScroll(e -> {
+        node.setOnScroll(e -> {
             for (MouseCallback callback : callbacks) {
                 callback.onMouseScrolled(e);
             }
