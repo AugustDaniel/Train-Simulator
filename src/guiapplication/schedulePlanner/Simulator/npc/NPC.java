@@ -55,9 +55,9 @@ public class NPC {
         }
 
         if (angleDifference < -0.1) {
-            angle += 0.1;
+            angle += 0.1 * speed;
         } else if (angleDifference > 0.1) {
-            angle -= 0.1;
+            angle -= 0.1 * speed;
         } else {
             angle = newAngle;
         }
@@ -84,7 +84,7 @@ public class NPC {
             this.position = newPosition;
         } else {
             this.currentSpeed *= 0.5;
-            this.angle += 0.18;
+            this.angle += 0.18 * speed;
         }
 
         // clipping performance is terrible with large amounts of npcs, this is way better
