@@ -73,13 +73,6 @@ public class TrainEntity {
                 clip = AudioSystem.getClip();
                 clip.open(audioInput);
                 clip.start();
-                if (clip.getMicrosecondPosition() == clip.getMicrosecondLength()){
-                    clip.stop();
-                }
-                if (this.clock.getCurrentTime() == this.clock.getCurrentTime().plusSeconds(40)){
-                    clip.stop();
-                }
-                System.out.println("playing: " + filePath);
             }else {
                 System.out.println("cant find file");
             }
