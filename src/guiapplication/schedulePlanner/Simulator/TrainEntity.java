@@ -3,11 +3,15 @@ package guiapplication.schedulePlanner.Simulator;
 import data.Journey;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -51,8 +55,37 @@ public class TrainEntity {
             draw = true;
         } else if (this.clock.getCurrentTime().isAfter(journey.getDepartureTime())) {
             position = new Point2D.Double(position.getX() + 4, position.getY());
+            if (!playedOnes) {
+                whistleWhenTrainLeaving();
+            }
         }
 
+    }
+    private boolean playedOnes = false;
+    private Clip clip;
+    public void whistleWhenTrainLeaving(){
+        String filePath = "res/train-whistle-102834.wav ";
+        try {
+            playedOnes = true;
+            File musicPath = new File(filePath);
+            if (musicPath.exists()) {
+                AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
+                clip = AudioSystem.getClip();
+                clip.open(audioInput);
+                clip.start();
+                if (clip.getMicrosecondPosition() == clip.getMicrosecondLength()){
+                    clip.stop();
+                }
+                if (this.clock.getCurrentTime() == this.clock.getCurrentTime().plusSeconds(40)){
+                    clip.stop();
+                }
+                System.out.println("playing: " + filePath);
+            }else {
+                System.out.println("cant find file");
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }
     }
 
     public void draw(Graphics2D g2d) {

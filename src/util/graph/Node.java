@@ -1,6 +1,5 @@
 package util.graph;
 
-import guiapplication.schedulePlanner.Simulator.npc.NPC;
 
 import java.awt.geom.Point2D;
 import java.util.*;
