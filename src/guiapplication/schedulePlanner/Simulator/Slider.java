@@ -10,11 +10,11 @@ public class Slider extends VBox {
 
     public Slider(MapView mapView) {
         //creates people slider
-        amountOfPeopleSlider = new javafx.scene.control.Slider(0, 2000, 50);
+        amountOfPeopleSlider = new javafx.scene.control.Slider(0, 100, 50);
         amountOfPeopleSlider.setOrientation(Orientation.HORIZONTAL);
         amountOfPeopleSlider.setShowTickMarks(true);
         amountOfPeopleSlider.setShowTickLabels(true);
-        amountOfPeopleSlider.setMajorTickUnit(50);
+        amountOfPeopleSlider.setMajorTickUnit(10);
         amountOfPeopleSlider.setBlockIncrement(10);
 
         amountOfPeopleSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -36,7 +36,6 @@ public class Slider extends VBox {
             if ((newClockSpeed % 1) > 0.5){
                 newClockSpeed += 1;
             }
-            System.out.println("new speed " + (int) newClockSpeed);
             mapView.updateClock( 0.0625 * (Math.pow(2, (int)newClockSpeed -1)));
         });
 

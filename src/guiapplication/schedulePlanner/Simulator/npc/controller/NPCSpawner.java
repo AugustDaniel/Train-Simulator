@@ -10,24 +10,29 @@ import java.util.*;
 
 public class NPCSpawner {
 
-    private final Queue<Map.Entry<Journey, Double>> journeysToSpawn;
+    private final Queue<Map.Entry<Journey, Integer>> journeysToSpawn;
     private final List<NPC> npcs;
     private int spawnRate;
-    private double timer;
+    private int counter;
 
     public NPCSpawner(List<NPC> npcs) {
         this.npcs = npcs;
-        this.journeysToSpawn = new ArrayDeque<>();
+        this.journeysToSpawn = new LinkedList<>();
+        this.counter = 0;
+        this.spawnRate = 50;
     }
 
     public void update(double deltaTime) {
-        this.timer += deltaTime;
+        spawnNPCs();
+    }
 
-        if (timer > Double.MAX_VALUE - 100) {
-            timer = 0;
+    public void addToQueue(Journey journey) {
+        if (this.journeysToSpawn.stream().anyMatch(e -> e.getKey().equals(journey))) {
+            return;
         }
 
-        spawnNPCs();
+        int amountOfSpawns = (int) Math.ceil((journey.getTrainPopularity() * 10) * ((double) spawnRate / 100));
+        this.journeysToSpawn.offer(new AbstractMap.SimpleEntry<>(journey, amountOfSpawns));
     }
 
     private void spawnNPCs() {
@@ -35,13 +40,15 @@ public class NPCSpawner {
             return;
         }
 
-        Map.Entry<Journey, Double> journey = this.journeysToSpawn.peek();
+        Map.Entry<Journey, Integer> journey = this.journeysToSpawn.peek();
 
-        if (journey.getValue() >= timer) {
+        if (journey.getValue() > counter) {
             Node spawnPoint = checkSpawnPoint(PathFinding.spawnPoints.get((int) (Math.random() * (PathFinding.spawnPoints.size() - 1))));
             npcs.add(new Traveler(spawnPoint, journey.getKey()));
-        } else {
+            counter++;
+        } else if (this.journeysToSpawn.size() > 1) {
             this.journeysToSpawn.poll();
+            counter = 0;
         }
     }
 
@@ -57,14 +64,5 @@ public class NPCSpawner {
 
     public void setSpawnRate(int newPeopleCount) {
         this.spawnRate = newPeopleCount;
-    }
-
-    public void addToQueue(Journey journey, double timerSnapshot) {
-        if (this.journeysToSpawn.stream().anyMatch(e -> e.getKey().equals(journey))) {
-            return;
-        }
-
-        double timerEnd = timerSnapshot + (double) journey.getTrainPopularity() / (2001 - spawnRate); //todo magic number is max spawnrate in slider
-        this.journeysToSpawn.offer(new AbstractMap.SimpleEntry<>(journey, timerEnd));
     }
 }

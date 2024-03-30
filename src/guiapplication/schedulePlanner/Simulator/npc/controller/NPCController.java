@@ -21,7 +21,6 @@ public class NPCController implements MouseCallback, util.Observer {
     private ScheduleSubject subject;
     private Camera camera;
     private NPCSpawner spawner;
-    private double timer;
 
     public NPCController(Clock clock, ScheduleSubject subject, Camera camera) {
         this.npcs = new ArrayList<>();
@@ -30,19 +29,12 @@ public class NPCController implements MouseCallback, util.Observer {
         this.clock.attach(this);
         this.camera = camera;
         this.spawner = new NPCSpawner(this.npcs);
-        this.timer = 0;
     }
 
     public void update(double deltaTime) {
-        timer += deltaTime;
-
-        if (timer > Double.MAX_VALUE - 100) {
-            timer = 0;
-        }
-
         this.subject.getSchedule().getJourneyList().forEach(journey -> {
                     if (journey.getArrivalTime().minusMinutes(30).equals(this.clock.getCurrentTime())) {
-                        this.spawner.addToQueue(journey, timer);
+                        this.spawner.addToQueue(journey);
                     }
                 }
         );
