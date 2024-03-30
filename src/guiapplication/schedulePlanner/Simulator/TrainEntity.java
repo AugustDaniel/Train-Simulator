@@ -52,27 +52,6 @@ public class TrainEntity {
         }
     }
 
-    public void update() {
-        if (this.clock.getCurrentTime().isAfter(journey.getArrivalTime().minusMinutes(5)) &&
-                this.position.getX() < 50 * tileDimentions) {
-            position = new Point2D.Double(position.getX() + trainSpeed, position.getY());
-            draw = true;
-            if (position.getX() > 5 * tileDimentions)
-                if (trainSpeed > 4)
-                    trainSpeed -= 0.125;
-                else
-                    trainSpeed = 4;
-        } else if (this.clock.getCurrentTime().isAfter(journey.getDepartureTime())) {
-            if (trainSpeed < 25)
-                trainSpeed += 0.5;
-            position = new Point2D.Double(position.getX() + trainSpeed, position.getY());
-            if (!playedOnes) {
-                whistleWhenTrainLeaving();
-            }
-        }
-
-
-    }
     private boolean playedOnes = false;
     private Clip clip;
     public void whistleWhenTrainLeaving(){
@@ -90,6 +69,28 @@ public class TrainEntity {
             }
         }catch (Exception e){
             System.out.println(e);
+        }
+    }
+
+    public void update() {
+        double clockSpeed = 1 / this.clock.getTimeSpeed();
+
+        if (this.clock.getCurrentTime().isAfter(journey.getArrivalTime().minusMinutes(5)) &&
+                this.position.getX() < 50 * tileDimentions) {
+            position = new Point2D.Double(position.getX() + (trainSpeed * clockSpeed), position.getY());
+            draw = true;
+            if (position.getX() > 5 * tileDimentions)
+                if (trainSpeed > 4)
+                    trainSpeed -= 0.125;
+                else
+                    trainSpeed = 4;
+        } else if (this.clock.getCurrentTime().isAfter(journey.getDepartureTime())) {
+            if (trainSpeed < 25)
+                trainSpeed += 0.5;
+            position = new Point2D.Double(position.getX() + (trainSpeed * clockSpeed), position.getY());
+            if (!playedOnes) {
+                whistleWhenTrainLeaving();
+            }
         }
     }
 
