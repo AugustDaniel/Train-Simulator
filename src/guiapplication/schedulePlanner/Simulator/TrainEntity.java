@@ -66,11 +66,17 @@ public class TrainEntity {
         tx.translate(position.getX(), position.getY());
         g2d.drawImage(trainHeadRight, tx, null);
 
-        tx.translate(trainHeadRight.getWidth(),-4);
-        g2d.drawImage(trainWagon, tx, null);
+        for (int i = 0; i < journey.getTrain().getWagons().size(); i++) {
+            if (i == 0) {
+                tx.translate(trainHeadRight.getWidth(), -4);
+            } else {
+                tx.translate(trainWagon.getWidth(), 0);
+            }
+            g2d.drawImage(trainWagon, tx, null);
+        }
 
-        tx.translate(trainWagon.getWidth(),2);
-        g2d.drawImage(trainHeadLeft, tx, null);
-        g2d.setClip(null);
+            tx.translate(trainWagon.getWidth(), 2);
+            g2d.drawImage(trainHeadLeft, tx, null);
+            g2d.setClip(null);
     }
 }
