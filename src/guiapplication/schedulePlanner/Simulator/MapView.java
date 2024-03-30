@@ -15,6 +15,7 @@ import org.jfree.fx.ResizableCanvas;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.io.IOException;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class MapView implements View {
@@ -32,7 +33,7 @@ public class MapView implements View {
     public MapView(ScheduleSubject subject) throws IOException {
         mainPane = new BorderPane();
         this.subject = subject;
-        this.clock = new Clock(0.5);
+        this.clock = new Clock(1);
         this.canvas = new ResizableCanvas(this::draw, mainPane);
         this.camera = new Camera(canvas);
         this.map = new Map("/TrainStationPlannerMap.tmj");
@@ -44,6 +45,14 @@ public class MapView implements View {
     }
 
     public void update(double deltaTime) {
+        if (clock.getCurrentTime().equals(LocalTime.MIDNIGHT)){
+            trains.clear();
+            for (Journey journey : subject.getSchedule().getJourneyList()) {
+                trains.add(new TrainEntity(journey,this.clock));
+            }
+        }
+
+
         //dit zorgt ervoor dat die een fps limit heeft op ongeveer 60 fps
         timer += deltaTime * 144;
         if (timer >= 1){
@@ -107,7 +116,7 @@ public class MapView implements View {
         }
     }
 
-    public void updateClock(int timeSpeed){
+    public void updateClock(double timeSpeed){
         clock.updateTimeSpeed(timeSpeed);
     }
 
