@@ -37,42 +37,8 @@ public class Slider extends VBox {
             if ((newClockSpeed % 1) > 0.5){
                 newClockSpeed += 1;
             }
-
-            switch ((int)newClockSpeed){
-                case 1:
-                    newClockSpeed = 0.0625;
-                    break;
-                case 2:
-                    newClockSpeed = 0.125;
-                    break;
-                case 3:
-                    newClockSpeed = 0.25;
-                    break;
-                case 4:
-                    newClockSpeed = 0.5;
-                    break;
-                case 5:
-                    newClockSpeed = 1;
-                    break;
-                case 6:
-                    newClockSpeed = 2;
-                    break;
-                case 7:
-                    newClockSpeed = 4;
-                    break;
-                case 8:
-                    newClockSpeed = 8;
-                    break;
-                case 9:
-                    newClockSpeed = 16;
-                    break;
-                case 10:
-                    newClockSpeed = 32;
-                    break;
-            }
-
-            System.out.println("new speed " + newClockSpeed);
-            mapView.updateClock( newClockSpeed);
+            System.out.println("new speed " + (int) newClockSpeed);
+            mapView.updateClock( 0.0625 * (Math.pow(2, (int)newClockSpeed -1)));
         });
 
         getChildren().add(amountOfPeopleSlider);
