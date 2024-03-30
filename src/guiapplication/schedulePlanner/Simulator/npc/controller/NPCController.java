@@ -71,7 +71,7 @@ public class NPCController implements MouseCallback, util.Observer {
 
             Target target = null;
             switch (status) {
-                case BOARDING: target = PathFinding.getRandomTrainTarget("Train " + tr.getJourney().getPlatform()); break;
+                case BOARDING: target = PathFinding.getRandomTrainTarget(tr.getJourney().getPlatform().getPlatformNumber()); break;
                 case LEAVING: target = new Target(PathFinding.getRandomSpawnPoint()); break;
             }
 

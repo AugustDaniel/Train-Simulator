@@ -39,7 +39,7 @@ public class Traveler extends NPC {
         );
 
 
-        this.target = PathFinding.getRandomPlatformTarget("Platform " + this.journey.getPlatform());
+        this.target = PathFinding.getRandomPlatformTarget(this.journey.getPlatform().getPlatformNumber());
         this.target.calculateShortestPath();
         checkPosition();
     }

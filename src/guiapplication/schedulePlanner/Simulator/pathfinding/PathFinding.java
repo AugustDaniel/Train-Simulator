@@ -13,8 +13,8 @@ public class PathFinding {
     private final static int COLLISION_TILE = 1;
     private final static int TILE_SIZE = 32;
 
-    public static Map<String, List<Target>> platformTargets = new HashMap<>();
-    public static Map<String, List<Target>> trainTargets = new HashMap<>();
+    public static Map<Integer, List<Target>> platformTargets = new HashMap<>();
+    public static Map<Integer, List<Target>> trainTargets = new HashMap<>();
     public static List<Node> spawnPoints = new ArrayList<>();
     public static Graph graph = new Graph(0, 0);
 
@@ -130,12 +130,14 @@ public class PathFinding {
         }
     }
 
-    private static void addToMap(Map<String, List<Target>> map, String name, Node nodeToAdd) {
+    private static void addToMap(Map<Integer, List<Target>> map, String name, Node nodeToAdd) {
+        int id = Integer.parseInt(name.split(" ")[1]);
+
         if (!map.containsKey(name)) {
-            map.put(name, new LinkedList<>());
+            map.put(id, new LinkedList<>());
         }
 
-        map.get(name).add(new Target(nodeToAdd));
+        map.get(id).add(new Target(nodeToAdd));
     }
 
     private static void createSpawnPoints(JsonObject o) {
@@ -149,12 +151,12 @@ public class PathFinding {
         }
     }
 
-    public static Target getRandomPlatformTarget(String platform) {
+    public static Target getRandomPlatformTarget(int platform) {
         int size = platformTargets.get(platform).size();
         return platformTargets.get(platform).get((int) (Math.random() * size));
     }
 
-    public static Target getRandomTrainTarget(String train) {
+    public static Target getRandomTrainTarget(int train) {
         int size = trainTargets.get(train).size();
         return trainTargets.get(train).get((int) (Math.random() * size));
     }
