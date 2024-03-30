@@ -118,7 +118,7 @@ public class NPCController implements MouseCallback, util.Observer {
 
     @Override
     public void update() {
-        double speed = this.clock.getTimeSpeed();
+        double speed = 1 / this.clock.getTimeSpeed();
 
         for (NPC npc : npcs) {
             npc.setSpeed(speed);

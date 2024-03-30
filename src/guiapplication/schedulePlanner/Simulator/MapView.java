@@ -33,7 +33,7 @@ public class MapView implements View {
     public MapView(ScheduleSubject subject) throws IOException {
         mainPane = new BorderPane();
         this.subject = subject;
-        this.clock = new Clock(0.5);
+        this.clock = new Clock(1);
         this.canvas = new ResizableCanvas(this::draw, mainPane);
         this.camera = new Camera(canvas);
         this.map = new Map("/TrainStationPlannerMap.tmj");
@@ -116,7 +116,7 @@ public class MapView implements View {
         }
     }
 
-    public void updateClock(int timeSpeed){
+    public void updateClock(double timeSpeed){
         clock.updateTimeSpeed(timeSpeed);
     }
 

@@ -3,25 +3,26 @@ package guiapplication.schedulePlanner.Simulator;
 import util.Subject;
 import util.TimeFormatter;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 
 public class Clock extends Subject<Clock> {
     private double timeSpeed;
-    private double timePassed;
     private int currentTimeInt;
     private LocalTime currentTime;
+    private long previousTime;
 
     public Clock(double timeSpeed) {
         this.timeSpeed = timeSpeed;
         this.currentTime = TimeFormatter.intToLocalTime(currentTimeInt);
-        this.timePassed = 0;
     }
 
     public void update(double deltaTime) {
-        this.timePassed += deltaTime;
-        if (timePassed > this.timeSpeed) {
-            System.out.println(timePassed);
+        long now = System.currentTimeMillis();
+        long deltaActualTime = now-previousTime;
+        if (deltaActualTime > this.timeSpeed * 1000) {
+            System.out.println(deltaActualTime);
             currentTimeInt++;
             if (currentTimeInt % 100 > 59) {
                 currentTimeInt -= 60;
@@ -30,9 +31,9 @@ public class Clock extends Subject<Clock> {
             if (currentTimeInt > 2359) {
                 currentTimeInt -= 2400;
             }
-            timePassed -= timeSpeed;
             currentTime = TimeFormatter.intToLocalTime(currentTimeInt);
             System.out.println(currentTime);
+            previousTime = now;
         }
     }
 
