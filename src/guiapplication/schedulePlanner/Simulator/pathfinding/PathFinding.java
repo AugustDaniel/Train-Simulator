@@ -111,7 +111,7 @@ public class PathFinding {
             double yLimit = Math.ceil((double) o.getInt("height") / TILE_SIZE);
             double xLimit = Math.ceil((double) o.getInt("width") / TILE_SIZE);
             for (int y = 0; y < yLimit; y++) {
-                for (int x = xStartingPoint; x < xLimit; x += OFFSET) {
+                for (int x = xStartingPoint; x < xLimit; x++) {
 
                     Node nodeToAdd = graph.getNodes()[yObject + y][xObject + x];
 
