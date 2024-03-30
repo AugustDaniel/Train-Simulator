@@ -1,15 +1,16 @@
 package guiapplication.schedulePlanner;
 
-
 import data.Schedule;
 import data.ScheduleSubject;
 import guiapplication.schedulePlanner.Simulator.MapView;
+import guiapplication.schedulePlanner.Simulator.Slider;
 import guiapplication.schedulePlanner.scheduleview.components.ScheduleView;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import org.jfree.fx.ResizableCanvas;
@@ -21,7 +22,6 @@ public class GuiMain extends Application {
     private ScheduleSubject subject;
     private ScheduleView scheduleView;
     private MapView mapView;
-    private ResizableCanvas canvas;
 
     public static void main(String[] args) {
         launch(GuiMain.class);
@@ -39,8 +39,16 @@ public class GuiMain extends Application {
     public void start(Stage primaryStage) throws Exception {
         // create tabs
         TabPane tabPane = new TabPane();
-        tabPane.getTabs().add(new Tab("Trein tabel",scheduleView.getNode()));
-        tabPane.getTabs().add(new Tab("Simulatie",mapView.getNode()));
+        tabPane.getTabs().add(new Tab("Trein tabel", scheduleView.getNode()));
+
+        // Create simulation tab
+        Tab simulationTab = new Tab("Simulatie", mapView.getNode());
+        tabPane.getTabs().add(simulationTab);
+
+        // Add slider to the simulation tab
+        Slider slider = new Slider(mapView);
+        VBox.setVgrow(mapView.getNode(), javafx.scene.layout.Priority.ALWAYS);
+        simulationTab.setContent(new VBox(mapView.getNode(), slider));
 
         // to prevent flashing of screen when launching
         Screen screen = Screen.getPrimary();
