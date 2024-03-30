@@ -23,19 +23,6 @@ public class NPCSpawner {
     }
 
     public void update(double deltaTime) {
-        spawnNPCs();
-    }
-
-    public void addToQueue(Journey journey) {
-        if (this.journeysToSpawn.stream().anyMatch(e -> e.getKey().equals(journey))) {
-            return;
-        }
-
-        int amountOfSpawns = (int) Math.ceil((journey.getTrainPopularity() * 10) * ((double) spawnRate / 100));
-        this.journeysToSpawn.offer(new AbstractMap.SimpleEntry<>(journey, amountOfSpawns));
-    }
-
-    private void spawnNPCs() {
         if (this.journeysToSpawn.isEmpty()) {
             return;
         }
@@ -50,6 +37,15 @@ public class NPCSpawner {
             this.journeysToSpawn.poll();
             counter = 0;
         }
+    }
+
+    public void addToQueue(Journey journey) {
+        if (this.journeysToSpawn.stream().anyMatch(e -> e.getKey().equals(journey))) {
+            return;
+        }
+
+        int amountOfSpawns = (int) Math.ceil((journey.getTrainPopularity() * 10) * ((double) spawnRate / 100));
+        this.journeysToSpawn.offer(new AbstractMap.SimpleEntry<>(journey, amountOfSpawns));
     }
 
     public util.graph.Node checkSpawnPoint(util.graph.Node spawnPoint) {
