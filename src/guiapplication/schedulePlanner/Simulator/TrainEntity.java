@@ -26,6 +26,8 @@ public class TrainEntity {
     private int tileDimentions;
     private boolean draw;
 
+    private int trainlength;
+
 
     public TrainEntity(Journey journey, Clock clock) {
         this.journey = journey;
@@ -50,6 +52,9 @@ public class TrainEntity {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        this.trainlength = trainHeadLeft.getWidth() + trainHeadRight.getWidth() + journey.getTrain().getWagons().size() * trainWagon.getWidth();
+
     }
 
     private boolean playedOnes = false;
@@ -76,7 +81,7 @@ public class TrainEntity {
         double clockSpeed = 1 / this.clock.getTimeSpeed();
 
         if (this.clock.getCurrentTime().isAfter(journey.getArrivalTime().minusMinutes(5)) &&
-                this.position.getX() < 50 * tileDimentions) {
+                this.position.getX() + trainlength <  90 * tileDimentions) {
             position = new Point2D.Double(position.getX() + (trainSpeed * clockSpeed), position.getY());
             draw = true;
             if (position.getX() > 5 * tileDimentions)
