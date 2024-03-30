@@ -1,6 +1,5 @@
 package guiapplication.schedulePlanner.Simulator.npc.controller;
 
-import data.Journey;
 import data.ScheduleSubject;
 import guiapplication.schedulePlanner.Simulator.mouselistener.MouseCallback;
 import guiapplication.schedulePlanner.Simulator.Camera;
@@ -11,7 +10,6 @@ import guiapplication.schedulePlanner.Simulator.pathfinding.PathFinding;
 import guiapplication.schedulePlanner.Simulator.pathfinding.Target;
 import javafx.scene.input.MouseEvent;
 import org.jfree.fx.FXGraphics2D;
-import util.graph.Node;
 
 import java.util.*;
 
@@ -121,7 +119,7 @@ public class NPCController implements MouseCallback, util.Observer {
         double speed = 1 / this.clock.getTimeSpeed();
 
         for (NPC npc : npcs) {
-            npc.setSpeed(speed);
+            npc.setStandardSpeed(speed);
         }
     }
 }

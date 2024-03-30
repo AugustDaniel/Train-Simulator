@@ -6,7 +6,6 @@ import java.util.List;
 import java.awt.geom.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class NPC {
@@ -14,7 +13,7 @@ public class NPC {
     protected Point2D position;
     protected double angle;
     protected BufferedImage image;
-    protected double speed;
+    protected double standardSpeed;
     protected double currentSpeed;
     protected Point2D targetPosition;
     protected int scale;
@@ -24,10 +23,10 @@ public class NPC {
         this.position = position;
         this.targetPosition = position;
         this.angle = angle;
-        this.speed = 2;
+        this.standardSpeed = 2;
         this.draw = true;
         this.scale = 8;
-        this.currentSpeed = this.speed;
+        this.currentSpeed = this.standardSpeed;
 
         try {
             this.image = ImageIO.read(Objects.requireNonNull(this.getClass().getResourceAsStream("/astronautHelmet.png")));
@@ -55,9 +54,9 @@ public class NPC {
         }
 
         if (angleDifference < -0.1) {
-            angle += 0.1 * speed;
+            angle += 0.1 * standardSpeed;
         } else if (angleDifference > 0.1) {
-            angle -= 0.1 * speed;
+            angle -= 0.1 * standardSpeed;
         } else {
             angle = newAngle;
         }
@@ -80,11 +79,11 @@ public class NPC {
         }
 
         if (!hasCollision) {
-            this.currentSpeed = speed;
+            this.currentSpeed = standardSpeed;
             this.position = newPosition;
         } else {
             this.currentSpeed *= 0.5;
-            this.angle += 0.18 * speed;
+            this.angle += 0.18 * standardSpeed;
         }
 
         // clipping performance is terrible with large amounts of npcs, this is way better
@@ -126,7 +125,7 @@ public class NPC {
         return new Rectangle2D.Double(this.position.getX() - (double) size / 2, this.position.getY() - (double) size / 2, size, size).contains(p);
     }
 
-    public void setSpeed(double speed) {
-        this.speed = speed;
+    public void setStandardSpeed(double standardSpeed) {
+        this.standardSpeed = standardSpeed;
     }
 }
