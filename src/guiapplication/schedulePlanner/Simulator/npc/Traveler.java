@@ -86,6 +86,7 @@ public class Traveler extends NPC {
 
     public void setTarget(Target target) {
         this.target = target;
+        this.target.calculateShortestPath();
         checkPosition();
     }
 
