@@ -9,11 +9,12 @@ import guiapplication.schedulePlanner.Simulator.tilehandlers.Map;
 import guiapplication.schedulePlanner.View;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import org.jfree.fx.FXGraphics2D;
 import org.jfree.fx.ResizableCanvas;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.io.IOException;
 import java.time.LocalTime;
@@ -86,6 +87,10 @@ public class MapView implements View {
                 draw(g2d);
             }
         }.start();
+
+        Button distasterButton = new Button("Calamiteiten oefening");
+        mainPane.setBottom(distasterButton);
+        distasterButton.setOnAction(e -> this.npcController.toggleDisaster());
 
         draw(g2d);
         init();

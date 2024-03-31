@@ -19,6 +19,7 @@ public class NPCController implements MouseCallback, util.Observer {
     private ScheduleSubject subject;
     private Camera camera;
     private NPCSpawner spawner;
+    private boolean disaster;
 
     public NPCController(Clock clock, ScheduleSubject subject, Camera camera) {
         this.npcs = new ArrayList<>();
@@ -27,18 +28,22 @@ public class NPCController implements MouseCallback, util.Observer {
         this.clock.attach(this);
         this.camera = camera;
         this.spawner = new NPCSpawner(this.npcs, this.clock);
+        this.disaster = false;
     }
 
     public void update(double deltaTime) {
-        this.subject.getSchedule().getJourneyList().forEach(journey -> {
-                    if (journey.getArrivalTime().minusMinutes(30).equals(this.clock.getCurrentTime())) {
-                        this.spawner.addToQueue(journey);
+        if (!disaster) {
+            this.subject.getSchedule().getJourneyList().forEach(journey -> {
+                        if (journey.getArrivalTime().minusMinutes(30).equals(this.clock.getCurrentTime())) {
+                            this.spawner.addToQueue(journey);
+                        }
                     }
-                }
-        );
+            );
+
+            spawner.update(deltaTime);
+        }
 
         updateNPCs();
-        spawner.update(deltaTime);
     }
 
     private void updateNPCs() {
@@ -54,7 +59,7 @@ public class NPCController implements MouseCallback, util.Observer {
                 iterator.remove();
             }
 
-            if (isDepartureTime(tr)) {
+            if (isDepartureTime(tr) || disaster) {
                 handleStatus(tr, Traveler.Status.LEAVING);
                 continue;
             }
@@ -71,8 +76,12 @@ public class NPCController implements MouseCallback, util.Observer {
 
             Target target = null;
             switch (status) {
-                case BOARDING: target = PathFinding.getRandomTrainTarget(tr.getJourney().getPlatform().getPlatformNumber()); break;
-                case LEAVING: target = new Target(PathFinding.getRandomSpawnPoint()); break;
+                case BOARDING:
+                    target = PathFinding.getRandomTrainTarget(tr.getJourney().getPlatform().getPlatformNumber());
+                    break;
+                case LEAVING:
+                    target = new Target(PathFinding.getRandomSpawnPoint());
+                    break;
             }
 
             tr.setTarget(target);
@@ -124,5 +133,9 @@ public class NPCController implements MouseCallback, util.Observer {
 
     public List<NPC> getNPCs() {
         return npcs;
+    }
+
+    public void toggleDisaster() {
+        this.disaster = !this.disaster;
     }
 }
