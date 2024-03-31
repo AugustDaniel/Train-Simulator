@@ -59,9 +59,9 @@ public class NPC {
             angleDifference += 2 * Math.PI;
         }
 
-        if (angleDifference < -0.1) {
+        if (angleDifference < -0.1 * standardSpeed) {
             angle += 0.1 * standardSpeed;
-        } else if (angleDifference > 0.1) {
+        } else if (angleDifference > 0.1 * standardSpeed) {
             angle -= 0.1 * standardSpeed;
         } else {
             angle = newAngle;
