@@ -40,7 +40,7 @@ public class MapView implements View {
         this.camera = new Camera(canvas);
         this.map = new Map("/TrainStationPlannerMap.tmj");
         this.npcController = new NPCController(clock,subject,camera);
-        this.measureController = new MeasureController(this.npcController.getNPCs(), this.camera);
+        this.measureController = new MeasureController(this.npcController.getNPCs(), this.camera, this.clock);
 
         MouseListener ml = new MouseListener(canvas);
         ml.addCallback(this.camera);
