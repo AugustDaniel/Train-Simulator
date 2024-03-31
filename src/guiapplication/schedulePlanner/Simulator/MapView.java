@@ -1,5 +1,6 @@
 package guiapplication.schedulePlanner.Simulator;
 
+import guiapplication.schedulePlanner.Simulator.measuring.MeasureController;
 import guiapplication.schedulePlanner.Simulator.mouselistener.MouseListener;
 import guiapplication.schedulePlanner.Simulator.npc.controller.NPCController;
 import data.Journey;
@@ -28,6 +29,7 @@ public class MapView implements View {
     private final Camera camera;
     private Clock clock;
     private NPCController npcController;
+    private MeasureController measureController;
     private double timer  = 0;
 
     public MapView(ScheduleSubject subject) throws IOException {
@@ -38,10 +40,12 @@ public class MapView implements View {
         this.camera = new Camera(canvas);
         this.map = new Map("/TrainStationPlannerMap.tmj");
         this.npcController = new NPCController(clock,subject,camera);
+        this.measureController = new MeasureController(this.npcController.getNPCs(), this.camera);
 
         MouseListener ml = new MouseListener(canvas);
         ml.addCallback(this.camera);
         ml.addCallback(this.npcController);
+        ml.addCallback(this.measureController);
     }
 
     public void update(double deltaTime) {
@@ -61,6 +65,7 @@ public class MapView implements View {
             }
             clock.update(deltaTime);
             npcController.update(deltaTime);
+            measureController.update();
             timer -= 1;
         }
     }
@@ -103,6 +108,7 @@ public class MapView implements View {
 //            });
 //        });
 
+        measureController.draw(g);
         npcController.draw(g);
 
         for (TrainEntity train : trains) {

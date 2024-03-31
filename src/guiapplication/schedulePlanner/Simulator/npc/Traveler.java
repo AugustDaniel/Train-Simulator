@@ -1,6 +1,7 @@
 package guiapplication.schedulePlanner.Simulator.npc;
 
 import data.Journey;
+import guiapplication.schedulePlanner.Simulator.InfoScreen;
 import guiapplication.schedulePlanner.Simulator.pathfinding.PathFinding;
 import guiapplication.schedulePlanner.Simulator.pathfinding.Target;
 import util.graph.Node;
@@ -15,7 +16,7 @@ public class Traveler extends NPC {
     private Node currentNode;
     private Node closestNode;
     private Journey journey;
-    private NPCInfo infoScreen;
+    private InfoScreen infoScreen;
     private Status status;
 
     public enum Status {BOARDING, SHOPPING, ARRIVING, LEAVING}
@@ -26,7 +27,7 @@ public class Traveler extends NPC {
         this.currentNode = node;
         this.closestNode = node;
         this.status = Status.ARRIVING;
-        this.infoScreen = new NPCInfo(
+        this.infoScreen = new InfoScreen(
                 new String[]{
                         "Naam: " + (int) (Math.random() * 100),
                         "Leeftijd: " + (int) (Math.random() * 100),
@@ -94,6 +95,10 @@ public class Traveler extends NPC {
     public void setStatus(Status status) {
         this.status = status;
         this.infoScreen.updateInfo("Status: " + this.status.toString(), 2);
+    }
+
+    public Node getCurrentNode() {
+        return this.currentNode;
     }
 
     public Status getStatus() {

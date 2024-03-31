@@ -121,4 +121,8 @@ public class NPCController implements MouseCallback, util.Observer {
             npc.setStandardSpeed(speed);
         }
     }
+
+    public List<NPC> getNPCs() {
+        return npcs;
+    }
 }
