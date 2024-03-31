@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -22,9 +23,10 @@ public class MeasurePoint {
     public MeasurePoint(Node node, LocalTime startTime) {
         this.node = node;
         this.npcs = new HashSet<>();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
         this.infoScreen = new InfoScreen(
                 new String[]{
-                        "Meet sinds: " + startTime,
+                        "Meet sinds: " + startTime.format(dtf),
                         "Aantal overgelopen: " + 0
                 },
                 new Point2D.Double(this.node.getPosition().getX() + 20, this.node.getPosition().getY() - 20)
