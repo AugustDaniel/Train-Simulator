@@ -133,7 +133,7 @@ public class PathFinding {
     private static void addToMap(Map<Integer, List<Target>> map, String name, Node nodeToAdd) {
         int id = Integer.parseInt(name.split(" ")[1]);
 
-        if (!map.containsKey(name)) {
+        if (!map.containsKey(id)) {
             map.put(id, new LinkedList<>());
         }
 
