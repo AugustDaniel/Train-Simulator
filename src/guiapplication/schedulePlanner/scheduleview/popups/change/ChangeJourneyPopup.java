@@ -15,10 +15,9 @@ import java.util.ArrayList;
 
 
 public class ChangeJourneyPopup extends SchedulePopupView {
-    private Schedule schedule;
 
     public ChangeJourneyPopup(ReturnableView mainView, Schedule schedule) {
-        super(mainView);
+        super(mainView, schedule);
         this.schedule = schedule;
     }
 

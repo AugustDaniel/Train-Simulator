@@ -1,6 +1,6 @@
 package guiapplication.schedulePlanner.scheduleview.popups.create;
 
-import data.Platform;
+import data.Machinist;
 import data.Schedule;
 import guiapplication.schedulePlanner.ReturnableView;
 import guiapplication.schedulePlanner.scheduleview.popups.SchedulePopupView;
@@ -14,10 +14,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
-public class CreatePlatformPopup extends SchedulePopupView {
+public class CreateMachinistPopup extends SchedulePopupView {
 
-
-    public CreatePlatformPopup(ReturnableView mainView, Schedule schedule) {
+    public CreateMachinistPopup(ReturnableView mainView, Schedule schedule) {
         super(mainView, schedule);
         this.schedule = schedule;
     }
@@ -26,7 +25,7 @@ public class CreatePlatformPopup extends SchedulePopupView {
     public Node getNode() {
         BorderPane pane = new BorderPane();
 
-        Label infoLabel = new Label("Voer platform nummer in:");
+        Label infoLabel = new Label("Voer een naam in:");
         TextField inputField = new TextField();
         VBox inputBox = new VBox(infoLabel, inputField);
 
@@ -42,34 +41,21 @@ public class CreatePlatformPopup extends SchedulePopupView {
     private Button getSaveButton(TextField inputField) {
         Button saveButton = new Button("Voeg toe");
         saveButton.setOnAction(e -> {
-            System.out.println("test");
-            if (schedule.getPlatformList().size() >= 15) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setHeaderText("Error, Je kan maar maximaal 15 perrons toevoegen");
-                alert.showAndWait();
-            }
-
             if (!inputField.getText().isEmpty()) {
-                for (Platform platform : schedule.getPlatformList()) {
-                    if (Integer.parseInt(inputField.getText()) == platform.getPlatformNumber()) {
+                for (Machinist machinist : schedule.getMachinistsList()) {
+                    if (machinist.getName().equals(inputField.getText())) {
                         Alert alert = new Alert(Alert.AlertType.WARNING);
-                        alert.setHeaderText("Error, Dit platformnummer bestaat al");
+                        alert.setHeaderText("Error, deze machinist bestaat al");
                         alert.showAndWait();
+                        return;
                     }
                 }
             }
 
-            try {//try-catch zodat er geen karakters of letters kunnen worden gebruikt. Het geeft dan een warning
-                this.schedule.addPlatform(new Platform(Integer.parseInt(inputField.getText())));
-                inputField.clear();
-                super.callMainView();
-
-            } catch (Exception numberNotFound) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setHeaderText("Error, Het kan zijn dat je iets anders hebt neergezet dan een nummer");
-                alert.showAndWait();
-            }
+            schedule.addMachinist(new Machinist(inputField.getText()));
+            super.callMainView();
         });
+
         return saveButton;
     }
 }

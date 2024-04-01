@@ -15,10 +15,8 @@ import javafx.scene.layout.VBox;
 
 public class DeleteWagonPopup extends SchedulePopupView {
 
-    private Schedule schedule;
-
     public DeleteWagonPopup(ReturnableView mainView, Schedule schedule) {
-        super(mainView);
+        super(mainView, schedule);
         this.schedule = schedule;
     }
 

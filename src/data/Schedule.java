@@ -145,6 +145,9 @@ public class Schedule implements Serializable {
         return wagonList;
     }
 
+    public List<Machinist> getMachinistsList() {
+        return this.machinists;
+    }
 
     /*
         Testcode

@@ -1,5 +1,6 @@
 package guiapplication.schedulePlanner.scheduleview.popups;
 
+import data.Schedule;
 import guiapplication.schedulePlanner.PopupView;
 import guiapplication.schedulePlanner.ReturnableView;
 import javafx.scene.Node;
@@ -8,8 +9,11 @@ import javafx.scene.layout.VBox;
 
 abstract public class SchedulePopupView extends PopupView {
 
-    public SchedulePopupView(ReturnableView mainView) {
+    protected Schedule schedule;
+
+    public SchedulePopupView(ReturnableView mainView, Schedule schedule) {
         super(mainView);
+        this.schedule = schedule;
     }
 
     @Override

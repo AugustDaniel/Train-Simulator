@@ -15,9 +15,8 @@ import java.util.List;
 
 public class CreateWagonSetPopup extends SchedulePopupView {
 
-    private Schedule schedule;
     public CreateWagonSetPopup(ReturnableView mainView, Schedule schedule) {
-        super(mainView);
+        super(mainView, schedule);
         this.schedule = schedule;
     }
 

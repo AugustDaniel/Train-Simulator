@@ -77,7 +77,8 @@ public class ScheduleBuilderView implements View {
                 getButton("Creëer trein", new CreateTrainPopup(this.mainView, this.subject.getSchedule())),
                 getButton("Creëer wagon", new CreateWagonPopup(this.mainView, this.subject.getSchedule())),
                 getButton("Creëer perron", new CreatePlatformPopup(this.mainView, this.subject.getSchedule())),
-                getButton("Creëer wagon set", new CreateWagonSetPopup(this.mainView, this.subject.getSchedule()))
+                getButton("Creëer wagon set", new CreateWagonSetPopup(this.mainView, this.subject.getSchedule())),
+                getButton("Creëer machinist", new CreateMachinistPopup(this.mainView, this.subject.getSchedule()))
         );
         return box;
     }
@@ -88,7 +89,9 @@ public class ScheduleBuilderView implements View {
                 getButton("Verwijder trein", new DeleteTrainPopup(this.mainView, this.subject.getSchedule())),
                 getButton("Verwijder wagon", new DeleteWagonPopup(this.mainView, this.subject.getSchedule())),
                 getButton("Verwijder perron", new DeletePlatformPopup(this.mainView, this.subject.getSchedule())),
-                getButton("verwijder wagon set", new DeleteWagonSetPopup(this.mainView, this.subject.getSchedule()))
+                getButton("verwijder wagon set", new DeleteWagonSetPopup(this.mainView, this.subject.getSchedule())),
+                getButton("verwijder machinist", new DeleteMachinistPopup(this.mainView, this.subject.getSchedule()))
+
         );
         return box;
     }

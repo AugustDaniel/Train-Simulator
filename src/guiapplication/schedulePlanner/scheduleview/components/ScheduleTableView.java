@@ -36,6 +36,9 @@ public class ScheduleTableView implements View {
         TableColumn<Journey, String> trainID = new TableColumn<>("TreinID");
         trainID.setCellValueFactory(e -> new SimpleStringProperty(e.getValue().getTrain().getTrainIDNumber()));
 
+        TableColumn<Journey, String> machinist = new TableColumn<>("Machinist");
+        machinist.setCellValueFactory(e -> new SimpleStringProperty(e.getValue().getMachinist().getName()));
+
         TableColumn<Journey, Integer> trainPopularity = new TableColumn<>("Reis populareit");
         trainPopularity.setCellValueFactory(e -> new SimpleIntegerProperty(e.getValue().getTrainPopularity()).asObject());
 
@@ -45,7 +48,7 @@ public class ScheduleTableView implements View {
         TableColumn<Journey, Integer> departure = new TableColumn<>("Vertrek");
         departure.setCellValueFactory(new PropertyValueFactory<>("departureTime"));
 
-        table.getColumns().addAll(platform, trainID, trainPopularity, wagons, arrival, departure);
+        table.getColumns().addAll(platform, trainID, machinist, trainPopularity, wagons, arrival, departure);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         return table;

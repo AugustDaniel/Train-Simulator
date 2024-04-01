@@ -12,10 +12,8 @@ import javafx.scene.layout.VBox;
 
 public class ChangePlatformPopup extends SchedulePopupView {
 
-    private Schedule schedule;
-
     public ChangePlatformPopup(ReturnableView mainView, Schedule schedule) {
-        super(mainView);
+        super(mainView, schedule);
         this.schedule = schedule;
     }
 
