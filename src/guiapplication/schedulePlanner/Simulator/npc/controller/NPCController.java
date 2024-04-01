@@ -59,6 +59,11 @@ public class NPCController implements MouseCallback, util.Observer {
                 iterator.remove();
             }
 
+            if (tr.getStatus() == Traveler.Status.SHOPPING && isTimeToLeave(tr)) {
+                handleStatus(tr, Traveler.Status.ARRIVING);
+                continue;
+            }
+
             if (isDepartureTime(tr) || disaster) {
                 handleStatus(tr, Traveler.Status.LEAVING);
                 continue;
@@ -82,6 +87,9 @@ public class NPCController implements MouseCallback, util.Observer {
                 case LEAVING:
                     target = new Target(PathFinding.getRandomSpawnPoint());
                     break;
+                case ARRIVING:
+                    target = PathFinding.getRandomPlatformTarget(tr.getJourney().getPlatform().getPlatformNumber());
+                    break;
             }
 
             tr.setTarget(target);
@@ -96,6 +104,10 @@ public class NPCController implements MouseCallback, util.Observer {
     private boolean isArrivalTime(Traveler tr) {
         return clock.getCurrentTime().isAfter(tr.getJourney().getArrivalTime())
                 || clock.getCurrentTime().equals(tr.getJourney().getArrivalTime());
+    }
+
+    private boolean isTimeToLeave(Traveler tr) {
+       return clock.getCurrentTime().isAfter(tr.getJourney().getArrivalTime().minusMinutes(10));
     }
 
     public void draw(FXGraphics2D g) {

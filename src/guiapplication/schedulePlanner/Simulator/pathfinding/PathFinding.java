@@ -15,6 +15,7 @@ public class PathFinding {
 
     public static Map<Integer, List<Target>> platformTargets = new HashMap<>();
     public static Map<Integer, List<Target>> trainTargets = new HashMap<>();
+    public static List<Node> shopPoints = new ArrayList<>();
     public static List<Node> spawnPoints = new ArrayList<>();
     public static Graph graph = new Graph(0, 0);
 
@@ -102,6 +103,10 @@ public class PathFinding {
                 createSpawnPoints(o);
                 continue;
             }
+            if (o.getString("name").equals("Shops")){
+                createShopPoints(o);
+                continue;
+            }
 
             int xObject = o.getInt("x") / TILE_SIZE;
             int yObject = o.getInt("y") / TILE_SIZE;
@@ -150,6 +155,16 @@ public class PathFinding {
             }
         }
     }
+    private static void createShopPoints(JsonObject object){
+        int xObject = object.getInt("x") / TILE_SIZE;
+        int yObject = object.getInt("y") / TILE_SIZE;
+
+        for (int y = 0; y < Math.ceil((double) object.getInt("height") / TILE_SIZE) ; y++) {
+            for (int x = 0; x < object.getInt("width") / TILE_SIZE; x++) {
+                shopPoints.add(graph.getNodes()[yObject + y][xObject + x]);
+            }
+        }
+    }
 
     public static Target getRandomPlatformTarget(int platform) {
         int size = platformTargets.get(platform).size();
@@ -159,6 +174,9 @@ public class PathFinding {
     public static Target getRandomTrainTarget(int train) {
         int size = trainTargets.get(train).size();
         return trainTargets.get(train).get((int) (Math.random() * size));
+    }
+    public static Node getRandomShoppingTarget(){
+        return shopPoints.get((int) (Math.random() * shopPoints.size()));
     }
 
     public static Node getRandomSpawnPoint() {

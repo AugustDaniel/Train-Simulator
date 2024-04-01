@@ -23,7 +23,7 @@ public class Slider extends VBox {
         });
 
         //creates clock slider
-        clockSpeedSlider = new javafx.scene.control.Slider(1, 10, 1);
+        clockSpeedSlider = new javafx.scene.control.Slider(1, 10, 5);
         clockSpeedSlider.setOrientation(Orientation.HORIZONTAL);
         clockSpeedSlider.setShowTickMarks(true);
 //        clockSpeedSlider.setShowTickLabels(true);

@@ -5,6 +5,7 @@ import guiapplication.schedulePlanner.Simulator.Clock;
 import guiapplication.schedulePlanner.Simulator.npc.NPC;
 import guiapplication.schedulePlanner.Simulator.npc.Traveler;
 import guiapplication.schedulePlanner.Simulator.pathfinding.PathFinding;
+import guiapplication.schedulePlanner.Simulator.pathfinding.Target;
 import util.graph.Node;
 
 import java.util.*;
@@ -46,7 +47,15 @@ public class NPCSpawner implements util.Observer{
 
         if ((journey.getValue() > counter) && (counter != journey.getKey().getTrain().getCapacity())) {
             Node spawnPoint = checkSpawnPoint(PathFinding.spawnPoints.get((int) (Math.random() * (PathFinding.spawnPoints.size() - 1))));
-            npcs.add(new Traveler(spawnPoint, journey.getKey(), npcSpeed));
+            Traveler traveler = new Traveler(spawnPoint,journey.getKey(),npcSpeed);
+
+            if (Math.random() > 0.9) {
+                traveler.setStatus(Traveler.Status.SHOPPING);
+                traveler.setTarget(new Target(PathFinding.getRandomShoppingTarget()));
+                traveler.setTarget(new Target(PathFinding.getRandomSpawnPoint()));
+            }
+
+            npcs.add(traveler);
             counter++;
         } else if (this.journeysToSpawn.size() > 1) {
             this.journeysToSpawn.poll();
