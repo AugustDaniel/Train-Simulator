@@ -1,19 +1,18 @@
-package guiapplication.schedulePlanner.Simulator.npc.controller;
+package guiapplication.schedulePlanner.Simulator.npc.traveler.controller;
 
 import data.Journey;
 import guiapplication.schedulePlanner.Simulator.Clock;
 import guiapplication.schedulePlanner.Simulator.npc.NPC;
-import guiapplication.schedulePlanner.Simulator.npc.Traveler;
+import guiapplication.schedulePlanner.Simulator.npc.traveler.Traveler;
 import guiapplication.schedulePlanner.Simulator.pathfinding.PathFinding;
-import guiapplication.schedulePlanner.Simulator.pathfinding.Target;
 import util.graph.Node;
 
 import java.util.*;
 
-public class NPCSpawner implements util.Observer{
+public class TravelerSpawner implements util.Observer{
 
     private final Queue<Map.Entry<Journey, Integer>> journeysToSpawn;
-    private final List<NPC> npcs;
+    private final List<Traveler> npcs;
     private final Clock clock;
     private int spawnRate;
     private int counter;
@@ -21,7 +20,7 @@ public class NPCSpawner implements util.Observer{
     private double timer;
     private double npcSpeed;
 
-    public NPCSpawner(List<NPC> npcs, Clock clock) {
+    public TravelerSpawner(List<Traveler> npcs, Clock clock) {
         this.npcs = npcs;
         this.journeysToSpawn = new LinkedList<>();
         this.counter = 0;
@@ -48,12 +47,6 @@ public class NPCSpawner implements util.Observer{
         if ((journey.getValue() > counter) && (counter != journey.getKey().getTrain().getCapacity())) {
             Node spawnPoint = checkSpawnPoint(PathFinding.getRandomSpawnPoint());
             Traveler traveler = new Traveler(spawnPoint,journey.getKey(),npcSpeed);
-
-            if (Math.random() > 0.9) {
-                traveler.setStatus(Traveler.Status.SHOPPING);
-                traveler.setTarget(new Target(PathFinding.getRandomShoppingTarget()));
-            }
-
             npcs.add(traveler);
             counter++;
         } else if (this.journeysToSpawn.size() > 1) {

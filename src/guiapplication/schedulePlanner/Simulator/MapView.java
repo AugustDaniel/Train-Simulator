@@ -2,7 +2,7 @@ package guiapplication.schedulePlanner.Simulator;
 
 import guiapplication.schedulePlanner.Simulator.measuring.MeasureController;
 import guiapplication.schedulePlanner.Simulator.mouselistener.MouseListener;
-import guiapplication.schedulePlanner.Simulator.npc.controller.NPCController;
+import guiapplication.schedulePlanner.Simulator.npc.traveler.controller.TravelerController;
 import data.Journey;
 import data.ScheduleSubject;
 import guiapplication.schedulePlanner.Simulator.tilehandlers.Map;
@@ -29,7 +29,7 @@ public class MapView implements View {
     ArrayList<TrainEntity> trains = new ArrayList<>();
     private final Camera camera;
     private Clock clock;
-    private NPCController npcController;
+    private TravelerController npcController;
     private MeasureController measureController;
     private double timer  = 0;
 
@@ -40,7 +40,7 @@ public class MapView implements View {
         this.canvas = new ResizableCanvas(this::draw, mainPane);
         this.camera = new Camera(canvas);
         this.map = new Map("/TrainStationPlannerMap.tmj");
-        this.npcController = new NPCController(clock,subject,camera);
+        this.npcController = new TravelerController(clock,subject,camera);
         this.measureController = new MeasureController(this.npcController.getNPCs(), this.camera, this.clock);
 
         MouseListener ml = new MouseListener(canvas);

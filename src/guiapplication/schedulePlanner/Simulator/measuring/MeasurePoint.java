@@ -2,7 +2,7 @@ package guiapplication.schedulePlanner.Simulator.measuring;
 
 import guiapplication.schedulePlanner.Simulator.InfoScreen;
 import guiapplication.schedulePlanner.Simulator.npc.NPC;
-import guiapplication.schedulePlanner.Simulator.npc.Traveler;
+import guiapplication.schedulePlanner.Simulator.npc.traveler.Traveler;
 import util.graph.Node;
 
 import java.awt.*;
@@ -33,10 +33,9 @@ public class MeasurePoint {
         );
     }
 
-    public void update(List<NPC> npcs) {
-        for (NPC npc : npcs) {
-            Traveler tr = (Traveler) npc;
-            if (tr.getCurrentNode() == node) {
+    public void update(List<Traveler> npcs) {
+        for (Traveler npc : npcs) {
+            if (npc.getCurrentNode() == node) {
                 this.npcs.add(npc);
                 this.infoScreen.updateInfo("Aantal overgelopen: " + this.npcs.size(), 1);
             }
