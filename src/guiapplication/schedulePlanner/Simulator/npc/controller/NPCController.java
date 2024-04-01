@@ -1,9 +1,9 @@
 package guiapplication.schedulePlanner.Simulator.npc.controller;
 
 import data.ScheduleSubject;
-import guiapplication.schedulePlanner.Simulator.mouselistener.MouseCallback;
 import guiapplication.schedulePlanner.Simulator.Camera;
 import guiapplication.schedulePlanner.Simulator.Clock;
+import guiapplication.schedulePlanner.Simulator.mouselistener.MouseCallback;
 import guiapplication.schedulePlanner.Simulator.npc.NPC;
 import guiapplication.schedulePlanner.Simulator.npc.Traveler;
 import guiapplication.schedulePlanner.Simulator.pathfinding.PathFinding;
@@ -11,7 +11,13 @@ import guiapplication.schedulePlanner.Simulator.pathfinding.Target;
 import javafx.scene.input.MouseEvent;
 import org.jfree.fx.FXGraphics2D;
 
-import java.util.*;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class NPCController implements MouseCallback, util.Observer {
     private List<NPC> npcs;
@@ -20,6 +26,8 @@ public class NPCController implements MouseCallback, util.Observer {
     private Camera camera;
     private NPCSpawner spawner;
     private boolean disaster;
+    private Clip clip;
+    private boolean isplayed;
 
     public NPCController(Clock clock, ScheduleSubject subject, Camera camera) {
         this.npcs = new ArrayList<>();
@@ -29,6 +37,7 @@ public class NPCController implements MouseCallback, util.Observer {
         this.camera = camera;
         this.spawner = new NPCSpawner(this.npcs, this.clock);
         this.disaster = false;
+        this.isplayed = false;
     }
 
     public void update(double deltaTime) {
@@ -41,6 +50,22 @@ public class NPCController implements MouseCallback, util.Observer {
             );
 
             spawner.update(deltaTime);
+        } else if (disaster && !isplayed){
+                String filePath = "res/nederlands-luchtalarm.wav ";
+                isplayed = true;
+                try {
+                    File musicPath = new File(filePath);
+                    if (musicPath.exists()) {
+                        AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
+                        clip = AudioSystem.getClip();
+                        clip.open(audioInput);
+                        clip.start();
+                    }else {
+                        System.out.println("cant find file");
+                    }
+                }catch (Exception e){
+                    System.out.println(e);
+                }
         }
 
         updateNPCs();
