@@ -26,7 +26,6 @@ public class Clock extends Subject<Clock> {
         long now = System.currentTimeMillis();
         long deltaActualTime = now-previousTime;
         if (deltaActualTime > this.timeSpeed * 1000) {
-            System.out.println(deltaActualTime);
             currentTimeInt++;
             if (currentTimeInt % 100 > 59) {
                 currentTimeInt -= 60;
@@ -36,7 +35,6 @@ public class Clock extends Subject<Clock> {
                 currentTimeInt -= 2400;
             }
             currentTime = TimeFormatter.intToLocalTime(currentTimeInt);
-            System.out.println(currentTime);
             previousTime = now;
         }
     }

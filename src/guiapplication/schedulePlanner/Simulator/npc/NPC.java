@@ -6,7 +6,6 @@ import java.util.List;
 import java.awt.geom.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class NPC {
@@ -14,26 +13,32 @@ public class NPC {
     protected Point2D position;
     protected double angle;
     protected BufferedImage image;
-    protected double speed;
+    protected double standardSpeed;
     protected double currentSpeed;
     protected Point2D targetPosition;
     protected int scale;
     protected boolean draw;
+    protected boolean clicked;
 
     public NPC(Point2D position, double angle) {
         this.position = position;
         this.targetPosition = position;
         this.angle = angle;
-        this.speed = 2;
+        this.standardSpeed = 1;
         this.draw = true;
         this.scale = 8;
-        this.currentSpeed = this.speed;
+        this.currentSpeed = this.standardSpeed;
 
         try {
             this.image = ImageIO.read(Objects.requireNonNull(this.getClass().getResourceAsStream("/astronautHelmet.png")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public NPC(Point2D position, double angle, double standardSpeed) {
+        this(position, angle);
+        this.standardSpeed = standardSpeed;
     }
 
     public void update(List<NPC> npcs) {
@@ -54,10 +59,10 @@ public class NPC {
             angleDifference += 2 * Math.PI;
         }
 
-        if (angleDifference < -0.1) {
-            angle += 0.1;
-        } else if (angleDifference > 0.1) {
-            angle -= 0.1;
+        if (angleDifference < -0.1 * standardSpeed) {
+            angle += 0.1 * standardSpeed;
+        } else if (angleDifference > 0.1 * standardSpeed) {
+            angle -= 0.1 * standardSpeed;
         } else {
             angle = newAngle;
         }
@@ -80,11 +85,11 @@ public class NPC {
         }
 
         if (!hasCollision) {
-            this.currentSpeed = speed;
+            this.currentSpeed = standardSpeed;
             this.position = newPosition;
         } else {
             this.currentSpeed *= 0.5;
-            this.angle += 0.18;
+            this.angle += 0.18 * standardSpeed;
         }
 
         // clipping performance is terrible with large amounts of npcs, this is way better
@@ -94,7 +99,7 @@ public class NPC {
     }
 
     public boolean atTargetPosition() {
-        return position.distance(targetPosition) <= 7;
+        return position.distance(targetPosition) <= 25;
     }
 
     public void draw(Graphics2D g2d) {
@@ -107,9 +112,6 @@ public class NPC {
         tx.rotate(angle, (double) image.getWidth() / scale, (double) image.getHeight() / scale);
         tx.scale((double) 2 / scale, (double) 2 / scale);
         g2d.drawImage(image, tx, null);
-
-        g2d.setColor(Color.RED);
-        g2d.fill(new Ellipse2D.Double(position.getX(), position.getY(), 10, 10));
     }
 
     public Point2D getPosition() {
@@ -129,7 +131,11 @@ public class NPC {
         return new Rectangle2D.Double(this.position.getX() - (double) size / 2, this.position.getY() - (double) size / 2, size, size).contains(p);
     }
 
-    public void setSpeed(double speed) {
-        this.speed = speed;
+    public void setStandardSpeed(double standardSpeed) {
+        this.standardSpeed = standardSpeed;
+    }
+
+    public void toggleClicked() {
+        this.clicked = !this.clicked;
     }
 }

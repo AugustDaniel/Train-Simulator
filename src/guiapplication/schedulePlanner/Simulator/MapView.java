@@ -1,5 +1,6 @@
 package guiapplication.schedulePlanner.Simulator;
 
+import guiapplication.schedulePlanner.Simulator.measuring.MeasureController;
 import guiapplication.schedulePlanner.Simulator.mouselistener.MouseListener;
 import guiapplication.schedulePlanner.Simulator.npc.controller.NPCController;
 import data.Journey;
@@ -8,11 +9,12 @@ import guiapplication.schedulePlanner.Simulator.tilehandlers.Map;
 import guiapplication.schedulePlanner.View;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import org.jfree.fx.FXGraphics2D;
 import org.jfree.fx.ResizableCanvas;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.io.IOException;
 import java.time.LocalTime;
@@ -28,6 +30,7 @@ public class MapView implements View {
     private final Camera camera;
     private Clock clock;
     private NPCController npcController;
+    private MeasureController measureController;
     private double timer  = 0;
 
     public MapView(ScheduleSubject subject) throws IOException {
@@ -38,10 +41,12 @@ public class MapView implements View {
         this.camera = new Camera(canvas);
         this.map = new Map("/TrainStationPlannerMap.tmj");
         this.npcController = new NPCController(clock,subject,camera);
+        this.measureController = new MeasureController(this.npcController.getNPCs(), this.camera, this.clock);
 
         MouseListener ml = new MouseListener(canvas);
         ml.addCallback(this.camera);
         ml.addCallback(this.npcController);
+        ml.addCallback(this.measureController);
     }
 
     public void update(double deltaTime) {
@@ -61,6 +66,7 @@ public class MapView implements View {
             }
             clock.update(deltaTime);
             npcController.update(deltaTime);
+            measureController.update();
             timer -= 1;
         }
     }
@@ -81,6 +87,10 @@ public class MapView implements View {
                 draw(g2d);
             }
         }.start();
+
+        Button distasterButton = new Button("Calamiteiten oefening");
+        mainPane.setBottom(distasterButton);
+        distasterButton.setOnAction(e -> this.npcController.toggleDisaster());
 
         draw(g2d);
         init();
@@ -103,6 +113,7 @@ public class MapView implements View {
 //            });
 //        });
 
+        measureController.draw(g);
         npcController.draw(g);
 
         for (TrainEntity train : trains) {
