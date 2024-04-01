@@ -46,7 +46,7 @@ public class NPCSpawner implements util.Observer{
         Map.Entry<Journey, Integer> journey = this.journeysToSpawn.peek();
 
         if ((journey.getValue() > counter) && (counter != journey.getKey().getTrain().getCapacity())) {
-            Node spawnPoint = checkSpawnPoint(PathFinding.spawnPoints.get((int) (Math.random() * (PathFinding.spawnPoints.size() - 1))));
+            Node spawnPoint = checkSpawnPoint(PathFinding.getRandomSpawnPoint());
             Traveler traveler = new Traveler(spawnPoint,journey.getKey(),npcSpeed);
 
             if (Math.random() > 0.9) {
