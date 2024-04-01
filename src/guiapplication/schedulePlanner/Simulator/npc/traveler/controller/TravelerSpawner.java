@@ -44,7 +44,7 @@ public class TravelerSpawner implements util.Observer{
         timer -= delay;
         Map.Entry<Journey, Integer> journey = this.journeysToSpawn.peek();
 
-        if ((journey.getValue() > counter) && (counter != journey.getKey().getTrain().getCapacity())) {
+        if (journey.getValue() > counter) {
             Node spawnPoint = checkSpawnPoint(PathFinding.getRandomSpawnPoint());
             Traveler traveler = new Traveler(spawnPoint,journey.getKey(),npcSpeed);
             npcs.add(traveler);
@@ -60,7 +60,7 @@ public class TravelerSpawner implements util.Observer{
             return;
         }
 
-        int amountOfSpawns = (int) Math.ceil((journey.getTrainPopularity() * 10) * ((double) spawnRate / 100));
+        int amountOfSpawns = (int) Math.ceil((journey.getTrain().getCapacity() * (journey.getTrainPopularity() / 10.0)) * (spawnRate / 100.0));
         this.journeysToSpawn.offer(new AbstractMap.SimpleEntry<>(journey, amountOfSpawns));
     }
 
