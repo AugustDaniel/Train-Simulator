@@ -58,6 +58,9 @@ public class NPCController implements MouseCallback, util.Observer {
                     (tr.getStatus() == Traveler.Status.BOARDING || tr.getStatus() == Traveler.Status.LEAVING)) {
                 iterator.remove();
             }
+            if (tr.getStatus() == Traveler.Status.SHOPPING){
+                handleStatus(tr, Traveler.Status.SHOPPING);
+            }
 
             if (isDepartureTime(tr) || disaster) {
                 handleStatus(tr, Traveler.Status.LEAVING);
@@ -74,8 +77,15 @@ public class NPCController implements MouseCallback, util.Observer {
         if (tr.getStatus() != status) {
             tr.setStatus(status);
 
+            if (isArrivalTime(tr)){
+                tr.setStatus(Traveler.Status.SHOPPING);
+            }
+
             Target target = null;
             switch (status) {
+                case SHOPPING:
+                    target = new Target(PathFinding.getRandomSpawnPoint());
+                    break;
                 case BOARDING:
                     target = PathFinding.getRandomTrainTarget(tr.getJourney().getPlatform().getPlatformNumber());
                     break;
