@@ -5,6 +5,7 @@ import guiapplication.schedulePlanner.Simulator.Clock;
 import guiapplication.schedulePlanner.Simulator.npc.NPC;
 import guiapplication.schedulePlanner.Simulator.npc.Traveler;
 import guiapplication.schedulePlanner.Simulator.pathfinding.PathFinding;
+import guiapplication.schedulePlanner.Simulator.pathfinding.Target;
 import util.graph.Node;
 
 import java.util.*;
@@ -50,6 +51,7 @@ public class NPCSpawner implements util.Observer{
 
             if (Math.random() > 0.9) {
                 traveler.setStatus(Traveler.Status.SHOPPING);
+                traveler.setTarget(new Target(PathFinding.getRandomSpawnPoint()));
             }
 
             npcs.add(traveler);
