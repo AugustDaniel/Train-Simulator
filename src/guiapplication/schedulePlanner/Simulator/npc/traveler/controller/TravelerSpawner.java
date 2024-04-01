@@ -67,7 +67,7 @@ public class TravelerSpawner implements util.Observer{
     public util.graph.Node checkSpawnPoint(util.graph.Node spawnPoint) {
         for (NPC npc : npcs) {
             if (npc.getPosition().distance(spawnPoint.getPosition()) <= npc.getImageSize()) {
-                spawnPoint = checkSpawnPoint(PathFinding.spawnPoints.get((int) (Math.random() * (PathFinding.spawnPoints.size() - 1))));
+                spawnPoint = checkSpawnPoint(PathFinding.getRandomSpawnPoint());
             }
         }
 
