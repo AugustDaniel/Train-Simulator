@@ -27,7 +27,9 @@ public class NPCController implements MouseCallback, util.Observer {
     private NPCSpawner spawner;
     private boolean disaster;
     private Clip clip;
-    private boolean isplayed;
+    private String filePath;
+    private File musicPath;
+    private AudioInputStream audioInput;
 
     public NPCController(Clock clock, ScheduleSubject subject, Camera camera) {
         this.npcs = new ArrayList<>();
@@ -37,11 +39,33 @@ public class NPCController implements MouseCallback, util.Observer {
         this.camera = camera;
         this.spawner = new NPCSpawner(this.npcs, this.clock);
         this.disaster = false;
-        this.isplayed = false;
+        this.filePath = "res/nederlands-luchtalarm.wav ";
+        this.musicPath = new File(this.filePath);
+        try {
+            if (musicPath.exists()) {
+            this.clip = AudioSystem.getClip();
+            this.audioInput = AudioSystem.getAudioInputStream(musicPath);
+            }else {
+                System.out.println("cant find file");
+            }
+            this.clip.open(this.audioInput);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     public void update(double deltaTime) {
         if (!disaster) {
+            if (clip.isActive()){
+                clip.stop();
+                clip.close();
+                try {
+                    this.audioInput = AudioSystem.getAudioInputStream(musicPath);
+                    this.clip.open(audioInput);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
             this.subject.getSchedule().getJourneyList().forEach(journey -> {
                         if (journey.getArrivalTime().minusMinutes(30).equals(this.clock.getCurrentTime())) {
                             this.spawner.addToQueue(journey);
@@ -50,22 +74,9 @@ public class NPCController implements MouseCallback, util.Observer {
             );
 
             spawner.update(deltaTime);
-        } else if (disaster && !isplayed){
-                String filePath = "res/nederlands-luchtalarm.wav ";
-                isplayed = true;
-                try {
-                    File musicPath = new File(filePath);
-                    if (musicPath.exists()) {
-                        AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
-                        clip = AudioSystem.getClip();
-                        clip.open(audioInput);
-                        clip.start();
-                    }else {
-                        System.out.println("cant find file");
-                    }
-                }catch (Exception e){
-                    System.out.println(e);
-                }
+
+        } else if (disaster && !clip.isActive()){
+            clip.start();
         }
 
         updateNPCs();
