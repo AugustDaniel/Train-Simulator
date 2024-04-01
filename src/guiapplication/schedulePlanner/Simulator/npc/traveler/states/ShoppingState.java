@@ -2,7 +2,6 @@ package guiapplication.schedulePlanner.Simulator.npc.traveler.states;
 
 import guiapplication.schedulePlanner.Simulator.npc.traveler.Traveler;
 import guiapplication.schedulePlanner.Simulator.pathfinding.PathFinding;
-import guiapplication.schedulePlanner.Simulator.pathfinding.Target;
 
 import java.time.LocalTime;
 
