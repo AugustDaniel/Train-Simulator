@@ -1,14 +1,21 @@
 package guiapplication.schedulePlanner.Simulator;
 
 import javafx.geometry.Orientation;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 public class Slider extends VBox {
 
     private javafx.scene.control.Slider amountOfPeopleSlider;
     private javafx.scene.control.Slider clockSpeedSlider;
+    private Label amountOfPeopleLabel;
+    private Label clockSpeedLabel;
 
     public Slider(MapView mapView) {
+        //creates labels for the sliders
+        amountOfPeopleLabel = new Label("Maximaal aantal reizigers:");
+        clockSpeedLabel = new Label("Kloksnelheid:");
+
         //creates people slider
         amountOfPeopleSlider = new javafx.scene.control.Slider(0, 100, 50);
         amountOfPeopleSlider.setOrientation(Orientation.HORIZONTAL);
@@ -39,7 +46,6 @@ public class Slider extends VBox {
             mapView.updateClock( 0.0625 * (Math.pow(2, (int)newClockSpeed -1)));
         });
 
-        getChildren().add(amountOfPeopleSlider);
-        getChildren().add(clockSpeedSlider);
+        getChildren().addAll(amountOfPeopleLabel, amountOfPeopleSlider, clockSpeedLabel, clockSpeedSlider);
     }
 }
