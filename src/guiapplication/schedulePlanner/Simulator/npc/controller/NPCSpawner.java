@@ -51,6 +51,7 @@ public class NPCSpawner implements util.Observer{
 
             if (Math.random() > 0.9) {
                 traveler.setStatus(Traveler.Status.SHOPPING);
+                traveler.setTarget(new Target(PathFinding.getRandomShoppingTarget()));
                 traveler.setTarget(new Target(PathFinding.getRandomSpawnPoint()));
             }
 
