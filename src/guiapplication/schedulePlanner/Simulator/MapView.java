@@ -119,6 +119,9 @@ public class MapView implements View {
         for (TrainEntity train : trains) {
             train.draw(g);
         }
+
+        g.setTransform(new AffineTransform());
+        clock.draw(g);
     }
 
     public void init(){
