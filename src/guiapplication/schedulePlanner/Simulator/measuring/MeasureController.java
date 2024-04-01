@@ -1,6 +1,7 @@
 package guiapplication.schedulePlanner.Simulator.measuring;
 
 import guiapplication.schedulePlanner.Simulator.Camera;
+import guiapplication.schedulePlanner.Simulator.Clock;
 import guiapplication.schedulePlanner.Simulator.mouselistener.MouseCallback;
 import guiapplication.schedulePlanner.Simulator.npc.NPC;
 import guiapplication.schedulePlanner.Simulator.pathfinding.PathFinding;
@@ -18,11 +19,15 @@ public class MeasureController implements MouseCallback {
     private List<MeasurePoint> measurePoints;
     private List<NPC> npcs;
     private Camera camera;
+    private Clock clock;
 
-    public MeasureController(List<NPC> npcs, Camera camera) {
+    public MeasureController(List<NPC> npcs, Camera camera, Clock clock) {
         this.npcs = npcs;
         this.measurePoints = new LinkedList<>();
+
+        //todo fix coupling maybe idk
         this.camera = camera;
+        this.clock = clock;
     }
 
     @Override
@@ -38,7 +43,7 @@ public class MeasureController implements MouseCallback {
 
         Node clickedNode = PathFinding.graph.getNodes()[(int) (mousePos.getY()/ 32)][(int) (mousePos.getX() /32)];
         if (clickedNode != null) {
-            this.measurePoints.add(new MeasurePoint(clickedNode, LocalTime.now()));
+            this.measurePoints.add(new MeasurePoint(clickedNode, this.clock.getCurrentTime()));
         }
     }
 

@@ -6,7 +6,7 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.nio.file.Files;
 
-public class IOHelper {
+public final class IOHelper {
 
     public static <T> void saveObject(T object, File file) throws Exception {
         ObjectOutputStream output = new ObjectOutputStream(Files.newOutputStream(file.toPath()));
