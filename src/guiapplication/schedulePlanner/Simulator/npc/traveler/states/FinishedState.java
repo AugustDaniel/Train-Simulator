@@ -9,6 +9,6 @@ public class FinishedState implements TravelerState{
 
     @Override
     public String toString() {
-        return "Winkelen";
+        return "Heeft het station verlaten";
     }
 }
