@@ -145,13 +145,13 @@ public class PathFinding {
         map.get(id).add(new Target(nodeToAdd));
     }
 
-    private static void createPoints(JsonObject object, List<Node> shopPoints) {
+    private static void createPoints(JsonObject object, List<Node> pointList) {
         int xObject = object.getInt("x") / TILE_SIZE;
         int yObject = object.getInt("y") / TILE_SIZE;
 
         for (int y = 0; y < Math.ceil((double) object.getInt("height") / TILE_SIZE) ; y++) {
             for (int x = 0; x < object.getInt("width") / TILE_SIZE; x++) {
-                shopPoints.add(graph.getNodes()[yObject + y][xObject + x]);
+                pointList.add(graph.getNodes()[yObject + y][xObject + x]);
             }
         }
     }
@@ -165,8 +165,8 @@ public class PathFinding {
         int size = trainTargets.get(train).size();
         return trainTargets.get(train).get((int) (Math.random() * size));
     }
-    public static Node getRandomShoppingTarget(){
-        return shopPoints.get((int) (Math.random() * shopPoints.size()));
+    public static Target getRandomShoppingTarget(){
+        return new Target(shopPoints.get((int) (Math.random() * shopPoints.size())));
     }
 
     public static Node getRandomSpawnPoint() {

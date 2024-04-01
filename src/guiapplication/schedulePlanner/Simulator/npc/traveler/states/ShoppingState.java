@@ -12,7 +12,7 @@ public class ShoppingState implements TravelerState {
 
     public ShoppingState(Traveler traveler) {
         this.traveler = traveler;
-        this.traveler.setTarget(new Target(PathFinding.getRandomShoppingTarget()));
+        this.traveler.setTarget(PathFinding.getRandomShoppingTarget());
     }
 
     @Override
