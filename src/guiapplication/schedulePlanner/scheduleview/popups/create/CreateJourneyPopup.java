@@ -76,7 +76,8 @@ public class CreateJourneyPopup extends SchedulePopupView {
                         inputTime,
                         trainComboBox.getValue(),
                         Integer.parseInt(popularityInput.getText()),
-                        platformComboBox.getValue()
+                        platformComboBox.getValue(),
+                        new Machinist("henk")
                 ));
                 super.callMainView();
             }
