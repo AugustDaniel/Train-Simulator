@@ -14,38 +14,29 @@ public class Sounds {
     private static File disasterSoundMusicPath = new File(disasterSoundFilePath);
     private static AudioInputStream trainAudioInput;
     private static AudioInputStream disasterAudioInput;
-    private static Boolean firstTime = false;
 
-    public static void whistleWhenTrainLeaving() {
+    static {
         try {
-            if (trainWhistleMusicPath.exists()) {
-                trainAudioInput = AudioSystem.getAudioInputStream(trainWhistleMusicPath);
+            if (disasterSoundMusicPath.exists() && trainWhistleMusicPath.exists()) {
+                disasterClip = AudioSystem.getClip();
                 trainClip = AudioSystem.getClip();
-                trainClip.open(trainAudioInput);
-                trainClip.start();
+                disasterAudioInput = AudioSystem.getAudioInputStream(disasterSoundMusicPath);
+                trainAudioInput = AudioSystem.getAudioInputStream(trainWhistleMusicPath);
             } else {
                 System.out.println("cant find file");
             }
+            disasterClip.open(disasterAudioInput);
+            trainClip.open(trainAudioInput);
         } catch (Exception e) {
             System.out.println(e);
         }
     }
 
+    public static void whistleWhenTrainLeaving() {
+      trainClip.start();
+    }
+
     public static void disasterSound(Boolean disaster) {
-        if (!firstTime){
-            firstTime = true;
-          try {
-                if (disasterSoundMusicPath.exists()) {
-                    disasterClip = AudioSystem.getClip();
-                    disasterAudioInput = AudioSystem.getAudioInputStream(disasterSoundMusicPath);
-                } else {
-                    System.out.println("cant find file");
-                }
-              disasterClip.open(disasterAudioInput);
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-        }
             if (disasterClip.isActive() && !disaster) {
             disasterClip.stop();
             disasterClip.close();
