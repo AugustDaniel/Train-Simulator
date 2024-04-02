@@ -1,17 +1,19 @@
 package guiapplication.scheduleview.components;
 
+import data.ScheduleSubject;
 import guiapplication.PopupView;
 import guiapplication.ReturnableView;
 import guiapplication.View;
-import guiapplication.scheduleview.popups.change.*;
+import guiapplication.scheduleview.popups.change.ChangeJourneyPopup;
+import guiapplication.scheduleview.popups.change.ChangePlatformPopup;
+import guiapplication.scheduleview.popups.change.ChangeTrainPopup;
+import guiapplication.scheduleview.popups.change.ChangeWagonPopup;
 import guiapplication.scheduleview.popups.create.*;
 import guiapplication.scheduleview.popups.delete.*;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import data.ScheduleSubject;
 
 public class ScheduleBuilderView implements View {
 
@@ -46,7 +48,6 @@ public class ScheduleBuilderView implements View {
         Button switchModeButton = getSwitchModeButton();
 
         box.getChildren().addAll(switchModeButton);
-        box.setPadding(new Insets(10));
         box.setSpacing(10);
         box.setAlignment(Pos.BASELINE_LEFT);
         return box;
@@ -54,6 +55,7 @@ public class ScheduleBuilderView implements View {
 
     private Button getSwitchModeButton() {
         Button switchModeButton = new Button("Verander modus");
+        switchModeButton.setPrefWidth(150);
         switchModeButton.setOnAction(event -> {
             switch (menuToggle) {
                 case CREATE:
@@ -73,41 +75,41 @@ public class ScheduleBuilderView implements View {
 
     private VBox getAddButtons() {
         VBox box = new VBox(
-                getButton("Creëer reis", new CreateJourneyPopup(mainView, subject.getSchedule())),
-                getButton("Creëer trein", new CreateTrainPopup(mainView, subject.getSchedule())),
                 getButton("Creëer wagon", new CreateWagonPopup(mainView, subject.getSchedule())),
-                getButton("Creëer perron", new CreatePlatformPopup(mainView, subject.getSchedule())),
                 getButton("Creëer wagon set", new CreateWagonSetPopup(mainView, subject.getSchedule())),
-                getButton("Creëer machinist", new CreateMachinistPopup(mainView, subject.getSchedule()))
+                getButton("Creëer trein", new CreateTrainPopup(mainView, subject.getSchedule())),
+                getButton("Creëer perron", new CreatePlatformPopup(mainView, subject.getSchedule())),
+                getButton("Creëer machinist", new CreateMachinistPopup(mainView, subject.getSchedule())),
+                getButton("Creëer reis", new CreateJourneyPopup(mainView, subject.getSchedule()))
         );
         return box;
     }
 
     private VBox getDeleteButtons() {
         VBox box = new VBox(
-                getButton("Verwijder reis", new DeleteJourneyPopup(mainView, subject.getSchedule())),
-                getButton("Verwijder trein", new DeleteTrainPopup(mainView, subject.getSchedule())),
                 getButton("Verwijder wagon", new DeleteWagonPopup(mainView, subject.getSchedule())),
-                getButton("Verwijder perron", new DeletePlatformPopup(mainView, subject.getSchedule())),
                 getButton("verwijder wagon set", new DeleteWagonSetPopup(mainView, subject.getSchedule())),
-                getButton("verwijder machinist", new DeleteMachinistPopup(mainView, subject.getSchedule()))
-
+                getButton("Verwijder trein", new DeleteTrainPopup(mainView, subject.getSchedule())),
+                getButton("Verwijder perron", new DeletePlatformPopup(mainView, subject.getSchedule())),
+                getButton("verwijder machinist", new DeleteMachinistPopup(mainView, subject.getSchedule())),
+                getButton("Verwijder reis", new DeleteJourneyPopup(mainView, subject.getSchedule()))
         );
         return box;
     }
 
     private VBox getChangeButtons() {
         VBox box = new VBox(
-                getButton("Verander reis", new ChangeJourneyPopup(mainView, subject.getSchedule())),
-                getButton("Verander trein", new ChangeTrainPopup(mainView, subject.getSchedule())),
                 getButton("Verander wagon", new ChangeWagonPopup(mainView, subject.getSchedule())),
-                getButton("Verander perron", new ChangePlatformPopup(mainView, subject.getSchedule()))
-        );
+                getButton("Verander trein", new ChangeTrainPopup(mainView, subject.getSchedule())),
+                getButton("Verander perron", new ChangePlatformPopup(mainView, subject.getSchedule())),
+                getButton("Verander reis", new ChangeJourneyPopup(mainView, subject.getSchedule()))
+                );
         return box;
     }
 
     private Node getButton(String text, PopupView popup) {
         Button button = new Button(text);
+        button.setPrefWidth(150);
         button.setOnAction(e -> {
             mainView.setPopup(popup);
             mainView.returnToView();
