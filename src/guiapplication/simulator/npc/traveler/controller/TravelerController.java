@@ -89,7 +89,7 @@ public class TravelerController implements MouseCallback, util.Observer {
 
     @Override
     public void update() {
-        double speed = 1 / clock.getTimeSpeed();
+        double speed = 4 / clock.getTimeSpeed();
 
         for (NPC npc : travelers) {
             npc.setStandardSpeed(speed);
