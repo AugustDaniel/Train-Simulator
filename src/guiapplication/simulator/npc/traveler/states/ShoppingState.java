@@ -16,7 +16,7 @@ public class ShoppingState implements TravelerState {
 
     @Override
     public void handle(LocalTime time) {
-        if (time.isAfter(traveler.getJourney().getArrivalTime().minusMinutes(10))) {
+        if (time.isAfter(traveler.getJourney().getArrivalTime().minusMinutes(15))) {
             traveler.setState(new ArrivingState(traveler));
         }
 
