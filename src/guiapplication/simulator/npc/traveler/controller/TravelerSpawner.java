@@ -5,8 +5,10 @@ import guiapplication.simulator.Clock;
 import guiapplication.simulator.npc.NPC;
 import guiapplication.simulator.npc.traveler.Traveler;
 import guiapplication.simulator.pathfinding.PathFinding;
+import util.TimeFormatter;
 import util.graph.Node;
 
+import java.time.LocalTime;
 import java.util.*;
 
 public class TravelerSpawner implements util.Observer{
@@ -19,6 +21,7 @@ public class TravelerSpawner implements util.Observer{
     private double delay;
     private double timer;
     private double npcSpeed;
+    private LocalTime previousTime;
 
     public TravelerSpawner(List<Traveler> npcs, Clock clock) {
         this.npcs = npcs;
@@ -29,6 +32,7 @@ public class TravelerSpawner implements util.Observer{
         this.delay = clock.getTimeSpeed() / 10;
         this.clock = clock;
         this.clock.attach(this);
+        this.previousTime = TimeFormatter.intToLocalTime(0);
     }
 
     public void update(double deltaTime) {
@@ -49,10 +53,12 @@ public class TravelerSpawner implements util.Observer{
             Traveler traveler = new Traveler(spawnPoint,journey.getKey(),npcSpeed);
             npcs.add(traveler);
             counter++;
-        } else if (journeysToSpawn.size() > 1) {
+        } else if (!clock.getCurrentTime().equals(previousTime)) {
             journeysToSpawn.poll();
             counter = 0;
         }
+
+        previousTime = clock.getCurrentTime();
     }
 
     public void addToQueue(Journey journey) {
