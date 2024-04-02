@@ -16,8 +16,8 @@ public class ArrivingState implements TravelerState {
 
     @Override
     public void handle(LocalTime time) {
-        if (time.isAfter(traveler.getJourney().getArrivalTime().minusMinutes(3))
-                || time.equals(traveler.getJourney().getArrivalTime().minusMinutes(3))) {
+        if (time.isAfter(traveler.getJourney().getArrivalTime())
+                || time.equals(traveler.getJourney().getArrivalTime())) {
             traveler.setState(new BoardingState(traveler));
         }
 
