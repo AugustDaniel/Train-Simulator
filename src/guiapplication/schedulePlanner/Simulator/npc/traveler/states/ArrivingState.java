@@ -7,7 +7,7 @@ import java.time.LocalTime;
 
 public class ArrivingState implements TravelerState {
 
-    Traveler traveler;
+    private Traveler traveler;
 
     public ArrivingState(Traveler traveler) {
         this.traveler = traveler;
