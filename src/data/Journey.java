@@ -64,4 +64,8 @@ public class Journey implements Serializable {
         return "platform: " + platform +
                 "\n train: " + train;
     }
+
+    public void setMachinist(Machinist machinist) {
+        this.machinist = machinist;
+    }
 }
