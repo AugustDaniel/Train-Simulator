@@ -23,7 +23,7 @@ public class Clock extends Subject<Clock> {
 
     public void update(double deltaTime) {
         long now = System.currentTimeMillis();
-        long deltaActualTime = now-previousTime;
+        long deltaActualTime = now - previousTime;
         if (deltaActualTime > timeSpeed * 1000) {
             currentTimeInt++;
             if (currentTimeInt % 100 > 59) {
@@ -38,26 +38,26 @@ public class Clock extends Subject<Clock> {
         }
     }
 
-    public void draw(Graphics2D graphics){
+    public void draw(Graphics2D graphics) {
 
-        Rectangle2D minute = new Rectangle2D.Double(0,0,5,50);
-        Rectangle2D hour = new Rectangle2D.Double(0,0,5,30);
-        Ellipse2D clockBody = new Ellipse2D.Double(150,150,100,100);
+        Rectangle2D minute = new Rectangle2D.Double(0, 0, 5, 50);
+        Rectangle2D hour = new Rectangle2D.Double(0, 0, 5, 30);
+        Ellipse2D clockBody = new Ellipse2D.Double(150, 150, 100, 100);
         Font digitalTime = new Font("ariel", Font.PLAIN, 50);
 
         Shape timeShape = digitalTime.createGlyphVector(graphics.getFontRenderContext(), String.valueOf(currentTime)).getOutline();
         AffineTransform digitalTimeTranslation = new AffineTransform();
-        digitalTimeTranslation.translate(clockBody.getX(),clockBody.getCenterY()+100);
+        digitalTimeTranslation.translate(clockBody.getX(), clockBody.getCenterY() + 100);
 
         AffineTransform minuteRotation = new AffineTransform();
-        minuteRotation.translate(clockBody.getCenterX() + 2 ,clockBody.getCenterY());
-        minuteRotation.rotate(Math.toRadians(-180 + (360/60.0 * (currentTimeInt%100.0))));
-        minuteRotation.translate(-2,-2);
+        minuteRotation.translate(clockBody.getCenterX() + 2, clockBody.getCenterY());
+        minuteRotation.rotate(Math.toRadians(-180 + (360 / 60.0 * (currentTimeInt % 100.0))));
+        minuteRotation.translate(-2, -2);
 
         AffineTransform hourRotation = new AffineTransform();
-        hourRotation.translate(clockBody.getCenterX() + 2,clockBody.getCenterY());
-        hourRotation.rotate(Math.toRadians(-180 + (360/12.0 * (currentTimeInt/100.0))));
-        hourRotation.translate(-2,-2);
+        hourRotation.translate(clockBody.getCenterX() + 2, clockBody.getCenterY());
+        hourRotation.rotate(Math.toRadians(-180 + (360 / 12.0 * (currentTimeInt / 100.0))));
+        hourRotation.translate(-2, -2);
 
         graphics.setColor(Color.WHITE);
         graphics.fill(clockBody);
@@ -70,7 +70,7 @@ public class Clock extends Subject<Clock> {
         graphics.fill(hourRotation.createTransformedShape(hour));
     }
 
-    public void updateTimeSpeed(double timeSpeed){
+    public void updateTimeSpeed(double timeSpeed) {
         this.timeSpeed = 1.0 / timeSpeed;
         super.setState(this);
     }

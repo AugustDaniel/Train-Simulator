@@ -18,7 +18,7 @@ public class Camera implements MouseCallback {
     private Point2D distance;
 
     public Camera(Canvas canvas) {
-        this.target = new Point2D.Double(-canvas.getWidth()*4, -canvas.getHeight()*7);
+        this.target = new Point2D.Double(-canvas.getWidth() * 4, -canvas.getHeight() * 7);
         this.zoom = 1;
         this.canvas = canvas;
     }

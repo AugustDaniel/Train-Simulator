@@ -41,10 +41,10 @@ public class Slider extends VBox {
 
         clockSpeedSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             double newClockSpeed = newValue.doubleValue();
-            if ((newClockSpeed % 1) > 0.5){
+            if ((newClockSpeed % 1) > 0.5) {
                 newClockSpeed += 1;
             }
-            mapView.updateClock( 0.0625 * (Math.pow(2, (int)newClockSpeed -1)));
+            mapView.updateClock(0.0625 * (Math.pow(2, (int) newClockSpeed - 1)));
         });
 
         getChildren().addAll(amountOfPeopleLabel, amountOfPeopleSlider, clockSpeedLabel, clockSpeedSlider);

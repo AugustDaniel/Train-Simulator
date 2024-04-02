@@ -8,7 +8,7 @@ public class Graph {
         nodes = new Node[height][width];
     }
 
-    public void addNode(int y, int x ,Node nodeA) {
+    public void addNode(int y, int x, Node nodeA) {
         nodes[y][x] = nodeA;
     }
 

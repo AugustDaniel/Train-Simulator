@@ -57,7 +57,7 @@ public class TrainEntity {
         double clockSpeed = 1 / clock.getTimeSpeed();
 
         if (clock.getCurrentTime().isAfter(journey.getArrivalTime().minusMinutes(5)) &&
-                position.getX() + trainlength <  90 * tileDimentions) {
+                position.getX() + trainlength < 90 * tileDimentions) {
             position = new Point2D.Double(position.getX() + (trainSpeed * clockSpeed), position.getY());
             draw = true;
             if (position.getX() > 5 * tileDimentions)
@@ -98,8 +98,8 @@ public class TrainEntity {
             g2d.drawImage(trainWagon, tx, null);
         }
 
-            tx.translate(trainWagon.getWidth(), 2);
-            g2d.drawImage(trainHeadLeft, tx, null);
-            g2d.setClip(null);
+        tx.translate(trainWagon.getWidth(), 2);
+        g2d.drawImage(trainHeadLeft, tx, null);
+        g2d.setClip(null);
     }
 }

@@ -103,7 +103,7 @@ public class PathFinding {
                 createPoints(o, spawnPoints);
                 continue;
             }
-            if (o.getString("name").equals("Shops")){
+            if (o.getString("name").equals("Shops")) {
                 createPoints(o, shopPoints);
                 continue;
             }
@@ -149,7 +149,7 @@ public class PathFinding {
         int xObject = object.getInt("x") / TILE_SIZE;
         int yObject = object.getInt("y") / TILE_SIZE;
 
-        for (int y = 0; y < Math.ceil((double) object.getInt("height") / TILE_SIZE) ; y++) {
+        for (int y = 0; y < Math.ceil((double) object.getInt("height") / TILE_SIZE); y++) {
             for (int x = 0; x < object.getInt("width") / TILE_SIZE; x++) {
                 pointList.add(graph.getNodes()[yObject + y][xObject + x]);
             }
@@ -165,7 +165,8 @@ public class PathFinding {
         int size = trainTargets.get(train).size();
         return trainTargets.get(train).get((int) (Math.random() * size));
     }
-    public static Target getRandomShoppingTarget(){
+
+    public static Target getRandomShoppingTarget() {
         return new Target(shopPoints.get((int) (Math.random() * shopPoints.size())));
     }
 

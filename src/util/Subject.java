@@ -3,7 +3,7 @@ package util;
 import java.util.ArrayList;
 import java.util.List;
 
-abstract public class Subject <T>{
+abstract public class Subject<T> {
 
     private List<Observer> observers = new ArrayList<>();
     private T state;
@@ -17,11 +17,11 @@ abstract public class Subject <T>{
         return state;
     }
 
-    public void attach(Observer observer){
+    public void attach(Observer observer) {
         observers.add(observer);
     }
 
-    public void notifyAllObservers(){
+    public void notifyAllObservers() {
         for (Observer observer : observers) {
             observer.update();
         }

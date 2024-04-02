@@ -2,7 +2,6 @@ package guiapplication.simulator.npc.traveler.controller;
 
 import data.Journey;
 import guiapplication.simulator.Clock;
-import guiapplication.simulator.npc.NPC;
 import guiapplication.simulator.npc.traveler.Traveler;
 import guiapplication.simulator.pathfinding.PathFinding;
 import util.TimeFormatter;
@@ -11,10 +10,10 @@ import util.graph.Node;
 import java.time.LocalTime;
 import java.util.*;
 
-public class TravelerSpawner implements util.Observer{
+public class TravelerSpawner implements util.Observer {
 
     private final Queue<Map.Entry<Journey, Integer>> journeysToSpawn;
-    private final List<Traveler> npcs;
+    private final List<Traveler> travelers;
     private final Clock clock;
     private int spawnRate;
     private int counter;
@@ -24,7 +23,7 @@ public class TravelerSpawner implements util.Observer{
     private LocalTime previousTime;
 
     public TravelerSpawner(List<Traveler> npcs, Clock clock) {
-        this.npcs = npcs;
+        this.travelers = npcs;
         this.journeysToSpawn = new LinkedList<>();
         this.counter = 0;
         this.spawnRate = 50;
@@ -50,8 +49,8 @@ public class TravelerSpawner implements util.Observer{
 
         if (journey.getValue() > counter) {
             Node spawnPoint = checkSpawnPoint(PathFinding.getRandomSpawnPoint());
-            Traveler traveler = new Traveler(spawnPoint,journey.getKey(),npcSpeed);
-            npcs.add(traveler);
+            Traveler traveler = new Traveler(spawnPoint, journey.getKey(), npcSpeed);
+            travelers.add(traveler);
             counter++;
         } else if (!clock.getCurrentTime().equals(previousTime)) {
             journeysToSpawn.poll();
@@ -62,7 +61,7 @@ public class TravelerSpawner implements util.Observer{
     }
 
     public void addToQueue(Journey journey) {
-        if (journeysToSpawn.stream().anyMatch(e -> e.getKey().equals(journey))) {
+        if (journeysToSpawn.stream().anyMatch(value -> value.getKey().equals(journey))) {
             return;
         }
 
@@ -71,8 +70,8 @@ public class TravelerSpawner implements util.Observer{
     }
 
     public util.graph.Node checkSpawnPoint(util.graph.Node spawnPoint) {
-        for (NPC npc : npcs) {
-            if (npc.getPosition().distance(spawnPoint.getPosition()) <= npc.getImageSize()) {
+        for (Traveler traveler : travelers) {
+            if (traveler.getPosition().distance(spawnPoint.getPosition()) <= traveler.getImageSize()) {
                 spawnPoint = checkSpawnPoint(PathFinding.getRandomSpawnPoint());
             }
         }

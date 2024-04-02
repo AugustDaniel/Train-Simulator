@@ -33,11 +33,11 @@ public class Sounds {
     }
 
     public static void whistleWhenTrainLeaving() {
-      trainClip.start();
+        trainClip.start();
     }
 
     public static void disasterSound(Boolean disaster) {
-            if (disasterClip.isActive() && !disaster) {
+        if (disasterClip.isActive() && !disaster) {
             disasterClip.stop();
             disasterClip.close();
         } else if (disaster && !disasterClip.isActive()) {

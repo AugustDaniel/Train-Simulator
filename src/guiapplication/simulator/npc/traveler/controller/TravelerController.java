@@ -24,6 +24,7 @@ public class TravelerController implements MouseCallback, util.Observer {
     private Camera camera;
     private TravelerSpawner spawner;
     private boolean disaster;
+
     public TravelerController(Clock clock, ScheduleSubject subject, Camera camera) {
         this.travelers = new ArrayList<>();
         this.subject = subject;
@@ -55,18 +56,18 @@ public class TravelerController implements MouseCallback, util.Observer {
         Iterator<Traveler> iterator = travelers.iterator();
 
         while (iterator.hasNext()) {
-            Traveler tr = iterator.next();
-            tr.update(travelers);
-            tr.handle(clock.getCurrentTime());
+            Traveler traveler = iterator.next();
+            traveler.update(travelers);
+            traveler.handle(clock.getCurrentTime());
 
-            if (tr.getState() instanceof FinishedState) {
+            if (traveler.getState() instanceof FinishedState) {
                 iterator.remove();
             }
         }
     }
 
     public void draw(FXGraphics2D g) {
-        travelers.forEach(t -> t.draw(g));
+        travelers.forEach(traveler -> traveler.draw(g));
     }
 
     @Override
@@ -75,9 +76,9 @@ public class TravelerController implements MouseCallback, util.Observer {
             return;
         }
 
-        for (NPC npc : travelers) {
-            if (npc.contains(camera.getWorldPos(e.getX(), e.getY()))) {
-                npc.toggleClicked();
+        for (Traveler traveler : travelers) {
+            if (traveler.contains(camera.getWorldPos(e.getX(), e.getY()))) {
+                traveler.toggleClicked();
                 return;
             }
         }
@@ -91,8 +92,8 @@ public class TravelerController implements MouseCallback, util.Observer {
     public void update() {
         double speed = 4 / clock.getTimeSpeed();
 
-        for (NPC npc : travelers) {
-            npc.setStandardSpeed(speed);
+        for (Traveler traveler : travelers) {
+            traveler.setStandardSpeed(speed);
         }
     }
 

@@ -12,27 +12,27 @@ public class MouseListener {
     public MouseListener(Node node) {
         this.callbacks = new LinkedList<>();
 
-        node.setOnMousePressed(e -> {
+        node.setOnMousePressed(entry -> {
             for (MouseCallback callback : callbacks) {
-                callback.onMousePressed(e);
+                callback.onMousePressed(entry);
             }
         });
 
-        node.setOnMouseReleased(e -> {
+        node.setOnMouseReleased(entry -> {
             for (MouseCallback callback : callbacks) {
-                callback.onMouseReleased(e);
+                callback.onMouseReleased(entry);
             }
         });
 
-        node.setOnMouseDragged(e -> {
+        node.setOnMouseDragged(entry -> {
             for (MouseCallback callback : callbacks) {
-                callback.onMouseDragged(e);
+                callback.onMouseDragged(entry);
             }
         });
 
-        node.setOnScroll(e -> {
+        node.setOnScroll(entry -> {
             for (MouseCallback callback : callbacks) {
-                callback.onMouseScrolled(e);
+                callback.onMouseScrolled(entry);
             }
         });
     }

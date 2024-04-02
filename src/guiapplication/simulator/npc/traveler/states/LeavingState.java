@@ -6,7 +6,7 @@ import guiapplication.simulator.pathfinding.Target;
 
 import java.time.LocalTime;
 
-public class LeavingState implements TravelerState{
+public class LeavingState implements TravelerState {
 
     private Traveler traveler;
 

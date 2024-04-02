@@ -38,17 +38,17 @@ public class MeasureController implements MouseCallback {
             return;
         }
 
-        Node clickedNode = PathFinding.graph.getNodes()[(int) (mousePos.getY()/ 32)][(int) (mousePos.getX() /32)];
+        Node clickedNode = PathFinding.graph.getNodes()[(int) (mousePos.getY() / 32)][(int) (mousePos.getX() / 32)];
         if (clickedNode != null) {
             measurePoints.add(new MeasurePoint(clickedNode, clock.getCurrentTime()));
         }
     }
 
     public void update() {
-        measurePoints.forEach(e -> e.update(travelers));
+        measurePoints.forEach(measurePoint -> measurePoint.update(travelers));
     }
 
     public void draw(Graphics2D g) {
-        measurePoints.forEach(e -> e.draw(g));
+        measurePoints.forEach(measurePoint -> measurePoint.draw(g));
     }
 }
