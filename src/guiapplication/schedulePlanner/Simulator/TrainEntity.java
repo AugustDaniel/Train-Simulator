@@ -21,7 +21,6 @@ public class TrainEntity {
     private double trainSpeed;
     private int tileDimentions;
     private boolean draw;
-    private Sounds sound;
     private int trainlength;
     private boolean playedOnes = false;
 
@@ -55,10 +54,10 @@ public class TrainEntity {
     }
 
     public void update() {
-        double clockSpeed = 1 / this.clock.getTimeSpeed();
+        double clockSpeed = 1 / clock.getTimeSpeed();
 
-        if (this.clock.getCurrentTime().isAfter(journey.getArrivalTime().minusMinutes(5)) &&
-                this.position.getX() + trainlength <  90 * tileDimentions) {
+        if (clock.getCurrentTime().isAfter(journey.getArrivalTime().minusMinutes(5)) &&
+                position.getX() + trainlength <  90 * tileDimentions) {
             position = new Point2D.Double(position.getX() + (trainSpeed * clockSpeed), position.getY());
             draw = true;
             if (position.getX() > 5 * tileDimentions)
@@ -66,13 +65,13 @@ public class TrainEntity {
                     trainSpeed -= 0.125;
                 else
                     trainSpeed = 4;
-        } else if (this.clock.getCurrentTime().isAfter(journey.getDepartureTime())) {
+        } else if (clock.getCurrentTime().isAfter(journey.getDepartureTime())) {
             if (trainSpeed < 25)
                 trainSpeed += 0.5;
             position = new Point2D.Double(position.getX() + (trainSpeed * clockSpeed), position.getY());
             if (!playedOnes) {
                 playedOnes = true;
-                this.sound.whistleWhenTrainLeaving();
+                Sounds.whistleWhenTrainLeaving();
             }
         }
     }

@@ -39,7 +39,7 @@ public class CreateWagonPopup extends SchedulePopupView {
                 alert.setHeaderText("Error, je bent data vergeten in te vullen");
                 alert.showAndWait();
             } else {
-                this.schedule.addWagon(new Wagon(
+                schedule.addWagon(new Wagon(
                         idNumberWagonInput.getText(),
                         Integer.parseInt(wagonCapacityInput.getText())
                 ));

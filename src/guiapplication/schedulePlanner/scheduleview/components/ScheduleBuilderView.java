@@ -66,31 +66,31 @@ public class ScheduleBuilderView implements View {
                     menuToggle = MenuMode.CREATE;
                     break;
             }
-            this.mainView.returnToView();
+            mainView.returnToView();
         });
         return switchModeButton;
     }
 
     private VBox getAddButtons() {
         VBox box = new VBox(
-                getButton("Creëer reis", new CreateJourneyPopup(this.mainView, this.subject.getSchedule())),
-                getButton("Creëer trein", new CreateTrainPopup(this.mainView, this.subject.getSchedule())),
-                getButton("Creëer wagon", new CreateWagonPopup(this.mainView, this.subject.getSchedule())),
-                getButton("Creëer perron", new CreatePlatformPopup(this.mainView, this.subject.getSchedule())),
-                getButton("Creëer wagon set", new CreateWagonSetPopup(this.mainView, this.subject.getSchedule())),
-                getButton("Creëer machinist", new CreateMachinistPopup(this.mainView, this.subject.getSchedule()))
+                getButton("Creëer reis", new CreateJourneyPopup(mainView, subject.getSchedule())),
+                getButton("Creëer trein", new CreateTrainPopup(mainView, subject.getSchedule())),
+                getButton("Creëer wagon", new CreateWagonPopup(mainView, subject.getSchedule())),
+                getButton("Creëer perron", new CreatePlatformPopup(mainView, subject.getSchedule())),
+                getButton("Creëer wagon set", new CreateWagonSetPopup(mainView, subject.getSchedule())),
+                getButton("Creëer machinist", new CreateMachinistPopup(mainView, subject.getSchedule()))
         );
         return box;
     }
 
     private VBox getDeleteButtons() {
         VBox box = new VBox(
-                getButton("Verwijder reis", new DeleteJourneyPopup(this.mainView, this.subject.getSchedule())),
-                getButton("Verwijder trein", new DeleteTrainPopup(this.mainView, this.subject.getSchedule())),
-                getButton("Verwijder wagon", new DeleteWagonPopup(this.mainView, this.subject.getSchedule())),
-                getButton("Verwijder perron", new DeletePlatformPopup(this.mainView, this.subject.getSchedule())),
-                getButton("verwijder wagon set", new DeleteWagonSetPopup(this.mainView, this.subject.getSchedule())),
-                getButton("verwijder machinist", new DeleteMachinistPopup(this.mainView, this.subject.getSchedule()))
+                getButton("Verwijder reis", new DeleteJourneyPopup(mainView, subject.getSchedule())),
+                getButton("Verwijder trein", new DeleteTrainPopup(mainView, subject.getSchedule())),
+                getButton("Verwijder wagon", new DeleteWagonPopup(mainView, subject.getSchedule())),
+                getButton("Verwijder perron", new DeletePlatformPopup(mainView, subject.getSchedule())),
+                getButton("verwijder wagon set", new DeleteWagonSetPopup(mainView, subject.getSchedule())),
+                getButton("verwijder machinist", new DeleteMachinistPopup(mainView, subject.getSchedule()))
 
         );
         return box;
@@ -98,10 +98,10 @@ public class ScheduleBuilderView implements View {
 
     private VBox getChangeButtons() {
         VBox box = new VBox(
-                getButton("Verander reis", new ChangeJourneyPopup(this.mainView, this.subject.getSchedule())),
-                getButton("Verander trein", new ChangeTrainPopup(this.mainView, this.subject.getSchedule())),
-                getButton("Verander wagon", new ChangeWagonPopup(this.mainView, this.subject.getSchedule())),
-                getButton("Verander perron", new ChangePlatformPopup(this.mainView, this.subject.getSchedule()))
+                getButton("Verander reis", new ChangeJourneyPopup(mainView, subject.getSchedule())),
+                getButton("Verander trein", new ChangeTrainPopup(mainView, subject.getSchedule())),
+                getButton("Verander wagon", new ChangeWagonPopup(mainView, subject.getSchedule())),
+                getButton("Verander perron", new ChangePlatformPopup(mainView, subject.getSchedule()))
         );
         return box;
     }
@@ -109,8 +109,8 @@ public class ScheduleBuilderView implements View {
     private Node getButton(String text, PopupView popup) {
         Button button = new Button(text);
         button.setOnAction(e -> {
-            this.mainView.setPopup(popup);
-            this.mainView.returnToView();
+            mainView.setPopup(popup);
+            mainView.returnToView();
         });
 
         return button;

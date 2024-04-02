@@ -36,18 +36,13 @@ public class NPC {
         }
     }
 
-    public NPC(Point2D position, double angle, double standardSpeed) {
-        this(position, angle);
-        this.standardSpeed = standardSpeed;
-    }
-
     public void update(List<? extends NPC> npcs) {
         if (atTargetPosition()) {
             return;
         }
 
-        this.draw = true;
-        double newAngle = Math.atan2(this.targetPosition.getY() - this.position.getY(), this.targetPosition.getX() - this.position.getX());
+        draw = true;
+        double newAngle = Math.atan2(targetPosition.getY() - position.getY(), targetPosition.getX() - position.getX());
 
         double angleDifference = angle - newAngle;
 
@@ -68,8 +63,8 @@ public class NPC {
         }
 
         Point2D newPosition = new Point2D.Double(
-                this.position.getX() + currentSpeed * Math.cos(angle),
-                this.position.getY() + currentSpeed * Math.sin(angle)
+                position.getX() + currentSpeed * Math.cos(angle),
+                position.getY() + currentSpeed * Math.sin(angle)
         );
 
         boolean hasCollision = false;
@@ -85,16 +80,16 @@ public class NPC {
         }
 
         if (!hasCollision) {
-            this.currentSpeed = standardSpeed;
-            this.position = newPosition;
+            currentSpeed = standardSpeed;
+            position = newPosition;
         } else {
-            this.currentSpeed *= 0.5;
-            this.angle += 0.18 * standardSpeed;
+            currentSpeed *= 0.5;
+            angle += 0.18 * standardSpeed;
         }
 
         // clipping performance is terrible with large amounts of npcs, this is way better
-        if (this.position.getY() < 4096 - 800 && this.position.getX() < 4096 - 416 && this.position.getX() > 4096 - 528) {
-            this.draw = false;
+        if (position.getY() < 4096 - 800 && position.getX() < 4096 - 416 && position.getX() > 4096 - 528) {
+            draw = false;
         }
     }
 
@@ -108,14 +103,14 @@ public class NPC {
         }
 
         AffineTransform tx = new AffineTransform();
-        tx.translate(this.position.getX() - (double) image.getWidth() / scale, this.position.getY() - (double) image.getHeight() / scale);
+        tx.translate(position.getX() - (double) image.getWidth() / scale, position.getY() - (double) image.getHeight() / scale);
         tx.rotate(angle, (double) image.getWidth() / scale, (double) image.getHeight() / scale);
         tx.scale((double) 2 / scale, (double) 2 / scale);
         g2d.drawImage(image, tx, null);
     }
 
     public Point2D getPosition() {
-        return this.position;
+        return position;
     }
 
     public int getImageSize() {
@@ -123,12 +118,12 @@ public class NPC {
     }
 
     public Point2D getTargetPosition() {
-        return this.targetPosition;
+        return targetPosition;
     }
 
     public boolean contains(Point2D p) {
         int size = getImageSize();
-        return new Rectangle2D.Double(this.position.getX() - (double) size / 2, this.position.getY() - (double) size / 2, size, size).contains(p);
+        return new Rectangle2D.Double(position.getX() - (double) size / 2, position.getY() - (double) size / 2, size, size).contains(p);
     }
 
     public void setStandardSpeed(double standardSpeed) {
@@ -136,6 +131,6 @@ public class NPC {
     }
 
     public void toggleClicked() {
-        this.clicked = !this.clicked;
+        clicked = !clicked;
     }
 }

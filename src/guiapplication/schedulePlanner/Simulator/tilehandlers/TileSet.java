@@ -23,8 +23,8 @@ public class TileSet {
         tiles.add(null);
 
         try {
-            for (int i = 0; i < this.tileSets.size(); i++) {
-                JsonObject object = this.tileSets.getJsonObject(i);
+            for (int i = 0; i < tileSets.size(); i++) {
+                JsonObject object = tileSets.getJsonObject(i);
                 BufferedImage tilemap = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/" + object.getString("image"))));
 
                 int tileHeight = object.getInt("tileheight");
@@ -42,6 +42,6 @@ public class TileSet {
     }
 
     public BufferedImage getTile(int gid) {
-        return this.tiles.get(gid);
+        return tiles.get(gid);
     }
 }

@@ -34,15 +34,15 @@ public class CreateWagonSetPopup extends SchedulePopupView {
         VBox amountSelectionBox = new VBox(amountSelectionLable,amountSelectionComboBox);
 
         Label wagon1Label = new Label("Kies uit de mogelijke wagon:");
-        ComboBox<Wagon> wagon1ComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getWagonList()));
+        ComboBox<Wagon> wagon1ComboBox = new ComboBox<>(FXCollections.observableList(schedule.getWagonList()));
         VBox wagon1Box = new VBox(wagon1Label, wagon1ComboBox);
 
         Label wagon2Label = new Label("Kies uit de mogelijke wagon:");
-        ComboBox<Wagon> wagon2ComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getWagonList()));
+        ComboBox<Wagon> wagon2ComboBox = new ComboBox<>(FXCollections.observableList(schedule.getWagonList()));
         VBox wagon2Box = new VBox(wagon2Label, wagon2ComboBox);
 
         Label wagon3Label = new Label("Kies uit de mogelijke wagon:");;
-        ComboBox<Wagon> wagon3ComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getWagonList()));;
+        ComboBox<Wagon> wagon3ComboBox = new ComboBox<>(FXCollections.observableList(schedule.getWagonList()));;
         VBox wagon3Box = new VBox(wagon3Label, wagon3ComboBox);
 
         Button saveButton = new Button("Voeg toe");
@@ -68,7 +68,7 @@ public class CreateWagonSetPopup extends SchedulePopupView {
                         break;
                 }
 
-                this.schedule.addWagonSet(addedWagons);
+                schedule.addWagonSet(addedWagons);
                 super.callMainView();
             }
         });

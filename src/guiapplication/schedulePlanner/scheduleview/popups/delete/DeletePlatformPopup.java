@@ -25,7 +25,7 @@ public class DeletePlatformPopup extends SchedulePopupView {
         BorderPane pane = new BorderPane();
 
         Label platformLabel = new Label("Kies uit de mogelijke perrons:");
-        ComboBox<Platform> platformComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getPlatformList()));
+        ComboBox<Platform> platformComboBox = new ComboBox<>(FXCollections.observableList(schedule.getPlatformList()));
         VBox trainBox = new VBox(platformLabel, platformComboBox);
 
         Button saveButton = new Button("Verwijder");
@@ -35,7 +35,7 @@ public class DeletePlatformPopup extends SchedulePopupView {
                 alert.setHeaderText("Error, je bent data vergeten in te vullen");
                 alert.showAndWait();
             } else {
-                this.schedule.deletePlatform(
+                schedule.deletePlatform(
                         platformComboBox.getValue()
                 );
                 super.callMainView();

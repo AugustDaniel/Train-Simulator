@@ -1,7 +1,6 @@
 package guiapplication.schedulePlanner.scheduleview.popups.delete;
 
 import data.Machinist;
-import data.Platform;
 import data.Schedule;
 import guiapplication.schedulePlanner.ReturnableView;
 import guiapplication.schedulePlanner.scheduleview.popups.SchedulePopupView;
@@ -27,7 +26,7 @@ public class DeleteMachinistPopup extends SchedulePopupView {
         BorderPane pane = new BorderPane();
 
         Label machinistLabel = new Label("Kies uit de mogelijke machinisten:");
-        ComboBox<Machinist> machinistComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getMachinistsList()));
+        ComboBox<Machinist> machinistComboBox = new ComboBox<>(FXCollections.observableList(schedule.getMachinistsList()));
         VBox trainBox = new VBox(machinistLabel, machinistComboBox);
 
         Button saveButton = new Button("Verwijder");
@@ -37,7 +36,7 @@ public class DeleteMachinistPopup extends SchedulePopupView {
                 alert.setHeaderText("Error, je bent data vergeten in te vullen");
                 alert.showAndWait();
             } else {
-                this.schedule.deleteMachinist(
+                schedule.deleteMachinist(
                         machinistComboBox.getValue()
                 );
                 super.callMainView();

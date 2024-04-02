@@ -22,7 +22,7 @@ public class ChangeWagonPopup extends SchedulePopupView {
         BorderPane pane = new BorderPane();
 
         Label amountSelectionLable = new Label("Kies uit de hoeveelheid wagens:");
-        ComboBox<Wagon> amountSelectionComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getWagonList()));
+        ComboBox<Wagon> amountSelectionComboBox = new ComboBox<>(FXCollections.observableList(schedule.getWagonList()));
         VBox amountSelectionBox = new VBox(amountSelectionLable,amountSelectionComboBox);
 
         Label toChangeLabel = new Label("waar wilt u het nummer naar veranderen?:");
@@ -37,8 +37,8 @@ public class ChangeWagonPopup extends SchedulePopupView {
                 alert.setHeaderText("Error, je bent data vergeten in te vullen");
                 alert.showAndWait();
             } else {
-                this.schedule.getWagonList().get(
-                        this.schedule.getWagonList().indexOf(amountSelectionComboBox.getValue())
+                schedule.getWagonList().get(
+                        schedule.getWagonList().indexOf(amountSelectionComboBox.getValue())
                 ).setMaxCapacity(Integer.parseInt(toChangeTextField.getText()));
                 super.callMainView();
             }

@@ -36,14 +36,14 @@ public class MeasurePoint {
     public void update(List<Traveler> npcs) {
         for (Traveler npc : npcs) {
             if (npc.getCurrentNode() == node) {
-                this.npcs.add(npc);
-                this.infoScreen.updateInfo("Aantal overgelopen: " + this.npcs.size(), 1);
+                npcs.add(npc);
+                infoScreen.updateInfo("Aantal overgelopen: " + npcs.size(), 1);
             }
         }
     }
 
     public void draw(Graphics2D g) {
-        this.infoScreen.draw(g);
+        infoScreen.draw(g);
         g.setColor(Color.RED);
         g.draw(new Rectangle2D.Double(node.getPosition().getX() - 16, node.getPosition().getY() - 16, 32, 32));
     }

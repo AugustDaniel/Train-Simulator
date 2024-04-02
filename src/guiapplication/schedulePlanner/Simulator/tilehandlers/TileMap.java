@@ -37,7 +37,7 @@ public class TileMap {
     }
 
     public void draw(Graphics2D graphics) {
-        for (TileLayer layer : this.layers) {
+        for (TileLayer layer : layers) {
             layer.draw(graphics);
         }
     }

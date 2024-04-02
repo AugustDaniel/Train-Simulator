@@ -23,6 +23,6 @@ public class Target {
     }
 
     public void calculateShortestPath() {
-        this.shortestPath = PathFinding.getShortestPath(node);
+        shortestPath = PathFinding.getShortestPath(node);
     }
 }

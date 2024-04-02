@@ -29,7 +29,7 @@ public class ScheduleFileView implements View {
         saveScheduleButton.setOnAction(e ->
                 {
                     try {
-                        IOHelper.saveObject(this.subject.getSchedule(),
+                        IOHelper.saveObject(subject.getSchedule(),
                                 IOHelper.getFileFromChooser("Selecteer gewenste locatie"));
                     } catch (Exception ex) {
                         Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -42,7 +42,7 @@ public class ScheduleFileView implements View {
         loadScheduleButton.setOnAction(e ->
                 {
                     try {
-                        this.subject.setSchedule((Schedule) IOHelper.readObject(IOHelper.getFileFromChooser("Selecteer planning")));
+                        subject.setSchedule((Schedule) IOHelper.readObject(IOHelper.getFileFromChooser("Selecteer planning")));
                     } catch (Exception ex) {
                         Alert alert = new Alert(Alert.AlertType.WARNING);
                         alert.setHeaderText("Ongeldige planning");

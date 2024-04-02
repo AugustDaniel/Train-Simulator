@@ -37,31 +37,31 @@ public class TravelerSpawner implements util.Observer{
             return;
         }
 
-        if (this.journeysToSpawn.isEmpty()) {
+        if (journeysToSpawn.isEmpty()) {
             return;
         }
 
         timer -= delay;
-        Map.Entry<Journey, Integer> journey = this.journeysToSpawn.peek();
+        Map.Entry<Journey, Integer> journey = journeysToSpawn.peek();
 
         if (journey.getValue() > counter) {
             Node spawnPoint = checkSpawnPoint(PathFinding.getRandomSpawnPoint());
             Traveler traveler = new Traveler(spawnPoint,journey.getKey(),npcSpeed);
             npcs.add(traveler);
             counter++;
-        } else if (this.journeysToSpawn.size() > 1) {
-            this.journeysToSpawn.poll();
+        } else if (journeysToSpawn.size() > 1) {
+            journeysToSpawn.poll();
             counter = 0;
         }
     }
 
     public void addToQueue(Journey journey) {
-        if (this.journeysToSpawn.stream().anyMatch(e -> e.getKey().equals(journey))) {
+        if (journeysToSpawn.stream().anyMatch(e -> e.getKey().equals(journey))) {
             return;
         }
 
         int amountOfSpawns = (int) Math.ceil((journey.getTrain().getCapacity() * (journey.getTrainPopularity() / 10.0)) * (spawnRate / 100.0));
-        this.journeysToSpawn.offer(new AbstractMap.SimpleEntry<>(journey, amountOfSpawns));
+        journeysToSpawn.offer(new AbstractMap.SimpleEntry<>(journey, amountOfSpawns));
     }
 
     public util.graph.Node checkSpawnPoint(util.graph.Node spawnPoint) {
@@ -75,12 +75,12 @@ public class TravelerSpawner implements util.Observer{
     }
 
     public void setSpawnRate(int newPeopleCount) {
-        this.spawnRate = newPeopleCount;
+        spawnRate = newPeopleCount;
     }
 
     @Override
     public void update() {
-        this.delay = this.clock.getTimeSpeed() / 10;
-        this.npcSpeed = 1 / this.clock.getTimeSpeed();
+        delay = clock.getTimeSpeed() / 10;
+        npcSpeed = 1 / clock.getTimeSpeed();
     }
 }

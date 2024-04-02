@@ -60,7 +60,7 @@ public class CreatePlatformPopup extends SchedulePopupView {
             }
 
             try {//try-catch zodat er geen karakters of letters kunnen worden gebruikt. Het geeft dan een warning
-                this.schedule.addPlatform(new Platform(Integer.parseInt(inputField.getText())));
+                schedule.addPlatform(new Platform(Integer.parseInt(inputField.getText())));
                 inputField.clear();
                 super.callMainView();
 

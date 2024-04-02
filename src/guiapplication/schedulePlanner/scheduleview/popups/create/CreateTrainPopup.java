@@ -30,13 +30,13 @@ public class CreateTrainPopup extends SchedulePopupView {
         VBox idBox = new VBox(infoLabel, inputField);
 
         Label platformInfo = new Label("Kies uit wagon sets:");
-        ComboBox<List<Wagon>> trainComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getWagonSetList()));
+        ComboBox<List<Wagon>> trainComboBox = new ComboBox<>(FXCollections.observableList(schedule.getWagonSetList()));
         VBox WagonSetBox = new VBox(platformInfo, trainComboBox);
 
         Button saveButton = new Button("Voeg toe");
         saveButton.setOnAction(e -> {
             if (inputField.getText().length() < 11 && !inputField.getText().isEmpty()){//heb er een limiet aan gezet
-                this.schedule.addTrain(new Train(
+                schedule.addTrain(new Train(
                         inputField.getText(),
                         trainComboBox.getValue()
                 ));

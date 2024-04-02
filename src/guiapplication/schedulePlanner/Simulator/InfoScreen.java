@@ -15,7 +15,7 @@ public class InfoScreen {
         this.info = info;
         this.position = position;
         this.width = 150;
-        this.height = 80; //todo calculate these
+        this.height = 80;
     }
 
     public void draw(Graphics2D g) {
@@ -25,18 +25,18 @@ public class InfoScreen {
         g.setColor(Color.BLACK);
 
         int lineHeight = g.getFontMetrics().getHeight();
-        int textY = (int) (this.position.getY() + lineHeight);
+        int textY = (int) (position.getY() + lineHeight);
         for (String line : this.info) {
-            g.drawString(line, (int) (this.position.getX() + 10), textY);
+            g.drawString(line, (int) (position.getX() + 10), textY);
             textY += lineHeight;
         }
     }
 
     public void updatePosition(double x, double y) {
-        this.position = new Point2D.Double(x + 25, y - 50); //todo change these magic offsets
+        position = new Point2D.Double(x + 25, y - 50);
     }
 
     public void updateInfo(String s, int index) {
-        this.info[index] = s;
+        info[index] = s;
     }
 }

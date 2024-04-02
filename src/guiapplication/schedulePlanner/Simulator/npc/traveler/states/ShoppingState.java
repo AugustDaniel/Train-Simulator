@@ -16,13 +16,13 @@ public class ShoppingState implements TravelerState {
 
     @Override
     public void handle(LocalTime time) {
-        if (time.isAfter(this.traveler.getJourney().getArrivalTime().minusMinutes(10))) {
-            this.traveler.setState(new ArrivingState(this.traveler));
+        if (time.isAfter(traveler.getJourney().getArrivalTime().minusMinutes(10))) {
+            traveler.setState(new ArrivingState(traveler));
         }
 
-        if (time.isAfter(this.traveler.getJourney().getDepartureTime())
-                || time.equals(this.traveler.getJourney().getDepartureTime())) {
-            this.traveler.setState(new LeavingState(this.traveler));
+        if (time.isAfter(traveler.getJourney().getDepartureTime())
+                || time.equals(traveler.getJourney().getDepartureTime())) {
+            traveler.setState(new LeavingState(traveler));
         }
     }
 

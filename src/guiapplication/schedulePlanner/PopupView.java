@@ -19,8 +19,8 @@ abstract public class PopupView implements View {
     }
 
     public void callMainView() {
-        if (this.closePopup) {
-            this.mainView.setPopup(null);
+        if (closePopup) {
+            mainView.setPopup(null);
         }
 
         mainView.returnToView();

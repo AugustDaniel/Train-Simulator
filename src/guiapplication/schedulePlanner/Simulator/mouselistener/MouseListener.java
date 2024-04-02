@@ -38,6 +38,6 @@ public class MouseListener {
     }
 
     public void addCallback(MouseCallback callback) {
-        this.callbacks.add(callback);
+        callbacks.add(callback);
     }
 }

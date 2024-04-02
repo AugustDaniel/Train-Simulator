@@ -7,7 +7,6 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 
@@ -25,7 +24,7 @@ public class Clock extends Subject<Clock> {
     public void update(double deltaTime) {
         long now = System.currentTimeMillis();
         long deltaActualTime = now-previousTime;
-        if (deltaActualTime > this.timeSpeed * 1000) {
+        if (deltaActualTime > timeSpeed * 1000) {
             currentTimeInt++;
             if (currentTimeInt % 100 > 59) {
                 currentTimeInt -= 60;
