@@ -42,32 +42,32 @@ public class CreatePlatformPopup extends SchedulePopupView {
     private Button getSaveButton(TextField inputField) {
         Button saveButton = new Button("Voeg toe");
         saveButton.setOnAction(e -> {
-            System.out.println("test");
-            if (schedule.getPlatformList().size() >= 15) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setHeaderText("Error, Je kan maar maximaal 15 perrons toevoegen");
-                alert.showAndWait();
-            } else if (Integer.parseInt(inputField.getText()) < 15 || Integer.parseInt(inputField.getText()) > 0) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setHeaderText("Error, Het platform nummer moet tussen de 1-15 zitten");
-                alert.showAndWait();
-            }
-
-            if (!inputField.getText().isEmpty()) {
-                for (Platform platform : schedule.getPlatformList()) {
-                    if (Integer.parseInt(inputField.getText()) == platform.getPlatformNumber()) {
-                        Alert alert = new Alert(Alert.AlertType.WARNING);
-                        alert.setHeaderText("Error, Dit platformnummer bestaat al");
-                        alert.showAndWait();
+            try {
+                if (schedule.getPlatformList().size() >= 15) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setHeaderText("Error, Je kan maar maximaal 15 perrons toevoegen");
+                    alert.showAndWait();
+                } else if (Integer.parseInt(inputField.getText()) > 15 || Integer.parseInt(inputField.getText()) <= 0) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setHeaderText("Error, Het platform nummer moet tussen de 1-15 zitten");
+                    alert.showAndWait();
+                } else if (inputField.getText().isEmpty()) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setHeaderText("Error, Er is niks ingevuld");
+                    alert.showAndWait();
+                }
+                if (!inputField.getText().isEmpty()) {
+                    for (Platform platform : schedule.getPlatformList()) {
+                        if (Integer.parseInt(inputField.getText()) == platform.getPlatformNumber()) {
+                            Alert alert = new Alert(Alert.AlertType.WARNING);
+                            alert.setHeaderText("Error, Dit platformnummer bestaat al");
+                            alert.showAndWait();
+                        }
                     }
                 }
-            }
-
-            try {//try-catch zodat er geen karakters of letters kunnen worden gebruikt. Het geeft dan een warning
                 schedule.addPlatform(new Platform(Integer.parseInt(inputField.getText())));
                 inputField.clear();
                 super.callMainView();
-
             } catch (Exception numberNotFound) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setHeaderText("Error, Het kan zijn dat je iets anders hebt neergezet dan een nummer");

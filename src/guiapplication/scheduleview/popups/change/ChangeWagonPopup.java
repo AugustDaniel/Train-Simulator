@@ -1,6 +1,7 @@
 package guiapplication.scheduleview.popups.change;
 
-import data.*;
+import data.Schedule;
+import data.Wagon;
 import guiapplication.ReturnableView;
 import guiapplication.scheduleview.popups.SchedulePopupView;
 import javafx.collections.FXCollections;
@@ -32,15 +33,21 @@ public class ChangeWagonPopup extends SchedulePopupView {
 
         Button saveButton = new Button("Voeg toe");
         saveButton.setOnAction(e -> {
-            if (false) {
+            try {
+                if (false) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setHeaderText("Error, je bent data vergeten in te vullen");
+                    alert.showAndWait();
+                } else {
+                    schedule.getWagonList().get(
+                            schedule.getWagonList().indexOf(amountSelectionComboBox.getValue())
+                    ).setMaxCapacity(Integer.parseInt(toChangeTextField.getText()));
+                    super.callMainView();
+                }
+            } catch (Exception numberNotFound) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setHeaderText("Error, je bent data vergeten in te vullen");
+                alert.setHeaderText("Error, Het kan zijn dat je iets anders hebt neergezet dan een nummer");
                 alert.showAndWait();
-            } else {
-                schedule.getWagonList().get(
-                        schedule.getWagonList().indexOf(amountSelectionComboBox.getValue())
-                ).setMaxCapacity(Integer.parseInt(toChangeTextField.getText()));
-                super.callMainView();
             }
         });
 

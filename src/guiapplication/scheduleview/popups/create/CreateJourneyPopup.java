@@ -4,12 +4,12 @@ import data.*;
 import guiapplication.ReturnableView;
 import guiapplication.scheduleview.popups.SchedulePopupView;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
-import javafx.collections.ObservableList;
 import util.TimeFormatter;
 
 import java.time.LocalTime;
@@ -51,38 +51,44 @@ public class CreateJourneyPopup extends SchedulePopupView {
 
         Button saveButton = new Button("Voeg toe");
         saveButton.setOnAction(e -> {
-            if (departureTimeInput.getText().isEmpty()
-                    || trainComboBox.getSelectionModel().isEmpty() || platformComboBox.getSelectionModel().isEmpty()) {
+            try {
+                if (departureTimeInput.getText().isEmpty()
+                        || trainComboBox.getSelectionModel().isEmpty() || platformComboBox.getSelectionModel().isEmpty()) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setHeaderText("Error, je bent data vergeten in te vullen");
+                    alert.showAndWait();
+                } else if (overlappingTrains()) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setHeaderText("Error, 2 treinen overlappen qua tijd");
+                    alert.showAndWait();
+                } else if (timeBetweenArriveAndDeparture()) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setHeaderText("Error, de aankomst- en vertrektijd moet tussen 0000 en 2359 zitten");
+                    alert.showAndWait();
+                } else if (timeHigherThan60()) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setHeaderText("Error, 2 treinen overlappen qua tijd");
+                    alert.showAndWait();
+                } else if (Integer.parseInt(popularityInput.getText()) <= 0 || Integer.parseInt(popularityInput.getText()) > 10) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setHeaderText("Error, er is geen trein populariteit toegevoegd of is niet tussen de 1 en 10");
+                    alert.showAndWait();
+                } else {
+                    LocalTime inputTime = TimeFormatter.intToLocalTime(Integer.parseInt(departureTimeInput.getText()));
+                    schedule.addJourney(new Journey(
+                            inputTime.minusMinutes(10),
+                            inputTime,
+                            trainComboBox.getValue(),
+                            Integer.parseInt(popularityInput.getText()),
+                            platformComboBox.getValue(),
+                            machinistCombobox.getValue()
+                    ));
+                    super.callMainView();
+                }
+            } catch (Exception numberNotFound) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setHeaderText("Error, je bent data vergeten in te vullen");
+                alert.setHeaderText("Error, Het kan zijn dat je iets anders hebt neergezet dan een nummer");
                 alert.showAndWait();
-            } else if (overlappingTrains()) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setHeaderText("Error, 2 treinen overlappen qua tijd");
-                alert.showAndWait();
-            } else if (timeBetweenArriveAndDeparture()) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setHeaderText("Error, de aankomst- en vertrektijd moet tussen 0000 en 2359 zitten");
-                alert.showAndWait();
-            } else if (timeHigherThan60()) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setHeaderText("Error, 2 treinen overlappen qua tijd");
-                alert.showAndWait();
-            } else if (Integer.parseInt(popularityInput.getText()) <= 0 || Integer.parseInt(popularityInput.getText()) > 10) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setHeaderText("Error, er is geen trein populariteit toegevoegd of is niet tussen de 1 en 10");
-                alert.showAndWait();
-            } else {
-                LocalTime inputTime = TimeFormatter.intToLocalTime(Integer.parseInt(departureTimeInput.getText()));
-                schedule.addJourney(new Journey(
-                        inputTime.minusMinutes(10),
-                        inputTime,
-                        trainComboBox.getValue(),
-                        Integer.parseInt(popularityInput.getText()),
-                        platformComboBox.getValue(),
-                        machinistCombobox.getValue()
-                ));
-                super.callMainView();
             }
         });
 

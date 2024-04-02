@@ -1,6 +1,8 @@
 package guiapplication.scheduleview.popups.create;
 
-import data.*;
+import data.Schedule;
+import data.Train;
+import data.Wagon;
 import guiapplication.ReturnableView;
 import guiapplication.scheduleview.popups.SchedulePopupView;
 import javafx.collections.FXCollections;
@@ -15,6 +17,7 @@ import java.util.List;
 
 
 public class CreateTrainPopup extends SchedulePopupView {
+    private int maxCharacter = 11;
 
     public CreateTrainPopup(ReturnableView mainView, Schedule schedule) {
         super(mainView, schedule);
@@ -35,11 +38,11 @@ public class CreateTrainPopup extends SchedulePopupView {
 
         Button saveButton = new Button("Voeg toe");
         saveButton.setOnAction(e -> {
-            if (inputField.getText().isEmpty() || inputField.getText().length() >= 11 || trainComboBox.getItems().isEmpty()) {
+            if (inputField.getText().isEmpty() || inputField.getText().length() >= maxCharacter || trainComboBox.getItems().isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setHeaderText("Error, er is geen data of er zijn teveel karakters toegevoegd");
                 alert.showAndWait();
-            } else if (inputField.getText().length() < 11 && !inputField.getText().isEmpty() && !trainComboBox.getItems().isEmpty()) {//heb er een limiet aan gezet
+            } else if (inputField.getText().length() < maxCharacter && !inputField.getText().isEmpty() && !trainComboBox.getItems().isEmpty()) {
                 schedule.addTrain(new Train(
                         inputField.getText(),
                         trainComboBox.getValue()

@@ -32,15 +32,21 @@ public class ChangePlatformPopup extends SchedulePopupView {
 
         Button saveButton = new Button("Voeg toe");
         saveButton.setOnAction(e -> {
-            if (platformSelectionComboBox.getSelectionModel().isEmpty() || toChangeTextField.getText().isEmpty()) {
+            try {
+                if (platformSelectionComboBox.getSelectionModel().isEmpty() || toChangeTextField.getText().isEmpty()) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setHeaderText("Error, je bent data vergeten in te vullen");
+                    alert.showAndWait();
+                } else {
+                    schedule.getPlatformList().get(
+                            schedule.getPlatformList().indexOf(platformSelectionComboBox.getValue())
+                    ).setPlatformNumber(Integer.parseInt(toChangeTextField.getText()));
+                    super.callMainView();
+                }
+            } catch (Exception numberNotFound) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setHeaderText("Error, je bent data vergeten in te vullen");
+                alert.setHeaderText("Error, Het kan zijn dat je iets anders hebt neergezet dan een nummer");
                 alert.showAndWait();
-            } else {
-                schedule.getPlatformList().get(
-                        schedule.getPlatformList().indexOf(platformSelectionComboBox.getValue())
-                ).setPlatformNumber(Integer.parseInt(toChangeTextField.getText()));
-                super.callMainView();
             }
         });
 

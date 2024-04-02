@@ -1,11 +1,16 @@
 package guiapplication.scheduleview.popups.change;
 
-import data.*;
+import data.Schedule;
+import data.Train;
+import data.Wagon;
 import guiapplication.ReturnableView;
 import guiapplication.scheduleview.popups.SchedulePopupView;
 import javafx.collections.FXCollections;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
@@ -33,14 +38,20 @@ public class ChangeTrainPopup extends SchedulePopupView {
 
         Button saveButton = new Button("Voeg toe");
         saveButton.setOnAction(e -> {
-            if (platformSelectionComboBox.getSelectionModel().isEmpty() || toChangeTextField.getSelectionModel().isEmpty()) {
+            try {
+                if (platformSelectionComboBox.getSelectionModel().isEmpty() || toChangeTextField.getSelectionModel().isEmpty()) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setHeaderText("Error, je bent data vergeten in te vullen");
+                    alert.showAndWait();
+                } else {
+                    schedule.getTrainList().get(
+                            schedule.getTrainList().indexOf(platformSelectionComboBox.getValue())).setWagonList(toChangeTextField.getValue());
+                    super.callMainView();
+                }
+            } catch (Exception numberNotFound) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setHeaderText("Error, je bent data vergeten in te vullen");
+                alert.setHeaderText("Error, Het kan zijn dat je iets anders hebt neergezet dan een nummer");
                 alert.showAndWait();
-            } else {
-                schedule.getTrainList().get(
-                        schedule.getTrainList().indexOf(platformSelectionComboBox.getValue())).setWagonList(toChangeTextField.getValue());
-                super.callMainView();
             }
         });
 

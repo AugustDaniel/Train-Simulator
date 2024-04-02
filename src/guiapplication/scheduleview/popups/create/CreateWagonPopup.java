@@ -23,7 +23,6 @@ public class CreateWagonPopup extends SchedulePopupView {
     public Node getNode() {
         BorderPane pane = new BorderPane();
 
-
         Label idNumberWagon = new Label("Voer het ID nummer van de wagon in:");
         TextField idNumberWagonInput = new TextField();
         VBox idNumberWagonBox = new VBox(idNumberWagon, idNumberWagonInput);
@@ -34,16 +33,22 @@ public class CreateWagonPopup extends SchedulePopupView {
 
         Button saveButton = new Button("Voeg toe");
         saveButton.setOnAction(e -> {
-            if (wagonCapacityInput.getText().isEmpty() || idNumberWagonInput.getText().isEmpty() || Integer.parseInt(wagonCapacityInput.getText()) > 75) {
+            try {
+                if (wagonCapacityInput.getText().isEmpty() || idNumberWagonInput.getText().isEmpty() || Integer.parseInt(wagonCapacityInput.getText()) > 75) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setHeaderText("Error, je bent data vergeten in te vullen of hebt de capaciteit van 75 overschreden");
+                    alert.showAndWait();
+                } else {
+                    schedule.addWagon(new Wagon(
+                            idNumberWagonInput.getText(),
+                            Integer.parseInt(wagonCapacityInput.getText())
+                    ));
+                    super.callMainView();
+                }
+            } catch (Exception numberNotFound) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setHeaderText("Error, je bent data vergeten in te vullen of hebt de capaciteit van 75 overschreden");
+                alert.setHeaderText("Error, Het kan zijn dat je iets anders hebt neergezet dan een nummer");
                 alert.showAndWait();
-            } else {
-                schedule.addWagon(new Wagon(
-                        idNumberWagonInput.getText(),
-                        Integer.parseInt(wagonCapacityInput.getText())
-                ));
-                super.callMainView();
             }
         });
 

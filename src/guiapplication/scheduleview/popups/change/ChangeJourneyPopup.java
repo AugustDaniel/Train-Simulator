@@ -63,44 +63,50 @@ public class ChangeJourneyPopup extends SchedulePopupView {
 
         Button saveButton = new Button("Verander");
         saveButton.setOnAction(e -> {
-            if (journeySelectionComboBox.getSelectionModel().isEmpty() || toCangeComboBox.getSelectionModel().isEmpty()) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setHeaderText("Error, je bent data vergeten in te vullen");
-                alert.showAndWait();
-            } else {
-                if (toCangeComboBox.getValue().equals("perron")) {
-                    schedule.getJourneyList().get(
-                            schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
-                    ).setPlatform(changePlatformIntoComboBox.getValue());
+            try {
+                if (journeySelectionComboBox.getSelectionModel().isEmpty() || toCangeComboBox.getSelectionModel().isEmpty()) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setHeaderText("Error, je bent data vergeten in te vullen");
+                    alert.showAndWait();
+                } else {
+                    if (toCangeComboBox.getValue().equals("perron")) {
+                        schedule.getJourneyList().get(
+                                schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
+                        ).setPlatform(changePlatformIntoComboBox.getValue());
 
-                } else if (toCangeComboBox.getValue().equals("trein")) {
-                    schedule.getJourneyList().get(
-                            schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
-                    ).setTrain(changeTrainIntoComboBox.getValue());
+                    } else if (toCangeComboBox.getValue().equals("trein")) {
+                        schedule.getJourneyList().get(
+                                schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
+                        ).setTrain(changeTrainIntoComboBox.getValue());
 
-                } else if (toCangeComboBox.getValue().equals("aankomst tijd")) {
-                    schedule.getJourneyList().get(
-                            schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
-                    ).setArrivalTime(TimeFormatter.intToLocalTime(Integer.parseInt(changeArrivalTimeInput.getText())));
+                    } else if (toCangeComboBox.getValue().equals("aankomst tijd")) {
+                        schedule.getJourneyList().get(
+                                schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
+                        ).setArrivalTime(TimeFormatter.intToLocalTime(Integer.parseInt(changeArrivalTimeInput.getText())));
 
-                    schedule.getJourneyList().get(
-                            schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
-                    ).setDepartureTime(TimeFormatter.intToLocalTime(Integer.parseInt(changeArrivalTimeInput.getText())).plusMinutes(10));
+                        schedule.getJourneyList().get(
+                                schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
+                        ).setDepartureTime(TimeFormatter.intToLocalTime(Integer.parseInt(changeArrivalTimeInput.getText())).plusMinutes(10));
 
-                } else if (toCangeComboBox.getValue().equals("vertrek tijd")) {
-                    schedule.getJourneyList().get(
-                            schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
-                    ).setDepartureTime(TimeFormatter.intToLocalTime(Integer.parseInt(changeDepartureTimeInput.getText())));
+                    } else if (toCangeComboBox.getValue().equals("vertrek tijd")) {
+                        schedule.getJourneyList().get(
+                                schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
+                        ).setDepartureTime(TimeFormatter.intToLocalTime(Integer.parseInt(changeDepartureTimeInput.getText())));
 
-                    schedule.getJourneyList().get(
-                            schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
-                    ).setArrivalTime(TimeFormatter.intToLocalTime(Integer.parseInt(changeDepartureTimeInput.getText())).minusMinutes(10));
-                } else if (toCangeComboBox.getValue().equals("machinist")) {
-                    schedule.getJourneyList().get(
-                            schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
-                    ).setMachinist(changeMachinistIntoComboBox.getValue());
+                        schedule.getJourneyList().get(
+                                schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
+                        ).setArrivalTime(TimeFormatter.intToLocalTime(Integer.parseInt(changeDepartureTimeInput.getText())).minusMinutes(10));
+                    } else if (toCangeComboBox.getValue().equals("machinist")) {
+                        schedule.getJourneyList().get(
+                                schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
+                        ).setMachinist(changeMachinistIntoComboBox.getValue());
+                    }
+                    super.callMainView();
                 }
-                super.callMainView();
+            } catch (Exception numberNotFound) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setHeaderText("Error, Het kan zijn dat je iets anders hebt neergezet dan een nummer");
+                alert.showAndWait();
             }
         });
 
