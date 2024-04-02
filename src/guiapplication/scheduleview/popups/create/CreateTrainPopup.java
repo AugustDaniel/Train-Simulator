@@ -35,17 +35,18 @@ public class CreateTrainPopup extends SchedulePopupView {
 
         Button saveButton = new Button("Voeg toe");
         saveButton.setOnAction(e -> {
-            if (inputField.getText().length() < 11 && !inputField.getText().isEmpty()){//heb er een limiet aan gezet
+            if (inputField.getText().isEmpty() || inputField.getText().length() >= 11 || trainComboBox.getItems().isEmpty()){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setHeaderText("Error, er is geen data of er zijn teveel karakters toegevoegd");
+                alert.showAndWait();
+            }
+            else if (inputField.getText().length() < 11 && !inputField.getText().isEmpty() && !trainComboBox.getItems().isEmpty()){//heb er een limiet aan gezet
                 schedule.addTrain(new Train(
                         inputField.getText(),
                         trainComboBox.getValue()
                 ));
                 inputField.clear();
                 super.callMainView();
-            }else if (inputField.getText().isEmpty() || inputField.getText().length() >= 11){
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setHeaderText("Error, er is geen data of er zijn teveel karakters toegevoegd");
-                alert.showAndWait();
             }
         });
         FlowPane buttonBar = new FlowPane(super.getCloseButton(), saveButton);
