@@ -17,7 +17,7 @@ public class LeavingState implements TravelerState{
 
     @Override
     public void handle(LocalTime time) {
-        if (this.traveler.atTargetPosition()) {
+        if (this.traveler.atTargetNode()) {
             this.traveler.setState(new FinishedState());
         }
     }

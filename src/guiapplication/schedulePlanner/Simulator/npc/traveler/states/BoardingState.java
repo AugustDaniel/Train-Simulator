@@ -21,7 +21,7 @@ public class BoardingState implements TravelerState {
             this.traveler.setState(new LeavingState(this.traveler));
         }
 
-        if (this.traveler.atTargetPosition()) {
+        if (this.traveler.atTargetNode()) {
             this.traveler.setState(new FinishedState());
         }
     }
