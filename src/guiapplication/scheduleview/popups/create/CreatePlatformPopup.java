@@ -47,6 +47,10 @@ public class CreatePlatformPopup extends SchedulePopupView {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setHeaderText("Error, Je kan maar maximaal 15 perrons toevoegen");
                 alert.showAndWait();
+            } else if (Integer.parseInt(inputField.getText()) < 15 || Integer.parseInt(inputField.getText()) > 0) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setHeaderText("Error, Het platform nummer moet tussen de 1-15 zitten");
+                alert.showAndWait();
             }
 
             if (!inputField.getText().isEmpty()) {

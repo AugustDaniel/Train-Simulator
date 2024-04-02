@@ -1,11 +1,11 @@
 package guiapplication.scheduleview.components;
 
+import data.ScheduleSubject;
 import guiapplication.PopupView;
 import guiapplication.ReturnableView;
 import guiapplication.View;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
-import data.ScheduleSubject;
 import javafx.scene.layout.VBox;
 import util.Observer;
 
