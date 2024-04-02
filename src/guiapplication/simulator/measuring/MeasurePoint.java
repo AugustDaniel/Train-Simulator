@@ -10,6 +10,7 @@ import java.awt.geom.Rectangle2D;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -32,8 +33,8 @@ public class MeasurePoint {
         );
     }
 
-    public void update(List<Traveler> travelers) {
-        for (Traveler npc : travelers) {
+    public void update(List<Traveler> traveler) {
+        for (Traveler npc : traveler) {
             if (npc.getCurrentNode() == node) {
                 travelers.add(npc);
                 infoScreen.updateInfo("Aantal overgelopen: " + travelers.size(), 1);
