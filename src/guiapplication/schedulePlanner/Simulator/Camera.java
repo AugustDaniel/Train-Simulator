@@ -19,7 +19,7 @@ public class Camera implements MouseCallback {
 
 
     public Camera(Canvas canvas) {
-        this.target = new Point2D.Double(-canvas.getWidth()*4, -canvas.getHeight()*7); //todo magic numbers is zoom for start of map
+        this.target = new Point2D.Double(-canvas.getWidth()*4, -canvas.getHeight()*7);
         this.zoom = 1;
         this.canvas = canvas;
     }
