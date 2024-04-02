@@ -27,7 +27,7 @@ public class ChangeJourneyPopup extends SchedulePopupView {
 
         Label journeySelectionLable = new Label("Kies uit mogelijke reizen:");
         ComboBox<Journey> journeySelectionComboBox = new ComboBox<>(FXCollections.observableList(schedule.getJourneyList()));
-        VBox journeySelectionBox = new VBox(journeySelectionLable,journeySelectionComboBox);
+        VBox journeySelectionBox = new VBox(journeySelectionLable, journeySelectionComboBox);
 
         ArrayList<String> toChange = new ArrayList<>();
         toChange.add("aankomst tijd");
@@ -38,19 +38,19 @@ public class ChangeJourneyPopup extends SchedulePopupView {
 
         Label toChangeLabel = new Label("wat wilt u veranderen?:");
         ComboBox<String> toCangeComboBox = new ComboBox<>(FXCollections.observableList(toChange));
-        VBox toChangeBox = new VBox(toChangeLabel,toCangeComboBox);
+        VBox toChangeBox = new VBox(toChangeLabel, toCangeComboBox);
 
         Label changeMachinistIntoLabel = new Label("kies voor welke machinist het moet zijn:");
         ComboBox<Machinist> changeMachinistIntoComboBox = new ComboBox<>(FXCollections.observableList(schedule.getMachinistsList()));
-        VBox changeMachinistIntoBox = new VBox(changeMachinistIntoLabel,changeMachinistIntoComboBox);
+        VBox changeMachinistIntoBox = new VBox(changeMachinistIntoLabel, changeMachinistIntoComboBox);
 
         Label changePlatformIntoLabel = new Label("kies voor welk perron het moet zijn:");
         ComboBox<Platform> changePlatformIntoComboBox = new ComboBox<>(FXCollections.observableList(schedule.getPlatformList()));
-        VBox changePlatformIntoBox = new VBox(changePlatformIntoLabel,changePlatformIntoComboBox);
+        VBox changePlatformIntoBox = new VBox(changePlatformIntoLabel, changePlatformIntoComboBox);
 
         Label changeTrainIntoLabel = new Label("kies voor welke trein het moet zijn:");
         ComboBox<Train> changeTrainIntoComboBox = new ComboBox<>(FXCollections.observableList(schedule.getTrainList()));
-        VBox changeTrainIntoBox = new VBox(changeTrainIntoLabel,changeTrainIntoComboBox);
+        VBox changeTrainIntoBox = new VBox(changeTrainIntoLabel, changeTrainIntoComboBox);
 
         Label changeArrivalTimeIntoLabel = new Label("kies voor welke aankomsttijd het moet zijn:");
         TextField changeArrivalTimeInput = new TextField();
@@ -58,7 +58,7 @@ public class ChangeJourneyPopup extends SchedulePopupView {
 
         Label ChangeDepartureTimeIntoLabel = new Label("kies voor welke vertrektijd het moet zijn:");
         TextField changeDepartureTimeInput = new TextField();
-        VBox changeDepartureTimeIntoBox = new VBox(ChangeDepartureTimeIntoLabel,changeDepartureTimeInput);
+        VBox changeDepartureTimeIntoBox = new VBox(ChangeDepartureTimeIntoLabel, changeDepartureTimeInput);
 
 
         Button saveButton = new Button("Verander");
@@ -68,7 +68,7 @@ public class ChangeJourneyPopup extends SchedulePopupView {
                 alert.setHeaderText("Error, je bent data vergeten in te vullen");
                 alert.showAndWait();
             } else {
-                if (toCangeComboBox.getValue().equals("perron")){
+                if (toCangeComboBox.getValue().equals("perron")) {
                     schedule.getJourneyList().get(
                             schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
                     ).setPlatform(changePlatformIntoComboBox.getValue());
@@ -106,11 +106,11 @@ public class ChangeJourneyPopup extends SchedulePopupView {
 
         FlowPane buttonBar = new FlowPane(super.getCloseButton(), saveButton);
 
-        VBox inputBox = new VBox(journeySelectionBox,toChangeBox);
+        VBox inputBox = new VBox(journeySelectionBox, toChangeBox);
         pane.setCenter(inputBox);
 
         toCangeComboBox.setOnAction((event) -> {
-            if (toCangeComboBox.getValue().equals("perron")){
+            if (toCangeComboBox.getValue().equals("perron")) {
                 VBox addedinputBox = new VBox(journeySelectionBox, toChangeBox, changePlatformIntoBox);
                 pane.setCenter(addedinputBox);
             } else if (toCangeComboBox.getValue().equals("trein")) {

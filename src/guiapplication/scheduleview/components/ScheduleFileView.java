@@ -54,7 +54,7 @@ public class ScheduleFileView implements View {
         VBox spaceBetweenButtons = new VBox();
         spaceBetweenButtons.setPrefHeight(100);
 
-        VBox box = new VBox(spaceBetweenButtons, saveScheduleButton,loadScheduleButton);
+        VBox box = new VBox(spaceBetweenButtons, saveScheduleButton, loadScheduleButton);
         box.setSpacing(10);
         box.setAlignment(Pos.BASELINE_LEFT);
         return box;

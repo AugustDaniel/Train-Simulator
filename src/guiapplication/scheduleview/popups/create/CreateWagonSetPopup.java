@@ -31,7 +31,7 @@ public class CreateWagonSetPopup extends SchedulePopupView {
         possibleAmounts.add(3);
         Label amountSelectionLable = new Label("Kies uit de hoeveelheid wagens:");
         ComboBox<Integer> amountSelectionComboBox = new ComboBox<>(FXCollections.observableList(possibleAmounts));
-        VBox amountSelectionBox = new VBox(amountSelectionLable,amountSelectionComboBox);
+        VBox amountSelectionBox = new VBox(amountSelectionLable, amountSelectionComboBox);
 
         Label wagon1Label = new Label("Kies uit de mogelijke wagon:");
         ComboBox<Wagon> wagon1ComboBox = new ComboBox<>(FXCollections.observableList(schedule.getWagonList()));
@@ -41,8 +41,10 @@ public class CreateWagonSetPopup extends SchedulePopupView {
         ComboBox<Wagon> wagon2ComboBox = new ComboBox<>(FXCollections.observableList(schedule.getWagonList()));
         VBox wagon2Box = new VBox(wagon2Label, wagon2ComboBox);
 
-        Label wagon3Label = new Label("Kies uit de mogelijke wagon:");;
-        ComboBox<Wagon> wagon3ComboBox = new ComboBox<>(FXCollections.observableList(schedule.getWagonList()));;
+        Label wagon3Label = new Label("Kies uit de mogelijke wagon:");
+        ;
+        ComboBox<Wagon> wagon3ComboBox = new ComboBox<>(FXCollections.observableList(schedule.getWagonList()));
+        ;
         VBox wagon3Box = new VBox(wagon3Label, wagon3ComboBox);
 
         Button saveButton = new Button("Voeg toe");
@@ -53,7 +55,7 @@ public class CreateWagonSetPopup extends SchedulePopupView {
                 alert.showAndWait();
             } else {
                 List<Wagon> addedWagons = new ArrayList<>();
-                switch (amountSelectionComboBox.getValue()){
+                switch (amountSelectionComboBox.getValue()) {
                     case 1:
                         addedWagons.add(wagon1ComboBox.getValue());
                         break;
@@ -80,15 +82,13 @@ public class CreateWagonSetPopup extends SchedulePopupView {
         pane.setBottom(buttonBar);
 
         amountSelectionComboBox.setOnAction((event) -> {
-            if (amountSelectionComboBox.getValue().equals(1)){
+            if (amountSelectionComboBox.getValue().equals(1)) {
                 VBox addedinputs = new VBox(amountSelectionBox, wagon1Box);
                 pane.setCenter(addedinputs);
-            }
-            else if (amountSelectionComboBox.getValue().equals(2)){
+            } else if (amountSelectionComboBox.getValue().equals(2)) {
                 VBox addedinputs = new VBox(amountSelectionBox, wagon1Box, wagon2Box);
                 pane.setCenter(addedinputs);
-            }
-            else if (amountSelectionComboBox.getValue().equals(3)){
+            } else if (amountSelectionComboBox.getValue().equals(3)) {
                 VBox addedinputs = new VBox(amountSelectionBox, wagon1Box, wagon2Box, wagon3Box);
                 pane.setCenter(addedinputs);
             }

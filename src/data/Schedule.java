@@ -14,7 +14,8 @@ public class Schedule implements Serializable {
     private ArrayList<List<Wagon>> wagonSetList;
     private List<Wagon> wagonList;
     private List<Machinist> machinists;
-    public Schedule(){
+
+    public Schedule() {
         this.trainList = new ArrayList<>();
         this.journeyList = new ArrayList<>();
         this.platformList = new ArrayList<>();
@@ -22,23 +23,24 @@ public class Schedule implements Serializable {
         this.wagonList = new ArrayList<>();
         this.machinists = new ArrayList<>();
     }
-    public void addTrain(Train train){
+
+    public void addTrain(Train train) {
         trainList.add(train);
     }
 
-    public void addWagonSet(List<Wagon> wagons){
+    public void addWagonSet(List<Wagon> wagons) {
         wagonSetList.add(wagons);
     }
 
-    public void addJourney(Journey journey){
+    public void addJourney(Journey journey) {
         journeyList.add(journey);
     }
 
-    public void addPlatform(Platform platform){
+    public void addPlatform(Platform platform) {
         platformList.add(platform);
     }
 
-    public void addWagon(Wagon newWagon){
+    public void addWagon(Wagon newWagon) {
         wagonList.add(newWagon);
     }
 
@@ -46,12 +48,12 @@ public class Schedule implements Serializable {
         machinists.add(machinist);
     }
 
-    public void deleteTrain(Train train){
+    public void deleteTrain(Train train) {
         Iterator<Journey> journeyIterator = journeyList.iterator();
 
-        while (journeyIterator.hasNext()){
+        while (journeyIterator.hasNext()) {
             Journey currentJourney = journeyIterator.next();
-            if (currentJourney.getTrain().equals(train)){
+            if (currentJourney.getTrain().equals(train)) {
                 journeyIterator.remove();
                 deleteJourney(currentJourney);
             }
@@ -63,12 +65,12 @@ public class Schedule implements Serializable {
         journeyList.remove(journey);
     }
 
-    public void deletePlatform(Platform platform){
+    public void deletePlatform(Platform platform) {
         Iterator<Journey> journeyIterator = journeyList.iterator();
 
-        while (journeyIterator.hasNext()){
+        while (journeyIterator.hasNext()) {
             Journey currentJourney = journeyIterator.next();
-            if (currentJourney.getPlatform().equals(platform)){
+            if (currentJourney.getPlatform().equals(platform)) {
                 journeyIterator.remove();
                 deleteJourney(currentJourney);
             }
@@ -77,12 +79,12 @@ public class Schedule implements Serializable {
         platformList.remove(platform);
     }
 
-    public void deleteWagonSet(List<Wagon> wagonSet){
+    public void deleteWagonSet(List<Wagon> wagonSet) {
         Iterator<Train> trainIterator = trainList.iterator();
 
-        while (trainIterator.hasNext()){
+        while (trainIterator.hasNext()) {
             Train currentTrain = trainIterator.next();
-            if (currentTrain.getWagons().equals(wagonSet)){
+            if (currentTrain.getWagons().equals(wagonSet)) {
                 trainIterator.remove();
                 deleteTrain(currentTrain);
             }
@@ -93,9 +95,9 @@ public class Schedule implements Serializable {
     public void deleteWagon(Wagon wagon) {
         Iterator<List<Wagon>> wagonSetListItterator = wagonSetList.iterator();
 
-        while (wagonSetListItterator.hasNext()){
+        while (wagonSetListItterator.hasNext()) {
             List<Wagon> currentWagonSet = wagonSetListItterator.next();
-            if (currentWagonSet.contains(wagon)){
+            if (currentWagonSet.contains(wagon)) {
                 wagonSetListItterator.remove();
                 deleteWagonSet(currentWagonSet);
             }
@@ -107,9 +109,9 @@ public class Schedule implements Serializable {
     public void deleteMachinist(Machinist machinist) {
         Iterator<Journey> journeyIterator = journeyList.iterator();
 
-        while (journeyIterator.hasNext()){
+        while (journeyIterator.hasNext()) {
             Journey currentJourney = journeyIterator.next();
-            if (currentJourney.getMachinist().equals(machinist)){
+            if (currentJourney.getMachinist().equals(machinist)) {
                 journeyIterator.remove();
                 deleteJourney(currentJourney);
             }
@@ -118,7 +120,7 @@ public class Schedule implements Serializable {
         machinists.remove(machinist);
     }
 
-    public List<Journey> getJourneyList(){
+    public List<Journey> getJourneyList() {
         return journeyList;
     }
 

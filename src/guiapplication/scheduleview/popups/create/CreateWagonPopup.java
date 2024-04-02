@@ -30,7 +30,7 @@ public class CreateWagonPopup extends SchedulePopupView {
 
         Label wagonCapacity = new Label("Voer maximum capaciteit (75 max) in:");
         TextField wagonCapacityInput = new TextField();
-        VBox wagonCapacityBox = new VBox(wagonCapacity,wagonCapacityInput);
+        VBox wagonCapacityBox = new VBox(wagonCapacity, wagonCapacityInput);
 
         Button saveButton = new Button("Voeg toe");
         saveButton.setOnAction(e -> {

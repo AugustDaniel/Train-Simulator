@@ -103,7 +103,7 @@ public class ScheduleBuilderView implements View {
                 getButton("Verander trein", new ChangeTrainPopup(mainView, subject.getSchedule())),
                 getButton("Verander perron", new ChangePlatformPopup(mainView, subject.getSchedule())),
                 getButton("Verander reis", new ChangeJourneyPopup(mainView, subject.getSchedule()))
-                );
+        );
         return box;
     }
 
