@@ -32,12 +32,12 @@ public class TravelerSpawner implements util.Observer{
     }
 
     public void update(double deltaTime) {
-        if (this.journeysToSpawn.isEmpty()) {
+        if (timer < delay) {
+            timer += deltaTime;
             return;
         }
 
-        if (timer < delay) {
-            timer += deltaTime;
+        if (this.journeysToSpawn.isEmpty()) {
             return;
         }
 
