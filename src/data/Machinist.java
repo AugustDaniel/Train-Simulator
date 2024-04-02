@@ -1,6 +1,9 @@
 package data;
 
-public class Machinist {
+import java.io.Serializable;
+import java.security.SecureRandom;
+
+public class Machinist implements Serializable {
 
     private String name;
 
