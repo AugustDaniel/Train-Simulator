@@ -1,5 +1,7 @@
 package guiapplication.simulator.npc;
 
+import guiapplication.simulator.npc.traveler.Traveler;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.util.List;
@@ -93,10 +95,6 @@ public class NPC {
         }
     }
 
-    public boolean atTargetPosition() {
-        return position.distance(targetPosition) <= 7;
-    }
-
     public void draw(Graphics2D g2d) {
         if (!draw) {
             return;
@@ -127,10 +125,22 @@ public class NPC {
     }
 
     public void setStandardSpeed(double standardSpeed) {
-        this.standardSpeed = standardSpeed;
+        if (((Traveler) this).getJourney().getPlatform().getPlatformNumber() >= 10) {
+            this.standardSpeed = standardSpeed * 6;
+            return;
+        }
+        this.standardSpeed = standardSpeed * 4;
     }
 
     public void toggleClicked() {
         clicked = !clicked;
+    }
+
+    public boolean atTargetPosition() {
+        if (standardSpeed >= 4) {
+            return position.distance(targetPosition) <= 7 * standardSpeed/8;
+        }
+
+        return position.distance(targetPosition) <= 7;
     }
 }

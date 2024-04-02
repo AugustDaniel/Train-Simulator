@@ -65,7 +65,12 @@ public class Traveler extends NPC implements TravelerState {
 
     @Override
     public void update(List<? extends NPC> npcs) {
-        if (position.distance(getTargetPosition()) < 110) {
+        double threshhold = 110 * standardSpeed;
+        if (standardSpeed >= 4) {
+                threshhold = 110 * standardSpeed/8;
+        }
+
+        if (position.distance(getTargetPosition()) < threshhold) {
             checkPosition();
         }
 
@@ -124,6 +129,10 @@ public class Traveler extends NPC implements TravelerState {
     }
 
     public boolean atTargetNode() {
+        if (standardSpeed >= 4) {
+            return position.distance(target.getNode().getPosition()) <= 7 * standardSpeed/8;
+        }
         return position.distance(target.getNode().getPosition()) <= 7;
     }
 }
+
