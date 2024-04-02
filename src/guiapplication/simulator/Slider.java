@@ -13,7 +13,7 @@ public class Slider extends VBox {
 
     public Slider(MapView mapView) {
         //creates labels for the sliders
-        amountOfPeopleLabel = new Label("Maximaal aantal reizigers:");
+        amountOfPeopleLabel = new Label("Reizigers drukte percentage:");
         clockSpeedLabel = new Label("Kloksnelheid:");
 
         //creates people slider
