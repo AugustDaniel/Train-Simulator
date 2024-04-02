@@ -1,8 +1,8 @@
 package guiapplication.scheduleview.components;
 
 import data.Schedule;
+import data.ScheduleSubject;
 import guiapplication.View;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -10,7 +10,6 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import util.IOHelper;
-import data.ScheduleSubject;
 
 public class ScheduleFileView implements View {
 
@@ -26,6 +25,7 @@ public class ScheduleFileView implements View {
         fileChooser.setTitle("Open Resource File");
 
         Button saveScheduleButton = new Button("Sla planning op");
+        saveScheduleButton.setPrefWidth(150);
         saveScheduleButton.setOnAction(e ->
                 {
                     try {
@@ -39,6 +39,7 @@ public class ScheduleFileView implements View {
                 }
         );
         Button loadScheduleButton = new Button("Laad planning");
+        loadScheduleButton.setPrefWidth(150);
         loadScheduleButton.setOnAction(e ->
                 {
                     try {
@@ -50,8 +51,10 @@ public class ScheduleFileView implements View {
                     }
                 }
         );
-        VBox box = new VBox(saveScheduleButton,loadScheduleButton);
-        box.setPadding(new Insets(20,10,10,10));
+        VBox spaceBetweenButtons = new VBox();
+        spaceBetweenButtons.setPrefHeight(100);
+
+        VBox box = new VBox(spaceBetweenButtons, saveScheduleButton,loadScheduleButton);
         box.setSpacing(10);
         box.setAlignment(Pos.BASELINE_LEFT);
         return box;
