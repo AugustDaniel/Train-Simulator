@@ -56,6 +56,7 @@ public class Traveler extends NPC implements TravelerState {
         }
 
         setState(new ArrivingState(this));
+        setStandardSpeed(1);
     }
 
     public Traveler(Node node, Journey journey, double standardSpeed) {
@@ -133,6 +134,11 @@ public class Traveler extends NPC implements TravelerState {
             return position.distance(target.getNode().getPosition()) <= 7 * standardSpeed/8;
         }
         return position.distance(target.getNode().getPosition()) <= 7;
+    }
+
+    @Override
+    public void setStandardSpeed(double standardSpeed) {
+        this.standardSpeed = standardSpeed * this.getJourney().getPlatform().getPlatformNumber() * 2;
     }
 }
 

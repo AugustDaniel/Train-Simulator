@@ -26,11 +26,10 @@ public class NPC {
         this.position = position;
         this.targetPosition = position;
         this.angle = angle;
-        this.standardSpeed = 1;
         this.draw = true;
         this.scale = 8;
         this.currentSpeed = this.standardSpeed;
-
+        this.standardSpeed = 1;
         try {
             this.image = ImageIO.read(Objects.requireNonNull(this.getClass().getResourceAsStream("/astronautHelmet.png")));
         } catch (IOException e) {
@@ -62,6 +61,10 @@ public class NPC {
             angle -= 0.1 * standardSpeed;
         } else {
             angle = newAngle;
+        }
+
+        if (((Traveler) this).getJourney().getPlatform().getPlatformNumber() >= 10) {
+            currentSpeed *= (1 + (double) ((Traveler) this).getJourney().getPlatform().getPlatformNumber() /10);
         }
 
         Point2D newPosition = new Point2D.Double(
@@ -125,11 +128,7 @@ public class NPC {
     }
 
     public void setStandardSpeed(double standardSpeed) {
-        if (((Traveler) this).getJourney().getPlatform().getPlatformNumber() >= 10) {
-            this.standardSpeed = standardSpeed * 6;
-            return;
-        }
-        this.standardSpeed = standardSpeed * 4;
+        this.standardSpeed = standardSpeed * ((Traveler) this).getJourney().getPlatform().getPlatformNumber() * 2;
     }
 
     public void toggleClicked() {
@@ -138,7 +137,7 @@ public class NPC {
 
     public boolean atTargetPosition() {
         if (standardSpeed >= 4) {
-            return position.distance(targetPosition) <= 7 * standardSpeed/8;
+            return position.distance(targetPosition) <= 7 * standardSpeed / 8;
         }
 
         return position.distance(targetPosition) <= 7;
