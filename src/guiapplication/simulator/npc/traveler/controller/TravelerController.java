@@ -1,5 +1,6 @@
 package guiapplication.simulator.npc.traveler.controller;
 
+import data.Journey;
 import data.ScheduleSubject;
 import guiapplication.simulator.Camera;
 import guiapplication.simulator.Clock;
@@ -39,12 +40,11 @@ public class TravelerController implements MouseCallback, util.Observer {
         Sounds.disasterSound(disaster);
 
         if (!disaster) {
-            subject.getSchedule().getJourneyList().forEach(journey -> {
-                        if (journey.getArrivalTime().minusMinutes(30).equals(clock.getCurrentTime())) {
-                            spawner.addToQueue(journey);
-                        }
-                    }
-            );
+            for (Journey journey : subject.getSchedule().getJourneyList()) {
+                if (journey.getArrivalTime().minusMinutes(30).equals(clock.getCurrentTime())) {
+                    spawner.addToQueue(journey);
+                }
+            }
 
             spawner.update(deltaTime);
         }
@@ -67,7 +67,9 @@ public class TravelerController implements MouseCallback, util.Observer {
     }
 
     public void draw(FXGraphics2D g) {
-        travelers.forEach(traveler -> traveler.draw(g));
+        for (Traveler traveler : travelers) {
+            traveler.draw(g);
+        }
     }
 
     @Override
@@ -105,9 +107,13 @@ public class TravelerController implements MouseCallback, util.Observer {
         disaster = !disaster;
 
         if (disaster) {
-            travelers.forEach(t -> t.setState(new LeavingState(t)));
+            for (Traveler traveler : travelers) {
+                traveler.setState(new LeavingState(traveler));
+            }
         } else {
-            travelers.forEach(t -> t.setState(new ArrivingState(t)));
+            for (Traveler traveler : travelers) {
+                traveler.setState(new ArrivingState(traveler));
+            }
         }
     }
 }

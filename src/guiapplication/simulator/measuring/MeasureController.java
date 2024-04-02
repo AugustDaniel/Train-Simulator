@@ -45,10 +45,14 @@ public class MeasureController implements MouseCallback {
     }
 
     public void update() {
-        measurePoints.forEach(measurePoint -> measurePoint.update(travelers));
+        for (MeasurePoint measurePoint : measurePoints) {
+            measurePoint.update(travelers);
+        }
     }
 
     public void draw(Graphics2D g) {
-        measurePoints.forEach(measurePoint -> measurePoint.draw(g));
+        for (MeasurePoint measurePoint : measurePoints) {
+            measurePoint.draw(g);
+        }
     }
 }
