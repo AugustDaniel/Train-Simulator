@@ -23,6 +23,10 @@ public class TrainEntity {
     private boolean draw;
     private int trainlength;
     private boolean playedOnes = false;
+    private int startBridge = 112;
+    private int endBridge = 124;
+    private int spacebetweenEndBridgeAndEndOfSimulation = 4;
+
 
 
     public TrainEntity(Journey journey, Clock clock) {
@@ -81,8 +85,8 @@ public class TrainEntity {
             return;
         }
 
-        Area clipArea = new Area(new Rectangle(0, 0, 112 * tileDimentions, 4000));
-        clipArea.add(new Area(new Rectangle(124 * tileDimentions, 0, 4 * tileDimentions, 4000)));
+        Area clipArea = new Area(new Rectangle(0, 0, startBridge * tileDimentions, 4000));
+        clipArea.add(new Area(new Rectangle(endBridge * tileDimentions, 0, spacebetweenEndBridgeAndEndOfSimulation * tileDimentions, 4000)));
         g2d.setClip(clipArea);
 
         AffineTransform tx = new AffineTransform();

@@ -1,6 +1,7 @@
 package guiapplication.scheduleview.popups.change;
 
-import data.*;
+import data.Platform;
+import data.Schedule;
 import guiapplication.ReturnableView;
 import guiapplication.scheduleview.popups.SchedulePopupView;
 import javafx.collections.FXCollections;
@@ -23,7 +24,7 @@ public class ChangePlatformPopup extends SchedulePopupView {
 
         Label platformSelectionLable = new Label("Kies uit perrons:");
         ComboBox<Platform> platformSelectionComboBox = new ComboBox<>(FXCollections.observableList(schedule.getPlatformList()));
-        VBox platformSelectionBox = new VBox(platformSelectionLable,platformSelectionComboBox);
+        VBox platformSelectionBox = new VBox(platformSelectionLable, platformSelectionComboBox);
 
         Label toChangeLabel = new Label("waar wilt u het nummer naar veranderen?:");
         TextField toChangeTextField = new TextField();

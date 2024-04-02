@@ -1,6 +1,7 @@
 package guiapplication.scheduleview.components;
 
 import data.Journey;
+import data.ScheduleSubject;
 import guiapplication.View;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -10,7 +11,6 @@ import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import data.ScheduleSubject;
 
 public class ScheduleTableView implements View {
 
