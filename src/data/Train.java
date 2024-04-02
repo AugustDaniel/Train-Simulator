@@ -12,11 +12,12 @@ public class Train implements Serializable {
         this.wagonList = wagonList;
         this.trainIDNumber = trainIDNumber;
     }
-    public Train(String trainIDNumber){
-        this(trainIDNumber,new ArrayList<>());
+
+    public Train(String trainIDNumber) {
+        this(trainIDNumber, new ArrayList<>());
     }
 
-    public List<Wagon> getWagons(){
+    public List<Wagon> getWagons() {
         return wagonList;
     }
 

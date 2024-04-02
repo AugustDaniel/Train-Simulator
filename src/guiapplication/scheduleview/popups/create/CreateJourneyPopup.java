@@ -61,9 +61,9 @@ public class CreateJourneyPopup extends SchedulePopupView {
                 alert.setHeaderText("Error, 2 treinen overlappen qua tijd");
                 alert.showAndWait();
             } else if (timeBetweenArriveAndDeparture()) {
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setHeaderText("Error, de aankomst- en vertrektijd moet tussen 0000 en 2359 zitten");
-                    alert.showAndWait();
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setHeaderText("Error, de aankomst- en vertrektijd moet tussen 0000 en 2359 zitten");
+                alert.showAndWait();
             } else if (timeHigherThan60()) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setHeaderText("Error, 2 treinen overlappen qua tijd");
@@ -116,7 +116,7 @@ public class CreateJourneyPopup extends SchedulePopupView {
 
     public Boolean timeHigherThan60() {
         Boolean higherThan60 = false;
-        if ((Integer.parseInt(departureTimeInput.getText()) % 100) > 59){
+        if ((Integer.parseInt(departureTimeInput.getText()) % 100) > 59) {
             higherThan60 = true;
         }
         return higherThan60;

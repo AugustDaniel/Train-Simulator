@@ -25,10 +25,10 @@ public class ChangeTrainPopup extends SchedulePopupView {
 
         Label platformSelectionLable = new Label("Kies uit train:");
         ComboBox<Train> platformSelectionComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getTrainList()));
-        VBox platformSelectionBox = new VBox(platformSelectionLable,platformSelectionComboBox);
+        VBox platformSelectionBox = new VBox(platformSelectionLable, platformSelectionComboBox);
 
         Label toChangeLabel = new Label("waar wilt u het nummer naar veranderen?:");
-        ComboBox<List<Wagon>> toChangeTextField= new ComboBox<>(FXCollections.observableList(schedule.getWagonSetList()));
+        ComboBox<List<Wagon>> toChangeTextField = new ComboBox<>(FXCollections.observableList(schedule.getWagonSetList()));
         VBox toChangeBox = new VBox(toChangeLabel, toChangeTextField);
 
         Button saveButton = new Button("Voeg toe");

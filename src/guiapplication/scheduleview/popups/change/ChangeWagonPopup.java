@@ -23,7 +23,7 @@ public class ChangeWagonPopup extends SchedulePopupView {
 
         Label amountSelectionLable = new Label("Kies uit de hoeveelheid wagens:");
         ComboBox<Wagon> amountSelectionComboBox = new ComboBox<>(FXCollections.observableList(schedule.getWagonList()));
-        VBox amountSelectionBox = new VBox(amountSelectionLable,amountSelectionComboBox);
+        VBox amountSelectionBox = new VBox(amountSelectionLable, amountSelectionComboBox);
 
         Label toChangeLabel = new Label("waar wilt u het nummer naar veranderen?:");
         TextField toChangeTextField = new TextField();
@@ -46,7 +46,7 @@ public class ChangeWagonPopup extends SchedulePopupView {
 
         FlowPane buttonBar = new FlowPane(super.getCloseButton(), saveButton);
 
-        VBox inputBox = new VBox(amountSelectionBox,toChangeBox);
+        VBox inputBox = new VBox(amountSelectionBox, toChangeBox);
         pane.setCenter(inputBox);
 
         amountSelectionComboBox.setOnAction((event) -> {
