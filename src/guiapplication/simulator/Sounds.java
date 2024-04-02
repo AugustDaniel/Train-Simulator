@@ -22,8 +22,6 @@ public class Sounds {
                 trainClip = AudioSystem.getClip();
                 disasterAudioInput = AudioSystem.getAudioInputStream(disasterSoundMusicPath);
                 trainAudioInput = AudioSystem.getAudioInputStream(trainWhistleMusicPath);
-            } else {
-                System.out.println("cant find file");
             }
             disasterClip.open(disasterAudioInput);
             trainClip.open(trainAudioInput);
