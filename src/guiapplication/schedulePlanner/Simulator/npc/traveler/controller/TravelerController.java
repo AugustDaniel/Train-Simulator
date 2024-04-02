@@ -1,9 +1,10 @@
 package guiapplication.schedulePlanner.Simulator.npc.traveler.controller;
 
 import data.ScheduleSubject;
-import guiapplication.schedulePlanner.Simulator.mouselistener.MouseCallback;
 import guiapplication.schedulePlanner.Simulator.Camera;
 import guiapplication.schedulePlanner.Simulator.Clock;
+import guiapplication.schedulePlanner.Simulator.Sounds;
+import guiapplication.schedulePlanner.Simulator.mouselistener.MouseCallback;
 import guiapplication.schedulePlanner.Simulator.npc.NPC;
 import guiapplication.schedulePlanner.Simulator.npc.traveler.Traveler;
 import guiapplication.schedulePlanner.Simulator.npc.traveler.states.ArrivingState;
@@ -13,7 +14,9 @@ import guiapplication.schedulePlanner.Simulator.npc.traveler.states.TravelerStat
 import javafx.scene.input.MouseEvent;
 import org.jfree.fx.FXGraphics2D;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class TravelerController implements MouseCallback, util.Observer {
     private List<Traveler> travelers;
@@ -22,7 +25,6 @@ public class TravelerController implements MouseCallback, util.Observer {
     private Camera camera;
     private TravelerSpawner spawner;
     private boolean disaster;
-
     public TravelerController(Clock clock, ScheduleSubject subject, Camera camera) {
         this.travelers = new ArrayList<>();
         this.subject = subject;
@@ -34,6 +36,8 @@ public class TravelerController implements MouseCallback, util.Observer {
     }
 
     public void update(double deltaTime) {
+        Sounds.disasterSound(disaster);
+
         if (!disaster) {
             this.subject.getSchedule().getJourneyList().forEach(journey -> {
                         if (journey.getArrivalTime().minusMinutes(30).equals(this.clock.getCurrentTime())) {
