@@ -45,11 +45,6 @@ public class GuiMain extends Application {
         Tab simulationTab = new Tab("Simulatie", mapView.getNode());
         tabPane.getTabs().add(simulationTab);
 
-        // Add slider to the simulation tab
-        Slider slider = new Slider(mapView);
-        VBox.setVgrow(mapView.getNode(), javafx.scene.layout.Priority.ALWAYS);
-        simulationTab.setContent(new VBox(mapView.getNode(), slider));
-
         // to prevent flashing of screen when launching
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
