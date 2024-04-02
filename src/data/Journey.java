@@ -9,14 +9,15 @@ public class Journey implements Serializable {
     private Train train;
     private int popularity;
     private Platform platform;
-    private int ID;
+    private Machinist machinist;
 
-    public Journey(LocalTime arrivalTime, LocalTime departureTime, Train train, int popularity, Platform platform) {
+    public Journey(LocalTime arrivalTime, LocalTime departureTime, Train train, int popularity, Platform platform, Machinist machinist) {
         this.arrivalTime = arrivalTime;
         this.departureTime = departureTime;
         this.train = train;
         this.popularity = popularity;
         this.platform = platform;
+        this.machinist = machinist;
     }
     
     public LocalTime getArrivalTime() {
@@ -26,11 +27,6 @@ public class Journey implements Serializable {
     public LocalTime getDepartureTime() {
         return departureTime;
     }
-
-    public String getTrainID(){
-        return this.train.getTrainIDNumber();
-    }
-
     public Train getTrain() {
         return this.train;
     }
@@ -41,6 +37,10 @@ public class Journey implements Serializable {
 
     public int getTrainPopularity(){
         return this.popularity;
+    }
+
+    public Machinist getMachinist() {
+        return machinist;
     }
 
     public void setArrivalTime(LocalTime arrivalTime) {
@@ -63,5 +63,9 @@ public class Journey implements Serializable {
     public String toString() {
         return "platform: " + platform +
                 "\n train: " + train;
+    }
+
+    public void setMachinist(Machinist machinist) {
+        this.machinist = machinist;
     }
 }

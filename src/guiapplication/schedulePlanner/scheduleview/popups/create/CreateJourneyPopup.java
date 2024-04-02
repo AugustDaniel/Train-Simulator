@@ -15,13 +15,12 @@ import util.TimeFormatter;
 import java.time.LocalTime;
 
 public class CreateJourneyPopup extends SchedulePopupView {
-    private Schedule schedule;
     private TextField departureTimeInput;
     private TextField popularityInput;
     private ComboBox<Platform> platformComboBox;
 
     public CreateJourneyPopup(ReturnableView mainView, Schedule schedule) {
-        super(mainView);
+        super(mainView, schedule);
         this.schedule = schedule;
     }
 
@@ -45,6 +44,10 @@ public class CreateJourneyPopup extends SchedulePopupView {
         ObservableList<Platform> platformList = FXCollections.observableArrayList(this.schedule.getPlatformList());
         this.platformComboBox = new ComboBox<>(platformList);
         VBox platformBox = new VBox(platformInfo, platformComboBox);
+
+        Label machinistLabel = new Label("Kies uit machinist:");
+        ComboBox<Machinist> machinistCombobox = new ComboBox<>(FXCollections.observableList(this.schedule.getMachinistsList()));
+        VBox machinistBox = new VBox(machinistLabel, machinistCombobox);
 
         Button saveButton = new Button("Voeg toe");
         saveButton.setOnAction(e -> {
@@ -76,7 +79,8 @@ public class CreateJourneyPopup extends SchedulePopupView {
                         inputTime,
                         trainComboBox.getValue(),
                         Integer.parseInt(popularityInput.getText()),
-                        platformComboBox.getValue()
+                        platformComboBox.getValue(),
+                        machinistCombobox.getValue()
                 ));
                 super.callMainView();
             }
@@ -84,7 +88,7 @@ public class CreateJourneyPopup extends SchedulePopupView {
 
         FlowPane buttonBar = new FlowPane(super.getCloseButton(), saveButton);
 
-        VBox inputBox = new VBox(departureTimeBox, popularityBox, trainBox, platformBox);
+        VBox inputBox = new VBox(departureTimeBox, popularityBox, trainBox, platformBox, machinistBox);
         pane.setCenter(inputBox);
         pane.setBottom(buttonBar);
         return pane;

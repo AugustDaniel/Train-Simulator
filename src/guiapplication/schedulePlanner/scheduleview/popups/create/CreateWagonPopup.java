@@ -14,10 +14,8 @@ import javafx.scene.layout.VBox;
 
 public class CreateWagonPopup extends SchedulePopupView {
 
-    private Schedule schedule;
-
     public CreateWagonPopup(ReturnableView mainView, Schedule schedule) {
-        super(mainView);
+        super(mainView, schedule);
         this.schedule = schedule;
     }
 

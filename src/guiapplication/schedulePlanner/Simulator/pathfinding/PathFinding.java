@@ -100,11 +100,11 @@ public class PathFinding {
             JsonObject o = objects.getJsonObject(i);
 
             if (o.getString("name").equals("spawn")) {
-                createSpawnPoints(o);
+                createPoints(o, spawnPoints);
                 continue;
             }
             if (o.getString("name").equals("Shops")){
-                createShopPoints(o);
+                createPoints(o, shopPoints);
                 continue;
             }
 
@@ -145,23 +145,13 @@ public class PathFinding {
         map.get(id).add(new Target(nodeToAdd));
     }
 
-    private static void createSpawnPoints(JsonObject o) {
-        int xObject = o.getInt("x") / TILE_SIZE;
-        int yObject = o.getInt("y") / TILE_SIZE;
-
-        for (int y = 0; y < Math.ceil((double) o.getInt("height") / TILE_SIZE); y++) {
-            for (int x = 0; x < o.getInt("width") / TILE_SIZE; x++) {
-                spawnPoints.add(graph.getNodes()[yObject + y][xObject + x]);
-            }
-        }
-    }
-    private static void createShopPoints(JsonObject object){
+    private static void createPoints(JsonObject object, List<Node> pointList) {
         int xObject = object.getInt("x") / TILE_SIZE;
         int yObject = object.getInt("y") / TILE_SIZE;
 
         for (int y = 0; y < Math.ceil((double) object.getInt("height") / TILE_SIZE) ; y++) {
             for (int x = 0; x < object.getInt("width") / TILE_SIZE; x++) {
-                shopPoints.add(graph.getNodes()[yObject + y][xObject + x]);
+                pointList.add(graph.getNodes()[yObject + y][xObject + x]);
             }
         }
     }
@@ -175,8 +165,8 @@ public class PathFinding {
         int size = trainTargets.get(train).size();
         return trainTargets.get(train).get((int) (Math.random() * size));
     }
-    public static Node getRandomShoppingTarget(){
-        return shopPoints.get((int) (Math.random() * shopPoints.size()));
+    public static Target getRandomShoppingTarget(){
+        return new Target(shopPoints.get((int) (Math.random() * shopPoints.size())));
     }
 
     public static Node getRandomSpawnPoint() {

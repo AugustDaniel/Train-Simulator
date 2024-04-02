@@ -1,19 +1,18 @@
-package guiapplication.schedulePlanner.Simulator.npc.controller;
+package guiapplication.schedulePlanner.Simulator.npc.traveler.controller;
 
 import data.Journey;
 import guiapplication.schedulePlanner.Simulator.Clock;
 import guiapplication.schedulePlanner.Simulator.npc.NPC;
-import guiapplication.schedulePlanner.Simulator.npc.Traveler;
+import guiapplication.schedulePlanner.Simulator.npc.traveler.Traveler;
 import guiapplication.schedulePlanner.Simulator.pathfinding.PathFinding;
-import guiapplication.schedulePlanner.Simulator.pathfinding.Target;
 import util.graph.Node;
 
 import java.util.*;
 
-public class NPCSpawner implements util.Observer{
+public class TravelerSpawner implements util.Observer{
 
     private final Queue<Map.Entry<Journey, Integer>> journeysToSpawn;
-    private final List<NPC> npcs;
+    private final List<Traveler> npcs;
     private final Clock clock;
     private int spawnRate;
     private int counter;
@@ -21,7 +20,7 @@ public class NPCSpawner implements util.Observer{
     private double timer;
     private double npcSpeed;
 
-    public NPCSpawner(List<NPC> npcs, Clock clock) {
+    public TravelerSpawner(List<Traveler> npcs, Clock clock) {
         this.npcs = npcs;
         this.journeysToSpawn = new LinkedList<>();
         this.counter = 0;
@@ -45,16 +44,9 @@ public class NPCSpawner implements util.Observer{
         timer -= delay;
         Map.Entry<Journey, Integer> journey = this.journeysToSpawn.peek();
 
-        if ((journey.getValue() > counter) && (counter != journey.getKey().getTrain().getCapacity())) {
-            Node spawnPoint = checkSpawnPoint(PathFinding.spawnPoints.get((int) (Math.random() * (PathFinding.spawnPoints.size() - 1))));
+        if (journey.getValue() > counter) {
+            Node spawnPoint = checkSpawnPoint(PathFinding.getRandomSpawnPoint());
             Traveler traveler = new Traveler(spawnPoint,journey.getKey(),npcSpeed);
-
-            if (Math.random() > 0.9) {
-                traveler.setStatus(Traveler.Status.SHOPPING);
-                traveler.setTarget(new Target(PathFinding.getRandomShoppingTarget()));
-                traveler.setTarget(new Target(PathFinding.getRandomSpawnPoint()));
-            }
-
             npcs.add(traveler);
             counter++;
         } else if (this.journeysToSpawn.size() > 1) {
@@ -68,14 +60,14 @@ public class NPCSpawner implements util.Observer{
             return;
         }
 
-        int amountOfSpawns = (int) Math.ceil((journey.getTrainPopularity() * 10) * ((double) spawnRate / 100));
+        int amountOfSpawns = (int) Math.ceil((journey.getTrain().getCapacity() * (journey.getTrainPopularity() / 10.0)) * (spawnRate / 100.0));
         this.journeysToSpawn.offer(new AbstractMap.SimpleEntry<>(journey, amountOfSpawns));
     }
 
     public util.graph.Node checkSpawnPoint(util.graph.Node spawnPoint) {
         for (NPC npc : npcs) {
             if (npc.getPosition().distance(spawnPoint.getPosition()) <= npc.getImageSize()) {
-                spawnPoint = checkSpawnPoint(PathFinding.spawnPoints.get((int) (Math.random() * (PathFinding.spawnPoints.size() - 1))));
+                spawnPoint = checkSpawnPoint(PathFinding.getRandomSpawnPoint());
             }
         }
 

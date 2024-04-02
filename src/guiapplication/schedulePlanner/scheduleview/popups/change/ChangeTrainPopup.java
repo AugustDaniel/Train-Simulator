@@ -14,10 +14,8 @@ import java.util.List;
 
 public class ChangeTrainPopup extends SchedulePopupView {
 
-    private Schedule schedule;
-
     public ChangeTrainPopup(ReturnableView mainView, Schedule schedule) {
-        super(mainView);
+        super(mainView, schedule);
         this.schedule = schedule;
     }
 

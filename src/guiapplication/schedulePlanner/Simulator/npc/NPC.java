@@ -41,7 +41,7 @@ public class NPC {
         this.standardSpeed = standardSpeed;
     }
 
-    public void update(List<NPC> npcs) {
+    public void update(List<? extends NPC> npcs) {
         if (atTargetPosition()) {
             return;
         }
