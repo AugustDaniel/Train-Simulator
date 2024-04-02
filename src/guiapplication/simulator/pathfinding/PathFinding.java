@@ -19,6 +19,15 @@ public class PathFinding {
     public static List<Node> spawnPoints = new ArrayList<>();
     public static Graph graph = new Graph(0, 0);
 
+    /**
+     * getShortestPath
+     *
+     * Find the shortest path for every node in Pathfinding.graph to the source node
+     * It achieves this with a breadth first search and keeping count of the distance
+     * @author Group A1
+     * @param source node to find the shortest path to
+     * @return a distance map with distance from all tiles to source
+     */
     public static Map<Node, Integer> getShortestPath(Node source) {
         Queue<Node> nodes = new LinkedList<>();
         nodes.offer(source);
@@ -39,6 +48,15 @@ public class PathFinding {
         return distances;
     }
 
+    /**
+     * addCollision
+     *
+     * fills Pathfinding.graph with nodes for every tile in the json object, it will skip an index in the graph when a collision tile is detected
+     * this results in a graph with nodes in indices which can be walked upon and null on indices which have collision
+     * it will add nodes as adjacent in a cross shape so every nodes is connected to the node above, to the right and left and the node below
+     * @author Group A1
+     * @param object json object which includes the collision layer
+     */
     public static void addCollision(JsonObject object) {
 
         int layerHeight = object.getInt("height");
@@ -82,6 +100,16 @@ public class PathFinding {
         }
     }
 
+    /**
+     * addNodeAsAdjacent
+     *
+     * will add a node as adjacent to a current node
+     * it will also check if that the node added as an adjacent has current node as adjacent
+     * if not it will correct this by adding the current node as adjacent
+     * @author Group A1
+     * @param currentNode node to add adjacent to
+     * @param toAdd adjacent node
+     */
     private static void addNodeAsAdjacent(Node currentNode, Node toAdd) {
         if (toAdd != null && currentNode != null) {
             currentNode.addAdjacentNode(toAdd);
@@ -92,6 +120,13 @@ public class PathFinding {
         }
     }
 
+    /**
+     * addTargets
+     *
+     * will walk through the width and height of the object layer and adds as targets or points
+     * @author Group A1
+     * @param jsonObject json object which contains the object layer
+     */
     public static void addTargets(JsonObject jsonObject) {
         JsonArray objects = jsonObject.getJsonArray("objects");
 
@@ -135,6 +170,15 @@ public class PathFinding {
         }
     }
 
+    /**
+     * addToMap
+     *
+     * extracts the number out of the name and adds the node to the map with that number as key
+     * @author Group A1
+     * @param map hashmap in pathfinding which to add to
+     * @param name name of the entry in the hashmap
+     * @param nodeToAdd node to aad to map
+     */
     private static void addToMap(Map<Integer, List<Target>> map, String name, Node nodeToAdd) {
         int id = Integer.parseInt(name.split(" ")[1]);
 
