@@ -2,7 +2,7 @@ package util;
 
 import java.time.LocalTime;
 
-public class TimeFormatter {
+public final class TimeFormatter {
 
     public static LocalTime intToLocalTime(int num) {
         int hours = num / 100;

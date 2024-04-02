@@ -14,10 +14,10 @@ public class TileMap implements TileHandler {
     private List<TileLayer> layers;
     private TileSet tileSet;
 
-    public TileMap(JsonArray tileLayers, TileSet tileSet) {
+    public TileMap(JsonArray tileLayers, JsonArray tileSet) {
         this.tileLayers = tileLayers;
         this.layers = new ArrayList<>();
-        this.tileSet = tileSet;
+        this.tileSet = new TileSet(tileSet);
 
         for (int i = 0; i < this.tileLayers.size(); i++) {
             JsonObject object = this.tileLayers.getJsonObject(i);

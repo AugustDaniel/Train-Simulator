@@ -10,6 +10,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -67,6 +68,7 @@ public class GuiMain extends Application {
         primaryStage.setMinHeight(600);
         primaryStage.setMinWidth(900);
         primaryStage.setTitle("Trein planner");
+        primaryStage.getIcons().add(new Image("spaceTrainIcon.jpg"));
         primaryStage.show();
     }
 

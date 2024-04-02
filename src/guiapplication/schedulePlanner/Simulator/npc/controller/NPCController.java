@@ -1,19 +1,23 @@
 package guiapplication.schedulePlanner.Simulator.npc.controller;
 
-import data.Journey;
 import data.ScheduleSubject;
-import guiapplication.schedulePlanner.Simulator.mouselistener.MouseCallback;
 import guiapplication.schedulePlanner.Simulator.Camera;
 import guiapplication.schedulePlanner.Simulator.Clock;
+import guiapplication.schedulePlanner.Simulator.mouselistener.MouseCallback;
 import guiapplication.schedulePlanner.Simulator.npc.NPC;
 import guiapplication.schedulePlanner.Simulator.npc.Traveler;
 import guiapplication.schedulePlanner.Simulator.pathfinding.PathFinding;
 import guiapplication.schedulePlanner.Simulator.pathfinding.Target;
 import javafx.scene.input.MouseEvent;
 import org.jfree.fx.FXGraphics2D;
-import util.graph.Node;
 
-import java.util.*;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class NPCController implements MouseCallback, util.Observer {
     private List<NPC> npcs;
@@ -21,6 +25,11 @@ public class NPCController implements MouseCallback, util.Observer {
     private ScheduleSubject subject;
     private Camera camera;
     private NPCSpawner spawner;
+    private boolean disaster;
+    private Clip clip;
+    private String filePath;
+    private File musicPath;
+    private AudioInputStream audioInput;
 
     public NPCController(Clock clock, ScheduleSubject subject, Camera camera) {
         this.npcs = new ArrayList<>();
@@ -28,19 +37,49 @@ public class NPCController implements MouseCallback, util.Observer {
         this.clock = clock;
         this.clock.attach(this);
         this.camera = camera;
-        this.spawner = new NPCSpawner(this.npcs);
+        this.spawner = new NPCSpawner(this.npcs, this.clock);
+        this.disaster = false;
+        this.filePath = "res/nederlands-luchtalarm.wav ";
+        this.musicPath = new File(this.filePath);
+        try {
+            if (musicPath.exists()) {
+            this.clip = AudioSystem.getClip();
+            this.audioInput = AudioSystem.getAudioInputStream(musicPath);
+            }else {
+                System.out.println("cant find file");
+            }
+            this.clip.open(this.audioInput);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     public void update(double deltaTime) {
-        this.subject.getSchedule().getJourneyList().forEach(journey -> {
-                    if (journey.getArrivalTime().minusMinutes(30).equals(this.clock.getCurrentTime())) {
-                        this.spawner.addToQueue(journey);
-                    }
+        if (!disaster) {
+            if (clip.isActive()){
+                clip.stop();
+                clip.close();
+                try {
+                    this.audioInput = AudioSystem.getAudioInputStream(musicPath);
+                    this.clip.open(audioInput);
+                } catch (Exception e) {
+                    System.out.println(e);
                 }
-        );
+            }
+            this.subject.getSchedule().getJourneyList().forEach(journey -> {
+                        if (journey.getArrivalTime().minusMinutes(30).equals(this.clock.getCurrentTime())) {
+                            this.spawner.addToQueue(journey);
+                        }
+                    }
+            );
+
+            spawner.update(deltaTime);
+
+        } else if (disaster && !clip.isActive()){
+            clip.start();
+        }
 
         updateNPCs();
-        spawner.update(deltaTime);
     }
 
     private void updateNPCs() {
@@ -56,7 +95,12 @@ public class NPCController implements MouseCallback, util.Observer {
                 iterator.remove();
             }
 
-            if (isDepartureTime(tr)) {
+            if (tr.getStatus() == Traveler.Status.SHOPPING && isTimeToLeave(tr)) {
+                handleStatus(tr, Traveler.Status.ARRIVING);
+                continue;
+            }
+
+            if (isDepartureTime(tr) || disaster) {
                 handleStatus(tr, Traveler.Status.LEAVING);
                 continue;
             }
@@ -73,8 +117,15 @@ public class NPCController implements MouseCallback, util.Observer {
 
             Target target = null;
             switch (status) {
-                case BOARDING: target = PathFinding.getRandomTrainTarget("Train " + tr.getJourney().getPlatform()); break;
-                case LEAVING: target = new Target(PathFinding.getRandomSpawnPoint()); break;
+                case BOARDING:
+                    target = PathFinding.getRandomTrainTarget(tr.getJourney().getPlatform().getPlatformNumber());
+                    break;
+                case LEAVING:
+                    target = new Target(PathFinding.getRandomSpawnPoint());
+                    break;
+                case ARRIVING:
+                    target = PathFinding.getRandomPlatformTarget(tr.getJourney().getPlatform().getPlatformNumber());
+                    break;
             }
 
             tr.setTarget(target);
@@ -91,6 +142,10 @@ public class NPCController implements MouseCallback, util.Observer {
                 || clock.getCurrentTime().equals(tr.getJourney().getArrivalTime());
     }
 
+    private boolean isTimeToLeave(Traveler tr) {
+       return clock.getCurrentTime().isAfter(tr.getJourney().getArrivalTime().minusMinutes(10));
+    }
+
     public void draw(FXGraphics2D g) {
         for (NPC npc : npcs) {
             npc.draw(g);
@@ -105,8 +160,7 @@ public class NPCController implements MouseCallback, util.Observer {
 
         for (NPC npc : npcs) {
             if (npc.contains(camera.getWorldPos(e.getX(), e.getY()))) {
-                Traveler tr = (Traveler) npc;
-                tr.toggleClicked();
+                npc.toggleClicked();
                 return;
             }
         }
@@ -118,10 +172,18 @@ public class NPCController implements MouseCallback, util.Observer {
 
     @Override
     public void update() {
-        double speed = this.clock.getTimeSpeed();
+        double speed = 1 / this.clock.getTimeSpeed();
 
         for (NPC npc : npcs) {
-            npc.setSpeed(speed);
+            npc.setStandardSpeed(speed);
         }
+    }
+
+    public List<NPC> getNPCs() {
+        return npcs;
+    }
+
+    public void toggleDisaster() {
+        this.disaster = !this.disaster;
     }
 }

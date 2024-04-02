@@ -1,6 +1,7 @@
 package guiapplication.schedulePlanner.Simulator.npc;
 
 import data.Journey;
+import guiapplication.schedulePlanner.Simulator.InfoScreen;
 import guiapplication.schedulePlanner.Simulator.pathfinding.PathFinding;
 import guiapplication.schedulePlanner.Simulator.pathfinding.Target;
 import util.graph.Node;
@@ -14,9 +15,8 @@ public class Traveler extends NPC {
     private Target target;
     private Node currentNode;
     private Node closestNode;
-    private boolean clicked;
     private Journey journey;
-    private NPCInfo infoScreen;
+    private InfoScreen infoScreen;
     private Status status;
 
     public enum Status {BOARDING, SHOPPING, ARRIVING, LEAVING}
@@ -27,7 +27,7 @@ public class Traveler extends NPC {
         this.currentNode = node;
         this.closestNode = node;
         this.status = Status.ARRIVING;
-        this.infoScreen = new NPCInfo(
+        this.infoScreen = new InfoScreen(
                 new String[]{
                         "Naam: " + (int) (Math.random() * 100),
                         "Leeftijd: " + (int) (Math.random() * 100),
@@ -40,9 +40,14 @@ public class Traveler extends NPC {
         );
 
 
-        this.target = PathFinding.getRandomPlatformTarget("Platform " + this.journey.getPlatform());
+        this.target = PathFinding.getRandomPlatformTarget(this.journey.getPlatform().getPlatformNumber());
         this.target.calculateShortestPath();
         checkPosition();
+    }
+
+    public Traveler(Node node, Journey journey, double standardSpeed) {
+        this(node, journey);
+        this.standardSpeed = standardSpeed;
     }
 
     @Override
@@ -77,10 +82,6 @@ public class Traveler extends NPC {
         super.draw(g);
     }
 
-    public void toggleClicked() {
-        this.clicked = !this.clicked;
-    }
-
     public Journey getJourney() {
         return this.journey;
     }
@@ -94,6 +95,10 @@ public class Traveler extends NPC {
     public void setStatus(Status status) {
         this.status = status;
         this.infoScreen.updateInfo("Status: " + this.status.toString(), 2);
+    }
+
+    public Node getCurrentNode() {
+        return this.currentNode;
     }
 
     public Status getStatus() {
