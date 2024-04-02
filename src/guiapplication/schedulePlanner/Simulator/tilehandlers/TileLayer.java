@@ -4,7 +4,7 @@ import javax.json.JsonObject;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class TileLayer implements TileHandler {
+public class TileLayer {
 
     private JsonObject object;
     private TileSet tileSet;
@@ -40,7 +40,6 @@ public class TileLayer implements TileHandler {
         }
     }
 
-    @Override
     public void draw(Graphics2D graphics) {
         graphics.drawImage(layerImage, null, null);
     }

@@ -9,7 +9,7 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 import java.awt.*;
 
-public class Map implements TileHandler {
+public class Map {
     private TileMap tileMap;
 
     public Map(String fileName) {
@@ -18,7 +18,6 @@ public class Map implements TileHandler {
         this.tileMap = new TileMap(root.getJsonArray("layers"), root.getJsonArray("tilesets"));
     }
 
-    @Override
     public void draw(Graphics2D graphics) {
         this.tileMap.draw(graphics);
     }

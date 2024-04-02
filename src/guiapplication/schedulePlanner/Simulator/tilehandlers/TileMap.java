@@ -8,7 +8,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TileMap implements TileHandler {
+public class TileMap {
 
     private JsonArray tileLayers;
     private List<TileLayer> layers;
@@ -36,7 +36,6 @@ public class TileMap implements TileHandler {
         }
     }
 
-    @Override
     public void draw(Graphics2D graphics) {
         for (TileLayer layer : this.layers) {
             layer.draw(graphics);
