@@ -28,15 +28,15 @@ public class CreateWagonPopup extends SchedulePopupView {
         TextField idNumberWagonInput = new TextField();
         VBox idNumberWagonBox = new VBox(idNumberWagon, idNumberWagonInput);
 
-        Label wagonCapacity = new Label("Voer maximum capaciteit in:");
+        Label wagonCapacity = new Label("Voer maximum capaciteit (75 max) in:");
         TextField wagonCapacityInput = new TextField();
         VBox wagonCapacityBox = new VBox(wagonCapacity,wagonCapacityInput);
 
         Button saveButton = new Button("Voeg toe");
         saveButton.setOnAction(e -> {
-            if (wagonCapacity.getText().isEmpty() || idNumberWagonInput.getText().isEmpty()) {
+            if (wagonCapacityInput.getText().isEmpty() || idNumberWagonInput.getText().isEmpty() || Integer.parseInt(wagonCapacityInput.getText()) > 75) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setHeaderText("Error, je bent data vergeten in te vullen");
+                alert.setHeaderText("Error, je bent data vergeten in te vullen of hebt de capaciteit van 75 overschreden");
                 alert.showAndWait();
             } else {
                 schedule.addWagon(new Wagon(
