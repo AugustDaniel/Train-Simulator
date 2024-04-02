@@ -3,15 +3,11 @@ package guiapplication.schedulePlanner.Simulator;
 import data.Journey;
 
 import javax.imageio.ImageIO;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -25,8 +21,9 @@ public class TrainEntity {
     private double trainSpeed;
     private int tileDimentions;
     private boolean draw;
-
+    private Sounds sound;
     private int trainlength;
+    private boolean playedOnes = false;
 
 
     public TrainEntity(Journey journey, Clock clock) {
@@ -57,26 +54,6 @@ public class TrainEntity {
 
     }
 
-    private boolean playedOnes = false;
-    private Clip clip;
-    public void whistleWhenTrainLeaving(){
-        String filePath = "res/train-whistle-102834.wav ";
-        try {
-            playedOnes = true;
-            File musicPath = new File(filePath);
-            if (musicPath.exists()) {
-                AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
-                clip = AudioSystem.getClip();
-                clip.open(audioInput);
-                clip.start();
-            }else {
-                System.out.println("cant find file");
-            }
-        }catch (Exception e){
-            System.out.println(e);
-        }
-    }
-
     public void update() {
         double clockSpeed = 1 / this.clock.getTimeSpeed();
 
@@ -94,7 +71,8 @@ public class TrainEntity {
                 trainSpeed += 0.5;
             position = new Point2D.Double(position.getX() + (trainSpeed * clockSpeed), position.getY());
             if (!playedOnes) {
-                whistleWhenTrainLeaving();
+                playedOnes = true;
+                this.sound.whistleWhenTrainLeaving();
             }
         }
     }
