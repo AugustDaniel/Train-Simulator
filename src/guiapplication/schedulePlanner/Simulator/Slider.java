@@ -33,6 +33,7 @@ public class Slider extends VBox {
         clockSpeedSlider = new javafx.scene.control.Slider(1, 10, 5);
         clockSpeedSlider.setOrientation(Orientation.HORIZONTAL);
         clockSpeedSlider.setShowTickMarks(true);
+
 //        clockSpeedSlider.setShowTickLabels(true);
         clockSpeedSlider.setMajorTickUnit(1);
         clockSpeedSlider.setBlockIncrement(1);

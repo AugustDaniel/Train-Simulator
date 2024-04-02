@@ -23,8 +23,6 @@ public class MeasureController implements MouseCallback {
     public MeasureController(List<Traveler> travelers, Camera camera, Clock clock) {
         this.travelers = travelers;
         this.measurePoints = new LinkedList<>();
-
-        //todo fix coupling maybe idk
         this.camera = camera;
         this.clock = clock;
     }
@@ -35,19 +33,19 @@ public class MeasureController implements MouseCallback {
             return;
         }
 
-        Point2D mousePos = this.camera.getWorldPos(e.getX(), e.getY());
+        Point2D mousePos = camera.getWorldPos(e.getX(), e.getY());
         if (measurePoints.removeIf(current -> current.contains(mousePos))) {
             return;
         }
 
         Node clickedNode = PathFinding.graph.getNodes()[(int) (mousePos.getY()/ 32)][(int) (mousePos.getX() /32)];
         if (clickedNode != null) {
-            this.measurePoints.add(new MeasurePoint(clickedNode, this.clock.getCurrentTime()));
+            measurePoints.add(new MeasurePoint(clickedNode, clock.getCurrentTime()));
         }
     }
 
     public void update() {
-        this.measurePoints.forEach(e -> e.update(this.travelers));
+        measurePoints.forEach(e -> e.update(travelers));
     }
 
     public void draw(Graphics2D g) {

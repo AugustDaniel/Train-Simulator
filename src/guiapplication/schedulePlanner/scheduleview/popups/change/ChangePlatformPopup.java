@@ -22,7 +22,7 @@ public class ChangePlatformPopup extends SchedulePopupView {
         BorderPane pane = new BorderPane();
 
         Label platformSelectionLable = new Label("Kies uit perrons:");
-        ComboBox<Platform> platformSelectionComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getPlatformList()));
+        ComboBox<Platform> platformSelectionComboBox = new ComboBox<>(FXCollections.observableList(schedule.getPlatformList()));
         VBox platformSelectionBox = new VBox(platformSelectionLable,platformSelectionComboBox);
 
         Label toChangeLabel = new Label("waar wilt u het nummer naar veranderen?:");
@@ -36,8 +36,8 @@ public class ChangePlatformPopup extends SchedulePopupView {
                 alert.setHeaderText("Error, je bent data vergeten in te vullen");
                 alert.showAndWait();
             } else {
-                this.schedule.getPlatformList().get(
-                        this.schedule.getPlatformList().indexOf(platformSelectionComboBox.getValue())
+                schedule.getPlatformList().get(
+                        schedule.getPlatformList().indexOf(platformSelectionComboBox.getValue())
                 ).setPlatformNumber(Integer.parseInt(toChangeTextField.getText()));
                 super.callMainView();
             }

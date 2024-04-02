@@ -53,7 +53,7 @@ public class MapView implements View {
         if (clock.getCurrentTime().equals(LocalTime.MIDNIGHT)){
             trains.clear();
             for (Journey journey : subject.getSchedule().getJourneyList()) {
-                trains.add(new TrainEntity(journey,this.clock));
+                trains.add(new TrainEntity(journey, clock));
             }
         }
 
@@ -90,7 +90,7 @@ public class MapView implements View {
 
         Button distasterButton = new Button("Calamiteiten oefening");
         mainPane.setBottom(distasterButton);
-        distasterButton.setOnAction(e -> this.npcController.toggleDisaster());
+        distasterButton.setOnAction(e -> npcController.toggleDisaster());
 
         draw(g2d);
         init();
@@ -105,14 +105,6 @@ public class MapView implements View {
 
         map.draw(g);
 
-        //todo target debug
-//        PathFinding.trainTargets.forEach((s, targets) -> {
-//            targets.forEach(target -> {
-//                Point2D p = target.getNode().getPosition();
-//                g.draw(new Rectangle2D.Double(p.getX() - 16, p.getY() - 16, 32 ,32)); //todo change magic number 16 = half tilesize 32 tilesize
-//            });
-//        });
-
         measureController.draw(g);
         npcController.draw(g);
 
@@ -126,7 +118,7 @@ public class MapView implements View {
 
     public void init(){
         for (Journey journey : subject.getSchedule().getJourneyList()) {
-            trains.add(new TrainEntity(journey,this.clock));
+            trains.add(new TrainEntity(journey, clock));
         }
     }
 
@@ -135,6 +127,6 @@ public class MapView implements View {
     }
 
     public void updatePeopleCount(int newPeopleCount) {
-        this.npcController.setSpawnRate(newPeopleCount);
+        npcController.setSpawnRate(newPeopleCount);
     }
 }

@@ -65,7 +65,7 @@ public class Traveler extends NPC implements TravelerState {
 
     @Override
     public void update(List<? extends NPC> npcs) {
-        if (this.position.distance(getTargetPosition()) < 110) {
+        if (position.distance(getTargetPosition()) < 110) {
             checkPosition();
         }
 
@@ -82,13 +82,13 @@ public class Traveler extends NPC implements TravelerState {
             }
         }
 
-        this.targetPosition = closestNode.getPosition();
+        targetPosition = closestNode.getPosition();
     }
 
     @Override
     public void draw(Graphics2D g) {
         if (clicked) {
-            infoScreen.updatePosition(this.position.getX(), this.position.getY());
+            infoScreen.updatePosition(position.getX(), position.getY());
             infoScreen.draw(g);
         }
 
@@ -96,7 +96,7 @@ public class Traveler extends NPC implements TravelerState {
     }
 
     public Journey getJourney() {
-        return this.journey;
+        return journey;
     }
 
     public void setTarget(Target target) {
@@ -111,19 +111,19 @@ public class Traveler extends NPC implements TravelerState {
     }
 
     public Node getCurrentNode() {
-        return this.currentNode;
+        return currentNode;
     }
 
     public TravelerState getState() {
-        return this.state;
+        return state;
     }
 
     @Override
     public void handle(LocalTime time) {
-        this.state.handle(time);
+        state.handle(time);
     }
 
     public boolean atTargetNode() {
-        return this.position.distance(this.target.getNode().getPosition()) <= 7;
+        return position.distance(target.getNode().getPosition()) <= 7;
     }
 }

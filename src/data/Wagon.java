@@ -15,12 +15,12 @@ public class Wagon implements Serializable {
         return maxCapacity;
     }
 
-    @Override
-    public String toString() {
-        return this.idNumber;
-    }
-
     public void setMaxCapacity(int maxCapacity) {
         this.maxCapacity = maxCapacity;
+    }
+
+    @Override
+    public String toString() {
+        return idNumber;
     }
 }

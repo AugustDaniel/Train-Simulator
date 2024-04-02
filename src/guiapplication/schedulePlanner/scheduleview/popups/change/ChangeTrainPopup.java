@@ -28,7 +28,7 @@ public class ChangeTrainPopup extends SchedulePopupView {
         VBox platformSelectionBox = new VBox(platformSelectionLable,platformSelectionComboBox);
 
         Label toChangeLabel = new Label("waar wilt u het nummer naar veranderen?:");
-        ComboBox<List<Wagon>> toChangeTextField= new ComboBox<>(FXCollections.observableList(this.schedule.getWagonSetList()));
+        ComboBox<List<Wagon>> toChangeTextField= new ComboBox<>(FXCollections.observableList(schedule.getWagonSetList()));
         VBox toChangeBox = new VBox(toChangeLabel, toChangeTextField);
 
         Button saveButton = new Button("Voeg toe");
@@ -38,8 +38,8 @@ public class ChangeTrainPopup extends SchedulePopupView {
                 alert.setHeaderText("Error, je bent data vergeten in te vullen");
                 alert.showAndWait();
             } else {
-                this.schedule.getTrainList().get(
-                        this.schedule.getTrainList().indexOf(platformSelectionComboBox.getValue())).setWagonList(toChangeTextField.getValue());
+                schedule.getTrainList().get(
+                        schedule.getTrainList().indexOf(platformSelectionComboBox.getValue())).setWagonList(toChangeTextField.getValue());
                 super.callMainView();
             }
         });

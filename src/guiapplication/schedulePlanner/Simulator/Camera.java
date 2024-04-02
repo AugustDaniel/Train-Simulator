@@ -26,42 +26,38 @@ public class Camera implements MouseCallback {
 
     @Override
     public void onMousePressed(MouseEvent e) {
-        screenMousePos = new Point2D.Double(e.getX() / this.zoom, e.getY() / this.zoom);
+        screenMousePos = new Point2D.Double(e.getX() / zoom, e.getY() / zoom);
 
         if (e.isSecondaryButtonDown()) {
-            distance = getDistancePoint((a, b) -> a - b, this.target, screenMousePos);
+            distance = getDistancePoint((a, b) -> a - b, target, screenMousePos);
         }
     }
 
     @Override
     public void onMouseDragged(MouseEvent e) {
-        screenMousePos = new Point2D.Double(e.getX() / this.zoom, e.getY() / this.zoom);
+        screenMousePos = new Point2D.Double(e.getX() / zoom, e.getY() / zoom);
 
         if (e.isSecondaryButtonDown()) {
-            this.target = getDistancePoint(Double::sum, screenMousePos, distance);
+            target = getDistancePoint(Double::sum, screenMousePos, distance);
         }
     }
 
     @Override
     public void onMouseScrolled(ScrollEvent e) {
-        this.incrementZoom((float) e.getDeltaY() / 1500);
+        incrementZoom((float) e.getDeltaY() / 1500);
     }
 
     public AffineTransform getTransform() {
         AffineTransform transform = new AffineTransform();
-        transform.translate(this.canvas.getWidth() / 2, this.canvas.getHeight() / 2);
-        transform.scale(this.zoom, this.zoom);
-        transform.translate(this.target.getX(), this.target.getY());
+        transform.translate(canvas.getWidth() / 2, canvas.getHeight() / 2);
+        transform.scale(zoom, zoom);
+        transform.translate(target.getX(), target.getY());
         return transform;
     }
 
     @Override
     public void onMouseReleased(MouseEvent e) {
         distance = null;
-    }
-
-    public float getZoom() {
-        return this.zoom;
     }
 
     public void setZoom(float zoom) {
@@ -73,7 +69,7 @@ public class Camera implements MouseCallback {
     }
 
     public void incrementZoom(float amount) {
-        setZoom(this.zoom + amount);
+        setZoom(zoom + amount);
     }
 
     public Point2D getDistancePoint(BiFunction<Double, Double, Double> operator, Point2D i, Point2D j) {

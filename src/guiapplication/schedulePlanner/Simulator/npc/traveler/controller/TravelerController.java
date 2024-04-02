@@ -10,7 +10,6 @@ import guiapplication.schedulePlanner.Simulator.npc.traveler.Traveler;
 import guiapplication.schedulePlanner.Simulator.npc.traveler.states.ArrivingState;
 import guiapplication.schedulePlanner.Simulator.npc.traveler.states.FinishedState;
 import guiapplication.schedulePlanner.Simulator.npc.traveler.states.LeavingState;
-import guiapplication.schedulePlanner.Simulator.npc.traveler.states.TravelerState;
 import javafx.scene.input.MouseEvent;
 import org.jfree.fx.FXGraphics2D;
 
@@ -39,9 +38,9 @@ public class TravelerController implements MouseCallback, util.Observer {
         Sounds.disasterSound(disaster);
 
         if (!disaster) {
-            this.subject.getSchedule().getJourneyList().forEach(journey -> {
-                        if (journey.getArrivalTime().minusMinutes(30).equals(this.clock.getCurrentTime())) {
-                            this.spawner.addToQueue(journey);
+            subject.getSchedule().getJourneyList().forEach(journey -> {
+                        if (journey.getArrivalTime().minusMinutes(30).equals(clock.getCurrentTime())) {
+                            spawner.addToQueue(journey);
                         }
                     }
             );
@@ -67,7 +66,7 @@ public class TravelerController implements MouseCallback, util.Observer {
     }
 
     public void draw(FXGraphics2D g) {
-        this.travelers.forEach(t -> t.draw(g));
+        travelers.forEach(t -> t.draw(g));
     }
 
     @Override
@@ -85,12 +84,12 @@ public class TravelerController implements MouseCallback, util.Observer {
     }
 
     public void setSpawnRate(int newPeopleCount) {
-        this.spawner.setSpawnRate(newPeopleCount);
+        spawner.setSpawnRate(newPeopleCount);
     }
 
     @Override
     public void update() {
-        double speed = 1 / this.clock.getTimeSpeed();
+        double speed = 1 / clock.getTimeSpeed();
 
         for (NPC npc : travelers) {
             npc.setStandardSpeed(speed);
@@ -102,12 +101,12 @@ public class TravelerController implements MouseCallback, util.Observer {
     }
 
     public void toggleDisaster() {
-        this.disaster = !this.disaster;
+        disaster = !disaster;
 
         if (disaster) {
-            this.travelers.forEach(t -> t.setState(new LeavingState(t)));
+            travelers.forEach(t -> t.setState(new LeavingState(t)));
         } else {
-            this.travelers.forEach(t -> t.setState(new ArrivingState(t)));
+            travelers.forEach(t -> t.setState(new ArrivingState(t)));
         }
     }
 }

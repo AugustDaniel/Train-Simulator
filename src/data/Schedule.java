@@ -1,7 +1,5 @@
 package data;
 
-import util.TimeFormatter;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -23,8 +21,6 @@ public class Schedule implements Serializable {
         this.wagonSetList = new ArrayList<>();
         this.wagonList = new ArrayList<>();
         this.machinists = new ArrayList<>();
-
-        this.initTestData();
     }
     public void addTrain(Train train){
         trainList.add(train);
@@ -35,19 +31,19 @@ public class Schedule implements Serializable {
     }
 
     public void addJourney(Journey journey){
-        this.journeyList.add(journey);
+        journeyList.add(journey);
     }
 
     public void addPlatform(Platform platform){
-        this.platformList.add(platform);
+        platformList.add(platform);
     }
 
     public void addWagon(Wagon newWagon){
-        this.wagonList.add(newWagon);
+        wagonList.add(newWagon);
     }
 
     public void addMachinist(Machinist machinist) {
-        this.machinists.add(machinist);
+        machinists.add(machinist);
     }
 
     public void deleteTrain(Train train){
@@ -119,22 +115,19 @@ public class Schedule implements Serializable {
             }
         }
 
-        this.machinists.remove(machinist);
-    }
-
-    public void changeWagonList(List<Wagon> wagonSet){
+        machinists.remove(machinist);
     }
 
     public List<Journey> getJourneyList(){
-        return this.journeyList;
+        return journeyList;
     }
 
     public List<Train> getTrainList() {
-        return this.trainList;
+        return trainList;
     }
 
     public List<Platform> getPlatformList() {
-        return this.platformList;
+        return platformList;
     }
 
     public ArrayList<List<Wagon>> getWagonSetList() {
@@ -146,66 +139,7 @@ public class Schedule implements Serializable {
     }
 
     public List<Machinist> getMachinistsList() {
-        return this.machinists;
+        return machinists;
     }
 
-    /*
-        Testcode
-     */
-    public void initTestData(){
-
-        //adding some wagons to list
-        this.addWagon(new Wagon("01", 20));
-        this.addWagon(new Wagon("02", 25));
-        this.addWagon(new Wagon("03", 30));
-
-        //adding some wagonSets to list
-        ArrayList<Wagon> list1 = new ArrayList<>();
-        list1.add(wagonList.get(0));
-        list1.add(wagonList.get(0));
-        list1.add(wagonList.get(0));
-
-        ArrayList<Wagon> list2 = new ArrayList<>();
-        list2.add(wagonList.get(2));
-        list2.add(wagonList.get(2));
-        list2.add(wagonList.get(1));
-
-        ArrayList<Wagon> list3 = new ArrayList<>();
-        list3.add(wagonList.get(1));
-        list3.add(wagonList.get(1));
-        list3.add(wagonList.get(1));
-
-        this.addWagonSet(list1);
-        this.addWagonSet(list2);
-        this.addWagonSet(list3);
-
-
-        //adding some trains to list
-        Train train1 = new Train("21", wagonSetList.get(0));
-        Train train2 = new Train("22", wagonSetList.get(1));
-        Train train3 = new Train("23", wagonSetList.get(2));
-
-        this.addTrain(train1);
-        this.addTrain(train2);
-        this.addTrain(train3);
-
-        //adding some platforms to list
-        this.addPlatform(new Platform(1));
-        this.addPlatform(new Platform(2));
-        this.addPlatform(new Platform(3));
-
-        //adding machinists
-        this.addMachinist(new Machinist("Tim"));
-        this.addMachinist(new Machinist("Sybe"));
-        this.addMachinist(new Machinist("David"));
-        this.addMachinist(new Machinist("Fedde"));
-        this.addMachinist(new Machinist("Jayson"));
-
-        //adding some journeys to list
-        this.addJourney(new Journey(TimeFormatter.intToLocalTime(1000), TimeFormatter.intToLocalTime(1010), this.trainList.get(0), 6, this.platformList.get(0), this.machinists.get(0)));
-        this.addJourney(new Journey(TimeFormatter.intToLocalTime(1020), TimeFormatter.intToLocalTime(1030), this.trainList.get(1), 3, this.platformList.get(1), this.machinists.get(1)));
-        this.addJourney(new Journey(TimeFormatter.intToLocalTime(1040), TimeFormatter.intToLocalTime(1050), this.trainList.get(2), 8, this.platformList.get(2), this.machinists.get(2)));
-        this.addJourney(new Journey(TimeFormatter.intToLocalTime(40), TimeFormatter.intToLocalTime(100), this.trainList.get(1), 8, this.platformList.get(0), this.machinists.get(3)));
-        this.addJourney(new Journey(TimeFormatter.intToLocalTime(50), TimeFormatter.intToLocalTime(110), this.trainList.get(2), 8, this.platformList.get(1), this.machinists.get(4)));
-    }
 }

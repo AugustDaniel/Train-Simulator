@@ -14,7 +14,7 @@ abstract public class Subject <T>{
     }
 
     public T getState() {
-        return this.state;
+        return state;
     }
 
     public void attach(Observer observer){

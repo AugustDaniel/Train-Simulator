@@ -39,26 +39,26 @@ public class ScheduleView extends ReturnableView implements Observer {
 
     @Override
     public Node getNode() {
-        this.returnToView();
-        return this.mainPane;
+        returnToView();
+        return mainPane;
     }
 
     @Override
     public void returnToView() {
-        this.mainPane.getChildren().clear();
-        this.mainPane.setLeft(getButtons());
-        this.mainPane.setCenter(this.tableView.getNode());
+        mainPane.getChildren().clear();
+        mainPane.setLeft(getButtons());
+        mainPane.setCenter(tableView.getNode());
 
-        if (this.popup != null) {
-            this.mainPane.setBottom(this.popup.getNode());
+        if (popup != null) {
+            mainPane.setBottom(popup.getNode());
         } else {
-            this.mainPane.setBottom(null);
+            mainPane.setBottom(null);
         }
     }
 
     public Node getButtons() {
-        Node builderButtons = this.builderView.getNode();
-        Node fileButtons = this.fileView.getNode();
+        Node builderButtons = builderView.getNode();
+        Node fileButtons = fileView.getNode();
 
         VBox box = new VBox(builderButtons, fileButtons);
         return box;

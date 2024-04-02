@@ -19,7 +19,7 @@ public class Journey implements Serializable {
         this.platform = platform;
         this.machinist = machinist;
     }
-    
+
     public LocalTime getArrivalTime() {
         return arrivalTime;
     }
@@ -27,16 +27,17 @@ public class Journey implements Serializable {
     public LocalTime getDepartureTime() {
         return departureTime;
     }
+
     public Train getTrain() {
-        return this.train;
+        return train;
     }
 
     public Platform getPlatform() {
-        return this.platform;
+        return platform;
     }
 
-    public int getTrainPopularity(){
-        return this.popularity;
+    public int getTrainPopularity() {
+        return popularity;
     }
 
     public Machinist getMachinist() {
@@ -59,13 +60,13 @@ public class Journey implements Serializable {
         this.platform = platform;
     }
 
+    public void setMachinist(Machinist machinist) {
+        this.machinist = machinist;
+    }
+
     @Override
     public String toString() {
         return "platform: " + platform +
                 "\n train: " + train;
-    }
-
-    public void setMachinist(Machinist machinist) {
-        this.machinist = machinist;
     }
 }

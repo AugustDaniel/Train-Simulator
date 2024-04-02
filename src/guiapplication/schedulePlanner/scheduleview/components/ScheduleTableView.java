@@ -22,7 +22,7 @@ public class ScheduleTableView implements View {
 
     @Override
     public Node getNode() {
-        ObservableList<Journey> journeys = FXCollections.observableList(this.subject.getSchedule().getJourneyList());
+        ObservableList<Journey> journeys = FXCollections.observableList(subject.getSchedule().getJourneyList());
 
         TableView<Journey> table = new TableView<>();
         table.setItems(journeys);

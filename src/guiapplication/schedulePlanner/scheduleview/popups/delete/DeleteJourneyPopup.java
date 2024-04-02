@@ -22,7 +22,7 @@ public class DeleteJourneyPopup extends SchedulePopupView {
         BorderPane pane = new BorderPane();
 
         Label journeyLable = new Label("Kies uit reis:");
-        ComboBox<Journey> journeyComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getJourneyList()));
+        ComboBox<Journey> journeyComboBox = new ComboBox<>(FXCollections.observableList(schedule.getJourneyList()));
         VBox trainBox = new VBox(journeyLable, journeyComboBox);
 
         Button saveButton = new Button("Verwijder");
@@ -32,7 +32,7 @@ public class DeleteJourneyPopup extends SchedulePopupView {
                 alert.setHeaderText("Error, je bent data vergeten in te vullen");
                 alert.showAndWait();
             } else {
-                this.schedule.deleteJourney(
+                schedule.deleteJourney(
                         journeyComboBox.getValue()
                 );
                 super.callMainView();

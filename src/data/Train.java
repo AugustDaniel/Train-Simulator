@@ -22,14 +22,14 @@ public class Train implements Serializable {
 
     public int getCapacity() {
         int sum = 0;
-        for (Wagon wagon : this.wagonList) {
+        for (Wagon wagon : wagonList) {
             sum += wagon.getMaxCapacity();
         }
         return sum;
     }
 
     public String getTrainIDNumber() {
-        return this.trainIDNumber;
+        return trainIDNumber;
     }
 
     public void setWagonList(List<Wagon> wagonList) {

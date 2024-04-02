@@ -26,7 +26,7 @@ public class DeleteWagonSetPopup extends SchedulePopupView {
         BorderPane pane = new BorderPane();
 
         Label trainInfo = new Label("Kies uit de mogelijke Wagons sets:");
-        ComboBox<List<Wagon>> platformComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getWagonSetList()));
+        ComboBox<List<Wagon>> platformComboBox = new ComboBox<>(FXCollections.observableList(schedule.getWagonSetList()));
         VBox wagonSetBox = new VBox(trainInfo, platformComboBox);
 
         Button saveButton = new Button("Verwijder");
@@ -36,7 +36,7 @@ public class DeleteWagonSetPopup extends SchedulePopupView {
                 alert.setHeaderText("Error, je bent data vergeten in te vullen");
                 alert.showAndWait();
             } else {
-                this.schedule.deleteWagonSet(
+                schedule.deleteWagonSet(
                         platformComboBox.getValue()
                 );
                 super.callMainView();

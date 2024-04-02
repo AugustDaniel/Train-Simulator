@@ -29,24 +29,24 @@ public class CreateJourneyPopup extends SchedulePopupView {
         BorderPane pane = new BorderPane();
 
         Label departureTimeLabel = new Label("Voer vertrektijd in(ie. 1030):");
-        this.departureTimeInput = new TextField();
+        departureTimeInput = new TextField();
         VBox departureTimeBox = new VBox(departureTimeLabel, departureTimeInput);
 
         Label trainLabel = new Label("Kies uit trein:");
-        ComboBox<Train> trainComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getTrainList()));
+        ComboBox<Train> trainComboBox = new ComboBox<>(FXCollections.observableList(schedule.getTrainList()));
         VBox trainBox = new VBox(trainLabel, trainComboBox);
 
         Label popularityLabel = new Label("Voer trein populariteit in (1-10):");
-        this.popularityInput = new TextField();
+        popularityInput = new TextField();
         VBox popularityBox = new VBox(popularityLabel, popularityInput);
 
         Label platformInfo = new Label("Kies uit perron:");
-        ObservableList<Platform> platformList = FXCollections.observableArrayList(this.schedule.getPlatformList());
-        this.platformComboBox = new ComboBox<>(platformList);
+        ObservableList<Platform> platformList = FXCollections.observableArrayList(schedule.getPlatformList());
+        platformComboBox = new ComboBox<>(platformList);
         VBox platformBox = new VBox(platformInfo, platformComboBox);
 
         Label machinistLabel = new Label("Kies uit machinist:");
-        ComboBox<Machinist> machinistCombobox = new ComboBox<>(FXCollections.observableList(this.schedule.getMachinistsList()));
+        ComboBox<Machinist> machinistCombobox = new ComboBox<>(FXCollections.observableList(schedule.getMachinistsList()));
         VBox machinistBox = new VBox(machinistLabel, machinistCombobox);
 
         Button saveButton = new Button("Voeg toe");
@@ -74,7 +74,7 @@ public class CreateJourneyPopup extends SchedulePopupView {
                 alert.showAndWait();
             } else {
                 LocalTime inputTime = TimeFormatter.intToLocalTime(Integer.parseInt(departureTimeInput.getText()));
-                this.schedule.addJourney(new Journey(
+                schedule.addJourney(new Journey(
                         inputTime.minusMinutes(10),
                         inputTime,
                         trainComboBox.getValue(),

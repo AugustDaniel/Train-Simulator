@@ -14,7 +14,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import org.jfree.fx.ResizableCanvas;
 
 import java.io.IOException;
 
@@ -30,10 +29,10 @@ public class GuiMain extends Application {
 
     @Override
     public void init() throws IOException {
-        this.subject = new ScheduleSubject();
-        this.subject.setState(new Schedule());
-        this.scheduleView = new ScheduleView(this.subject);
-        this.mapView = new MapView(this.subject);
+        subject = new ScheduleSubject();
+        subject.setState(new Schedule());
+        scheduleView = new ScheduleView(subject);
+        mapView = new MapView(subject);
     }
 
     @Override

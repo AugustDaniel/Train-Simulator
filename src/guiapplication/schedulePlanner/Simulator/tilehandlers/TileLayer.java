@@ -20,19 +20,19 @@ public class TileLayer {
     }
 
     private void init() {
-        this.layerHeight = object.getInt("height");
-        this.layerWidth = object.getInt("width");
+        layerHeight = object.getInt("height");
+        layerWidth = object.getInt("width");
 
         int index = 0;
-        layerImage = new BufferedImage(layerHeight * 32, layerWidth * 32 ,BufferedImage.TYPE_INT_ARGB); // todo change magic numbers
+        layerImage = new BufferedImage(layerHeight * 32, layerWidth * 32 ,BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = layerImage.createGraphics();
 
-        for (int y = 0; y < this.layerHeight; y++) {
-            for (int x = 0; x < this.layerWidth; x++) {
+        for (int y = 0; y < layerHeight; y++) {
+            for (int x = 0; x < layerWidth; x++) {
 
                 g.drawImage(
-                        this.tileSet.getTile(object.getJsonArray("data").getInt(index)),
-                        x * 32, y * 32, //todo change magic number to tileheight etc...
+                        tileSet.getTile(object.getJsonArray("data").getInt(index)),
+                        x * 32, y * 32,
                         null);
 
                 index++;

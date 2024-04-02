@@ -26,7 +26,7 @@ public class ChangeJourneyPopup extends SchedulePopupView {
         BorderPane pane = new BorderPane();
 
         Label journeySelectionLable = new Label("Kies uit mogelijke reizen:");
-        ComboBox<Journey> journeySelectionComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getJourneyList()));
+        ComboBox<Journey> journeySelectionComboBox = new ComboBox<>(FXCollections.observableList(schedule.getJourneyList()));
         VBox journeySelectionBox = new VBox(journeySelectionLable,journeySelectionComboBox);
 
         ArrayList<String> toChange = new ArrayList<>();
@@ -41,15 +41,15 @@ public class ChangeJourneyPopup extends SchedulePopupView {
         VBox toChangeBox = new VBox(toChangeLabel,toCangeComboBox);
 
         Label changeMachinistIntoLabel = new Label("kies voor welke machinist het moet zijn:");
-        ComboBox<Machinist> changeMachinistIntoComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getMachinistsList()));
+        ComboBox<Machinist> changeMachinistIntoComboBox = new ComboBox<>(FXCollections.observableList(schedule.getMachinistsList()));
         VBox changeMachinistIntoBox = new VBox(changeMachinistIntoLabel,changeMachinistIntoComboBox);
 
         Label changePlatformIntoLabel = new Label("kies voor welk perron het moet zijn:");
-        ComboBox<Platform> changePlatformIntoComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getPlatformList()));
+        ComboBox<Platform> changePlatformIntoComboBox = new ComboBox<>(FXCollections.observableList(schedule.getPlatformList()));
         VBox changePlatformIntoBox = new VBox(changePlatformIntoLabel,changePlatformIntoComboBox);
 
         Label changeTrainIntoLabel = new Label("kies voor welke trein het moet zijn:");
-        ComboBox<Train> changeTrainIntoComboBox = new ComboBox<>(FXCollections.observableList(this.schedule.getTrainList()));
+        ComboBox<Train> changeTrainIntoComboBox = new ComboBox<>(FXCollections.observableList(schedule.getTrainList()));
         VBox changeTrainIntoBox = new VBox(changeTrainIntoLabel,changeTrainIntoComboBox);
 
         Label changeArrivalTimeIntoLabel = new Label("kies voor welke aankomsttijd het moet zijn:");
@@ -69,35 +69,35 @@ public class ChangeJourneyPopup extends SchedulePopupView {
                 alert.showAndWait();
             } else {
                 if (toCangeComboBox.getValue().equals("perron")){
-                    this.schedule.getJourneyList().get(
-                            this.schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
+                    schedule.getJourneyList().get(
+                            schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
                     ).setPlatform(changePlatformIntoComboBox.getValue());
 
                 } else if (toCangeComboBox.getValue().equals("trein")) {
-                    this.schedule.getJourneyList().get(
-                            this.schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
+                    schedule.getJourneyList().get(
+                            schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
                     ).setTrain(changeTrainIntoComboBox.getValue());
 
                 } else if (toCangeComboBox.getValue().equals("aankomst tijd")) {
-                    this.schedule.getJourneyList().get(
-                            this.schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
+                    schedule.getJourneyList().get(
+                            schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
                     ).setArrivalTime(TimeFormatter.intToLocalTime(Integer.parseInt(changeArrivalTimeInput.getText())));
 
-                    this.schedule.getJourneyList().get(
-                            this.schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
+                    schedule.getJourneyList().get(
+                            schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
                     ).setDepartureTime(TimeFormatter.intToLocalTime(Integer.parseInt(changeArrivalTimeInput.getText())).plusMinutes(10));
 
                 } else if (toCangeComboBox.getValue().equals("vertrek tijd")) {
-                    this.schedule.getJourneyList().get(
-                            this.schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
+                    schedule.getJourneyList().get(
+                            schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
                     ).setDepartureTime(TimeFormatter.intToLocalTime(Integer.parseInt(changeDepartureTimeInput.getText())));
 
-                    this.schedule.getJourneyList().get(
-                            this.schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
+                    schedule.getJourneyList().get(
+                            schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
                     ).setArrivalTime(TimeFormatter.intToLocalTime(Integer.parseInt(changeDepartureTimeInput.getText())).minusMinutes(10));
                 } else if (toCangeComboBox.getValue().equals("machinist")) {
-                    this.schedule.getJourneyList().get(
-                            this.schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
+                    schedule.getJourneyList().get(
+                            schedule.getJourneyList().indexOf(journeySelectionComboBox.getValue())
                     ).setMachinist(changeMachinistIntoComboBox.getValue());
                 }
                 super.callMainView();
@@ -111,19 +111,19 @@ public class ChangeJourneyPopup extends SchedulePopupView {
 
         toCangeComboBox.setOnAction((event) -> {
             if (toCangeComboBox.getValue().equals("perron")){
-                VBox addedinputBox = new VBox(journeySelectionBox,toChangeBox, changePlatformIntoBox);
+                VBox addedinputBox = new VBox(journeySelectionBox, toChangeBox, changePlatformIntoBox);
                 pane.setCenter(addedinputBox);
             } else if (toCangeComboBox.getValue().equals("trein")) {
-                VBox addedinputBox = new VBox(journeySelectionBox,toChangeBox, changeTrainIntoBox);
+                VBox addedinputBox = new VBox(journeySelectionBox, toChangeBox, changeTrainIntoBox);
                 pane.setCenter(addedinputBox);
             } else if (toCangeComboBox.getValue().equals("aankomst tijd")) {
-                VBox addedinputBox = new VBox(journeySelectionBox,toChangeBox, changeArrivalTimeIntoBox);
+                VBox addedinputBox = new VBox(journeySelectionBox, toChangeBox, changeArrivalTimeIntoBox);
                 pane.setCenter(addedinputBox);
             } else if (toCangeComboBox.getValue().equals("vertrek tijd")) {
-                VBox addedinputBox = new VBox(journeySelectionBox,toChangeBox, changeDepartureTimeIntoBox);
+                VBox addedinputBox = new VBox(journeySelectionBox, toChangeBox, changeDepartureTimeIntoBox);
                 pane.setCenter(addedinputBox);
             } else if (toCangeComboBox.getValue().equals("machinist")) {
-                VBox addedinputBox = new VBox(journeySelectionBox,toChangeBox, changeMachinistIntoBox);
+                VBox addedinputBox = new VBox(journeySelectionBox, toChangeBox, changeMachinistIntoBox);
                 pane.setCenter(addedinputBox);
             }
         });
