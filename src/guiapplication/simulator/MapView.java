@@ -103,12 +103,13 @@ public class MapView implements View {
 
         mainPane.setTop(null);
 
+
         Button distasterButton = new Button("Calamiteiten oefening");
-        mainPane.setBottom(distasterButton);
         distasterButton.setOnAction(e -> npcController.toggleDisaster());
 
         Slider slider = new Slider(this);
         VBox.setVgrow(mainPane, javafx.scene.layout.Priority.ALWAYS);
+        slider.getChildren().add(distasterButton);
         mainPane.setBottom(slider);
 
         draw(g2d);
