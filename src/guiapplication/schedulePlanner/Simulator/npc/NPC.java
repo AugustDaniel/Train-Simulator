@@ -99,7 +99,7 @@ public class NPC {
     }
 
     public boolean atTargetPosition() {
-        return position.distance(targetPosition) <= 25;
+        return position.distance(targetPosition) <= 7;
     }
 
     public void draw(Graphics2D g2d) {

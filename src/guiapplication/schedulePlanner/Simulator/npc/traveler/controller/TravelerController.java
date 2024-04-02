@@ -7,7 +7,10 @@ import guiapplication.schedulePlanner.Simulator.Sounds;
 import guiapplication.schedulePlanner.Simulator.mouselistener.MouseCallback;
 import guiapplication.schedulePlanner.Simulator.npc.NPC;
 import guiapplication.schedulePlanner.Simulator.npc.traveler.Traveler;
+import guiapplication.schedulePlanner.Simulator.npc.traveler.states.ArrivingState;
 import guiapplication.schedulePlanner.Simulator.npc.traveler.states.FinishedState;
+import guiapplication.schedulePlanner.Simulator.npc.traveler.states.LeavingState;
+import guiapplication.schedulePlanner.Simulator.npc.traveler.states.TravelerState;
 import javafx.scene.input.MouseEvent;
 import org.jfree.fx.FXGraphics2D;
 
@@ -101,5 +104,10 @@ public class TravelerController implements MouseCallback, util.Observer {
     public void toggleDisaster() {
         this.disaster = !this.disaster;
 
+        if (disaster) {
+            this.travelers.forEach(t -> t.setState(new LeavingState(t)));
+        } else {
+            this.travelers.forEach(t -> t.setState(new ArrivingState(t)));
+        }
     }
 }

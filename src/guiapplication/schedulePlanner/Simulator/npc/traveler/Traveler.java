@@ -122,4 +122,8 @@ public class Traveler extends NPC implements TravelerState {
     public void handle(LocalTime time) {
         this.state.handle(time);
     }
+
+    public boolean atTargetNode() {
+        return this.position.distance(this.target.getNode().getPosition()) <= 7;
+    }
 }
